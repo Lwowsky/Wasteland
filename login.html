@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="uk" translate="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="google" content="notranslate" />
+  <title>Google вхід — Wasteland King Defenders</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/auth-page.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <script defer src="js/i18n.js"></script>
+  <script defer src="js/i18n-uk.js"></script>
+  <script defer src="js/core/dom.js"></script>
+  <script defer src="js/core/partials.js"></script>
+  <script defer src="js/header.js"></script>
+  <script defer src="js/app-login-shell.js"></script>
+  <script type="module" src="js/auth-google.js"></script>
+  <script type="module" src="js/login-page.js"></script>
+</head>
+<body class="notranslate">
+  <div data-include="partials/header.html"></div>
+
+  <main class="auth-page container">
+    <section class="auth-card">
+      <div class="auth-card-top">
+        <img class="auth-card-logo" src="img/logo.webp" alt="Wasteland King Defenders" />
+        <div>
+          <p class="auth-eyebrow">Google account</p>
+          <h2>Вхід для гравців</h2>
+          <p>Увійди через Google, щоб сайт створив запис гравця в базі даних. Гостьовий режим залишився, тому сайт можна використовувати без акаунта.</p>
+        </div>
+      </div>
+
+      <div class="auth-actions">
+        <button class="btn auth-google-main" id="loginGoogleBtn" type="button">Увійти через Google</button>
+        <button class="btn auth-guest" id="guestBtn" type="button">Продовжити як гість</button>
+        <button class="btn auth-guest" id="goAppBtn" type="button" hidden>Перейти на сайт</button>
+        <button class="btn auth-guest" id="loginLogoutBtn" type="button" hidden>Вийти</button>
+      </div>
+
+      <div class="auth-status" id="loginStatus">Перевіряю Firebase...</div>
+
+      <div class="login-user-card is-hidden" id="loginUserCard">
+        <img id="loginAvatar" src="img/logo.webp" alt="Avatar" />
+        <div>
+          <strong id="loginName">Google user</strong>
+          <span id="loginEmail"></span>
+        </div>
+      </div>
+
+      <div class="auth-setup">
+        <h3>Куди вставити Firebase config</h3>
+        <ol>
+          <li>Створи Firebase project, додай Web app і скопіюй config.</li>
+          <li>Встав config у файл:</li>
+        </ol>
+        <code>js/config/firebase.config.js</code>
+        <ol start="3">
+          <li>Увімкни Authentication → Google.</li>
+          <li>Увімкни Firestore Database і додай правила з файлу:</li>
+        </ol>
+        <code>firebase/firestore.rules</code>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

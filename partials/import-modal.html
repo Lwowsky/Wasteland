@@ -1,0 +1,106 @@
+<section class="modal" id="settings-modal" aria-hidden="true" aria-label="Налаштування та імпорт">
+    <button class="modal-backdrop" type="button" aria-label="Закрити" data-close-modal></button>
+    <div class="modal-card has-settings-side-menu" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+      <div class="modal-head">
+        <div>
+          <h2 id="settingsModalTitle">Налаштування / Імпорт</h2>
+          <p class="muted">Завантаж список гравців, звір колонки й підготуй сайт до розподілу по турелях.</p>
+        </div>
+        <button class="btn btn-icon" type="button" aria-label="Закрити" data-close-modal>✕</button>
+      </div>
+
+      <aside class="settings-side-menu" aria-label="Розділи імпорту">
+        <div class="settings-side-list">
+          <button class="settings-side-btn active" data-settings-tab="source" type="button">Звідки взяти список гравців</button>
+          <button class="settings-side-btn" data-settings-tab="required" type="button">Обов’язкові колонки</button>
+          <button class="settings-side-btn" data-settings-tab="optional" type="button">Додаткові колонки</button>
+          <button class="settings-side-btn" data-settings-tab="shifts" type="button">Розпізнавання змін</button>
+          <button class="settings-side-btn" data-settings-tab="visible" type="button">Які дані показувати в таблиці</button>
+          <button class="settings-side-btn" data-settings-tab="reset" type="button">Скидання даних</button>
+        </div>
+      </aside>
+
+      <div class="modal-grid">
+        <section class="panel subpanel" data-settings-panel="source">
+          <div class="mapping-section-head"><div><h3>1. Звідки взяти список гравців</h3><p class="mapping-section-note">Завантаж файл і налаштуй регіони/зміни для розподілу.</p></div></div>
+          <div class="import-source-grid">
+            <label class="file-drop import-source-card import-upload-card" id="fileDrop">
+              <span class="import-card-kicker">Файл</span>
+              <span class="drop-title">Завантажити CSV / Excel</span>
+              <span class="muted">Підтримуються CSV, XLSX, XLS і TXT. Це найзручніший спосіб швидко додати таблицю.</span>
+              <input id="importFileInput" type="file" accept=".csv,.xlsx,.xls,.txt" />
+            </label>
+
+            <div class="import-source-card import-regions-card">
+              <span class="import-card-kicker">Регіони</span>
+              <span class="drop-title">Захоплення регіонів</span>
+              <span class="muted">Вибери регіон і увімкни потрібний тумблер для 1, 2, 3 або 4 змін.</span>
+              <div class="import-region-tabs" role="tablist" aria-label="Регіони">
+                <button class="import-region-tab is-active" data-import-region-tab="home" aria-selected="true" type="button">Дім</button>
+                <button class="import-region-tab" data-import-region-tab="region2" aria-selected="false" type="button">Регіон 2</button>
+                <button class="import-region-tab" data-import-region-tab="region3" aria-selected="false" type="button">Регіон 3</button>
+              </div>
+              <div class="import-region-panels" id="importRegionPanels"></div>
+            </div>
+          </div>
+
+          <div class="import-tools-row"><button class="btn btn-sm" id="detectColumnsBtn" type="button">Знайти колонки</button></div>
+          <div class="import-status-grid">
+            <div class="import-status-card"><div class="import-status-title">Поточне джерело</div><div class="muted small" id="importLoadedInfo">Файл ще не завантажено.</div></div>
+            <div class="import-status-card"><div class="import-status-title">Статус імпорту</div><div class="muted small" id="importStatusInfo">Завантаж файл, перевір колонки й натисни «Застосувати імпорт».</div></div>
+          </div>
+          <div class="import-source-actions">
+            <button class="btn btn-primary" id="applyImportBtn" type="button" disabled>Застосувати імпорт</button>
+            <button class="btn" id="clearPendingImportBtn" type="button">Очистити вибір</button>
+          </div>
+        </section>
+
+        <section class="panel subpanel" data-settings-panel="required" hidden>
+          <div class="mapping-section-head"><div><h3>2. Обов’язкові колонки</h3><p class="mapping-section-note">Ім’я гравця, тип військ, тір, розмір маршу, розмір групової атаки, альянс, готовність бути капітаном і доступність по змінах.</p></div><button class="btn btn-sm" id="saveMappingBtn" type="button">Зберегти шаблон</button></div>
+          <div class="mapping-grid-2" id="requiredMappingContainer"></div>
+        </section>
+
+        <section class="panel subpanel" data-settings-panel="optional" hidden>
+          <div class="mapping-section-head"><div><h3>3. Додаткові колонки</h3><p class="mapping-section-note">Захоплення іншого регіону, резервний тип військ і будь-які додаткові поля.</p></div><button class="btn btn-sm" id="saveOptionalMappingBtn" type="button">Зберегти шаблон</button></div>
+          <div class="mapping-grid-2" id="optionalMappingContainer"></div>
+        </section>
+
+        <section class="panel subpanel" data-settings-panel="shifts" hidden>
+          <div class="mapping-section-head"><div><h3>4. Розпізнавання змін</h3><p class="mapping-section-note">Перевір значення з Excel і за потреби об’єднай зміни перед імпортом.</p></div></div>
+          <div class="shift-recognition-toolbar">
+            <label class="shift-recognition-mode"><span>Об’єднання змін</span><select id="shiftMergeMode"><option value="custom">Власне об’єднання</option><option value="pair12_34">1+2 | 3+4</option><option value="allTo1">Усі в 1 зміну</option></select></label>
+            <div class="shift-recognition-actions"><button class="btn btn-sm" id="autoDetectShiftRulesBtn" type="button">Авто-розпізнати</button><button class="btn btn-sm" id="resetShiftRulesBtn" type="button">Скинути правила</button></div>
+          </div>
+          <div id="shiftRecognitionBody"></div>
+          <div class="shift-recognition-footer"><span class="muted small" id="shiftRecognitionStatus">Правила ще не застосовані.</span><button class="btn btn-primary" id="saveShiftRulesBtn" type="button">Зберегти правила</button></div>
+        </section>
+
+        <section class="panel subpanel" data-settings-panel="visible" hidden>
+          <div class="mapping-section-head"><div><h3>5. Які дані показувати в таблиці</h3><p class="mapping-section-note">Обери, які додаткові колонки бачити після натискання «Показати всі дані».</p></div></div>
+          <div class="visibility-panel">
+            <label class="checkbox-row"><input type="checkbox" checked><span>Захоплення іншого регіону</span></label>
+            <label class="checkbox-row"><input type="checkbox" checked><span>Резервний тип військ: боєць</span></label>
+            <label class="checkbox-row"><input type="checkbox" checked><span>Резервний тип військ: наїзник</span></label>
+            <label class="checkbox-row"><input type="checkbox" checked><span>Резервний тип військ: стрілець</span></label>
+          </div>
+          <div class="tier-visibility-panel">
+            <div class="tier-visibility-head">
+              <div><h4>Додаткові тіри</h4><p class="muted">Додай T1–T14 і увімкни тіри, які треба показати в лімітах турелей.</p></div>
+              <div class="tier-visibility-add"><select id="addTierSelect"></select><button class="btn btn-sm" id="addTierBtn" type="button">Додати тір</button></div>
+            </div>
+            <div class="tier-visibility-list" id="visibleTierList"></div>
+          </div>
+          <button class="btn" id="saveVisibleColumnsBtn" type="button">Зберегти видимі колонки</button>
+        </section>
+
+        <section class="panel subpanel" data-settings-panel="reset" hidden>
+          <div class="mapping-section-head"><div><h3>6. Скидання даних</h3><p class="mapping-section-note">Обережно: ці дії очищають збережені налаштування або дані таблиць.</p></div></div>
+          <div class="reset-actions-grid">
+            <button class="btn btn-danger-soft" id="resetAllStorageBtn" type="button">Повністю очистити LocalStorage</button>
+            <button class="btn" id="resetColumnDataBtn" type="button">Скинути дані колонок</button>
+            <button class="btn" id="resetTableDataBtn" type="button">Скинути дані таблиць</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>

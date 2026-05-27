@@ -4,189 +4,131 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="google" content="notranslate" />
-  <title>Wasteland King Defenders — Puzzle & Survival</title>
-  <meta name="description" content="Wasteland King Defenders — фанатський інструмент для реєстрації гравців, регіонів і підготовки плану Wasteland." />
+  <title>Wasteland King Defenders</title>
   <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/base.css" />
-  <link rel="stylesheet" href="css/layout.css" />
-  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/players.css" />
+  <link rel="stylesheet" href="css/modal-import.css" />
+  <link rel="stylesheet" href="css/modal-regions.css" />
+  <link rel="stylesheet" href="css/modal-tiers.css" />
+  <link rel="stylesheet" href="css/confirm-modal.css" />
   <link rel="stylesheet" href="css/responsive.css" />
+  <script defer src="js/i18n.js"></script>
+  <script defer src="js/i18n-uk.js"></script>
+  <script defer src="js/i18n-en.js"></script>
+  <script defer src="js/i18n-ru.js"></script>
+  <script defer src="js/i18n-pl.js"></script>
+  <script defer src="js/i18n-de.js"></script>
+  <script defer src="js/i18n-ja.js"></script>
+  <script defer src="js/i18n-zh.js"></script>
+  <script defer src="js/i18n-ko.js"></script>
+  <script defer src="js/i18n-vi.js"></script>
+  <script defer src="js/i18n-ar.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script defer src="js/core/dom.js"></script>
+  <script defer src="js/core/state.js"></script>
+  <script defer src="js/core/partials.js"></script>
+  <script defer src="js/confirm-modal.js"></script>
+  <script defer src="js/header.js"></script>
+  <script defer src="js/import-modal.js"></script>
+  <script defer src="js/import-regions.js"></script>
+  <script defer src="js/import-file.js"></script>
+  <script defer src="js/import-mapping.js"></script>
+  <script defer src="js/import-shift-recognition.js"></script>
+  <script defer src="js/visible-tiers.js"></script>
+  <script defer src="js/players-table.js"></script>
+  <script defer src="js/app.js"></script>
+  <script type="module" src="js/auth-google.js"></script>
 </head>
 <body class="notranslate">
-<a id="top"></a>
-<header class="app-header">
-  <div class="container header-inner">
-    <a class="brand" href="#top" aria-label="Wasteland King Defenders">
-      <img class="brand-logo" src="img/logo.webp" alt="Wasteland King Defenders" width="160" height="135" decoding="async" fetchpriority="high" />
-      <span class="brand-text">
-        <span class="brand-title">Wasteland <b>King</b> Defenders</span>
-        <span class="brand-subtitle" data-i18n="subtitle">Puzzle & Survival — Планувальник турелей</span>
-      </span>
-    </a>
+  <a id="top"></a>
 
-    <div class="lang desktop-lang">
-      <button class="lang-btn" id="langBtn" type="button" aria-haspopup="listbox" aria-expanded="false">
-        <span aria-hidden="true">🌐</span>
-        <span id="langLabel">Українська</span>
-        <span aria-hidden="true">▾</span>
-      </button>
-      <div class="lang-menu" id="langMenu" role="listbox" aria-label="Мова"></div>
-    </div>
+  <div data-include="partials/header.html"></div>
 
-    <button class="burger-btn" id="burgerBtn" type="button" aria-label="Відкрити меню" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</header>
-
-<div class="drawer" id="drawer" aria-hidden="true">
-  <div class="drawer-backdrop" data-close-drawer></div>
-  <aside class="drawer-panel" role="dialog" aria-modal="true" aria-label="Меню">
-    <div class="drawer-top">
-      <strong data-i18n="menu">Меню</strong>
-      <button class="drawer-close" type="button" data-close-drawer aria-label="Закрити меню">✕</button>
-    </div>
-    <div class="drawer-body">
-      <details class="drawer-lang-group">
-        <summary class="btn" data-i18n="language">Мова</summary>
-        <div class="drawer-lang-list" id="drawerLangList" role="listbox" aria-label="Мова"></div>
-      </details>
-      <button class="btn btn-primary" data-open-section="registration" data-i18n="google_registration">Google реєстрація</button>
-      <button class="btn" data-open-section="players" data-i18n="players">Гравці</button>
-      <button class="btn" data-open-section="settings" data-i18n="settings_import">Налаштування / Імпорт</button>
-      <button class="btn" data-open-section="board" data-i18n="final_plan">Фінальний план</button>
-      <button class="btn" data-open-section="towers" data-i18n="tower_planning">Розподіл по турелях</button>
-      <button class="btn" data-open-section="editor" data-i18n="player_editor">Редактор гравців</button>
-      <button class="btn" data-open-section="contact" data-i18n="contact_us">Написати нам</button>
-      <button class="btn" data-open-section="support" data-i18n="support_site">Підтримати сайт</button>
-    </div>
-  </aside>
-</div>
-
-<main>
-  <section class="hero container" id="home">
-    <div class="hero-copy">
-      <span class="eyebrow" data-i18n="hero_tag">Wasteland registration hub</span>
-      <h1>Wasteland <span>King</span> Defenders</h1>
-      <p data-i18n="hero_text">Чистий старт сайту для реєстрації гравців, регіонів і майбутнього планування турелей.</p>
-      <div class="hero-actions">
-        <button class="btn btn-primary" data-open-section="registration" data-i18n="start_registration">Почати реєстрацію</button>
-        <button class="btn" data-open-section="board" data-i18n="open_final_plan">Відкрити фінальний план</button>
-      </div>
-    </div>
-    <div class="hero-art">
-      <img src="img/pns.png" alt="Puzzle & Survival" class="game-orb" />
-      <div class="tower-stack">
-        <img src="img/tower_hub.webp" alt="Техно-Центр" />
-        <img src="img/tower_turret.webp" alt="Турель" />
-      </div>
-    </div>
-  </section>
-
-  <section class="container quick-grid" aria-label="Швидке меню">
-    <article class="quick-card is-blue" data-open-section="registration"><span>01</span><h2 data-i18n="google_registration">Google реєстрація</h2><p data-i18n="registration_card_text">Гравець може увійти через Google або продовжити як гість.</p></article>
-    <article class="quick-card is-orange" data-open-section="players"><span>02</span><h2 data-i18n="players">Гравці</h2><p data-i18n="players_card_text">Локальний список заявок по регіонах 1–1200+.</p></article>
-    <article class="quick-card is-purple" data-open-section="towers"><span>03</span><h2 data-i18n="tower_planning">Розподіл по турелях</h2><p data-i18n="coming_card_text">Легка заготовка під майбутню логіку без старого дублювання.</p></article>
-  </section>
-
-  <section class="container panel-grid" id="registration">
-    <article class="panel auth-panel">
+<main class="layout container">
+    <section class="panel players-panel" id="playersPanel">
       <div class="panel-head">
-        <div><span class="eyebrow" data-i18n="account">Акаунт</span><h2 data-i18n="google_registration">Google реєстрація</h2></div>
-        <span class="status-pill" id="authStatus" data-i18n="guest_mode">Гість</span>
-      </div>
-      <p class="muted" data-i18n="auth_hint">Google-вхід готовий для Firebase. Якщо Firebase ще не налаштований, сайт працює в режимі гостя.</p>
-      <div class="auth-user" id="authUserBox">
-        <div class="avatar" id="authAvatar">G</div>
-        <div><strong id="authName">Guest player</strong><small id="authEmail">local guest mode</small></div>
-      </div>
-      <div class="button-row">
-        <button class="btn btn-primary" id="googleLoginBtn" type="button" data-i18n="login_google">Увійти через Google</button>
-        <button class="btn" id="guestLoginBtn" type="button" data-i18n="continue_guest">Продовжити як гість</button>
-        <button class="btn btn-danger ghost" id="logoutBtn" type="button" data-i18n="logout">Вийти</button>
-      </div>
-      <p class="tiny" id="firebaseNote" data-i18n="firebase_note">Щоб увімкнути справжній Google login, встав Firebase config у js/config/firebase.config.js.</p>
-    </article>
-
-    <article class="panel form-panel">
-      <div class="panel-head">
-        <div><span class="eyebrow" data-i18n="game_form">Ігрова форма</span><h2 data-i18n="region_registration">Реєстрація для регіону</h2></div>
-        <span class="status-pill">1–1200+</span>
-      </div>
-      <form id="playerForm" class="player-form" autocomplete="off">
-        <label><span data-i18n="region">Регіон</span><input name="region" type="number" min="1" max="9999" value="1" required /></label>
-        <label><span data-i18n="nickname">Нік гравця</span><input name="nickname" type="text" maxlength="40" required placeholder="Lwowsky" /></label>
-        <label><span data-i18n="alliance">Альянс</span><input name="alliance" type="text" maxlength="8" placeholder="EVO" /></label>
-        <label><span data-i18n="troop_type">Тип військ</span><select name="troop"><option value="Shooter" data-i18n="shooter">Стрілець</option><option value="Fighter" data-i18n="fighter">Боєць</option><option value="Rider" data-i18n="rider">Наїзник</option></select></label>
-        <label><span data-i18n="tier">Тір</span><select name="tier" id="tierSelect"></select></label>
-        <label><span data-i18n="march_size">Розмір маршу</span><input name="march" type="number" min="0" step="1000" placeholder="350000" /></label>
-        <label><span data-i18n="rally_size">Розмір ралі</span><input name="rally" type="number" min="0" step="1000" placeholder="2500000" /></label>
-        <label><span data-i18n="captain_ready">Готовий бути капітаном</span><select name="captain"><option value="yes" data-i18n="yes">Так</option><option value="no" data-i18n="no">Ні</option></select></label>
-        <fieldset class="field-wide checks"><legend data-i18n="available_shifts">Доступні зміни</legend><label><input type="checkbox" name="shifts" value="1" checked /> <span data-i18n="shift1">Зміна 1</span></label><label><input type="checkbox" name="shifts" value="2" /> <span data-i18n="shift2">Зміна 2</span></label><label><input type="checkbox" name="shifts" value="3" /> <span data-i18n="shift3">Зміна 3</span></label><label><input type="checkbox" name="shifts" value="4" /> <span data-i18n="shift4">Зміна 4</span></label></fieldset>
-        <label class="field-wide"><span data-i18n="comment">Коментар</span><textarea name="note" rows="3" placeholder=""></textarea></label>
-        <div class="field-wide button-row">
-          <button class="btn btn-primary" type="submit" data-i18n="save_registration">Зберегти заявку</button>
-          <button class="btn" type="reset" data-i18n="clear_form">Очистити</button>
+        <div>
+          <h2>Гравці</h2>
+          <p class="players-panel-lead">Складай список альянсу в одному місці: імпортуй Excel або CSV, фільтруй гравців і готуй дані для майбутнього розподілу по турелях.</p>
         </div>
-      </form>
-    </article>
-  </section>
+        <div class="panel-actions">
+          <button class="btn" id="showAllDataBtn" type="button" aria-pressed="false">Показати всі дані</button>
+          <button class="btn btn-primary" id="openImportQuickBtn" type="button">Імпорт CSV/XLSX/URL</button>
+        </div>
+      </div>
 
-  <section class="container panel players-panel" id="players">
-    <div class="panel-head">
-      <div><span class="eyebrow" data-i18n="local_storage">LocalStorage</span><h2 data-i18n="players">Гравці</h2></div>
-      <div class="button-row"><button class="btn" id="exportBtn" type="button" data-i18n="export_json">Експорт JSON</button><button class="btn btn-danger ghost" id="clearBtn" type="button" data-i18n="clear_list">Очистити список</button></div>
-    </div>
-    <div class="filters-row">
-      <label><span data-i18n="search">Пошук</span><input id="searchInput" type="search" placeholder="Нік / альянс / регіон" /></label>
-      <label><span data-i18n="region">Регіон</span><input id="regionFilter" type="number" min="1" placeholder="Усі" /></label>
-    </div>
-    <div class="table-wrap">
-      <table class="data-table">
-        <thead><tr><th data-i18n="region">Регіон</th><th data-i18n="nickname">Нік</th><th data-i18n="alliance">Альянс</th><th data-i18n="troop_type">Тип військ</th><th data-i18n="tier">Тір</th><th data-i18n="shift">Зміна</th><th data-i18n="captain">Капітан</th><th></th></tr></thead>
-        <tbody id="playersTbody"></tbody>
-      </table>
-    </div>
-    <p class="tiny" id="emptyText" data-i18n="empty_list">Поки немає заявок.</p>
-  </section>
+      <div class="stats-grid">
+        <div class="stat-card stat-card--duo">
+          <div class="stat-duo-item"><span>Усього гравців</span><strong id="totalPlayers">0</strong></div>
+          <div class="stat-duo-divider"></div>
+          <div class="stat-duo-item"><span>Капітани готові</span><strong id="captainsReady">0</strong></div>
+        </div>
+        <div class="stat-card stat-card--plain">
+          <div class="stat-split stat-split--roles">
+            <div class="stat-chip stat-chip--role is-fighter"><b id="fighterCount">0</b><small>Бійці</small></div>
+            <div class="stat-chip stat-chip--role is-rider"><b id="riderCount">0</b><small>Наїзники</small></div>
+            <div class="stat-chip stat-chip--role is-shooter"><b id="shooterCount">0</b><small>Стрільці</small></div>
+          </div>
+        </div>
+        <div class="stat-card stat-card--plain stat-card--shifts">
+          <div class="stat-split stat-split--shifts">
+            <div class="stat-chip stat-chip--shift is-shift1"><b id="shift1Count">0</b><small>Зміна 1</small></div>
+            <div class="stat-chip stat-chip--shift is-shift2"><b id="shift2Count">0</b><small>Зміна 2</small></div>
+            <div class="stat-chip stat-chip--shift is-shift3"><b id="shift3Count">0</b><small>Зміна 3</small></div>
+            <div class="stat-chip stat-chip--shift is-shift4"><b id="shift4Count">0</b><small>Зміна 4</small></div>
+            <div class="stat-chip stat-chip--shift is-both"><b id="bothCount">0</b><small>Всі</small></div>
+          </div>
+        </div>
+      </div>
 
-  <section class="container feature-grid" aria-label="Майбутні секції">
-    <article class="feature-card" id="settings"><img src="img/shooter.webp" alt="" /><h2 data-i18n="settings_import">Налаштування / Імпорт</h2><p data-i18n="stub_settings">Місце під майбутній імпорт CSV/XLSX. Старий важкий код не перенесено.</p></article>
-    <article class="feature-card" id="board"><img src="img/board-signature-flatflags.svg" alt="Developed by Lwowsky" /><h2 data-i18n="final_plan">Фінальний план</h2><p data-i18n="stub_board">Заготовка для майбутнього фінального плану, PNG/TXT і мов плану.</p></article>
-    <article class="feature-card" id="towers"><img src="img/tower_turret.webp" alt="" /><h2 data-i18n="tower_planning">Розподіл по турелях</h2><p data-i18n="stub_towers">Тут пізніше повернемо логіку турелей маленькими модулями.</p></article>
-    <article class="feature-card" id="editor"><img src="img/rider.webp" alt="" /><h2 data-i18n="player_editor">Редактор гравців</h2><p data-i18n="stub_editor">Проста база вже є через форму. Розширений редактор додамо окремо.</p></article>
-  </section>
-</main>
+      <div class="filters-card">
+        <label><span>Пошук</span><input id="searchFilter" type="search" placeholder="Пошук за ніком / альянсом" /></label>
+        <label><span>Тип військ</span><select id="roleFilter"><option value="all">Усі</option><option value="Fighter">Бійці</option><option value="Rider">Наїзники</option><option value="Shooter">Стрільці</option></select></label>
+        <label><span>Зміна</span><select id="shiftFilter"><option value="all">Усі</option><option value="shift1">Зміна 1</option><option value="shift2">Зміна 2</option><option value="shift3">Зміна 3</option><option value="shift4">Зміна 4</option><option value="both">Всі</option></select></label>
+        <label><span>Статус</span><select id="statusFilter"><option value="all">Усі</option><option value="captains">Капітани</option></select></label>
+        <label><span>Тір</span><select id="tierFilter"><option value="all">Усі</option><option>T14</option><option>T13</option><option>T12</option><option>T11</option><option>T10</option><option>T9</option><option>T8</option><option>T7</option></select></label>
+        <label><span>Рядків</span><select id="pageSizeSelect"><option value="10">10</option><option value="20">20</option><option value="50">50</option><option value="100">100</option><option value="all">Усі</option></select></label>
+        <button class="btn" id="resetFiltersBtn" type="button">Скинути фільтри</button>
+      </div>
 
-<footer class="app-footer" id="contact">
-  <div class="container footer-shell">
-    <div class="footer-actions">
-      <button class="footer-action" data-open-section="contact"><span>✉</span><b data-i18n="contact_us">Написати нам</b><small data-i18n="contact_subtitle">Зв'язок та пропозиції</small></button>
-      <button class="footer-action" id="support"><span>★</span><b data-i18n="support_site">Підтримати сайт</b><small data-i18n="support_subtitle">Підтримка безкоштовного проєкту</small></button>
-      <a class="footer-action" href="https://www.pnsofficial.com/pnsofficial/ztmslg/" rel="noopener" target="_blank"><span>🎮</span><b>Puzzle & Survival</b><small data-i18n="game_site">Сайт гри</small></a>
-    </div>
-    <div class="footer-brand">
-      <img src="img/board-signature-flatflags.svg" alt="Developed by Lwowsky" />
-      <p><b>© Wasteland King Defenders · Developed by Lwowsky</b></p>
-      <p data-i18n="footer_text">Повністю безкоштовний незалежний фанатський інструмент для гравців — для зручного планування списків, координації команди та підготовки до події Битва за пустош.</p>
-      <p data-i18n="footer_disclaimer">Сайт не є офіційним і не афілійований із правовласниками гри. Усі права щодо Puzzle & Survival належать їхнім відповідним правовласникам.</p>
-    </div>
-  </div>
-</footer>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th data-field="name"><span>Нік гравця</span><button class="sort-btn" data-sort="name" type="button" title="Сортувати">↓</button></th>
+              <th data-field="alliance"><span>Альянс</span><button class="sort-btn" data-sort="alliance" type="button" title="Сортувати">↓</button></th>
+              <th data-field="role"><span>Тип військ</span><button class="sort-btn" data-sort="role" type="button" title="Сортувати">↓</button></th>
+              <th data-field="tier"><span>Тір</span><button class="sort-btn" data-sort="tier" type="button" title="Сортувати">↓</button></th>
+              <th data-field="march"><span>Розмір маршу</span><button class="sort-btn" data-sort="march" type="button" title="Сортувати">↓</button></th>
+              <th data-field="rally"><span>Розмір ралі</span><button class="sort-btn" data-sort="rally" type="button" title="Сортувати">↓</button></th>
+              <th data-field="captainReady"><span>Капітан</span><button class="sort-btn" data-sort="captain" type="button" title="Сортувати">↓</button></th>
+              <th data-field="shiftLabel"><span>Зміна</span><button class="sort-btn" data-sort="shift" type="button" title="Сортувати">↓</button></th>
+              <th class="optional-col is-hidden-col" data-field="lair"><span>Захоплення</span><button class="sort-btn" data-sort="lair" type="button" title="Сортувати">↓</button></th>
+              <th data-field="actions"><span>Розміщення</span><button class="sort-btn" type="button" title="Сортувати">↓</button></th>
+            </tr>
+          </thead>
+          <tbody id="playersTbody">
+            <tr><td class="empty-cell" colspan="10">Імпортуй Excel або CSV файл, щоб показати гравців.</td></tr>
+          </tbody>
+        </table>
+      </div>
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+      <div class="table-footer">
+        <button class="btn btn-icon" id="pagePrevBtn" type="button" aria-label="Попередня сторінка">‹</button>
+        <span id="pageInfoText">Сторінка 1 / 1 • показано 0</span>
+        <button class="btn btn-icon" id="pageNextBtn" type="button" aria-label="Наступна сторінка">›</button>
+      </div>
+    </section>
 
-<script src="js/i18n/i18n-uk.js"></script>
-<script src="js/i18n/i18n-en.js"></script>
-<script src="js/i18n/i18n-ru.js"></script>
-<script src="js/i18n/i18n-pl.js"></script>
-<script src="js/i18n/i18n-de.js"></script>
-<script src="js/i18n/i18n-ja.js"></script>
-<script src="js/i18n/i18n-zh.js"></script>
-<script src="js/i18n/i18n-ko.js"></script>
-<script src="js/i18n/i18n-vi.js"></script>
-<script src="js/i18n/i18n-ar.js"></script>
-<script src="js/config/firebase.config.js"></script>
-<script type="module" src="js/app.js"></script>
+    <div data-include="partials/footer.html"></div>
+  </main>
+
+
+  <div data-include="partials/import-modal.html"></div>
+  <div data-include="partials/confirm-modal.html"></div>
+
 </body>
 </html>

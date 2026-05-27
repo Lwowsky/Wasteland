@@ -1,0 +1,54 @@
+<header class="app-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <img class="brand-logo" src="img/logo.webp" width="170" height="170" alt="Wasteland King Defenders" />
+        <div class="brand-text">
+          <h1>Wasteland <span>King</span> Defenders</h1>
+          <p>Puzzle &amp; Survival — Планувальник турелей</p>
+        </div>
+      </div>
+
+      <div class="header-tools">
+        <div class="auth-mini" id="authMini">
+          <button class="auth-btn" id="googleLoginBtn" type="button">Google вхід</button>
+          <button class="auth-btn auth-btn-ghost" id="googleLogoutBtn" type="button" hidden>Вийти</button>
+          <span class="auth-user" id="authUserText">Гість</span>
+        </div>
+
+        <div class="lang">
+          <button class="lang-btn" id="langBtn" type="button" aria-haspopup="listbox" aria-expanded="false">
+            <span class="lang-ico" aria-hidden="true">🌐</span>
+            <span class="lang-label" id="currentLangLabel">Українська</span>
+            <span class="lang-caret" aria-hidden="true">▾</span>
+          </button>
+          <div class="lang-menu" id="langMenu" role="listbox" aria-label="Мова"></div>
+        </div>
+
+        <button class="burger-btn" id="burgerBtn" type="button" aria-label="Відкрити меню" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+    <aside class="drawer-panel" role="dialog" aria-modal="true" aria-label="Меню">
+      <div class="drawer-top">
+        <div class="drawer-title">Меню</div>
+        <button class="drawer-close" id="drawerClose" type="button" aria-label="Закрити меню">✕</button>
+      </div>
+      <div class="drawer-body">
+        <div class="drawer-auth">
+          <div class="drawer-auth-title">Акаунт</div>
+          <button class="btn btn-primary" id="drawerGoogleLoginBtn" type="button">Увійти через Google</button>
+          <div class="muted small" id="drawerAuthHint">Можна користуватись сайтом як гість.</div>
+        </div>
+        <button class="btn btn-primary" id="drawerImportBtn" type="button">Налаштування / Імпорт</button>
+        <button class="btn" data-scroll="#playersPanel" type="button">Гравці</button>
+        <button class="btn" data-disabled-note="Фінальний план додамо наступним кроком" type="button">Фінальний план</button>
+        <button class="btn" data-disabled-note="Розподіл по турелях додамо наступним кроком" type="button">Розподіл по турелях</button>
+        <button class="btn" data-disabled-note="Редактор гравців додамо наступним кроком" type="button">Редактор гравців</button>
+      </div>
+    </aside>
+  </div>
