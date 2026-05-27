@@ -1,272 +1,192 @@
-<!doctype html>
-<html lang="uk">
+<!DOCTYPE html>
+<html lang="uk" translate="no">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#111827" />
-  <title>Wasteland Region Forms</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="css/app.css" />
+  <meta name="google" content="notranslate" />
+  <title>Wasteland King Defenders — Puzzle & Survival</title>
+  <meta name="description" content="Wasteland King Defenders — фанатський інструмент для реєстрації гравців, регіонів і підготовки плану Wasteland." />
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
 </head>
-<body>
-  <div class="bg-glow bg-glow-a"></div>
-  <div class="bg-glow bg-glow-b"></div>
+<body class="notranslate">
+<a id="top"></a>
+<header class="app-header">
+  <div class="container header-inner">
+    <a class="brand" href="#top" aria-label="Wasteland King Defenders">
+      <img class="brand-logo" src="img/logo.webp" alt="Wasteland King Defenders" width="160" height="135" decoding="async" fetchpriority="high" />
+      <span class="brand-text">
+        <span class="brand-title">Wasteland <b>King</b> Defenders</span>
+        <span class="brand-subtitle" data-i18n="subtitle">Puzzle & Survival — Планувальник турелей</span>
+      </span>
+    </a>
 
-  <div class="app-shell">
-    <header class="site-header" id="top">
-      <a class="brand" href="#top" aria-label="Wasteland Region Forms">
-        <span class="brand-mark">WK</span>
-        <span class="brand-copy">
-          <strong>Wasteland Region Forms</strong>
-          <small data-i18n="brand_subtitle">Реєстрація гравців по регіонах</small>
-        </span>
-      </a>
+    <div class="lang desktop-lang">
+      <button class="lang-btn" id="langBtn" type="button" aria-haspopup="listbox" aria-expanded="false">
+        <span aria-hidden="true">🌐</span>
+        <span id="langLabel">Українська</span>
+        <span aria-hidden="true">▾</span>
+      </button>
+      <div class="lang-menu" id="langMenu" role="listbox" aria-label="Мова"></div>
+    </div>
 
-      <div class="header-actions">
-        <label class="lang-box" for="languageSelect">
-          <span aria-hidden="true">🌐</span>
-          <select id="languageSelect" aria-label="Мова"></select>
-        </label>
-        <button class="btn btn-soft" id="guestModeBtn" type="button" data-i18n="continue_guest">Гість</button>
-        <button class="btn btn-primary" id="signInBtn" type="button" data-i18n="login_google">Увійти Google</button>
-        <button class="btn btn-soft is-hidden" id="signOutBtn" type="button" data-i18n="logout">Вийти</button>
-      </div>
-    </header>
-
-    <main>
-      <section class="hero section-card">
-        <div class="hero-copy">
-          <p class="eyebrow" data-i18n="hero_eyebrow">Нова чиста версія</p>
-          <h1 data-i18n="hero_title">Створи форму реєстрації для свого регіону</h1>
-          <p class="lead" data-i18n="hero_text">
-            Увійди через Google, створи форму для регіону 1–1200+ і збирай заявки гравців. Гості можуть користуватись сайтом локально без входу.
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#builder" data-i18n="create_form_now">Створити форму</a>
-            <a class="btn btn-soft" href="#register" data-i18n="fill_registration">Заповнити заявку</a>
-          </div>
-        </div>
-        <div class="hero-panel" aria-label="Статус">
-          <div class="mini-card">
-            <span data-i18n="account_status">Статус акаунту</span>
-            <strong id="accountStatus">Гість</strong>
-          </div>
-          <div class="mini-card">
-            <span data-i18n="forms_count">Форми</span>
-            <strong id="formsCount">0</strong>
-          </div>
-          <div class="mini-card">
-            <span data-i18n="players_count">Заявки</span>
-            <strong id="playersCount">0</strong>
-          </div>
-        </div>
-      </section>
-
-      <section class="workspace">
-        <aside class="side-stack">
-          <article class="section-card user-card">
-            <div class="card-head">
-              <div>
-                <p class="eyebrow" data-i18n="profile">Профіль</p>
-                <h2 data-i18n="your_account">Твій акаунт</h2>
-              </div>
-              <span class="status-pill" id="authPill">Guest</span>
-            </div>
-            <div class="profile-row">
-              <div class="avatar" id="avatar">G</div>
-              <div>
-                <strong id="profileName">Гість</strong>
-                <p class="muted" id="profileEmail" data-i18n="guest_note">Можна тестувати сайт без входу.</p>
-              </div>
-            </div>
-            <div class="notice" id="firebaseNotice" data-i18n="firebase_not_configured">
-              Google-вхід підключиться після додавання Firebase config.
-            </div>
-          </article>
-
-          <article class="section-card forms-card">
-            <div class="card-head">
-              <div>
-                <p class="eyebrow" data-i18n="my_forms">Мої форми</p>
-                <h2 data-i18n="regions">Регіони</h2>
-              </div>
-              <button class="icon-btn" id="refreshFormsBtn" type="button" aria-label="Оновити">↻</button>
-            </div>
-            <div class="empty" id="formsEmpty" data-i18n="no_forms_yet">Поки немає форм.</div>
-            <div class="forms-list" id="formsList"></div>
-          </article>
-        </aside>
-
-        <section class="main-stack">
-          <div class="tabs section-card" role="tablist" aria-label="Робоча зона">
-            <button class="tab is-active" type="button" data-panel="builder" data-i18n="tab_builder">Форма регіону</button>
-            <button class="tab" type="button" data-panel="register" data-i18n="tab_register">Заявка гравця</button>
-            <button class="tab" type="button" data-panel="roster" data-i18n="tab_roster">Список заявок</button>
-          </div>
-
-          <article class="section-card panel-view is-active" id="builder" data-panel-view="builder">
-            <div class="section-title">
-              <div>
-                <p class="eyebrow" data-i18n="builder_eyebrow">Для офіцера / організатора</p>
-                <h2 data-i18n="builder_title">Створення форми для регіону</h2>
-              </div>
-              <span class="sync-pill" id="syncStatus" data-i18n="local_mode">Локальний режим</span>
-            </div>
-
-            <form class="grid-form" id="regionForm">
-              <label>
-                <span data-i18n="region_number">Номер регіону</span>
-                <input id="regionNumber" name="regionNumber" type="number" min="1" max="9999" inputmode="numeric" placeholder="1–1200+" required />
-              </label>
-              <label>
-                <span data-i18n="form_title">Назва форми</span>
-                <input id="formTitle" name="formTitle" type="text" maxlength="80" placeholder="Wasteland registration" required />
-              </label>
-              <label>
-                <span data-i18n="event_date">Дата події</span>
-                <input id="eventDate" name="eventDate" type="date" />
-              </label>
-              <label>
-                <span data-i18n="status">Статус</span>
-                <select id="formStatus" name="formStatus">
-                  <option value="draft" data-i18n="status_draft">Чернетка</option>
-                  <option value="open" data-i18n="status_open">Відкрита</option>
-                  <option value="closed" data-i18n="status_closed">Закрита</option>
-                </select>
-              </label>
-
-              <fieldset class="field-box">
-                <legend data-i18n="available_shifts">Доступні зміни</legend>
-                <label class="check"><input type="checkbox" name="shifts" value="1" checked /> <span data-i18n="shift_1">Зміна 1</span></label>
-                <label class="check"><input type="checkbox" name="shifts" value="2" checked /> <span data-i18n="shift_2">Зміна 2</span></label>
-                <label class="check"><input type="checkbox" name="shifts" value="3" /> <span data-i18n="shift_3">Зміна 3</span></label>
-                <label class="check"><input type="checkbox" name="shifts" value="4" /> <span data-i18n="shift_4">Зміна 4</span></label>
-              </fieldset>
-
-              <label class="span-2">
-                <span data-i18n="short_description">Короткий опис</span>
-                <textarea id="formDescription" name="formDescription" rows="4" maxlength="400" placeholder="Що потрібно знати гравцям перед реєстрацією"></textarea>
-              </label>
-
-              <div class="form-actions span-2">
-                <button class="btn btn-primary" type="submit" data-i18n="save_form">Зберегти форму</button>
-                <button class="btn btn-soft" id="resetRegionFormBtn" type="button" data-i18n="new_clean_form">Нова чиста форма</button>
-                <button class="btn btn-soft" id="copyActiveLinkBtn" type="button" data-i18n="copy_link">Копіювати посилання</button>
-              </div>
-            </form>
-          </article>
-
-          <article class="section-card panel-view" id="register" data-panel-view="register">
-            <div class="section-title">
-              <div>
-                <p class="eyebrow" data-i18n="player_eyebrow">Для гравця</p>
-                <h2 data-i18n="player_title">Заявка на участь</h2>
-              </div>
-            </div>
-
-            <form class="grid-form" id="playerForm">
-              <label class="span-2">
-                <span data-i18n="choose_region_form">Оберіть форму регіону</span>
-                <select id="activeRegionSelect" required></select>
-              </label>
-              <label>
-                <span data-i18n="player_name">Нік гравця</span>
-                <input id="playerName" name="playerName" type="text" maxlength="60" required />
-              </label>
-              <label>
-                <span data-i18n="alliance_tag">Альянс</span>
-                <input id="allianceTag" name="allianceTag" type="text" maxlength="12" placeholder="EVO" />
-              </label>
-              <label>
-                <span data-i18n="troop_type">Тип військ</span>
-                <select id="troopType" name="troopType">
-                  <option value="fighter" data-i18n="fighter">Воїни</option>
-                  <option value="rider" data-i18n="rider">Наїзники</option>
-                  <option value="shooter" data-i18n="shooter">Стрільці</option>
-                  <option value="mixed" data-i18n="mixed">Змішано</option>
-                </select>
-              </label>
-              <label>
-                <span data-i18n="tier">Тір</span>
-                <select id="tier" name="tier"></select>
-              </label>
-              <label>
-                <span data-i18n="march_size">Марш</span>
-                <input id="marchSize" name="marchSize" type="number" min="0" step="1000" inputmode="numeric" />
-              </label>
-              <label>
-                <span data-i18n="rally_size">Розмір атаки групи</span>
-                <input id="rallySize" name="rallySize" type="number" min="0" step="1000" inputmode="numeric" />
-              </label>
-              <label>
-                <span data-i18n="preferred_shift">Бажана зміна</span>
-                <select id="preferredShift" name="preferredShift"></select>
-              </label>
-              <label class="check check-card">
-                <input id="captainReady" name="captainReady" type="checkbox" />
-                <span data-i18n="captain_ready">Готовий бути капітаном</span>
-              </label>
-              <label class="span-2">
-                <span data-i18n="comment">Коментар</span>
-                <textarea id="playerComment" name="playerComment" rows="3" maxlength="300"></textarea>
-              </label>
-              <div class="form-actions span-2">
-                <button class="btn btn-primary" type="submit" data-i18n="send_registration">Відправити заявку</button>
-                <button class="btn btn-soft" id="clearPlayerFormBtn" type="button" data-i18n="clear">Очистити</button>
-              </div>
-            </form>
-          </article>
-
-          <article class="section-card panel-view" id="roster" data-panel-view="roster">
-            <div class="section-title">
-              <div>
-                <p class="eyebrow" data-i18n="roster_eyebrow">Зібрані дані</p>
-                <h2 data-i18n="roster_title">Список заявок</h2>
-              </div>
-              <button class="btn btn-soft" id="exportJsonBtn" type="button" data-i18n="export_json">Експорт JSON</button>
-            </div>
-
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th data-i18n="th_player">Гравець</th>
-                    <th data-i18n="th_alliance">Альянс</th>
-                    <th data-i18n="th_troop">Війська</th>
-                    <th data-i18n="th_tier">Тір</th>
-                    <th data-i18n="th_shift">Зміна</th>
-                    <th data-i18n="th_captain">Капітан</th>
-                    <th data-i18n="th_actions">Дії</th>
-                  </tr>
-                </thead>
-                <tbody id="registrationsTable"></tbody>
-              </table>
-            </div>
-            <div class="empty" id="registrationsEmpty" data-i18n="no_registrations">Поки немає заявок.</div>
-          </article>
-        </section>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <span data-i18n="footer_text">Fan-made tool. Not affiliated with Puzzle &amp; Survival.</span>
-      <strong>Developed by Lwowsky</strong>
-    </footer>
+    <button class="burger-btn" id="burgerBtn" type="button" aria-label="Відкрити меню" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
+</header>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-backdrop" data-close-drawer></div>
+  <aside class="drawer-panel" role="dialog" aria-modal="true" aria-label="Меню">
+    <div class="drawer-top">
+      <strong data-i18n="menu">Меню</strong>
+      <button class="drawer-close" type="button" data-close-drawer aria-label="Закрити меню">✕</button>
+    </div>
+    <div class="drawer-body">
+      <details class="drawer-lang-group">
+        <summary class="btn" data-i18n="language">Мова</summary>
+        <div class="drawer-lang-list" id="drawerLangList" role="listbox" aria-label="Мова"></div>
+      </details>
+      <button class="btn btn-primary" data-open-section="registration" data-i18n="google_registration">Google реєстрація</button>
+      <button class="btn" data-open-section="players" data-i18n="players">Гравці</button>
+      <button class="btn" data-open-section="settings" data-i18n="settings_import">Налаштування / Імпорт</button>
+      <button class="btn" data-open-section="board" data-i18n="final_plan">Фінальний план</button>
+      <button class="btn" data-open-section="towers" data-i18n="tower_planning">Розподіл по турелях</button>
+      <button class="btn" data-open-section="editor" data-i18n="player_editor">Редактор гравців</button>
+      <button class="btn" data-open-section="contact" data-i18n="contact_us">Написати нам</button>
+      <button class="btn" data-open-section="support" data-i18n="support_site">Підтримати сайт</button>
+    </div>
+  </aside>
+</div>
 
-  <script src="js/config/firebase.config.js"></script>
-  <script src="js/i18n/i18n-uk.js"></script>
-  <script src="js/i18n/i18n-en.js"></script>
-  <script src="js/i18n/i18n-ru.js"></script>
-  <script src="js/i18n/i18n-pl.js"></script>
-  <script src="js/i18n/i18n-de.js"></script>
-  <script src="js/i18n/i18n-ja.js"></script>
-  <script src="js/i18n/i18n-zh.js"></script>
-  <script src="js/i18n/i18n-ko.js"></script>
-  <script src="js/i18n/i18n-vi.js"></script>
-  <script src="js/i18n/i18n-ar.js"></script>
-  <script type="module" src="js/app.js"></script>
+<main>
+  <section class="hero container" id="home">
+    <div class="hero-copy">
+      <span class="eyebrow" data-i18n="hero_tag">Wasteland registration hub</span>
+      <h1>Wasteland <span>King</span> Defenders</h1>
+      <p data-i18n="hero_text">Чистий старт сайту для реєстрації гравців, регіонів і майбутнього планування турелей.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" data-open-section="registration" data-i18n="start_registration">Почати реєстрацію</button>
+        <button class="btn" data-open-section="board" data-i18n="open_final_plan">Відкрити фінальний план</button>
+      </div>
+    </div>
+    <div class="hero-art">
+      <img src="img/pns.png" alt="Puzzle & Survival" class="game-orb" />
+      <div class="tower-stack">
+        <img src="img/tower_hub.webp" alt="Техно-Центр" />
+        <img src="img/tower_turret.webp" alt="Турель" />
+      </div>
+    </div>
+  </section>
+
+  <section class="container quick-grid" aria-label="Швидке меню">
+    <article class="quick-card is-blue" data-open-section="registration"><span>01</span><h2 data-i18n="google_registration">Google реєстрація</h2><p data-i18n="registration_card_text">Гравець може увійти через Google або продовжити як гість.</p></article>
+    <article class="quick-card is-orange" data-open-section="players"><span>02</span><h2 data-i18n="players">Гравці</h2><p data-i18n="players_card_text">Локальний список заявок по регіонах 1–1200+.</p></article>
+    <article class="quick-card is-purple" data-open-section="towers"><span>03</span><h2 data-i18n="tower_planning">Розподіл по турелях</h2><p data-i18n="coming_card_text">Легка заготовка під майбутню логіку без старого дублювання.</p></article>
+  </section>
+
+  <section class="container panel-grid" id="registration">
+    <article class="panel auth-panel">
+      <div class="panel-head">
+        <div><span class="eyebrow" data-i18n="account">Акаунт</span><h2 data-i18n="google_registration">Google реєстрація</h2></div>
+        <span class="status-pill" id="authStatus" data-i18n="guest_mode">Гість</span>
+      </div>
+      <p class="muted" data-i18n="auth_hint">Google-вхід готовий для Firebase. Якщо Firebase ще не налаштований, сайт працює в режимі гостя.</p>
+      <div class="auth-user" id="authUserBox">
+        <div class="avatar" id="authAvatar">G</div>
+        <div><strong id="authName">Guest player</strong><small id="authEmail">local guest mode</small></div>
+      </div>
+      <div class="button-row">
+        <button class="btn btn-primary" id="googleLoginBtn" type="button" data-i18n="login_google">Увійти через Google</button>
+        <button class="btn" id="guestLoginBtn" type="button" data-i18n="continue_guest">Продовжити як гість</button>
+        <button class="btn btn-danger ghost" id="logoutBtn" type="button" data-i18n="logout">Вийти</button>
+      </div>
+      <p class="tiny" id="firebaseNote" data-i18n="firebase_note">Щоб увімкнути справжній Google login, встав Firebase config у js/config/firebase.config.js.</p>
+    </article>
+
+    <article class="panel form-panel">
+      <div class="panel-head">
+        <div><span class="eyebrow" data-i18n="game_form">Ігрова форма</span><h2 data-i18n="region_registration">Реєстрація для регіону</h2></div>
+        <span class="status-pill">1–1200+</span>
+      </div>
+      <form id="playerForm" class="player-form" autocomplete="off">
+        <label><span data-i18n="region">Регіон</span><input name="region" type="number" min="1" max="9999" value="1" required /></label>
+        <label><span data-i18n="nickname">Нік гравця</span><input name="nickname" type="text" maxlength="40" required placeholder="Lwowsky" /></label>
+        <label><span data-i18n="alliance">Альянс</span><input name="alliance" type="text" maxlength="8" placeholder="EVO" /></label>
+        <label><span data-i18n="troop_type">Тип військ</span><select name="troop"><option value="Shooter" data-i18n="shooter">Стрілець</option><option value="Fighter" data-i18n="fighter">Боєць</option><option value="Rider" data-i18n="rider">Наїзник</option></select></label>
+        <label><span data-i18n="tier">Тір</span><select name="tier" id="tierSelect"></select></label>
+        <label><span data-i18n="march_size">Розмір маршу</span><input name="march" type="number" min="0" step="1000" placeholder="350000" /></label>
+        <label><span data-i18n="rally_size">Розмір ралі</span><input name="rally" type="number" min="0" step="1000" placeholder="2500000" /></label>
+        <label><span data-i18n="captain_ready">Готовий бути капітаном</span><select name="captain"><option value="yes" data-i18n="yes">Так</option><option value="no" data-i18n="no">Ні</option></select></label>
+        <fieldset class="field-wide checks"><legend data-i18n="available_shifts">Доступні зміни</legend><label><input type="checkbox" name="shifts" value="1" checked /> <span data-i18n="shift1">Зміна 1</span></label><label><input type="checkbox" name="shifts" value="2" /> <span data-i18n="shift2">Зміна 2</span></label><label><input type="checkbox" name="shifts" value="3" /> <span data-i18n="shift3">Зміна 3</span></label><label><input type="checkbox" name="shifts" value="4" /> <span data-i18n="shift4">Зміна 4</span></label></fieldset>
+        <label class="field-wide"><span data-i18n="comment">Коментар</span><textarea name="note" rows="3" placeholder=""></textarea></label>
+        <div class="field-wide button-row">
+          <button class="btn btn-primary" type="submit" data-i18n="save_registration">Зберегти заявку</button>
+          <button class="btn" type="reset" data-i18n="clear_form">Очистити</button>
+        </div>
+      </form>
+    </article>
+  </section>
+
+  <section class="container panel players-panel" id="players">
+    <div class="panel-head">
+      <div><span class="eyebrow" data-i18n="local_storage">LocalStorage</span><h2 data-i18n="players">Гравці</h2></div>
+      <div class="button-row"><button class="btn" id="exportBtn" type="button" data-i18n="export_json">Експорт JSON</button><button class="btn btn-danger ghost" id="clearBtn" type="button" data-i18n="clear_list">Очистити список</button></div>
+    </div>
+    <div class="filters-row">
+      <label><span data-i18n="search">Пошук</span><input id="searchInput" type="search" placeholder="Нік / альянс / регіон" /></label>
+      <label><span data-i18n="region">Регіон</span><input id="regionFilter" type="number" min="1" placeholder="Усі" /></label>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th data-i18n="region">Регіон</th><th data-i18n="nickname">Нік</th><th data-i18n="alliance">Альянс</th><th data-i18n="troop_type">Тип військ</th><th data-i18n="tier">Тір</th><th data-i18n="shift">Зміна</th><th data-i18n="captain">Капітан</th><th></th></tr></thead>
+        <tbody id="playersTbody"></tbody>
+      </table>
+    </div>
+    <p class="tiny" id="emptyText" data-i18n="empty_list">Поки немає заявок.</p>
+  </section>
+
+  <section class="container feature-grid" aria-label="Майбутні секції">
+    <article class="feature-card" id="settings"><img src="img/shooter.webp" alt="" /><h2 data-i18n="settings_import">Налаштування / Імпорт</h2><p data-i18n="stub_settings">Місце під майбутній імпорт CSV/XLSX. Старий важкий код не перенесено.</p></article>
+    <article class="feature-card" id="board"><img src="img/board-signature-flatflags.svg" alt="Developed by Lwowsky" /><h2 data-i18n="final_plan">Фінальний план</h2><p data-i18n="stub_board">Заготовка для майбутнього фінального плану, PNG/TXT і мов плану.</p></article>
+    <article class="feature-card" id="towers"><img src="img/tower_turret.webp" alt="" /><h2 data-i18n="tower_planning">Розподіл по турелях</h2><p data-i18n="stub_towers">Тут пізніше повернемо логіку турелей маленькими модулями.</p></article>
+    <article class="feature-card" id="editor"><img src="img/rider.webp" alt="" /><h2 data-i18n="player_editor">Редактор гравців</h2><p data-i18n="stub_editor">Проста база вже є через форму. Розширений редактор додамо окремо.</p></article>
+  </section>
+</main>
+
+<footer class="app-footer" id="contact">
+  <div class="container footer-shell">
+    <div class="footer-actions">
+      <button class="footer-action" data-open-section="contact"><span>✉</span><b data-i18n="contact_us">Написати нам</b><small data-i18n="contact_subtitle">Зв'язок та пропозиції</small></button>
+      <button class="footer-action" id="support"><span>★</span><b data-i18n="support_site">Підтримати сайт</b><small data-i18n="support_subtitle">Підтримка безкоштовного проєкту</small></button>
+      <a class="footer-action" href="https://www.pnsofficial.com/pnsofficial/ztmslg/" rel="noopener" target="_blank"><span>🎮</span><b>Puzzle & Survival</b><small data-i18n="game_site">Сайт гри</small></a>
+    </div>
+    <div class="footer-brand">
+      <img src="img/board-signature-flatflags.svg" alt="Developed by Lwowsky" />
+      <p><b>© Wasteland King Defenders · Developed by Lwowsky</b></p>
+      <p data-i18n="footer_text">Повністю безкоштовний незалежний фанатський інструмент для гравців — для зручного планування списків, координації команди та підготовки до події Битва за пустош.</p>
+      <p data-i18n="footer_disclaimer">Сайт не є офіційним і не афілійований із правовласниками гри. Усі права щодо Puzzle & Survival належать їхнім відповідним правовласникам.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/i18n/i18n-uk.js"></script>
+<script src="js/i18n/i18n-en.js"></script>
+<script src="js/i18n/i18n-ru.js"></script>
+<script src="js/i18n/i18n-pl.js"></script>
+<script src="js/i18n/i18n-de.js"></script>
+<script src="js/i18n/i18n-ja.js"></script>
+<script src="js/i18n/i18n-zh.js"></script>
+<script src="js/i18n/i18n-ko.js"></script>
+<script src="js/i18n/i18n-vi.js"></script>
+<script src="js/i18n/i18n-ar.js"></script>
+<script src="js/config/firebase.config.js"></script>
+<script type="module" src="js/app.js"></script>
 </body>
 </html>
