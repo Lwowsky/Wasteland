@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="uk" translate="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="google" content="notranslate" />
+  <title>Статистика гравців — Wasteland King Defenders</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/auth-page.css" />
+  <link rel="stylesheet" href="css/profile-page.css" />
+  <link rel="stylesheet" href="css/admin-page.css" />
+  <link rel="stylesheet" href="css/stats-page.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <script defer src="js/i18n.js"></script>
+  <script defer src="js/i18n-uk.js"></script>
+  <script defer src="js/i18n-en.js"></script>
+  <script defer src="js/i18n-ru.js"></script>
+  <script defer src="js/i18n-pl.js"></script>
+  <script defer src="js/i18n-de.js"></script>
+  <script defer src="js/i18n-ja.js"></script>
+  <script defer src="js/i18n-zh.js"></script>
+  <script defer src="js/i18n-ko.js"></script>
+  <script defer src="js/i18n-vi.js"></script>
+  <script defer src="js/i18n-ar.js"></script>
+  <script defer src="js/core/dom.js"></script>
+  <script defer src="js/core/partials.js"></script>
+  <script defer src="js/header.js"></script>
+  <script defer src="js/app-login-shell.js"></script>
+  <script type="module" src="js/auth-google.js"></script>
+  <script type="module" src="js/pages/stats-page.js"></script>
+</head>
+<body class="notranslate">
+  <div data-include="partials/header.html"></div>
+
+  <main class="profile-page container">
+    <section class="profile-card stats-card">
+      <div class="profile-head">
+        <div>
+          <p class="auth-eyebrow">Player directory</p>
+          <h2>Статистика гравців</h2>
+          <p>Тут показані зареєстровані гравці сайту. Email прихований — видно тільки ігрову інформацію.</p>
+        </div>
+        <div class="admin-summary" id="statsSummary">Завантажую...</div>
+      </div>
+
+      <div class="auth-status" id="statsStatus">Перевіряю доступ...</div>
+
+      <div class="admin-stats" id="publicStats">
+        <div class="admin-stat-card"><span>Гравців</span><b>0</b></div>
+        <div class="admin-stat-card"><span>Регіонів</span><b>0</b></div>
+        <div class="admin-stat-card"><span>Альянсів</span><b>0</b></div>
+        <div class="admin-stat-card"><span>Керівних ролей</span><b>0</b></div>
+      </div>
+
+      <div class="admin-toolbar admin-toolbar--grid stats-toolbar">
+        <label>
+          <span>Нік</span>
+          <input id="statsNickSearch" type="search" placeholder="Lwowsky" />
+        </label>
+        <label>
+          <span>Альянс</span>
+          <input id="statsAllianceSearch" type="search" placeholder="YYY" maxlength="8" />
+        </label>
+        <label>
+          <span>Регіон</span>
+          <input id="statsRegionSearch" type="search" inputmode="numeric" placeholder="987" />
+        </label>
+        <label>
+          <span>Роль</span>
+          <select id="statsRoleFilter">
+            <option value="all">Усі</option>
+            <option value="admin">Адмін</option>
+            <option value="moderator">Модератор</option>
+            <option value="consul">Консул</option>
+            <option value="officer">Офіцер</option>
+            <option value="player">Простий гравець</option>
+          </select>
+        </label>
+        <label>
+          <span>Рядків</span>
+          <select id="statsRowsFilter">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="all">Усі</option>
+          </select>
+        </label>
+        <button class="btn btn-primary" id="refreshStatsBtn" type="button">Оновити</button>
+      </div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table stats-table" id="publicPlayersTable">
+          <thead>
+            <tr>
+              <th><button type="button" data-sort="nickname">Нік ↓</button></th>
+              <th><button type="button" data-sort="region">Регіон ↓</button></th>
+              <th><button type="button" data-sort="alliance">Альянс ↓</button></th>
+              <th><button type="button" data-sort="rank">Ранг ↓</button></th>
+              <th><button type="button" data-sort="shk">ШК ↓</button></th>
+              <th><button type="button" data-sort="role">Роль ↓</button></th>
+              <th><button type="button" data-sort="createdAt">Дата реєстрації ↓</button></th>
+            </tr>
+          </thead>
+          <tbody id="publicPlayersBody">
+            <tr><td colspan="7">Завантажую гравців...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

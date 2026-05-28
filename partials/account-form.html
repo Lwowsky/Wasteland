@@ -1,0 +1,64 @@
+<form class="profile-form" id="accountForm" autocomplete="on">
+  <div class="profile-form-layout">
+    <section class="profile-field profile-avatar-panel" aria-label="Аватар гравця">
+      <span>Аватар</span>
+      <div class="profile-avatar-wrap">
+        <img id="accountAvatar" src="img/logo.webp" alt="Avatar" />
+        <div>
+          <strong id="accountGoogleName">Google user</strong>
+          <small id="accountEmail"></small>
+          <em id="accountRole">Простий гравець</em>
+        </div>
+      </div>
+      <small>Поки використовується Google-аватар. Пізніше додамо готові аватарки для вибору на сайті.</small>
+    </section>
+
+    <label class="profile-field profile-field--role">
+      <span>Роль / заявка</span>
+      <small class="profile-current-role">Поточна роль: <b id="currentRoleText">Простий гравець</b></small>
+      <select id="requestedRole" name="requestedRole">
+        <option value="player">Простий гравець</option>
+        <option value="officer">Офіцер — потрібне підтвердження</option>
+        <option value="consul">Консул — потрібне підтвердження</option>
+      </select>
+      <small id="roleRequestHint">Офіцера або консула підтверджує тільки адмін. Адміна і модератора можна отримати тільки вручну.</small>
+    </label>
+
+    <label class="profile-field">
+      <span>Нік у грі <b>*</b></span>
+      <input id="nickname" name="nickname" type="text" maxlength="40" placeholder="Наприклад: Lwowsky" required />
+    </label>
+
+    <label class="profile-field">
+      <span>Регіон <b>*</b></span>
+      <input id="region" name="region" type="number" min="1" max="1200" step="1" placeholder="142" required />
+    </label>
+
+    <label class="profile-field">
+      <span>Альянс <b>*</b></span>
+      <input id="alliance" name="alliance" type="text" maxlength="8" placeholder="YYY" required />
+    </label>
+
+    <label class="profile-field">
+      <span>Ранг <b>*</b></span>
+      <select id="rank" name="rank" required>
+        <option value="p1">P1</option>
+        <option value="p2">P2</option>
+        <option value="p3">P3</option>
+        <option value="p4">P4</option>
+        <option value="p5">P5</option>
+      </select>
+    </label>
+
+    <label class="profile-field">
+      <span>ШК <b>*</b></span>
+      <input id="shk" name="shk" type="number" min="1" max="45" step="1" placeholder="45" required />
+    </label>
+  </div>
+
+  <div class="profile-actions">
+    <button class="btn btn-primary profile-save" type="submit">Зберегти профіль</button>
+    <button class="btn" id="backToSiteBtn" type="button">На сайт</button>
+    <button class="btn" id="signOutBtn" type="button">Вийти</button>
+  </div>
+</form>

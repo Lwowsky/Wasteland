@@ -63,3 +63,23 @@ regions/{regionNumber}/plans/{planId}
 ```
 
 Так буде легше робити фільтр по регіонах 1–1200+, права доступу і майбутню адмінку.
+
+
+## Реєстрація гравця
+
+Після Google входу сайт перевіряє документ `users/{uid}`.
+
+- Якщо `profileComplete: false` або даних профілю немає — відкривається `register.html`.
+- Якщо профіль заповнений — гравець може перейти в `profile.html`.
+- Роль за замовчуванням завжди `player`.
+- `admin`, `consul`, `officer` не видаються через форму. Адмін має поставити роль вручну в Firestore.
+
+Поля профілю:
+
+- `gameProfile.nickname`
+- `gameProfile.region`
+- `gameProfile.alliance`
+- `gameProfile.rank`
+- `gameProfile.shk`
+- `role`
+- `profileComplete`

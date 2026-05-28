@@ -1,0 +1,7 @@
+.stats-card .profile-head{align-items:start}
+.stats-table td:first-child strong{font-size:16px}
+.stats-toolbar{grid-template-columns:minmax(130px,1fr) minmax(105px,.7fr) minmax(95px,.55fr) 150px 110px max-content;gap:10px;align-items:end}
+.stats-toolbar .btn{min-height:46px;padding:0 18px;white-space:nowrap}
+@media (max-width:1120px){.stats-toolbar{grid-template-columns:repeat(3,minmax(120px,1fr)) 150px 110px}.stats-toolbar .btn{width:100%}}
+@media (max-width:760px){.stats-toolbar{grid-template-columns:1fr 1fr}.stats-card{border-radius:24px}}
+@media (max-width:560px){.stats-toolbar{grid-template-columns:1fr}}

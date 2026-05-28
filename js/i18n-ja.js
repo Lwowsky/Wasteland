@@ -15,5 +15,24 @@ window.WKD_TRANSLATIONS.ja = {
   'common.delete': 'Видалити',
   'common.edit': 'Редагувати',
   'common.yes': 'Так',
-  'common.no': 'Ні'
+  'common.no': 'Ні',
+  "account.registerTitle": "Реєстрація гравця",
+  "account.profileTitle": "Профіль гравця",
+  "account.nickname": "Нік у грі",
+  "account.region": "Регіон",
+  "account.alliance": "Альянс",
+  "account.rank": "Ранг",
+  "account.role": "Роль",
+  "account.shk": "ШК",
+  "account.playerRole": "Простий гравець",
+  "account.saveProfile": "Зберегти профіль",
+  "account.backToSite": "На сайт",
+  "account.signOut": "Вийти",
+  "region.formEyebrow": "Wasteland registration",
+  "region.formTitle": "Реєстрація на пустош",
+  "region.formLead": "Заповни заявку за посиланням від консула або офіцера. Таблицю бачать тільки гравці цього регіону.",
+  "region.myRequest": "Реєстрація пустоші",
+  "region.table": "Таблиця регіону",
+  "region.settings": "Форма регіону"
+
 };

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="uk" translate="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="google" content="notranslate" />
+  <title>Форма регіону — Wasteland King Defenders</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/auth-page.css" />
+  <link rel="stylesheet" href="css/profile-page.css" />
+  <link rel="stylesheet" href="css/admin-page.css" />
+  <link rel="stylesheet" href="css/region-page.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <script defer src="js/i18n.js"></script>
+  <script defer src="js/i18n-uk.js"></script>
+  <script defer src="js/i18n-en.js"></script>
+  <script defer src="js/i18n-ru.js"></script>
+  <script defer src="js/i18n-pl.js"></script>
+  <script defer src="js/i18n-de.js"></script>
+  <script defer src="js/i18n-ja.js"></script>
+  <script defer src="js/i18n-zh.js"></script>
+  <script defer src="js/i18n-ko.js"></script>
+  <script defer src="js/i18n-vi.js"></script>
+  <script defer src="js/i18n-ar.js"></script>
+  <script defer src="js/core/dom.js"></script>
+  <script defer src="js/core/partials.js"></script>
+  <script defer src="js/header.js"></script>
+  <script defer src="js/app-login-shell.js"></script>
+  <script type="module" src="js/auth-google.js"></script>
+  <script type="module" src="js/pages/region-settings-page.js"></script>
+</head>
+<body class="notranslate">
+  <div data-include="partials/header.html"></div>
+
+  <main class="profile-page container">
+    <section class="profile-card region-card">
+      <div class="profile-head">
+        <div>
+          <p class="auth-eyebrow">Region form settings</p>
+          <h2>Форма регіону</h2>
+          <p>Консул або офіцер може налаштувати форму тільки для свого регіону. Адмін і модератор можуть керувати всіма регіонами.</p>
+        </div>
+        <div class="region-head-actions"><span class="region-pill region-pill--region" id="settingsRegionPill">Регіон —</span></div>
+      </div>
+
+      <div class="auth-status" id="regionSettingsStatus">Перевіряю доступ...</div>
+
+      <form class="region-form-block" id="regionSettingsForm" hidden>
+        <div class="region-grid">
+          <div class="region-field region-field--full region-share-field">
+            <span>Посилання для гравців</span>
+            <div class="region-share-row">
+              <input id="regionShareLink" readonly />
+              <button class="btn" id="copyRegionShareBtn" type="button">Скопіювати</button>
+            </div>
+            <small>Це посилання можна кинути в чат. Гравець зможе заповнити заявку навіть без Google-входу.</small>
+          </div>
+          <label class="region-field"><span>Форма активна</span><select id="settingsEnabled"><option value="true">Включено</option><option value="false">Відключено</option></select></label>
+          <label class="region-field"><span>Назва форми</span><input id="settingsTitle" /></label>
+          <label class="region-field region-field--full"><span>Опис</span><textarea id="settingsDescription"></textarea></label>
+          <div class="region-field region-field--full">
+            <span>Зміни для реєстрації</span>
+            <div class="region-check-grid">
+              <label class="region-check"><input type="checkbox" name="settingsShift" value="shift1" /> Зміна 1</label>
+              <label class="region-check"><input type="checkbox" name="settingsShift" value="shift2" /> Зміна 2</label>
+              <label class="region-check"><input type="checkbox" name="settingsShift" value="shift3" /> Зміна 3</label>
+              <label class="region-check"><input type="checkbox" name="settingsShift" value="shift4" /> Зміна 4</label>
+              <label class="region-check"><input type="checkbox" name="settingsShift" value="both" /> Обидві</label>
+            </div>
+          </div>
+          <div class="region-field region-field--full">
+            <span>Додаткові опції</span>
+            <div class="region-check-grid">
+              <label class="region-check"><input id="settingsRequireCaptain" type="checkbox" /> Обов’язково вибрати капітана</label>
+              <label class="region-check"><input id="settingsExtraTroop" type="checkbox" /> Дозволити додатковий загін</label>
+            </div>
+          </div>
+        </div>
+        <div class="region-actions">
+          <button class="btn region-save" type="submit">Зберегти форму</button>
+          <button class="btn" id="openRegionTableFromSettingsBtn" type="button">Таблиця регіону</button>
+        </div>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

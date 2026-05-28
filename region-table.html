@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="uk" translate="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="google" content="notranslate" />
+  <title>Таблиця регіону — Wasteland King Defenders</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/auth-page.css" />
+  <link rel="stylesheet" href="css/profile-page.css" />
+  <link rel="stylesheet" href="css/admin-page.css" />
+  <link rel="stylesheet" href="css/region-page.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <script defer src="js/i18n.js"></script>
+  <script defer src="js/i18n-uk.js"></script>
+  <script defer src="js/i18n-en.js"></script>
+  <script defer src="js/i18n-ru.js"></script>
+  <script defer src="js/i18n-pl.js"></script>
+  <script defer src="js/i18n-de.js"></script>
+  <script defer src="js/i18n-ja.js"></script>
+  <script defer src="js/i18n-zh.js"></script>
+  <script defer src="js/i18n-ko.js"></script>
+  <script defer src="js/i18n-vi.js"></script>
+  <script defer src="js/i18n-ar.js"></script>
+  <script defer src="js/core/dom.js"></script>
+  <script defer src="js/core/partials.js"></script>
+  <script defer src="js/header.js"></script>
+  <script defer src="js/app-login-shell.js"></script>
+  <script type="module" src="js/auth-google.js"></script>
+  <script type="module" src="js/pages/region-table-page.js"></script>
+</head>
+<body class="notranslate">
+  <div data-include="partials/header.html"></div>
+
+  <main class="profile-page container">
+    <section class="profile-card region-card">
+      <div class="profile-head">
+        <div>
+          <p class="auth-eyebrow">Region board</p>
+          <h2>Таблиця регіону</h2>
+          <p>Тут показані заявки на пустош тільки твого регіону. Email прихований у таблиці.</p>
+        </div>
+        <div class="region-head-actions">
+          <span class="region-pill region-pill--region" id="regionTablePill">Регіон —</span>
+          <button class="btn" id="openWastelandRegisterBtn" type="button">Моя заявка</button>
+          <button class="btn" id="openRegionSettingsBtn" type="button" hidden>Форма регіону</button>
+        </div>
+      </div>
+
+      <div class="auth-status" id="regionTableStatus">Завантажую таблицю...</div>
+
+      <div class="admin-toolbar admin-toolbar--grid stats-toolbar">
+        <label><span>Нік</span><input id="regionNickSearch" type="search" placeholder="Lwowsky" /></label>
+        <label><span>Альянс</span><input id="regionAllianceSearch" type="search" placeholder="YYY" maxlength="8" /></label>
+        <label><span>Тип</span><select id="regionTroopFilter"><option value="all">Усі</option><option value="fighter">Бійці</option><option value="rider">Наїзники</option><option value="shooter">Стрільці</option></select></label>
+        <label><span>Зміна</span><select id="regionShiftFilter"><option value="all">Усі</option><option value="shift1">Зміна 1</option><option value="shift2">Зміна 2</option><option value="shift3">Зміна 3</option><option value="shift4">Зміна 4</option><option value="both">Обидві</option></select></label>
+        <button class="btn btn-primary" id="refreshRegionTableBtn" type="button">Оновити</button>
+      </div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table region-public-table">
+          <thead>
+            <tr>
+              <th>Нік</th><th>Альянс</th><th>Тип</th><th>Тір</th><th>Марш</th><th>Ралі</th><th>Капітан</th><th>Зміна</th><th>Готовність</th><th>Коментар</th>
+            </tr>
+          </thead>
+          <tbody id="regionRegistrationsBody"><tr><td colspan="10">Завантажую заявки...</td></tr></tbody>
+        </table>
+      </div>
+      <p class="region-mobile-help">На телефоні таблицю можна прокручувати горизонтально.</p>
+    </section>
+  </main>
+</body>
+</html>

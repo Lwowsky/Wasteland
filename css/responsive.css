@@ -1,5 +1,4 @@
 @media (max-width:1180px){
-  .auth-mini{display:none}
   .stats-grid{grid-template-columns:1fr}
   .filters-card{grid-template-columns:repeat(2,minmax(0,1fr))}
   .modal{padding:12px}
@@ -34,6 +33,8 @@
 
 @media (max-width:560px){
   .header-tools{margin-left:auto}
+  .account-btn{max-width:150px;padding:8px 11px}
+  .account-name{max-width:95px}
   .lang{display:none}
   .brand-text{display:none}
   .import-source-grid{gap:10px}

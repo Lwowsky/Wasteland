@@ -21,3 +21,12 @@ Google login:
 
 Важливо:
 Через partials сайт потрібно відкривати через локальний сервер або GitHub Pages, не подвійним кліком по index.html.
+
+
+Google profile flow:
+- login.html — Google-вхід.
+- register.html — перша реєстрація гравця після Google-входу.
+- profile.html — редагування профілю гравця.
+- Дані зберігаються у Firestore: users/{uid} і regions/{region}/players/{uid}.
+- Роль за замовчуванням: player / Простий гравець.
+- Ролі admin, consul, officer треба ставити вручну в Firestore тільки адміну.

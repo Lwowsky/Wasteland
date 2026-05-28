@@ -1,30 +1,91 @@
 import { isFirebaseConfigured, getFirebase, watchAuth } from './services/firebase-service.js';
+import { canUseAdminPanel, getUserProfile, isProfileComplete, normalizeUserRole } from './services/user-db.js';
 
 const $ = selector => document.querySelector(selector);
-let authReady = false;
 
-function setUser(user) {
+let authReady = false;
+let currentUser = null;
+let currentProfile = null;
+
+function setUserShell(user, profile = null) {
+  currentUser = user;
+  currentProfile = profile;
   const signedIn = Boolean(user);
-  const name = user?.displayName || user?.email || 'Гість';
+  const gameNick = profile?.gameProfile?.nickname || profile?.gameNick;
+  const name = gameNick || user?.displayName || user?.email || 'Акаунт';
+  const admin = signedIn && canUseAdminPanel(user, profile);
+  const role = normalizeUserRole(profile?.role || 'player');
+  const profileReady = signedIn && isProfileComplete(profile);
+  const regionManager = profileReady && ['admin', 'moderator', 'consul', 'officer'].includes(role);
   const userText = $('#authUserText');
-  const hint = $('#drawerAuthHint');
+  const drawerAccountLabel = $('#drawerAccountLabel');
   const login = $('#googleLoginBtn');
   const logout = $('#googleLogoutBtn');
+  const profileBtn = $('#profileBtn');
+  const drawerProfileBtn = $('#drawerProfileBtn');
+  const drawerLogin = $('#drawerGoogleLoginBtn');
+  const drawerLogout = $('#drawerGoogleLogoutBtn');
+  const drawerStats = $('#drawerStatsBtn');
+  const adminBtn = $('#adminBtn');
+  const drawerAdminBtn = $('#drawerAdminBtn');
+  const regionFormBtn = $('#regionFormBtn');
+  const regionTableBtn = $('#regionTableBtn');
+  const regionSettingsBtn = $('#regionSettingsBtn');
+  const drawerRegionFormBtn = $('#drawerRegionFormBtn');
+  const drawerRegionTableBtn = $('#drawerRegionTableBtn');
+  const drawerRegionSettingsBtn = $('#drawerRegionSettingsBtn');
 
-  if (userText) userText.textContent = name;
-  if (hint) hint.textContent = signedIn ? `Ви увійшли як ${name}.` : 'Можна користуватись сайтом як гість.';
+  if (userText) userText.textContent = signedIn ? name : 'Акаунт';
+  if (drawerAccountLabel) drawerAccountLabel.textContent = signedIn ? name : 'Гість';
   if (login) login.hidden = signedIn;
+  if (drawerLogin) drawerLogin.hidden = signedIn;
+  if (drawerLogout) drawerLogout.hidden = !signedIn;
+  if (drawerStats) drawerStats.hidden = !signedIn;
   if (logout) logout.hidden = !signedIn;
+  if (profileBtn) profileBtn.hidden = !signedIn;
+  if (drawerProfileBtn) drawerProfileBtn.hidden = !signedIn;
+  if (regionFormBtn) regionFormBtn.hidden = !profileReady;
+  if (regionTableBtn) regionTableBtn.hidden = !profileReady;
+  if (regionSettingsBtn) regionSettingsBtn.hidden = !regionManager;
+  if (drawerRegionFormBtn) drawerRegionFormBtn.hidden = !profileReady;
+  if (drawerRegionTableBtn) drawerRegionTableBtn.hidden = !profileReady;
+  if (drawerRegionSettingsBtn) drawerRegionSettingsBtn.hidden = !regionManager;
+  if (adminBtn) adminBtn.hidden = !admin;
+  if (drawerAdminBtn) drawerAdminBtn.hidden = !admin;
 }
 
 function openLoginPage() {
   window.location.href = 'login.html';
 }
 
+function openProfilePage() {
+  window.location.href = isProfileComplete(currentProfile) ? 'profile.html' : 'register.html';
+}
+
+function openStatsPage() {
+  window.location.href = 'stats.html';
+}
+
+function openAdminPage() {
+  window.location.href = 'admin.html';
+}
+
+function openRegionFormPage() {
+  window.location.href = isProfileComplete(currentProfile) ? 'region-form.html' : 'register.html';
+}
+
+function openRegionTablePage() {
+  window.location.href = isProfileComplete(currentProfile) ? 'region-table.html' : 'register.html';
+}
+
+function openRegionSettingsPage() {
+  window.location.href = isProfileComplete(currentProfile) ? 'region-settings.html' : 'register.html';
+}
+
 async function logoutGoogle() {
   const firebase = await getFirebase();
   if (firebase) await firebase.authMod.signOut(firebase.auth);
-  setUser(null);
+  setUserShell(null);
 }
 
 async function initAuthGoogle() {
@@ -34,13 +95,33 @@ async function initAuthGoogle() {
   $('#googleLoginBtn')?.addEventListener('click', openLoginPage);
   $('#drawerGoogleLoginBtn')?.addEventListener('click', openLoginPage);
   $('#googleLogoutBtn')?.addEventListener('click', logoutGoogle);
+  $('#drawerGoogleLogoutBtn')?.addEventListener('click', logoutGoogle);
+  $('#statsBtn')?.addEventListener('click', openStatsPage);
+  $('#drawerStatsBtn')?.addEventListener('click', openStatsPage);
+  $('#profileBtn')?.addEventListener('click', openProfilePage);
+  $('#drawerProfileBtn')?.addEventListener('click', openProfilePage);
+  $('#regionFormBtn')?.addEventListener('click', openRegionFormPage);
+  $('#drawerRegionFormBtn')?.addEventListener('click', openRegionFormPage);
+  $('#regionTableBtn')?.addEventListener('click', openRegionTablePage);
+  $('#drawerRegionTableBtn')?.addEventListener('click', openRegionTablePage);
+  $('#regionSettingsBtn')?.addEventListener('click', openRegionSettingsPage);
+  $('#drawerRegionSettingsBtn')?.addEventListener('click', openRegionSettingsPage);
+  $('#adminBtn')?.addEventListener('click', openAdminPage);
+  $('#drawerAdminBtn')?.addEventListener('click', openAdminPage);
 
   if (!isFirebaseConfigured()) {
-    setUser(null);
+    setUserShell(null);
     return;
   }
 
-  await watchAuth(setUser);
+  await watchAuth(async user => {
+    if (!user) {
+      setUserShell(null);
+      return;
+    }
+    const profile = await getUserProfile(user.uid).catch(() => null);
+    setUserShell(user, profile);
+  });
 }
 
 document.addEventListener('wkd:partials-ready', initAuthGoogle);

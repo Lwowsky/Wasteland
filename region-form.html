@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="uk" translate="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="google" content="notranslate" />
+  <title>Реєстрація на пустош — Wasteland King Defenders</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/auth-page.css" />
+  <link rel="stylesheet" href="css/profile-page.css" />
+  <link rel="stylesheet" href="css/admin-page.css" />
+  <link rel="stylesheet" href="css/region-page.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <script defer src="js/i18n.js"></script>
+  <script defer src="js/i18n-uk.js"></script>
+  <script defer src="js/i18n-en.js"></script>
+  <script defer src="js/i18n-ru.js"></script>
+  <script defer src="js/i18n-pl.js"></script>
+  <script defer src="js/i18n-de.js"></script>
+  <script defer src="js/i18n-ja.js"></script>
+  <script defer src="js/i18n-zh.js"></script>
+  <script defer src="js/i18n-ko.js"></script>
+  <script defer src="js/i18n-vi.js"></script>
+  <script defer src="js/i18n-ar.js"></script>
+  <script defer src="js/core/dom.js"></script>
+  <script defer src="js/core/partials.js"></script>
+  <script defer src="js/header.js"></script>
+  <script defer src="js/app-login-shell.js"></script>
+  <script type="module" src="js/auth-google.js"></script>
+  <script type="module" src="js/pages/region-form-page.js"></script>
+</head>
+<body class="notranslate">
+  <div data-include="partials/header.html"></div>
+
+  <main class="profile-page container">
+    <section class="profile-card region-card">
+      <div class="profile-head">
+        <div>
+          <p class="auth-eyebrow" data-i18n="region.formEyebrow">Wasteland registration</p>
+          <h2 data-i18n="region.formTitle">Реєстрація на пустош</h2>
+          <p data-i18n="region.formLead">Заповни заявку за посиланням від консула або офіцера. Таблицю бачать тільки гравці цього регіону.</p>
+        </div>
+        <div class="region-head-actions">
+          <span class="region-pill region-pill--region" id="regionNumberPill">Регіон —</span>
+          <span class="region-pill" id="regionFormState">Перевіряю...</span>
+        </div>
+      </div>
+
+      <div class="auth-status" id="regionStatus">Перевіряю форму регіону...</div>
+
+      <form class="region-form-block" id="wastelandForm" hidden>
+        <div class="region-form-title">
+          <div>
+            <h3 id="regionFormTitleText">Реєстрація на пустош</h3>
+            <p id="regionFormDescText">Заповни заявку для свого регіону.</p>
+          </div>
+          <button class="btn" id="openRegionTableBtn" type="button">Таблиця регіону</button>
+        </div>
+
+        <div class="region-grid">
+          <label class="region-field"><span>Нік у грі <b>*</b></span><input id="wrNickname" required autocomplete="off" /></label>
+          <label class="region-field"><span>Альянс <b>*</b></span><input id="wrAlliance" required maxlength="8" autocomplete="off" /></label>
+          <label class="region-field"><span>Основний тип військ <b>*</b></span><select id="wrTroopType" required><option value="">Вибери тип</option><option value="fighter">Бійці</option><option value="rider">Наїзники</option><option value="shooter">Стрільці</option></select></label>
+          <label class="region-field"><span>Тір <b>*</b></span><select id="wrTier" required></select></label>
+          <label class="region-field"><span>Розмір маршу</span><input id="wrMarch" inputmode="numeric" placeholder="Наприклад: 301000" /></label>
+          <label class="region-field"><span>Розмір ралі</span><input id="wrRally" inputmode="numeric" placeholder="Наприклад: 1350000" /></label>
+          <div class="region-field region-field--full">
+            <span>Участь</span>
+            <div class="region-check-grid">
+              <label class="region-check"><input id="wrReadyJoin" type="checkbox" /> Готовий брати участь</label>
+              <label class="region-check"><input id="wrReadyAttack" type="checkbox" /> Готовий атакувати</label>
+              <label class="region-check"><input id="wrCaptain" type="checkbox" /> Готовий бути капітаном</label>
+            </div>
+          </div>
+          <div class="region-field region-field--full">
+            <span>Доступність по змінах <b>*</b></span>
+            <div class="region-check-grid" id="wrShiftOptions"></div>
+          </div>
+          <div class="region-field region-field--full" id="extraTroopPanel">
+            <label class="region-check"><input id="wrExtraEnabled" type="checkbox" /> Є додатковий повний загін іншого типу</label>
+            <div class="region-grid" id="extraTroopFields" hidden>
+              <label class="region-field"><span>Додатковий тип</span><select id="wrExtraTroopType"><option value="">Вибери тип</option><option value="fighter">Бійці</option><option value="rider">Наїзники</option><option value="shooter">Стрільці</option></select></label>
+              <label class="region-field"><span>Додатковий тір</span><select id="wrExtraTier"></select></label>
+              <label class="region-field"><span>Додатковий марш</span><input id="wrExtraMarch" inputmode="numeric" /></label>
+            </div>
+          </div>
+          <label class="region-field region-field--full"><span>Коментар</span><textarea id="wrComment" placeholder="Можеш написати час, обмеження або примітку"></textarea></label>
+        </div>
+
+        <div class="region-actions">
+          <button class="btn region-save" type="submit">Відправити заявку</button>
+          <button class="btn" id="resetWastelandFormBtn" type="button">Очистити</button>
+        </div>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

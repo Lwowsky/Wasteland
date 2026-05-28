@@ -18,7 +18,7 @@
   <script defer src="js/header.js"></script>
   <script defer src="js/app-login-shell.js"></script>
   <script type="module" src="js/auth-google.js"></script>
-  <script type="module" src="js/login-page.js"></script>
+  <script type="module" src="js/pages/login-page.js"></script>
 </head>
 <body class="notranslate">
   <div data-include="partials/header.html"></div>
@@ -30,7 +30,7 @@
         <div>
           <p class="auth-eyebrow">Google account</p>
           <h2>Вхід для гравців</h2>
-          <p>Увійди через Google, щоб сайт створив запис гравця в базі даних. Гостьовий режим залишився, тому сайт можна використовувати без акаунта.</p>
+          <p>Увійди через Google, щоб зберегти свій ігровий профіль, регіон і заявку на роль. Гостьовий режим залишився для швидкого перегляду сайту.</p>
         </div>
       </div>
 
@@ -51,18 +51,15 @@
         </div>
       </div>
 
-      <div class="auth-setup">
-        <h3>Куди вставити Firebase config</h3>
-        <ol>
-          <li>Створи Firebase project, додай Web app і скопіюй config.</li>
-          <li>Встав config у файл:</li>
-        </ol>
-        <code>js/config/firebase.config.js</code>
-        <ol start="3">
-          <li>Увімкни Authentication → Google.</li>
-          <li>Увімкни Firestore Database і додай правила з файлу:</li>
-        </ol>
-        <code>firebase/firestore.rules</code>
+      <div class="auth-info-grid">
+        <article>
+          <strong>Перший вхід</strong>
+          <span>Після Google-входу сайт попросить заповнити нік у грі, регіон, альянс, ранг і ШК.</span>
+        </article>
+        <article>
+          <strong>Заявка на роль</strong>
+          <span>Офіцера або консула можна запросити у профілі. Роль підтвердить адмін.</span>
+        </article>
       </div>
     </section>
   </main>

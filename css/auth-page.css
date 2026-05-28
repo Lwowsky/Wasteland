@@ -23,3 +23,8 @@
 .auth-setup code{display:block;margin:8px 0;padding:10px 12px;border-radius:14px;background:#020815;color:#b8c7ff;overflow:auto}
 .auth-setup ol{margin:0;padding-left:20px;color:#b6c2da;line-height:1.6}
 @media (max-width:760px){.auth-page{padding:22px 0 40px}.auth-card{padding:18px;border-radius:24px}.auth-card-top{align-items:flex-start}.auth-card-logo{width:70px;height:70px}.auth-card h2{font-size:26px}.auth-actions .btn{width:100%}}
+.auth-info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}
+.auth-info-grid article{padding:16px;border:1px solid #ffffff12;border-radius:20px;background:#ffffff07}
+.auth-info-grid strong{display:block;color:#fff;font-weight:950;margin-bottom:6px}
+.auth-info-grid span{display:block;color:#aeb9d3;line-height:1.45}
+@media (max-width:760px){.auth-info-grid{grid-template-columns:1fr}}

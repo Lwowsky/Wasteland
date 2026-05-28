@@ -1,16 +1,34 @@
 window.WKD = window.WKD || {};
+
 WKD.initHeader = () => {
   const { $, $$, showNotice } = WKD;
-  const drawer = $('#drawer'), burger = $('#burgerBtn'), close = $('#drawerClose'), backdrop = $('#drawerBackdrop');
-  const langBtn = $('#langBtn'), langMenu = $('#langMenu');
+  const drawer = $('#drawer');
+  const burger = $('#burgerBtn');
+  const close = $('#drawerClose');
+  const backdrop = $('#drawerBackdrop');
+  const langBtn = $('#langBtn');
+  const langMenu = $('#langMenu');
+  const drawerLangBtn = $('#drawerLangBtn');
+  const drawerLangMenu = $('#drawerLangMenu');
+  const accountBtn = $('#accountBtn');
+  const accountMenu = $('#accountMenu');
+  const drawerAccountBtn = $('#drawerAccountBtn');
+  const drawerAccountMenu = $('#drawerAccountMenu');
   if (!drawer || !burger || !close || !backdrop || !langBtn || !langMenu) return;
 
-  const openDrawer = () => {
-    drawer.classList.add('is-open');
-    burger.classList.add('is-open');
-    drawer.setAttribute('aria-hidden', 'false');
-    burger.setAttribute('aria-expanded', 'true');
-    document.body.classList.add('drawer-open');
+  const closeAccountMenu = () => {
+    accountMenu?.classList.remove('is-open');
+    accountBtn?.setAttribute('aria-expanded', 'false');
+  };
+  const closeDrawerAccountMenu = () => {
+    drawerAccountMenu?.classList.remove('is-open');
+    drawerAccountBtn?.setAttribute('aria-expanded', 'false');
+  };
+  const closeLangMenus = () => {
+    langMenu.classList.remove('is-open');
+    langBtn.setAttribute('aria-expanded', 'false');
+    drawerLangMenu?.classList.remove('is-open');
+    drawerLangBtn?.setAttribute('aria-expanded', 'false');
   };
   const closeDrawer = () => {
     drawer.classList.remove('is-open');
@@ -18,57 +36,154 @@ WKD.initHeader = () => {
     drawer.setAttribute('aria-hidden', 'true');
     burger.setAttribute('aria-expanded', 'false');
     document.body.classList.remove('drawer-open');
+    closeLangMenus();
+    closeDrawerAccountMenu();
+  };
+  const openDrawer = () => {
+    closeAccountMenu();
+    closeLangMenus();
+    closeDrawerAccountMenu();
+    drawer.classList.add('is-open');
+    burger.classList.add('is-open');
+    drawer.setAttribute('aria-hidden', 'false');
+    burger.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('drawer-open');
+  };
+  const openImport = () => {
+    closeDrawer();
+    if (typeof WKD.openImportModal === 'function') {
+      WKD.openImportModal();
+      return;
+    }
+    window.location.href = 'index.html#import';
   };
 
   burger.addEventListener('click', () => drawer.classList.contains('is-open') ? closeDrawer() : openDrawer());
   close.addEventListener('click', closeDrawer);
   backdrop.addEventListener('click', closeDrawer);
-  $('#drawerImportBtn')?.addEventListener('click', () => {
-    closeDrawer();
-    if (typeof WKD.openImportModal === 'function') WKD.openImportModal();
-    else window.location.href = 'index.html#playersPanel';
-  });
+  $('#drawerImportBtn')?.addEventListener('click', openImport);
+
+  if (drawerAccountBtn && drawerAccountMenu) {
+    drawerAccountBtn.addEventListener('click', event => {
+      event.stopPropagation();
+      closeLangMenus();
+      const isOpen = drawerAccountMenu.classList.toggle('is-open');
+      drawerAccountBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+    drawerAccountMenu.addEventListener('click', event => event.stopPropagation());
+  }
+
+  if (accountBtn && accountMenu) {
+    accountBtn.addEventListener('click', event => {
+      event.stopPropagation();
+      closeLangMenus();
+      const isOpen = accountMenu.classList.toggle('is-open');
+      accountBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+    accountMenu.addEventListener('click', event => event.stopPropagation());
+  }
 
   $$('[data-scroll]').forEach(button => button.addEventListener('click', () => {
     closeDrawer();
     const target = $(button.dataset.scroll);
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    else window.location.href = 'index.html#playersPanel';
   }));
   $$('[data-disabled-note]').forEach(button => button.addEventListener('click', () => showNotice(button.dataset.disabledNote || 'Цей блок додамо пізніше.')));
 
   renderLanguages();
-  langBtn.addEventListener('click', () => {
+
+  langBtn.addEventListener('click', event => {
+    event.stopPropagation();
+    closeAccountMenu();
+    drawerLangMenu?.classList.remove('is-open');
+    drawerLangBtn?.setAttribute('aria-expanded', 'false');
     const isOpen = langMenu.classList.toggle('is-open');
     langBtn.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  drawerLangBtn?.addEventListener('click', event => {
+    event.stopPropagation();
+    closeAccountMenu();
+    langMenu.classList.remove('is-open');
+    langBtn.setAttribute('aria-expanded', 'false');
+    const isOpen = drawerLangMenu.classList.toggle('is-open');
+    drawerLangBtn.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  document.addEventListener('click', () => {
+    closeAccountMenu();
+    closeLangMenus();
+    closeDrawerAccountMenu();
   });
   document.addEventListener('keydown', event => {
     if (event.key !== 'Escape') return;
     closeDrawer();
     if (typeof WKD.closeImportModal === 'function') WKD.closeImportModal();
-    langMenu.classList.remove('is-open');
-    langBtn.setAttribute('aria-expanded', 'false');
+    closeAccountMenu();
+    closeLangMenus();
+    closeDrawerAccountMenu();
   });
 };
 
-function renderLanguages() {
+function getLanguages() {
+  return window.WKD_LANGUAGES || [{ id: 'uk', code: 'UK', name: 'Українська', icon: 'img/lang/lang-uk.svg' }];
+}
+
+function getActiveLang() {
+  return localStorage.getItem('wkd.lang') || window.WKD_CURRENT_LANG || 'uk';
+}
+
+function setLanguage(langId) {
   const { $, $$, showNotice } = WKD;
-  const menu = $('#langMenu');
-  const langs = window.WKD_LANGUAGES || [{ id: 'uk', code: 'UK', name: 'Українська', icon: 'img/lang/lang-uk.svg' }];
-  menu.innerHTML = langs.map(lang => `
-    <button class="lang-item ${lang.id === 'uk' ? 'is-active' : ''}" type="button" role="option" data-lang="${lang.id}" aria-selected="${lang.id === 'uk'}">
+  const langs = getLanguages();
+  const active = langs.find(lang => lang.id === langId) || langs[0];
+  window.WKD_CURRENT_LANG = active.id;
+  localStorage.setItem('wkd.lang', active.id);
+
+  $('#currentLangLabel') && ($('#currentLangLabel').textContent = active.name);
+  $('#drawerCurrentLangLabel') && ($('#drawerCurrentLangLabel').textContent = active.name);
+
+  $$('.lang-item').forEach(item => {
+    const selected = item.dataset.lang === active.id;
+    item.classList.toggle('is-active', selected);
+    item.setAttribute('aria-selected', String(selected));
+  });
+
+  if (typeof window.WKD_applyI18n === 'function') window.WKD_applyI18n();
+  showNotice('Мови додані. Переклад поки не підключений — працюємо з українською.');
+}
+
+function languageButton(lang, activeId) {
+  return `
+    <button class="lang-item ${lang.id === activeId ? 'is-active' : ''}" type="button" role="option" data-lang="${lang.id}" aria-selected="${lang.id === activeId}">
       <span class="lang-flag"><img src="${lang.icon}" alt="" width="40" height="40"></span>
-      <span class="lang-name">${lang.name}</span><span class="lang-code">${lang.code}</span>
-    </button>`).join('');
-  $$('.lang-item', menu).forEach(item => item.addEventListener('click', () => {
-    $$('.lang-item', menu).forEach(btn => { btn.classList.remove('is-active'); btn.setAttribute('aria-selected', 'false'); });
-    item.classList.add('is-active');
-    item.setAttribute('aria-selected', 'true');
-    window.WKD_CURRENT_LANG = item.dataset.lang || 'uk';
-    localStorage.setItem('wkd.lang', window.WKD_CURRENT_LANG);
-    $('#currentLangLabel').textContent = item.querySelector('.lang-name').textContent;
-    if (typeof window.WKD_applyI18n === 'function') window.WKD_applyI18n();
-    menu.classList.remove('is-open');
-    $('#langBtn').setAttribute('aria-expanded', 'false');
-    showNotice('Мови додані. Переклад поки не підключений — працюємо з українською.');
-  }));
+      <span class="lang-name">${lang.name}</span>
+      <span class="lang-code">${lang.code}</span>
+    </button>`;
+}
+
+function renderLanguages() {
+  const { $, $$ } = WKD;
+  const langs = getLanguages();
+  const activeId = getActiveLang();
+  const html = langs.map(lang => languageButton(lang, activeId)).join('');
+
+  ['#langMenu', '#drawerLangMenu'].forEach(selector => {
+    const menu = $(selector);
+    if (!menu) return;
+    menu.innerHTML = html;
+    $$('.lang-item', menu).forEach(item => item.addEventListener('click', event => {
+      event.stopPropagation();
+      setLanguage(item.dataset.lang || 'uk');
+      $('#langMenu')?.classList.remove('is-open');
+      $('#langBtn')?.setAttribute('aria-expanded', 'false');
+      $('#drawerLangMenu')?.classList.remove('is-open');
+      $('#drawerLangBtn')?.setAttribute('aria-expanded', 'false');
+    }));
+  });
+
+  const active = langs.find(lang => lang.id === activeId) || langs[0];
+  $('#currentLangLabel') && ($('#currentLangLabel').textContent = active.name);
+  $('#drawerCurrentLangLabel') && ($('#drawerCurrentLangLabel').textContent = active.name);
 }

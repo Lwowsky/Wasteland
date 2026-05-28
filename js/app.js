@@ -11,4 +11,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   WKD.initVisibleTiers();
   WKD.initShiftRecognition();
   WKD.initPlayersTable();
+
+  if (window.location.hash === '#import' && typeof WKD.openImportModal === 'function') {
+    WKD.openImportModal();
+  }
 });

@@ -1,4 +1,5 @@
 rules_version = '2';
+
 service cloud.firestore {
   match /databases/{database}/documents {
     function signedIn() {
@@ -9,15 +10,160 @@ service cloud.firestore {
       return signedIn() && request.auth.uid == userId;
     }
 
-    function isAdmin() {
+    function ownerEmail() {
       return signedIn() && request.auth.token.email in ['vovapotaychuk@gmail.com'];
     }
 
+    function userDoc(userId) {
+      return get(/databases/$(database)/documents/users/$(userId));
+    }
+
+    function currentUserDoc() {
+      return userDoc(request.auth.uid);
+    }
+
+    function currentRole() {
+      return signedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        ? currentUserDoc().data.role
+        : 'player';
+    }
+
+    function currentRegion() {
+      return signedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        ? currentUserDoc().data.gameProfile.region
+        : '';
+    }
+
+    function isSameRegion(regionId) {
+      return signedIn() && currentRegion() == regionId;
+    }
+
+    function isAdmin() {
+      return ownerEmail() || currentRole() == 'admin';
+    }
+
+    function isModerator() {
+      return currentRole() == 'moderator';
+    }
+
+    function isRegionLeader() {
+      return currentRole() in ['consul', 'officer'];
+    }
+
+    function canUseAdminPanel() {
+      return ownerEmail() || isAdmin() || isModerator();
+    }
+
+    function canManageRegion(regionId) {
+      return ownerEmail() || isAdmin() || isModerator() || (isRegionLeader() && isSameRegion(regionId));
+    }
+
+    function canAssignRole(role) {
+      return ownerEmail()
+        || (isAdmin() && role in ['moderator', 'consul', 'officer', 'player'])
+        || (isModerator() && role in ['consul', 'officer', 'player']);
+    }
+
+    function roleIsSafeOnCreate() {
+      return request.resource.data.role == 'player';
+    }
+
+    function ownerKeepsProtectedFields() {
+      return !request.resource.data.diff(resource.data).affectedKeys()
+        .hasAny(['role', 'createdAt', 'uid', 'email', 'providerId']);
+    }
+
+    function managerUpdateSafe() {
+      return canUseAdminPanel()
+        && request.resource.data.uid == resource.data.uid
+        && request.resource.data.email == resource.data.email
+        && request.resource.data.createdAt == resource.data.createdAt
+        && (!('providerId' in resource.data) || request.resource.data.providerId == resource.data.providerId)
+        && canAssignRole(request.resource.data.role);
+    }
+
+    function requestableRole() {
+      return request.resource.data.requestedRole in ['officer', 'consul'];
+    }
+
+    function ownerRoleRequestSafe(userId) {
+      return isOwner(userId)
+        && request.resource.data.uid == userId
+        && requestableRole()
+        && request.resource.data.status in ['pending', 'cancelled'];
+    }
+
+    function publicPlayerSafe(userId) {
+      return isOwner(userId)
+        && request.resource.data.uid == userId
+        && !('email' in request.resource.data)
+        && request.resource.data.role == userDoc(userId).data.role;
+    }
+
+    function managerPublicPlayerSafe() {
+      return canUseAdminPanel()
+        && !('email' in request.resource.data)
+        && canAssignRole(request.resource.data.role);
+    }
+
+    function publicPlayerForRegionSafe(userId, regionId) {
+      return isOwner(userId)
+        && request.resource.data.uid == userId
+        && request.resource.data.region == regionId
+        && !('email' in request.resource.data)
+        && request.resource.data.role == userDoc(userId).data.role;
+    }
+
+    function publicWastelandRegistrationSafe(regionId) {
+      return request.resource.data.region == regionId
+        && request.resource.data.publicLink == true
+        && request.resource.data.nickname is string
+        && request.resource.data.alliance is string
+        && request.resource.data.troopType in ['fighter', 'rider', 'shooter']
+        && request.resource.data.shift in ['shift1', 'shift2', 'shift3', 'shift4', 'both'];
+    }
+
     match /users/{userId} {
-      allow create: if isOwner(userId);
-      allow read: if isOwner(userId) || isAdmin();
-      allow update: if isOwner(userId) || isAdmin();
-      allow delete: if isAdmin();
+      allow create: if ownerEmail() || (isOwner(userId) && roleIsSafeOnCreate());
+      allow read: if isOwner(userId) || canUseAdminPanel();
+      allow update: if ownerEmail() || managerUpdateSafe() || (isOwner(userId) && ownerKeepsProtectedFields());
+      allow delete: if ownerEmail() || isAdmin();
+    }
+
+    match /publicPlayers/{userId} {
+      allow read: if signedIn();
+      allow create, update: if ownerEmail() || managerPublicPlayerSafe() || publicPlayerSafe(userId);
+      allow delete: if ownerEmail() || isAdmin();
+    }
+
+    match /roleRequests/{userId} {
+      allow create: if ownerEmail() || ownerRoleRequestSafe(userId) || canUseAdminPanel();
+      allow read: if isOwner(userId) || canUseAdminPanel();
+      allow update: if ownerEmail() || ownerRoleRequestSafe(userId) || canUseAdminPanel();
+      allow delete: if ownerEmail() || isAdmin();
+    }
+
+    match /regions/{regionId} {
+      allow read: if true;
+      allow create, update: if canManageRegion(regionId);
+      allow delete: if ownerEmail() || isAdmin();
+
+      match /players/{userId} {
+        allow read: if isSameRegion(regionId) || canManageRegion(regionId);
+        allow create, update: if ownerEmail() || managerPublicPlayerSafe() || publicPlayerForRegionSafe(userId, regionId);
+        allow delete: if canManageRegion(regionId) || isOwner(userId);
+      }
+
+      match /wastelandRegistrations/{registrationId} {
+        allow read: if isSameRegion(regionId) || canManageRegion(regionId);
+        allow create: if ownerEmail() || canManageRegion(regionId) || (isOwner(registrationId) && isSameRegion(regionId)) || publicWastelandRegistrationSafe(regionId);
+        allow update: if ownerEmail() || canManageRegion(regionId) || (isOwner(registrationId) && (isSameRegion(regionId) || request.resource.data.publicLink == true));
+        allow delete: if ownerEmail() || canManageRegion(regionId) || isOwner(registrationId);
+      }
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="uk" translate="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="google" content="notranslate" />
+  <title>Профіль гравця — Wasteland King Defenders</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/auth-page.css" />
+  <link rel="stylesheet" href="css/profile-page.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <script defer src="js/i18n.js"></script>
+  <script defer src="js/i18n-uk.js"></script>
+  <script defer src="js/i18n-en.js"></script>
+  <script defer src="js/i18n-ru.js"></script>
+  <script defer src="js/i18n-pl.js"></script>
+  <script defer src="js/i18n-de.js"></script>
+  <script defer src="js/i18n-ja.js"></script>
+  <script defer src="js/i18n-zh.js"></script>
+  <script defer src="js/i18n-ko.js"></script>
+  <script defer src="js/i18n-vi.js"></script>
+  <script defer src="js/i18n-ar.js"></script>
+  <script defer src="js/core/dom.js"></script>
+  <script defer src="js/core/partials.js"></script>
+  <script defer src="js/header.js"></script>
+  <script defer src="js/app-login-shell.js"></script>
+  <script type="module" src="js/auth-google.js"></script>
+  <script type="module" src="js/pages/account-form.js"></script>
+</head>
+<body class="notranslate" data-account-page="profile">
+  <div data-include="partials/header.html"></div>
+
+  <main class="profile-page container">
+    <section class="profile-card">
+      <div class="profile-head">
+        <div>
+          <p class="auth-eyebrow">Player profile</p>
+          <h2>Профіль гравця</h2>
+          <p>Тут можна оновити нік, регіон, альянс, ранг і ШК. Заявку на офіцера або консула підтверджує адмін.</p>
+        </div>
+      </div>
+
+      <div class="auth-status" id="accountStatus">Завантажую профіль...</div>
+      <div data-include="partials/account-form.html"></div>
+    </section>
+  </main>
+</body>
+</html>
