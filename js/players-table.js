@@ -1,8 +1,17 @@
 window.WKD = window.WKD || {};
+const t = (key, fallback) => window.WKD_t ? window.WKD_t(key) : fallback;
 
 WKD.initPlayersTable = () => {
   const { $, $$, state } = WKD;
-  state.players = state.players.map(normalizeStoredPlayer).filter(player => player.name);
+  if (!$('#playersTbody')) {
+    state.players = state.players
+      .map((row, index) => finalizePlayer(normalizeStoredPlayer(row), row, index))
+      .filter(player => player.name);
+    return;
+  }
+  state.players = state.players
+    .map((row, index) => finalizePlayer(normalizeStoredPlayer(row), row, index))
+    .filter(player => player.name);
 
   ['searchFilter', 'roleFilter', 'shiftFilter', 'statusFilter', 'tierFilter', 'pageSizeSelect'].forEach(id => {
     $('#' + id).addEventListener('input', () => {
@@ -24,7 +33,7 @@ WKD.initPlayersTable = () => {
   $('#showAllDataBtn').addEventListener('click', () => {
     state.showOptional = !state.showOptional;
     $('#showAllDataBtn').setAttribute('aria-pressed', String(state.showOptional));
-    $('#showAllDataBtn').textContent = state.showOptional ? 'Сховати зайві дані' : 'Показати всі дані';
+    $('#showAllDataBtn').textContent = state.showOptional ? t('players.hideOptional', 'Сховати зайві дані') : t('players.showOptional', 'Показати всі дані');
     $$('.optional-col').forEach(el => el.classList.toggle('is-hidden-col', !state.showOptional));
   });
 
@@ -53,19 +62,34 @@ WKD.initPlayersTable = () => {
 WKD.setPlayers = (rows, options = {}) => {
   const persist = options.persist !== false;
   const alreadyNormalized = options.normalized === true;
-  WKD.state.players = rows
-    .map(row => alreadyNormalized ? normalizeStoredPlayer(row) : normalizePlayer(row))
+  const source = options.source || '';
+  WKD.state.players = (Array.isArray(rows) ? rows : [])
+    .map((row, index) => finalizePlayer(alreadyNormalized ? normalizeStoredPlayer(row) : normalizePlayer(row), row, index, source))
     .filter(player => player.name);
   WKD.state.page = 1;
   if (persist) WKD.saveJson(WKD.storageKeys.players, WKD.state.players);
-  else localStorage.removeItem(WKD.storageKeys.players);
+  else if (options.clearStorage === true) localStorage.removeItem(WKD.storageKeys.players);
   WKD.renderPlayers();
+  document.dispatchEvent(new CustomEvent('wkd:players-updated', { detail: { source: options.eventSource || source, persist } }));
 };
 
 WKD.renderPlayers = () => {
   renderStats();
   renderTable();
 };
+
+function normalizeYesNoText(value) {
+  const text = WKD.clean(value).toLowerCase();
+  if (!text) return '';
+  if (/^(1|true|yes|y|так|да|готов|можна)$/i.test(text)) return 'Так';
+  if (/^(0|false|no|n|ні|нет)$/i.test(text)) return 'Ні';
+  return WKD.clean(value);
+}
+function clampLairLevel(value) {
+  const n = Number(String(value ?? '').replace(/[^0-9]/g, ''));
+  if (!Number.isFinite(n) || n <= 0) return '';
+  return String(Math.max(1, Math.min(70, Math.round(n))));
+}
 
 function normalizePlayer(row) {
   return {
@@ -77,7 +101,10 @@ function normalizePlayer(row) {
     rally: toNumber(WKD.getMappedValue(row, 'rally')),
     captain: normalizeYes(WKD.getMappedValue(row, 'captain') || row.captain || row.captainReady || row['Готовність бути капітаном'] || row['готовність бути капітаном'] || row['Captain readiness'] || row['Captain ready']),
     shift: normalizeShift(WKD.getMappedValue(row, 'shift')),
-    lair: WKD.clean(WKD.getMappedValue(row, 'lair'))
+    lair: normalizeYesNoText(WKD.getMappedValue(row, 'lair')),
+    lairLevel: clampLairLevel(WKD.getMappedValue(row, 'lairLevel')),
+    registeredAt: findRegistrationValue(row),
+    source: row.source || 'excel'
   };
 }
 
@@ -92,40 +119,87 @@ function normalizeStoredPlayer(player) {
     rally: toNumber(player.rally),
     captain: normalizeYes(captainValue),
     shift: normalizeShift(player.shift || player.shiftLabel || player.registeredShift),
-    lair: WKD.clean(player.lair || player.lairLevel)
+    lair: normalizeYesNoText(player.lair || player.captureRegion || player.capture),
+    lairLevel: clampLairLevel(player.lairLevel),
+    registeredAt: player.registeredAt || player.registered_at || player.createdAt || player.created_at || player.submittedAt || player.updatedAt || '',
+    source: player.source || 'excel',
+    id: player.id || '',
+    uid: player.uid || '',
+    regionNumber: player.regionNumber || player.region || '',
+    regionRegistrationId: player.regionRegistrationId || '',
+    dbSource: player.dbSource || '',
+    _rowId: player._rowId || player.id || player.uid || ''
   };
+}
+
+function finalizePlayer(player, row = {}, index = 0, source = '') {
+  const id = player._rowId || row._rowId || row.id || row.uid || row.docId || makeRowId(player, index);
+  return {
+    ...player,
+    ...(source ? { source } : null),
+    _rowId: String(id)
+  };
+}
+
+function makeRowId(player = {}, index = 0) {
+  const seed = [player.name, player.alliance, player.shift, player.tier, player.march, player.rally, index]
+    .map(value => String(value ?? '').trim().toLowerCase())
+    .join('|');
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) hash = ((hash << 5) - hash + seed.charCodeAt(i)) | 0;
+  return `local-${index + 1}-${Math.abs(hash).toString(36)}`;
+}
+
+function findRegistrationValue(row = {}) {
+  const direct = row.registeredAt || row.registered_at || row.createdAt || row.created_at || row.submittedAt || row.updatedAt || '';
+  if (direct) return direct;
+  const keyRe = /(timestamp|time\s*stamp|registration|registered(?:\s*at)?|created\s*at|submitted|дата.*реє|час.*реє|дата.*рег|время.*рег|відмітк.*час|отметк.*врем)/i;
+  const key = Object.keys(row || {}).find(name => keyRe.test(String(name || '')) && String(row[name] ?? '').trim());
+  return key ? row[key] : '';
 }
 
 function renderStats() {
   const players = WKD.state.players;
-  WKD.$('#totalPlayers').textContent = players.length;
-  WKD.$('#captainsReady').textContent = players.filter(p => p.captain).length;
-  WKD.$('#fighterCount').textContent = players.filter(p => p.role === 'Fighter').length;
-  WKD.$('#riderCount').textContent = players.filter(p => p.role === 'Rider').length;
-  WKD.$('#shooterCount').textContent = players.filter(p => p.role === 'Shooter').length;
-  WKD.$('#shift1Count').textContent = players.filter(p => p.shift === 'shift1').length;
-  WKD.$('#shift2Count').textContent = players.filter(p => p.shift === 'shift2').length;
-  WKD.$('#shift3Count').textContent = players.filter(p => p.shift === 'shift3').length;
-  WKD.$('#shift4Count').textContent = players.filter(p => p.shift === 'shift4').length;
-  WKD.$('#bothCount').textContent = players.filter(p => p.shift === 'both').length;
+  const setText = (selector, value) => {
+    const element = WKD.$(selector);
+    if (element) element.textContent = value;
+  };
+  setText('#totalPlayers', players.length);
+  setText('#captainsReady', players.filter(p => p.captain).length);
+  setText('#fighterCount', players.filter(p => p.role === 'Fighter').length);
+  setText('#riderCount', players.filter(p => p.role === 'Rider').length);
+  setText('#shooterCount', players.filter(p => p.role === 'Shooter').length);
+  setText('#shift1Count', players.filter(p => p.shift === 'shift1').length);
+  setText('#shift2Count', players.filter(p => p.shift === 'shift2').length);
+  setText('#shift3Count', players.filter(p => p.shift === 'shift3').length);
+  setText('#shift4Count', players.filter(p => p.shift === 'shift4').length);
+  setText('#bothCount', players.filter(p => p.shift === 'both').length);
 }
 
 function renderTable() {
   const state = WKD.state;
   const tbody = WKD.$('#playersTbody');
+  if (!tbody) {
+    document.dispatchEvent(new CustomEvent('wkd:players-rendered', { detail: { total: state.players.length, shown: 0 } }));
+    return;
+  }
   const list = filteredPlayers();
   const pageSize = state.pageSize === 'all' ? list.length || 1 : state.pageSize;
   const totalPages = Math.max(1, Math.ceil(list.length / pageSize));
   state.page = Math.min(state.page, totalPages);
   const pageRows = list.slice((state.page - 1) * pageSize, state.page * pageSize);
 
-  if (!state.players.length) tbody.innerHTML = '<tr><td colspan="10" class="empty-cell">Імпортуй Excel або CSV файл, щоб показати гравців.</td></tr>';
-  else if (!pageRows.length) tbody.innerHTML = '<tr><td colspan="10" class="empty-cell">Немає гравців за вибраними фільтрами.</td></tr>';
+  if (!state.players.length) tbody.innerHTML = `<tr><td colspan="11" class="empty-cell">${t('players.emptyImport', 'Імпортуй Excel або CSV файл, щоб показати гравців.')}</td></tr>`;
+  else if (!pageRows.length) tbody.innerHTML = `<tr><td colspan="11" class="empty-cell">${t('players.emptyFilters', 'Немає гравців за вибраними фільтрами.')}</td></tr>`;
   else tbody.innerHTML = pageRows.map(rowTemplate).join('');
 
-  WKD.$('#pageInfoText').textContent = `Сторінка ${state.page} / ${totalPages} • показано ${list.length}`;
-  WKD.$('#pagePrevBtn').disabled = state.page <= 1;
-  WKD.$('#pageNextBtn').disabled = state.page >= totalPages;
+  const pageInfo = WKD.$('#pageInfoText');
+  const pagePrev = WKD.$('#pagePrevBtn');
+  const pageNext = WKD.$('#pageNextBtn');
+  if (pageInfo) pageInfo.textContent = `${t('common.page', 'Сторінка')} ${state.page} / ${totalPages} • ${t('common.shown', 'показано')} ${list.length}`;
+  if (pagePrev) pagePrev.disabled = state.page <= 1;
+  if (pageNext) pageNext.disabled = state.page >= totalPages;
+  document.dispatchEvent(new CustomEvent('wkd:players-rendered', { detail: { total: state.players.length, shown: pageRows.length } }));
 }
 
 function filteredPlayers() {
@@ -153,32 +227,46 @@ function filteredPlayers() {
 }
 
 function rowTemplate(player) {
-  return `<tr>
+  const playerIndex = WKD.state.players.indexOf(player);
+  const rowId = player._rowId || '';
+  return `<tr data-player-index="${playerIndex}" data-player-id="${WKD.escapeHtml(rowId)}">
     <td data-field="name">${WKD.escapeHtml(player.name)}</td>
     <td data-field="alliance">${allianceBadge(player.alliance)}</td>
     <td data-field="role"><span class="tag ${roleClass(player.role)}">${roleLabel(player.role)}</span></td>
     <td data-field="tier">${tierBadge(player.tier)}</td>
     <td data-field="march">${WKD.formatNumber(player.march)}</td>
     <td data-field="rally">${WKD.formatNumber(player.rally)}</td>
-    <td data-field="captainReady"><span class="captain-badge ${player.captain ? 'yes' : 'no'}">${player.captain ? 'Так' : 'Ні'}</span></td>
+    <td data-field="captainReady"><span class="captain-badge ${player.captain ? 'yes' : 'no'}">${player.captain ? t('common.yes', 'Так') : t('common.no', 'Ні')}</span></td>
     <td data-field="shiftLabel"><span class="shift-badge ${player.shift}">${shiftLabel(player.shift)}</span></td>
     <td data-field="lair" class="optional-col ${WKD.state.showOptional ? '' : 'is-hidden-col'}">${WKD.escapeHtml(player.lair || '—')}</td>
-    <td data-field="actions">${placementTemplate()}</td>
+    <td data-field="lairLevel" class="optional-col ${WKD.state.showOptional ? '' : 'is-hidden-col'}">${WKD.escapeHtml(player.lairLevel || '—')}</td>
+    <td data-field="actions">${placementTemplate(player)}</td>
   </tr>`;
 }
 
-function placementTemplate() {
+function placementTemplate(player = {}) {
   const count = Math.max(1, Math.min(4, Number(WKD.getActiveShiftCount?.() || 2)));
-  const items = Array.from({ length: count }, (_, index) => `
-    <span class="placement-item" data-placement-shift="${index + 1}">
-      <b>Зміна ${index + 1}</b>
-      <strong>Резерв</strong>
-      <small>Не призначено</small>
-    </span>`).join('');
-  return `<div class="placement-card" style="--placement-cols:${count}">${items}<button class="placement-edit" type="button" aria-label="Редагувати розміщення">✎</button></div>`;
+  const id = String(player._rowId || player.id || player.uid || '');
+  const assigned = typeof WKD.getPlayerTowerAssignment === 'function' ? WKD.getPlayerTowerAssignment(id) : null;
+  const items = Array.from({ length: count }, (_, index) => {
+    const shift = `shift${index + 1}`;
+    const isHere = assigned && assigned.shift === shift;
+    const title = isHere ? assigned.towerName : t('common.reserve', 'Резерв');
+    const sub = isHere ? assigned.roleLabel : (player.placement && player.placement !== 'Резерв' ? player.placement : t('common.notAssigned', 'Не призначено'));
+    return `
+    <span class="placement-item ${isHere ? 'is-assigned' : ''}" data-placement-shift="${index + 1}">
+      <b>${t('common.shift', 'Зміна')} ${index + 1}</b>
+      <strong>${WKD.escapeHtml(title)}</strong>
+      <small>${WKD.escapeHtml(sub)}</small>
+    </span>`;
+  }).join('');
+  return `<div class="placement-card" style="--placement-cols:${count}">${items}<button class="placement-edit" type="button" aria-label="${t('players.editPlacement', 'Редагувати розміщення')}">✎</button></div>`;
 }
 
 function allianceBadge(alliance) {
+  if (typeof WKD.renderPlayerManagerAllianceBadge === 'function') {
+    return WKD.renderPlayerManagerAllianceBadge(alliance || '—', hashHue(alliance || 'empty'));
+  }
   const text = WKD.escapeHtml(alliance || '—');
   const hue = hashHue(alliance || 'empty');
   return `<span class="alliance-badge" style="--ally-hue:${hue}"><span class="badge-dot"></span><span>${text}</span></span>`;
@@ -242,9 +330,9 @@ function normalizeYes(value) {
 
 function normalizeRole(value) {
   const text = WKD.clean(value).toLowerCase();
-  if (/fighter|infantry|боец|боєць|бійц|воїн|воин|піхот|пехот|fight/.test(text)) return 'Fighter';
-  if (/rider|cavalry|наїз|наезд|кавал|riders|ride/.test(text)) return 'Rider';
-  if (/shooter|стрілець|стрільц|стрел|shoot|marksman/.test(text)) return 'Shooter';
+  if (/fighter|fighters|infantry|боец|боєць|бійц|бойц|воїн|воин|піхот|пехот|fight|wojownik|wojown|kämpfer|kaempfer|ファイター|战士|戰士|전사|đấu sĩ|dau si|مقاتل|المقاتل/.test(text)) return 'Fighter';
+  if (/rider|riders|cavalry|наїз|наезд|ездник|кавал|ride|jeźdź|jezdz|reiter|ライダー|骑兵|騎兵|기병|kỵ sĩ|ky si|فارس|فرسان|الفرسان/.test(text)) return 'Rider';
+  if (/shooter|shooters|стрілець|стрільц|стрел|shoot|marksman|strzel|schütz|schuetz|シューター|射手|사수|xạ thủ|xa thu|رامي|الرماة/.test(text)) return 'Shooter';
   return WKD.clean(value) || '—';
 }
 
@@ -273,9 +361,14 @@ function roleClass(role) {
 }
 
 function roleLabel(role) {
-  return role === 'Fighter' ? 'Бійці' : role === 'Rider' ? 'Наїзники' : role === 'Shooter' ? 'Стрільці' : WKD.escapeHtml(role || '—');
+  return role === 'Fighter' ? t('troop.fighter', 'Бійці') : role === 'Rider' ? t('troop.rider', 'Наїзники') : role === 'Shooter' ? t('troop.shooter', 'Стрільці') : WKD.escapeHtml(role || '—');
 }
 
 function shiftLabel(shift) {
-  return { shift1: 'Зміна 1', shift2: 'Зміна 2', shift3: 'Зміна 3', shift4: 'Зміна 4', both: 'Обидві' }[shift] || 'Всі';
+  return { shift1: t('shift.shift1', 'Зміна 1'), shift2: t('shift.shift2', 'Зміна 2'), shift3: t('shift.shift3', 'Зміна 3'), shift4: t('shift.shift4', 'Зміна 4'), both: t('shift.both', 'Обидві') }[shift] || t('common.all', 'Всі');
 }
+
+
+document.addEventListener('wkd:alliance-colors-updated', () => { if (window.WKD?.renderPlayers) window.WKD.renderPlayers(); });
+
+document.addEventListener('wkd:language-changed', () => { if (window.WKD?.renderPlayers) window.WKD.renderPlayers(); });

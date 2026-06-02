@@ -26,3 +26,9 @@
 .import-switch input:checked+.import-switch-ui{border-color:rgba(176,185,255,.58);background:linear-gradient(90deg,#6a88ff,#8d73ff)}
 .import-switch input:checked+.import-switch-ui:after{transform:translateX(20px);background:#fff}
 .is-hidden-shift{display:none!important}
+
+
+.import-capture-menu{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;padding:8px;border:1px solid rgba(115,132,207,.16);border-radius:16px;background:rgba(7,17,33,.42)}
+.import-capture-menu[hidden]{display:none!important}
+.import-capture-pill{min-height:34px;padding:6px 14px;border:1px solid rgba(130,145,220,.24);border-radius:999px;background:rgba(15,25,47,.78);color:#dfe7ff;font-weight:950;cursor:pointer}
+.import-capture-pill.is-active{background:linear-gradient(135deg,#4f72ee,#7c5af4);border-color:rgba(171,180,255,.52);color:#fff}

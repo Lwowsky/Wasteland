@@ -85,7 +85,7 @@ async function initLoginPage() {
     }
     const profile = await saveSignedInUser(user).catch(error => {
       console.error(error);
-      setStatus('Google-вхід працює, але Firestore не дозволив зберегти користувача. Перевір Rules.', 'error');
+      setStatus('Google-вхід працює, але база не дозволила зберегти користувача. перевір права доступу.', 'error');
       return null;
     });
     renderUser(user, profile);

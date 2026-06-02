@@ -17,6 +17,8 @@ function setUserShell(user, profile = null) {
   const role = normalizeUserRole(profile?.role || 'player');
   const profileReady = signedIn && isProfileComplete(profile);
   const regionManager = profileReady && ['admin', 'moderator', 'consul', 'officer'].includes(role);
+  const regionTablePageAllowed = profileReady;
+  const drawer = $('#drawer');
   const userText = $('#authUserText');
   const drawerAccountLabel = $('#drawerAccountLabel');
   const login = $('#googleLoginBtn');
@@ -25,7 +27,7 @@ function setUserShell(user, profile = null) {
   const drawerProfileBtn = $('#drawerProfileBtn');
   const drawerLogin = $('#drawerGoogleLoginBtn');
   const drawerLogout = $('#drawerGoogleLogoutBtn');
-  const drawerStats = $('#drawerStatsBtn');
+  const drawerStatsNav = $('#drawerStatsNavBtn');
   const adminBtn = $('#adminBtn');
   const drawerAdminBtn = $('#drawerAdminBtn');
   const regionFormBtn = $('#regionFormBtn');
@@ -35,20 +37,21 @@ function setUserShell(user, profile = null) {
   const drawerRegionTableBtn = $('#drawerRegionTableBtn');
   const drawerRegionSettingsBtn = $('#drawerRegionSettingsBtn');
 
+  if (drawer) drawer.classList.toggle('is-guest', !signedIn);
   if (userText) userText.textContent = signedIn ? name : 'Акаунт';
   if (drawerAccountLabel) drawerAccountLabel.textContent = signedIn ? name : 'Гість';
   if (login) login.hidden = signedIn;
   if (drawerLogin) drawerLogin.hidden = signedIn;
   if (drawerLogout) drawerLogout.hidden = !signedIn;
-  if (drawerStats) drawerStats.hidden = !signedIn;
+  if (drawerStatsNav) drawerStatsNav.hidden = !signedIn;
   if (logout) logout.hidden = !signedIn;
   if (profileBtn) profileBtn.hidden = !signedIn;
   if (drawerProfileBtn) drawerProfileBtn.hidden = !signedIn;
   if (regionFormBtn) regionFormBtn.hidden = !profileReady;
-  if (regionTableBtn) regionTableBtn.hidden = !profileReady;
+  if (regionTableBtn) regionTableBtn.hidden = !regionTablePageAllowed;
   if (regionSettingsBtn) regionSettingsBtn.hidden = !regionManager;
   if (drawerRegionFormBtn) drawerRegionFormBtn.hidden = !profileReady;
-  if (drawerRegionTableBtn) drawerRegionTableBtn.hidden = !profileReady;
+  if (drawerRegionTableBtn) drawerRegionTableBtn.hidden = !regionTablePageAllowed;
   if (drawerRegionSettingsBtn) drawerRegionSettingsBtn.hidden = !regionManager;
   if (adminBtn) adminBtn.hidden = !admin;
   if (drawerAdminBtn) drawerAdminBtn.hidden = !admin;
@@ -97,7 +100,7 @@ async function initAuthGoogle() {
   $('#googleLogoutBtn')?.addEventListener('click', logoutGoogle);
   $('#drawerGoogleLogoutBtn')?.addEventListener('click', logoutGoogle);
   $('#statsBtn')?.addEventListener('click', openStatsPage);
-  $('#drawerStatsBtn')?.addEventListener('click', openStatsPage);
+  $('#drawerStatsNavBtn')?.addEventListener('click', openStatsPage);
   $('#profileBtn')?.addEventListener('click', openProfilePage);
   $('#drawerProfileBtn')?.addEventListener('click', openProfilePage);
   $('#regionFormBtn')?.addEventListener('click', openRegionFormPage);

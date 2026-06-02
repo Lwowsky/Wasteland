@@ -28,5 +28,5 @@ Google profile flow:
 - register.html — перша реєстрація гравця після Google-входу.
 - profile.html — редагування профілю гравця.
 - Дані зберігаються у Firestore: users/{uid} і regions/{region}/players/{uid}.
-- Роль за замовчуванням: player / Простий гравець.
+- Роль за замовчуванням: player / Гравець.
 - Ролі admin, consul, officer треба ставити вручну в Firestore тільки адміну.

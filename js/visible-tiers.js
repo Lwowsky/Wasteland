@@ -1,16 +1,28 @@
 window.WKD = window.WKD || {};
+const vt = (key, fallback = '') => {
+  const value = window.WKD_t ? window.WKD_t(key) : (fallback || key);
+  return value && value !== key ? value : (fallback || key);
+};
+const vtFieldLabel = (key, field) => WKD.fieldLabel ? WKD.fieldLabel(key, field?.label) : (field?.label || key);
 WKD.initVisibleTiers = () => {
   const { $, showNotice } = WKD;
-  $('#addTierBtn').addEventListener('click', () => {
+  if (document.documentElement.dataset.wkdVisibleTiersInit === '1') {
+    WKD.renderVisibleOptions();
+    WKD.renderVisibleTiers();
+    return;
+  }
+  if (!$('#visibleTierList') || !$('#addTierSelect') || !$('#addTierBtn')) return;
+  document.documentElement.dataset.wkdVisibleTiersInit = '1';
+  $('#addTierBtn')?.addEventListener('click', () => {
     const value = $('#addTierSelect').value;
     if (!value || WKD.state.visibleTiers.includes(value)) return;
     WKD.state.visibleTiers.push(value);
     WKD.sortVisibleTiers();
     WKD.renderVisibleTiers();
   });
-  $('#saveVisibleColumnsBtn').addEventListener('click', () => {
+  $('#saveVisibleColumnsBtn')?.addEventListener('click', () => {
     saveVisibleSettings();
-    showNotice('Видимі колонки збережено.');
+    showNotice(vt('import.visibleColumnsSaved', 'Visible columns saved.'));
   });
   WKD.renderVisibleOptions();
   WKD.renderVisibleTiers();
@@ -25,7 +37,7 @@ WKD.renderVisibleOptions = () => {
   root.innerHTML = keys.map(key => {
     const field = WKD.fields[key];
     const checked = WKD.state.visibleOptionalFields.includes(key);
-    return `<label class="checkbox-row"><input type="checkbox" data-visible-field="${key}" ${checked ? 'checked' : ''}><span>${WKD.escapeHtml(field.label)}</span></label>`;
+    return `<label class="checkbox-row"><input type="checkbox" data-visible-field="${key}" ${checked ? 'checked' : ''}><span>${WKD.escapeHtml(vtFieldLabel(key, field))}</span></label>`;
   }).join('');
   root.querySelectorAll('[data-visible-field]').forEach(input => input.addEventListener('change', () => {
     const key = input.dataset.visibleField;
@@ -37,6 +49,7 @@ WKD.renderVisibleOptions = () => {
 WKD.renderVisibleTiers = () => {
   const { $, state, allTiers } = WKD;
   const list = $('#visibleTierList');
+  if (!list) return;
   list.innerHTML = state.visibleTiers.map(tier => tierTemplate(tier)).join('');
   list.querySelectorAll('[data-visible-tier]').forEach(input => {
     input.addEventListener('change', () => input.closest('[data-tier-pill]').classList.toggle('is-muted', !input.checked));
@@ -48,15 +61,15 @@ WKD.renderVisibleTiers = () => {
     });
   });
   const remaining = allTiers.filter(tier => !state.visibleTiers.includes(tier));
-  $('#addTierSelect').innerHTML = remaining.map(tier => `<option value="${tier}">${tier}</option>`).join('');
-  $('#addTierSelect').disabled = remaining.length === 0;
-  $('#addTierBtn').disabled = remaining.length === 0;
+  if ($('#addTierSelect')) $('#addTierSelect').innerHTML = remaining.map(tier => `<option value="${tier}">${tier}</option>`).join('');
+  if ($('#addTierSelect')) $('#addTierSelect').disabled = remaining.length === 0;
+  if ($('#addTierBtn')) $('#addTierBtn').disabled = remaining.length === 0;
 };
 function tierTemplate(tier) {
   const canRemove = Number(tier.replace('T', '')) <= 7;
   return `<div class="checkbox-row tier-row ${canRemove ? 'tier-row--removable' : ''}" data-tier-pill="${tier}">
     <label><input type="checkbox" checked data-visible-tier="${tier}"><span>${tier}</span></label>
-    ${canRemove ? `<button class="mapping-remove-btn tier-remove-btn" type="button" data-remove-tier="${tier}" aria-label="Видалити ${tier}">×</button>` : ''}
+    ${canRemove ? `<button class="mapping-remove-btn tier-remove-btn" type="button" data-remove-tier="${tier}" aria-label="${WKD.escapeHtml(vt('common.delete', 'Delete'))} ${tier}">×</button>` : ''}
   </div>`;
 }
 function saveVisibleSettings() {

@@ -12,7 +12,7 @@ WKD.initShiftRecognition = () => {
       WKD.saveJson(WKD.storageKeys.shiftMergeMode, WKD.state.shiftMergeMode);
       applyMergeModeToRules();
       WKD.renderShiftRecognition();
-      setShiftFooter('Є незбережені правила. Натисни «Зберегти правила».');
+      setShiftFooter(window.WKD_t?.('import.unsavedRules') || 'There are unsaved rules. Press Save rules.');
     });
   }
   if (saveBtn) saveBtn.addEventListener('click', saveShiftRules);
@@ -28,13 +28,13 @@ WKD.renderShiftRecognition = () => {
   if (!root) return;
   const values = getShiftValues();
   if (!values.length) {
-    root.innerHTML = '<div class="shift-recognition-empty">Вибери колонку зміни в обов’язкових колонках, і тут з’явиться перевірка.</div>';
-    setShiftFooter('Правила ще не застосовані.');
+    root.innerHTML = `<div class="shift-recognition-empty">${window.WKD_t?.('import.shiftValuesEmpty') || 'Choose the shift column in required columns.'}</div>`;
+    setShiftFooter('');
     return;
   }
 
   root.innerHTML = `<div class="shift-rule-table">
-    <div class="shift-rule-head"><span>Значення з Excel</span><span>Розпізнано як</span><span>Після об’єднання</span><span>Рядків</span></div>
+    <div class="shift-rule-head"><span>${window.WKD_t?.('import.excelValue') || 'Excel value'}</span><span>${window.WKD_t?.('import.recognizedAs') || 'Recognized as'}</span><span>${window.WKD_t?.('import.afterMerge') || 'After merging'}</span><span>${window.WKD_t?.('ui.rows') || 'Rows'}</span></div>
     ${values.map(item => shiftRuleRow(item)).join('')}
   </div>`;
 
@@ -47,7 +47,7 @@ WKD.renderShiftRecognition = () => {
       WKD.state.shiftRules[select.dataset.shiftRuleValue] = select.value;
       const pill = root.querySelector(`[data-shift-rule-pill="${CSS.escape(select.dataset.shiftRuleValue)}"]`);
       if (pill) pill.textContent = labelFor(select.value);
-      setShiftFooter('Є незбережені правила.');
+      setShiftFooter(window.WKD_t?.('import.unsavedRules') || 'Unsaved rules.');
     });
   });
 };
@@ -84,18 +84,12 @@ function shiftRuleRow(item) {
 
 function options(current) {
   return [
-    ['shift1', 'Зміна 1'], ['shift2', 'Зміна 2'], ['shift3', 'Зміна 3'], ['shift4', 'Зміна 4'], ['both', 'Обидві']
+    ['shift1', window.WKD_t?.('shift.shift1') || 'Shift 1'], ['shift2', window.WKD_t?.('shift.shift2') || 'Shift 2'], ['shift3', window.WKD_t?.('shift.shift3') || 'Shift 3'], ['shift4', window.WKD_t?.('shift.shift4') || 'Shift 4'], ['both', window.WKD_t?.('shift.both') || 'Both']
   ].map(([value, label]) => `<option value="${value}" ${value === current ? 'selected' : ''}>${label}</option>`).join('');
 }
 
 function detectShift(value) {
-  const text = WKD.clean(value).toLowerCase();
-  if (/both|all|всі|все|обидві|обе/.test(text)) return 'both';
-  if (/4/.test(text)) return 'shift4';
-  if (/3/.test(text)) return 'shift3';
-  if (/2/.test(text)) return 'shift2';
-  if (/1/.test(text)) return 'shift1';
-  return 'both';
+  return WKD.detectShiftToken?.(value) || 'both';
 }
 
 function mergeShift(shift) {
@@ -115,14 +109,14 @@ function applyMergeModeToRules() {
 }
 
 function labelFor(value) {
-  return { shift1: 'Зміна 1', shift2: 'Зміна 2', shift3: 'Зміна 3', shift4: 'Зміна 4', both: 'Обидві' }[value] || 'Обидві';
+  return ({ shift1: window.WKD_t?.('shift.shift1') || 'Shift 1', shift2: window.WKD_t?.('shift.shift2') || 'Shift 2', shift3: window.WKD_t?.('shift.shift3') || 'Shift 3', shift4: window.WKD_t?.('shift.shift4') || 'Shift 4', both: window.WKD_t?.('shift.both') || 'Both' })[value] || (window.WKD_t?.('shift.both') || 'Both');
 }
 
 function saveShiftRules() {
   WKD.saveJson(WKD.storageKeys.shiftRules, WKD.state.shiftRules);
   WKD.saveJson(WKD.storageKeys.shiftMergeMode, WKD.state.shiftMergeMode || 'custom');
-  setShiftFooter('Правила збережені.');
-  WKD.showNotice('Правила розпізнавання змін збережено.');
+  setShiftFooter(window.WKD_t?.('import.rulesSaved') || 'Rules saved.');
+  WKD.showNotice(window.WKD_t?.('import.rulesSaved') || 'Rules saved.');
 }
 
 function resetShiftRules() {
@@ -131,14 +125,14 @@ function resetShiftRules() {
   localStorage.removeItem(WKD.storageKeys.shiftRules);
   localStorage.removeItem(WKD.storageKeys.shiftMergeMode);
   WKD.renderShiftRecognition();
-  WKD.showNotice('Правила змін скинуто.');
+  WKD.showNotice(window.WKD_t?.('import.rulesReset') || 'Shift rules reset.');
 }
 
 function autoDetectShiftRules() {
   WKD.state.shiftMergeMode = 'custom';
   getShiftValues().forEach(item => { WKD.state.shiftRules[item.value] = detectShift(item.value); });
   WKD.renderShiftRecognition();
-  setShiftFooter('Авто-розпізнавання готове. Натисни «Зберегти правила».');
+  setShiftFooter(window.WKD_t?.('import.autoDetectReady') || 'Auto detection is ready. Press Save rules.');
 }
 
 function setShiftFooter(text) {

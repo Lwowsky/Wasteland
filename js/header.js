@@ -89,7 +89,46 @@ WKD.initHeader = () => {
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     else window.location.href = 'index.html#playersPanel';
   }));
-  $$('[data-disabled-note]').forEach(button => button.addEventListener('click', () => showNotice(button.dataset.disabledNote || 'Цей блок додамо пізніше.')));
+  function isHomePage() {
+    const name = String(window.location.pathname || '').split('/').pop().toLowerCase();
+    return !name || name === 'index.html';
+  }
+  function openToolWithRetry(button, type, attempt = 0) {
+    const isFinal = type === 'final';
+    const hash = isFinal ? '#final-plan' : '#tower-planner';
+    const fn = isFinal ? WKD.openFinalPlanModal : WKD.openTowerPlanner;
+    if (typeof fn === 'function') {
+      closeDrawer();
+      fn(button);
+      return;
+    }
+    document.dispatchEvent(new CustomEvent(isFinal ? 'wkd:open-final-plan' : 'wkd:open-tower-planner', { detail: { trigger: button } }));
+    if (attempt < 12) {
+      window.setTimeout(() => openToolWithRetry(button, type, attempt + 1), 80);
+      return;
+    }
+    closeDrawer();
+    showNotice(isFinal ? 'Фінальний план ще завантажується. Спробуй ще раз через секунду.' : 'Розподіл по турелях ще завантажується. Спробуй ще раз через секунду.');
+  }
+
+  $$('[data-disabled-note]').forEach(button => button.addEventListener('click', event => {
+    const note = button.dataset.disabledNote || '';
+    if (/Фінальний план/i.test(note)) {
+      event.preventDefault();
+      event.stopPropagation();
+      closeDrawer();
+      openToolWithRetry(button, 'final');
+      return;
+    }
+    if (/Розподіл по турелях/i.test(note)) {
+      event.preventDefault();
+      event.stopPropagation();
+      closeDrawer();
+      openToolWithRetry(button, 'tower');
+      return;
+    }
+    showNotice(note || 'Цей блок додамо пізніше.');
+  }));
 
   renderLanguages();
 
@@ -131,13 +170,16 @@ function getLanguages() {
 }
 
 function getActiveLang() {
-  return localStorage.getItem('wkd.lang') || window.WKD_CURRENT_LANG || 'uk';
+  return (typeof window.WKD_normalizeLang === 'function' && window.WKD_normalizeLang(localStorage.getItem('wkd.lang')))
+    || window.WKD_CURRENT_LANG
+    || (typeof window.WKD_browserLang === 'function' ? window.WKD_browserLang() : 'en');
 }
 
 function setLanguage(langId) {
   const { $, $$, showNotice } = WKD;
   const langs = getLanguages();
-  const active = langs.find(lang => lang.id === langId) || langs[0];
+  const normalized = typeof window.WKD_normalizeLang === 'function' ? window.WKD_normalizeLang(langId) : langId;
+  const active = langs.find(lang => lang.id === normalized) || langs.find(lang => lang.id === 'en') || langs[0];
   window.WKD_CURRENT_LANG = active.id;
   localStorage.setItem('wkd.lang', active.id);
 
@@ -151,7 +193,8 @@ function setLanguage(langId) {
   });
 
   if (typeof window.WKD_applyI18n === 'function') window.WKD_applyI18n();
-  showNotice('Мови додані. Переклад поки не підключений — працюємо з українською.');
+  document.dispatchEvent(new CustomEvent('wkd:language-changed', { detail: { lang: active.id } }));
+  showNotice?.(window.WKD_t ? window.WKD_t('common.languageChanged') : 'Language changed');
 }
 
 function languageButton(lang, activeId) {

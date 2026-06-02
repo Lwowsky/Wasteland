@@ -14,6 +14,13 @@
   <link rel="stylesheet" href="css/modal-regions.css" />
   <link rel="stylesheet" href="css/modal-tiers.css" />
   <link rel="stylesheet" href="css/confirm-modal.css" />
+  <link rel="stylesheet" href="css/duplicate-nick-modal.css" />
+  <link rel="stylesheet" href="css/player-edit-modal.css" />
+  <link rel="stylesheet" href="css/player-manager-modal.css" />
+  <link rel="stylesheet" href="css/tower-planner.css" />
+  <link rel="stylesheet" href="css/tower-planner-tablet.css" />
+  <link rel="stylesheet" href="css/tower-planner-mobile.css" />
+  <link rel="stylesheet" href="css/contact-modal.css" />
   <link rel="stylesheet" href="css/responsive.css" />
   <script defer src="js/i18n.js"></script>
   <script defer src="js/i18n-uk.js"></script>
@@ -26,7 +33,9 @@
   <script defer src="js/i18n-ko.js"></script>
   <script defer src="js/i18n-vi.js"></script>
   <script defer src="js/i18n-ar.js"></script>
+  <script defer src="js/i18n-autokeys.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script defer src="js/core/dom.js"></script>
   <script defer src="js/core/state.js"></script>
   <script defer src="js/core/partials.js"></script>
@@ -39,8 +48,19 @@
   <script defer src="js/import-shift-recognition.js"></script>
   <script defer src="js/visible-tiers.js"></script>
   <script defer src="js/players-table.js"></script>
+  <script defer src="js/duplicate-nick-modal.js"></script>
+  <script defer src="js/player-edit-modal.js"></script>
+  <script defer src="js/player-manager-modal.js"></script>
+  <script defer src="js/tower-planner/tower-planner-state.js"></script>
+  <script defer src="js/tower-planner/tower-planner-data.js"></script>
+  <script defer src="js/tower-planner/tower-planner-render.js"></script>
+  <script defer src="js/tower-planner/tower-planner-actions.js"></script>
+  <script defer src="js/tower-planner/tower-planner-bind.js"></script>
+  <script defer src="js/contact-modal.js"></script>
   <script defer src="js/app.js"></script>
+  <script type="module" src="js/player-manager-region-bridge.js"></script>
   <script type="module" src="js/auth-google.js"></script>
+  <script type="module" src="js/pages/index-region-players.js"></script>
 </head>
 <body class="notranslate">
   <a id="top"></a>
@@ -52,11 +72,30 @@
       <div class="panel-head">
         <div>
           <h2>Гравці</h2>
-          <p class="players-panel-lead">Складай список альянсу в одному місці: імпортуй Excel або CSV, фільтруй гравців і готуй дані для майбутнього розподілу по турелях.</p>
         </div>
         <div class="panel-actions">
           <button class="btn" id="showAllDataBtn" type="button" aria-pressed="false">Показати всі дані</button>
+          <a class="btn" href="profile.html?tab=region">Форма регіону</a>
           <button class="btn btn-primary" id="openImportQuickBtn" type="button">Імпорт CSV/XLSX/URL</button>
+        </div>
+      </div>
+
+      <div class="auth-status index-mode-note" id="indexModeNote">Гостьовий режим: список зберігається на цьому пристрої.</div>
+
+      <div class="players-source-card" id="playersSourcePanel" aria-label="Джерело даних таблиці" hidden>
+        <div class="players-source-copy">
+          <b data-i18n="players.sourceTitle">Джерело даних</b>
+          <small id="playersSourceHelp" data-i18n="players.sourceHelp">Обери локальний список або таблицю регіону.</small>
+        </div>
+        <div class="players-source-controls">
+          <div class="players-source-tabs" role="tablist" aria-label="Джерело даних">
+            <button class="source-tab is-active" type="button" role="tab" aria-selected="true" data-source-mode="local" data-i18n="players.sourceLocal">Локальний список</button>
+            <button class="source-tab" type="button" role="tab" aria-selected="false" data-source-mode="region" data-i18n="players.sourceRegion">Таблиця регіону</button>
+          </div>
+          <div class="players-source-transfer" id="playersSourceTransfer">
+            <button class="btn source-transfer-btn" id="copyLocalToRegionBtn" type="button" data-i18n="players.copyLocalToRegion">Локальний → регіон</button>
+            <button class="btn source-transfer-btn" id="copyRegionToLocalBtn" type="button" data-i18n="players.copyRegionToLocal">Регіон → локальний</button>
+          </div>
         </div>
       </div>
 
@@ -107,11 +146,12 @@
               <th data-field="captainReady"><span>Капітан</span><button class="sort-btn" data-sort="captain" type="button" title="Сортувати">↓</button></th>
               <th data-field="shiftLabel"><span>Зміна</span><button class="sort-btn" data-sort="shift" type="button" title="Сортувати">↓</button></th>
               <th class="optional-col is-hidden-col" data-field="lair"><span>Захоплення</span><button class="sort-btn" data-sort="lair" type="button" title="Сортувати">↓</button></th>
+              <th class="optional-col is-hidden-col" data-field="lairLevel"><span>Розмір лігва</span><button class="sort-btn" data-sort="lairLevel" type="button" title="Сортувати">↓</button></th>
               <th data-field="actions"><span>Розміщення</span><button class="sort-btn" type="button" title="Сортувати">↓</button></th>
             </tr>
           </thead>
           <tbody id="playersTbody">
-            <tr><td class="empty-cell" colspan="10">Імпортуй Excel або CSV файл, щоб показати гравців.</td></tr>
+            <tr><td class="empty-cell" colspan="11">Імпортуй Excel або CSV файл, щоб показати гравців.</td></tr>
           </tbody>
         </table>
       </div>
@@ -128,6 +168,12 @@
 
 
   <div data-include="partials/import-modal.html"></div>
+  <div data-include="partials/duplicate-modal.html"></div>
+  <div data-include="partials/player-edit-modal.html"></div>
+  <div data-include="partials/player-manager-modal.html"></div>
+  <div data-include="partials/tower-planner-modal.html"></div>
+  <div data-include="partials/final-plan-modal.html"></div>
+  <div data-include="partials/contact-modal.html"></div>
   <div data-include="partials/confirm-modal.html"></div>
 
 </body>

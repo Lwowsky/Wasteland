@@ -35,10 +35,50 @@ WKD.baseFields = {
   alliance: { label: 'Альянс', required: true, aliases: ['alliance','ally','альянс','allia'] },
   captain: { label: 'Готовність бути капітаном', required: true, aliases: ['captain','captain readiness','captain ready','ready captain','ready to be captain','can be captain','капітан','капитан','готовність бути капітаном','готовий бути капітаном','готова бути капітаном','готов бути капітаном','готовность быть капитаном','готов быть капитаном','готов капитан','готовий капітан','готовность капитана'] },
   shift: { label: 'Доступність по змінах', required: true, aliases: ['shift','shifts','availability','доступність по змінах','зміна','смена'] },
-  lair: { label: 'Захоплення інакшого регіону', required: false, aliases: ['lair','capture','захоплення','захват','region'] },
+  lair: { label: 'Захоплення інакшого регіону', required: false, aliases: ['capture','capture region','region capture','захоплення іншого регіону','захоплення інакшого регіону','захват другого региона','захват региона','так/ні','yes/no'] },
+  lairLevel: { label: 'Розмір лігва', required: false, aliases: ['lair','lair level','den','den level','hive','hive level','розмір лігва','рівень лігва','лігво','логово','уровень логова'] },
   reserveFighter: { label: 'Резервний тип військ: боєць', required: false, aliases: ['fighter reserve','боєць резерв','боец резерв'] },
   reserveRider: { label: 'Резервний тип військ: наїзник', required: false, aliases: ['rider reserve','наїзник резерв','наездник резерв'] },
   reserveShooter: { label: 'Резервний тип військ: стрілець', required: false, aliases: ['shooter reserve','стрілець резерв','стрелок резерв'] }
+};
+
+
+WKD.fieldI18nKeys = {
+  name: 'field.name',
+  role: 'field.role',
+  tier: 'field.tier',
+  march: 'field.march',
+  rally: 'field.rally',
+  alliance: 'field.alliance',
+  captain: 'field.captain',
+  shift: 'field.shift',
+  lair: 'field.lair',
+  lairLevel: 'field.lairLevel',
+  reserveFighter: 'field.reserveFighter',
+  reserveRider: 'field.reserveRider',
+  reserveShooter: 'field.reserveShooter'
+};
+
+function localizedCustomFieldLabel(label = '') {
+  const text = String(label || '').trim();
+  const match = text.match(/(?:Кастомна колонка|Custom column|Columna niestandardowa|カスタム列|Benutzerdefinierte Spalte|Пользовательская колонка|自定义列|사용자 지정 열|Cột tùy chỉnh|عمود مخصص)\s*(\d+)/i);
+  if (!match) return '';
+  const index = match[1];
+  if (window.WKD_tv) return window.WKD_tv('import.customColumnDefault', { index }, `Custom column ${index}`);
+  const template = window.WKD_t ? window.WKD_t('import.customColumnDefault') : `Custom column {index}`;
+  return String(template || `Custom column {index}`).replaceAll('{index}', index);
+}
+
+WKD.fieldLabel = (key, fallback = '') => {
+  const field = WKD.fields?.[key] || WKD.baseFields?.[key];
+  const defaultLabel = fallback || field?.label || key;
+  if (field?.custom) {
+    const localized = localizedCustomFieldLabel(defaultLabel);
+    if (localized) return localized;
+  }
+  const i18nKey = WKD.fieldI18nKeys?.[key];
+  const translated = i18nKey && window.WKD_t ? window.WKD_t(i18nKey) : '';
+  return translated && translated !== i18nKey ? translated : defaultLabel;
 };
 
 WKD.loadJson = (key, fallback) => {

@@ -85,3 +85,28 @@
 .admin-status-row .admin-summary{justify-content:center}
 .admin-status-row .auth-status{margin:0}
 @media (max-width:760px){.admin-status-row{grid-template-columns:1fr}}
+
+/* Shared alliance neon badge when a custom hue is provided */
+.alliance-badge[style*="--ally-hue"]{
+  gap:7px;
+  min-width:64px;
+  max-width:110px;
+  background:radial-gradient(circle at 50% 10%,rgba(255,255,255,.16),rgba(255,255,255,0) 58%),linear-gradient(180deg,hsl(calc(var(--ally-hue,260)*1deg) 84% 44% / .28),rgba(8,17,38,.96));
+  border-color:hsl(calc(var(--ally-hue,260)*1deg) 92% 66% / .62);
+  text-shadow:0 0 10px hsl(calc(var(--ally-hue,260)*1deg) 95% 72% / .35);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 0 16px hsl(calc(var(--ally-hue,260)*1deg) 90% 58% / .24),0 0 32px hsl(calc(var(--ally-hue,260)*1deg) 90% 58% / .18);
+}
+.alliance-badge[style*="--ally-hue"] .badge-dot{
+  width:8px;
+  height:8px;
+  flex:0 0 8px;
+  border-radius:999px;
+  background:currentColor;
+  box-shadow:0 0 10px currentColor,0 0 18px currentColor;
+}
+.alliance-badge[style*="--ally-hue"] span:last-child{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}

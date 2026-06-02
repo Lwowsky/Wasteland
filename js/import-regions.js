@@ -6,6 +6,7 @@ WKD.initImportRegions = () => {
     button.addEventListener('click', () => WKD.switchRegion(button.dataset.importRegionTab));
   });
   WKD.updateShiftVisibility();
+  WKD.renderCaptureMenu?.();
 };
 
 WKD.renderRegionPanels = () => {
@@ -22,6 +23,7 @@ WKD.renderRegionPanels = () => {
       WKD.renderRegionPanels();
       WKD.switchRegion(id);
       WKD.updateShiftVisibility();
+      WKD.renderCaptureMenu?.();
     });
   });
 
@@ -30,10 +32,12 @@ WKD.renderRegionPanels = () => {
       WKD.state.regionShifts[input.dataset.regionShift] = input.value;
       WKD.saveRegionSettings();
       WKD.updateShiftVisibility();
+      WKD.renderCaptureMenu?.();
     });
   });
 
   WKD.updateRegionTabs();
+  WKD.renderCaptureMenu?.();
 };
 
 WKD.switchRegion = region => {
@@ -47,6 +51,30 @@ WKD.switchRegion = region => {
     panel.hidden = !active;
     panel.classList.toggle('is-active', active);
   });
+};
+
+
+WKD.captureRegionOptions = () => {
+  const enabled = WKD.state?.regionEnabled || {};
+  const list = [];
+  const t = window.WKD_t || (key => key);
+  if (enabled.region2) list.push({ id: 'region2', label: enabled.region3 ? t('import.region2') : t('import.captureRegion') });
+  if (enabled.region3) list.push({ id: 'region3', label: t('import.region3') });
+  return list;
+};
+
+WKD.hasCaptureRegionsEnabled = () => WKD.captureRegionOptions().length > 0;
+
+WKD.renderCaptureMenu = () => {
+  const box = WKD.$('#importCaptureMenu');
+  if (!box) return;
+  const captures = WKD.captureRegionOptions();
+  box.hidden = captures.length === 0;
+  if (!captures.length) { box.innerHTML = ''; return; }
+  box.innerHTML = `<button class="import-capture-pill is-active" type="button" data-import-capture="home">${WKD.escapeHtml?.(window.WKD_t?.('import.home') || 'Home') || (window.WKD_t?.('import.home') || 'Home')}</button>${captures.map(item => `<button class="import-capture-pill" type="button" data-import-capture="${item.id}">${item.label}</button>`).join('')}`;
+  box.querySelectorAll('[data-import-capture]').forEach(button => button.addEventListener('click', () => {
+    box.querySelectorAll('[data-import-capture]').forEach(btn => btn.classList.toggle('is-active', btn === button));
+  }));
 };
 
 WKD.updateRegionTabs = () => {
@@ -84,6 +112,7 @@ WKD.updateShiftVisibility = () => {
   }
 
   if (typeof WKD.renderPlayers === 'function') WKD.renderPlayers();
+  document.dispatchEvent(new CustomEvent('wkd:region-shifts-updated', { detail: { count } }));
 };
 
 function regionPanelTemplate(region, index) {
@@ -93,10 +122,10 @@ function regionPanelTemplate(region, index) {
 
   return `<div class="import-region-panel ${active ? 'is-active' : ''} ${disabled ? 'is-disabled-region' : ''}" data-import-region-panel="${region.id}" ${active ? '' : 'hidden'}>
     <div class="import-region-panel-head">
-      <div class="import-region-title">${region.label}</div>
-      ${region.locked ? '<span class="import-region-status">Завжди включено</span>' : regionEnableSwitch(region, enabled)}
+      <div class="import-region-title">${window.WKD_t?.(region.i18n || `import.${region.id}`) || region.label}</div>
+      ${region.locked ? `<span class="import-region-status">${window.WKD_t?.('ui.alwaysEnabled') || 'Always enabled'}</span>` : regionEnableSwitch(region, enabled)}
     </div>
-    <div class="import-shift-toggles" aria-label="Кількість змін для ${region.label}">
+    <div class="import-shift-toggles" aria-label="${window.WKD_t?.('regionSettings.registrationShifts') || 'Registration shifts'} ${window.WKD_t?.(region.i18n || `import.${region.id}`) || region.label}">
       ${[1, 2, 3, 4].map(shift => shiftSwitch(region, shift, disabled)).join('')}
     </div>
   </div>`;
@@ -104,11 +133,11 @@ function regionPanelTemplate(region, index) {
 
 function regionEnableSwitch(region, enabled) {
   return `<div class="region-enable-control ${enabled ? '' : 'is-off'}">
-    <label class="region-enable-switch" aria-label="Увімкнути ${region.label}">
+    <label class="region-enable-switch" aria-label="${window.WKD_t?.('ui.enabled') || 'Enable'} ${window.WKD_t?.(region.i18n || `import.${region.id}`) || region.label}">
       <input type="checkbox" data-region-enabled="${region.id}" ${enabled ? 'checked' : ''}>
       <span></span>
     </label>
-    <span>${enabled ? 'Включено' : 'Відключено'}</span>
+    <span>${enabled ? (window.WKD_t?.('ui.enabled') || 'Enabled') : (window.WKD_t?.('ui.disabled') || 'Disabled')}</span>
   </div>`;
 }
 
@@ -117,6 +146,6 @@ function shiftSwitch(region, shift, disabled) {
   return `<label class="import-switch ${disabled ? 'is-disabled' : ''}">
     <input type="radio" name="${region.id}Shift" value="${shift}" ${checked ? 'checked' : ''} data-region-shift="${region.id}" ${disabled ? 'disabled' : ''}>
     <span class="import-switch-ui"></span>
-    <span>${shift} зміна</span>
+    <span>${window.WKD_t?.(`shift.shift${shift}`) || `Shift ${shift}`}</span>
   </label>`;
 }

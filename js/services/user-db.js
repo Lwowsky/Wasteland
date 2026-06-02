@@ -8,7 +8,7 @@ export const USER_ROLES = {
   moderator: 'Модератор',
   consul: 'Консул',
   officer: 'Офіцер',
-  player: 'Простий гравець',
+  player: 'Гравець',
   guest: 'Гість'
 };
 
@@ -24,15 +24,50 @@ const REQUESTABLE_ROLES = ['officer', 'consul'];
 const normalizeText = value => String(value ?? '').trim();
 const normalizeRole = role => Object.hasOwn(USER_ROLES, role) ? role : 'player';
 const isRequestableRole = role => REQUESTABLE_ROLES.includes(role);
+function serviceT(key, fallback) { return globalThis.window?.WKD_t ? globalThis.window.WKD_t(key) : fallback; }
+function serviceLocale() {
+  const lang = globalThis.window?.WKD_CURRENT_LANG || globalThis.document?.documentElement?.lang || globalThis.navigator?.language || 'en';
+  const map = { uk: 'uk-UA', en: 'en-US', ru: 'ru-RU', pl: 'pl-PL', de: 'de-DE', ja: 'ja-JP', zh: 'zh-CN', ko: 'ko-KR', vi: 'vi-VN', ar: 'ar' };
+  return map[String(lang).toLowerCase()] || lang || 'en-US';
+}
+
+export function normalizeWastelandProfile(raw = {}) {
+  const extraSquads = (Array.isArray(raw.extraSquads)
+    ? raw.extraSquads
+    : (raw.extraEnabled && raw.extraTroopType && raw.extraTier ? [{ troopType: raw.extraTroopType, tier: raw.extraTier }] : []))
+    .map(item => ({ troopType: normalizeText(item?.troopType), tier: normalizeText(item?.tier || 'T10').toUpperCase() }))
+    .filter(item => item.troopType && item.tier)
+    .filter((item, index, arr) => arr.findIndex(other => other.troopType === item.troopType) === index);
+  const firstExtra = extraSquads[0] || {};
+  return {
+    troopType: normalizeText(raw.troopType),
+    tier: normalizeText(raw.tier || 'T10').toUpperCase(),
+    lairLevel: normalizeText(raw.lairLevel || raw.lair),
+    marchSize: normalizeText(raw.marchSize),
+    rallySize: normalizeText(raw.rallySize),
+    readyToJoin: Boolean(raw.readyToJoin),
+    readyToAttack: Boolean(raw.readyToAttack),
+    captainReady: Boolean(raw.captainReady),
+    shift: normalizeText(raw.shift),
+    comment: normalizeText(raw.comment),
+    extraEnabled: Boolean(extraSquads.length),
+    extraSquads,
+    extraTroopType: firstExtra.troopType || '',
+    extraTier: firstExtra.tier || '',
+    extraMarchSize: ''
+  };
+}
 const isOwnerEmail = email => OWNER_EMAILS.includes(String(email || '').trim().toLowerCase());
 const isAdminEmail = email => ADMIN_EMAILS.includes(String(email || '').trim().toLowerCase());
 
 export function roleLabel(role = 'player') {
-  return USER_ROLES[normalizeRole(role)] || USER_ROLES.player;
+  const key = normalizeRole(role);
+  return serviceT(`role.${key}`, USER_ROLES[key] || USER_ROLES.player);
 }
 
 export function roleRequestStatusLabel(status = 'none') {
-  return ROLE_REQUEST_STATUS[status] || ROLE_REQUEST_STATUS.none;
+  const key = Object.hasOwn(ROLE_REQUEST_STATUS, status) ? status : 'none';
+  return serviceT(`roleRequest.${key}`, ROLE_REQUEST_STATUS[key] || ROLE_REQUEST_STATUS.none);
 }
 
 export function normalizeUserRole(role = 'player') {
@@ -80,7 +115,7 @@ export function timestampToMs(value) {
 export function formatUserDate(value) {
   const ms = timestampToMs(value);
   if (!ms) return '—';
-  return new Intl.DateTimeFormat('uk-UA', {
+  return new Intl.DateTimeFormat(serviceLocale(), {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
@@ -110,19 +145,92 @@ export function getActiveRoleRequest(profile = {}) {
 export function getGameProfile(data = {}) {
   const game = data.gameProfile || {};
   return {
+    farmId: game.farmId || 'main',
     nickname: normalizeText(game.nickname || data.gameNick || data.nickname),
     region: normalizeText(game.region || data.region),
     alliance: normalizeText(game.alliance || data.alliance).toUpperCase(),
     rank: normalizeText(game.rank || data.rank || 'p1').toLowerCase(),
     shk: normalizeText(game.shk || data.shk),
-    state: game.state || (data.profileComplete ? 'complete' : 'new')
+    state: game.state || (data.profileComplete ? 'complete' : 'new'),
+    wastelandProfile: normalizeWastelandProfile(game.wastelandProfile || data.wastelandProfile || {})
+  };
+}
+
+export function normalizeFarm(raw = {}, fallbackId = '') {
+  const id = normalizeText(raw.farmId || raw.id || fallbackId || `farm-${Date.now()}`);
+  return {
+    farmId: id,
+    id,
+    nickname: normalizeText(raw.nickname || raw.gameNick),
+    region: normalizeText(raw.region),
+    alliance: normalizeText(raw.alliance).toUpperCase(),
+    rank: normalizeText(raw.rank || 'p1').toLowerCase(),
+    shk: normalizeText(raw.shk),
+    state: raw.state || 'complete',
+    wastelandProfile: normalizeWastelandProfile(raw.wastelandProfile || {}),
+    createdAt: raw.createdAt || null,
+    updatedAt: raw.updatedAt || null
+  };
+}
+
+export function getUserFarms(data = {}) {
+  const farms = Array.isArray(data.farms) ? data.farms : [];
+  return farms.map((farm, index) => normalizeFarm(farm, farm.farmId || farm.id || `farm-${index + 1}`));
+}
+
+export function getFarmCount(data = {}) {
+  return getUserFarms(data).filter(farm => farm.nickname && farm.region).length;
+}
+
+export function getFarmById(data = {}, farmId = 'main') {
+  if (!farmId || farmId === 'main') return { ...getGameProfile(data), farmId: 'main', id: 'main' };
+  return getUserFarms(data).find(farm => farm.farmId === farmId || farm.id === farmId) || null;
+}
+
+export function normalizeProfileVisibility(raw = {}) {
+  return {
+    showWastelandInfo: Boolean(raw.showWastelandInfo),
+    showFarmsInfo: Boolean(raw.showFarmsInfo)
+  };
+}
+
+function makePublicWastelandInfo(profile = {}) {
+  const data = normalizeWastelandProfile(profile);
+  return {
+    lairLevel: data.lairLevel,
+    troopType: data.troopType,
+    tier: data.tier,
+    marchSize: data.marchSize,
+    rallySize: data.rallySize,
+    captainReady: data.captainReady,
+    readyToJoin: data.readyToJoin,
+    readyToAttack: data.readyToAttack,
+    shift: data.shift,
+    extraEnabled: data.extraEnabled,
+    extraSquads: data.extraSquads,
+    extraTroopType: data.extraTroopType,
+    extraTier: data.extraTier
+  };
+}
+
+function makePublicFarm(farm = {}, index = 0, showWastelandInfo = false) {
+  const item = normalizeFarm(farm, farm.farmId || farm.id || `farm-${index + 1}`);
+  return {
+    farmId: item.farmId,
+    nickname: item.nickname,
+    region: item.region,
+    alliance: item.alliance,
+    rank: item.rank,
+    shk: item.shk,
+    wastelandProfile: showWastelandInfo ? makePublicWastelandInfo(item.wastelandProfile || {}) : null
   };
 }
 
 export function makePublicPlayer(data = {}) {
   const game = getGameProfile(data);
   const role = normalizeRole(data.role || 'player');
-  return {
+  const visibility = normalizeProfileVisibility(data.profileVisibility || {});
+  const publicPlayer = {
     uid: data.uid || data.id || '',
     gameNick: game.nickname,
     nickname: game.nickname,
@@ -134,11 +242,18 @@ export function makePublicPlayer(data = {}) {
     roleLabel: roleLabel(role),
     displayName: data.displayName || '',
     photoURL: data.photoURL || '',
+    farmCount: getFarmCount(data),
     profileComplete: Boolean(data.profileComplete),
     createdAt: data.createdAt || null,
     updatedAt: data.updatedAt || null,
-    lastLoginAt: data.lastLoginAt || null
+    lastLoginAt: data.lastLoginAt || null,
+    profileVisibility: visibility,
+    wastelandProfile: visibility.showWastelandInfo ? makePublicWastelandInfo(game.wastelandProfile || {}) : null,
+    farms: visibility.showFarmsInfo
+      ? getUserFarms(data).filter(farm => farm.nickname || farm.region || farm.alliance).map((farm, index) => makePublicFarm(farm, index, visibility.showWastelandInfo))
+      : []
   };
+  return publicPlayer;
 }
 
 
@@ -194,7 +309,10 @@ export async function saveSignedInUser(user) {
         rank: 'p1',
         shk: '',
         state: 'new'
-      }
+      },
+      farms: [],
+      activeFarmId: 'main',
+      profileVisibility: { showWastelandInfo: false, showFarmsInfo: false }
     }, { merge: true });
   } else {
     const old = snapshot.data();
@@ -273,26 +391,45 @@ export async function saveGameRegistration(user, values) {
   const { db, firestoreMod } = firebase;
   const uid = user.uid;
   const userRef = firestoreMod.doc(db, 'users', uid);
-  const publicRef = firestoreMod.doc(db, 'publicPlayers', uid);
   const requestRef = firestoreMod.doc(db, 'roleRequests', uid);
   const oldProfile = await getUserProfile(uid);
   const now = firestoreMod.serverTimestamp();
   const currentRole = normalizeRole(oldProfile?.role || 'player');
   const requestedRole = normalizeRole(values.requestedRole || 'player');
+  const farmId = normalizeText(values.farmId || 'main') || 'main';
+  const profileVisibility = normalizeProfileVisibility(values.profileVisibility || oldProfile?.profileVisibility || {});
 
-  const clean = {
-    nickname: normalizeText(values.nickname),
-    region: normalizeText(values.region),
-    alliance: normalizeText(values.alliance).toUpperCase(),
-    rank: normalizeText(values.rank || 'p1').toLowerCase(),
-    shk: normalizeText(values.shk),
-    state: 'complete'
-  };
+  const oldMain = getGameProfile(oldProfile || {});
+  const oldFarms = getUserFarms(oldProfile || {});
+  const oldSelectedFarm = farmId === 'main'
+    ? oldMain
+    : (oldFarms.find(farm => farm.farmId === farmId || farm.id === farmId) || {});
+  const clean = normalizeFarm({
+    ...oldSelectedFarm,
+    farmId,
+    nickname: values.nickname,
+    region: values.region,
+    alliance: values.alliance,
+    rank: values.rank || 'p1',
+    shk: values.shk,
+    state: 'complete',
+    updatedAt: Date.now()
+  }, farmId);
+
+  const regionChangedByLeader = farmId === 'main'
+    && ['consul', 'officer'].includes(currentRole)
+    && oldMain.region
+    && clean.region
+    && oldMain.region !== clean.region;
+  const effectiveCurrentRole = regionChangedByLeader ? 'player' : currentRole;
+  let nextRolePatch = regionChangedByLeader
+    ? { role: 'player', roleLabel: roleLabel('player') }
+    : {};
 
   let roleRequest = oldProfile?.roleRequest || { requestedRole: 'player', status: 'none' };
-  const batch = firestoreMod.writeBatch(db);
+  const roleRequestWrites = [];
 
-  if (isRequestableRole(requestedRole) && requestedRole !== currentRole) {
+  if (isRequestableRole(requestedRole) && requestedRole !== effectiveCurrentRole) {
     const requestPayload = makeRoleRequestPayload({ user, oldProfile, clean, requestedRole, now });
     roleRequest = {
       requestedRole,
@@ -302,56 +439,137 @@ export async function saveGameRegistration(user, values) {
       requestedAt: now,
       updatedAt: now
     };
-    batch.set(requestRef, requestPayload, { merge: true });
+    roleRequestWrites.push(() => firestoreMod.setDoc(requestRef, requestPayload, { merge: true }));
   } else if (requestedRole === 'player' && oldProfile?.roleRequest?.status === 'pending') {
     roleRequest = { requestedRole: 'player', status: 'cancelled', statusLabel: roleRequestStatusLabel('cancelled'), updatedAt: now };
-    batch.set(requestRef, { status: 'cancelled', updatedAt: now }, { merge: true });
-  } else if (requestedRole === currentRole && currentRole !== 'player') {
-    roleRequest = { requestedRole: currentRole, status: 'approved', statusLabel: roleRequestStatusLabel('approved'), updatedAt: now };
+    roleRequestWrites.push(() => firestoreMod.setDoc(requestRef, { status: 'cancelled', updatedAt: now }, { merge: true }));
+  } else if (requestedRole === effectiveCurrentRole && effectiveCurrentRole !== 'player') {
+    roleRequest = { requestedRole: effectiveCurrentRole, status: 'approved', statusLabel: roleRequestStatusLabel('approved'), updatedAt: now };
   } else if (!isRequestableRole(requestedRole)) {
     roleRequest = oldProfile?.roleRequest?.status === 'pending'
       ? oldProfile.roleRequest
       : { requestedRole: 'player', status: 'none', statusLabel: roleRequestStatusLabel('none') };
   }
 
-  const fullUser = {
-    uid,
-    displayName: user.displayName || oldProfile?.displayName || '',
-    email: user.email || oldProfile?.email || '',
-    photoURL: user.photoURL || oldProfile?.photoURL || '',
-    role: currentRole,
+  const nextFarms = farmId === 'main'
+    ? oldFarms
+    : [clean, ...oldFarms.filter(farm => farm.farmId !== farmId && farm.id !== farmId)];
+  const mainGame = farmId === 'main' ? clean : oldMain;
+  const profileComplete = Boolean(mainGame.nickname && mainGame.region && mainGame.alliance && mainGame.rank && mainGame.shk);
+
+  // Не переписуємо захищені поля uid/email/role/createdAt.
+  // Так звичайний гравець може зберегти ферми без помилок права доступу.
+  await firestoreMod.setDoc(userRef, {
+    ...nextRolePatch,
     roleRequest,
-    profileComplete: true,
-    gameNick: clean.nickname,
-    region: clean.region,
-    alliance: clean.alliance,
-    rank: clean.rank,
-    shk: clean.shk,
-    gameProfile: clean,
-    createdAt: oldProfile?.createdAt || now,
-    updatedAt: now,
-    lastLoginAt: oldProfile?.lastLoginAt || now
-  };
+    profileComplete,
+    gameNick: mainGame.nickname,
+    region: mainGame.region,
+    alliance: mainGame.alliance,
+    rank: mainGame.rank,
+    shk: mainGame.shk,
+    gameProfile: mainGame,
+    farms: nextFarms,
+    farmCount: getFarmCount({ gameProfile: mainGame, farms: nextFarms, profileComplete }),
+    activeFarmId: farmId,
+    profileVisibility,
+    updatedAt: now
+  }, { merge: true });
 
-  const publicPlayer = makePublicPlayer(fullUser);
-  publicPlayer.createdAt = oldProfile?.createdAt || now;
-  publicPlayer.updatedAt = now;
-  publicPlayer.lastLoginAt = fullUser.lastLoginAt;
+  await Promise.all(roleRequestWrites.map(write => write())).catch(error => {
+    console.warn('Role request sync failed', error);
+  });
 
-  batch.set(userRef, fullUser, { merge: true });
-  batch.set(publicRef, publicPlayer, { merge: true });
-
-  const newRegionRef = firestoreMod.doc(db, 'regions', clean.region, 'players', uid);
-  batch.set(newRegionRef, publicPlayer, { merge: true });
-
-  const oldRegion = normalizeText(oldProfile?.gameProfile?.region || oldProfile?.region);
-  if (oldRegion && oldRegion !== clean.region) {
-    const oldRegionRef = firestoreMod.doc(db, 'regions', oldRegion, 'players', uid);
-    batch.delete(oldRegionRef);
+  const savedProfile = await getUserProfile(uid);
+  if (regionChangedByLeader && oldMain.region) {
+    await firestoreMod.deleteDoc(firestoreMod.doc(db, 'regions', oldMain.region, 'players', uid)).catch(() => null);
+  }
+  if (isProfileComplete(savedProfile)) {
+    await writePublicPlayerFromProfile(db, firestoreMod, savedProfile).catch(error => {
+      console.warn('Public player sync failed after profile save', error);
+    });
   }
 
-  await batch.commit();
   return getUserProfile(uid);
+}
+
+export async function saveFarmWastelandProfile(user, farmId = 'main', values = {}) {
+  if (!user) throw new Error('auth-required');
+  const firebase = await getFirebase();
+  if (!firebase) throw new Error('firebase-not-configured');
+
+  const { db, firestoreMod } = firebase;
+  const oldProfile = await getUserProfile(user.uid);
+  if (!oldProfile) throw new Error('profile-not-found');
+
+  const now = firestoreMod.serverTimestamp();
+  const safeFarmId = normalizeText(farmId || 'main') || 'main';
+  const oldMain = getGameProfile(oldProfile);
+  const oldFarms = getUserFarms(oldProfile);
+  const currentFarm = safeFarmId === 'main'
+    ? oldMain
+    : (oldFarms.find(farm => farm.farmId === safeFarmId || farm.id === safeFarmId) || null);
+  if (!currentFarm) throw new Error('farm-not-found');
+
+  const cleanForm = normalizeWastelandProfile(values);
+  const updatedFarm = normalizeFarm({
+    ...currentFarm,
+    nickname: values.nickname || currentFarm.nickname,
+    alliance: values.alliance || currentFarm.alliance,
+    wastelandProfile: cleanForm,
+    updatedAt: Date.now()
+  }, safeFarmId);
+
+  let nextMain = oldMain;
+  let nextFarms = oldFarms;
+  if (safeFarmId === 'main') {
+    nextMain = updatedFarm;
+  } else {
+    nextFarms = [updatedFarm, ...oldFarms.filter(farm => farm.farmId !== safeFarmId && farm.id !== safeFarmId)];
+  }
+
+  const profileComplete = Boolean(nextMain.nickname && nextMain.region && nextMain.alliance && nextMain.rank && nextMain.shk);
+  await firestoreMod.setDoc(firestoreMod.doc(db, 'users', user.uid), {
+    profileComplete,
+    gameNick: nextMain.nickname,
+    region: nextMain.region,
+    alliance: nextMain.alliance,
+    rank: nextMain.rank,
+    shk: nextMain.shk,
+    gameProfile: nextMain,
+    farms: nextFarms,
+    farmCount: getFarmCount({ gameProfile: nextMain, farms: nextFarms, profileComplete }),
+    activeFarmId: safeFarmId,
+    updatedAt: now
+  }, { merge: true });
+
+  const savedProfile = await getUserProfile(user.uid);
+  if (isProfileComplete(savedProfile)) {
+    await writePublicPlayerFromProfile(db, firestoreMod, savedProfile).catch(error => {
+      console.warn('Public player sync failed after saved Wasteland data', error);
+    });
+  }
+  return savedProfile;
+}
+
+export async function deleteFarm(user, farmId) {
+  if (!user || !farmId || farmId === 'main') throw new Error('farm-delete-denied');
+  const firebase = await getFirebase();
+  if (!firebase) throw new Error('firebase-not-configured');
+  const { db, firestoreMod } = firebase;
+  const oldProfile = await getUserProfile(user.uid);
+  if (!oldProfile) throw new Error('profile-not-found');
+  const farms = getUserFarms(oldProfile).filter(farm => farm.farmId !== farmId && farm.id !== farmId);
+  const now = firestoreMod.serverTimestamp();
+  await firestoreMod.setDoc(firestoreMod.doc(db, 'users', user.uid), {
+    farms,
+    farmCount: getFarmCount({ ...oldProfile, farms }),
+    activeFarmId: 'main',
+    updatedAt: now
+  }, { merge: true });
+  const savedProfile = await getUserProfile(user.uid);
+  await writePublicPlayerFromProfile(db, firestoreMod, savedProfile).catch(() => null);
+  return savedProfile;
 }
 
 export async function listRoleRequests(status = 'pending') {

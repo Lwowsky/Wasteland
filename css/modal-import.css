@@ -1,4 +1,4 @@
-.modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:24px}
+.modal{position:fixed;inset:0;z-index:9200;display:none;align-items:center;justify-content:center;padding:24px}
 .modal.is-open{display:flex}
 .modal-backdrop{position:absolute;inset:0;border:0;background:rgba(2,7,18,.76);backdrop-filter:blur(6px)}
 .modal-card{position:relative;z-index:1;width:var(--modal-width);height:var(--modal-height);max-width:var(--modal-width);max-height:var(--modal-height);overflow:hidden;border-radius:24px;border:1px solid rgba(131,154,230,.16);background:radial-gradient(1100px 520px at 82% 12%,rgba(114,92,255,.12),transparent 55%),radial-gradient(900px 480px at 18% 0%,rgba(78,126,255,.10),transparent 58%),linear-gradient(180deg,#091428 0%,#071121 100%);box-shadow:0 26px 80px rgba(2,6,18,.52),inset 0 1px 0 rgba(255,255,255,.03)}
@@ -72,3 +72,9 @@
 .shift-recognition-toolbar{display:grid;grid-template-columns:minmax(340px,.85fr) minmax(0,1fr);align-items:center}.shift-recognition-mode{min-width:0}.shift-recognition-mode select{min-width:0;width:250px}.shift-recognition-actions{justify-content:flex-end;min-width:0}
 .shift-rule-table{max-height:330px;overflow:auto}.shift-rule-row{min-height:62px}.shift-rule-row span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @media(max-width:980px){.visibility-panel{grid-template-columns:1fr}.shift-recognition-toolbar{grid-template-columns:1fr}.shift-recognition-actions{justify-content:flex-start;flex-wrap:wrap}.shift-recognition-mode{display:grid;grid-template-columns:1fr}.shift-recognition-mode select{width:100%}}
+
+body.wkd-modal-open{overflow:hidden}
+
+.modal:not(.is-open){pointer-events:none}
+.modal.is-open{pointer-events:auto}
+.modal.is-open .modal-card{pointer-events:auto}
