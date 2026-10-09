@@ -1,0 +1,40 @@
+{
+  "title": "Фінальний план",
+  "shift1": "Зміна 1",
+  "shift2": "Зміна 2",
+  "firstHalf": "Перша половина",
+  "secondHalf": "Друга половина",
+  "planLanguage": "Мова плану",
+  "planLanguageText": "Основна мова відповідає мові сайту. Додатково можна вибрати інші мови.",
+  "siteLanguage": "Мова сайту",
+  "share": "Поділитися",
+  "typeByCaptain": "Тип визначає капітан",
+  "noPlayers": "Немає призначених гравців",
+  "towers": {
+    "hub": "Техно-Центр",
+    "north": "Північна турель",
+    "west": "Західна турель",
+    "east": "Східна турель",
+    "south": "Південна турель"
+  },
+  "troops": {
+    "fighter": "Бійці",
+    "rider": "Наїзники",
+    "shooter": "Стрільці"
+  },
+  "columns": {
+    "nickname": "Нік",
+    "alliance": "Альянс",
+    "tier": "Тір",
+    "march": "Марш"
+  },
+  "signatureAlt": "Розроблено Lwowsky",
+  "formats": {
+    "png": "PNG",
+    "txt": "TXT"
+  },
+  "textExport": {
+    "captain": "Капітан: {{name}}",
+    "signature": "Розроблено Lwowsky"
+  }
+}

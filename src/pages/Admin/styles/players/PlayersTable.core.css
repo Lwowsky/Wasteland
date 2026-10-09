@@ -1,0 +1,293 @@
+/* =========================================================
+   TABLE SCROLL CONTAINER
+========================================================= */
+
+.admin-players-table-wrap {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid #d8e6f5;
+  border-radius: 15px;
+
+  box-sizing: border-box;
+
+  -webkit-overflow-scrolling: touch;
+
+  overscroll-behavior-x: contain;
+
+  scrollbar-width: thin;
+  scrollbar-color: #91aed0 #edf4fb;
+}
+
+.admin-players-table-wrap:focus-visible {
+  outline: 3px solid rgba(52, 119, 223, 0.18);
+  outline-offset: 3px;
+}
+
+.admin-players-table-wrap::-webkit-scrollbar {
+  height: 10px;
+}
+
+.admin-players-table-wrap::-webkit-scrollbar-track {
+  background: #edf4fb;
+}
+
+.admin-players-table-wrap::-webkit-scrollbar-thumb {
+  background: #9eb8d5;
+
+  border: 2px solid #edf4fb;
+  border-radius: 999px;
+}
+
+.admin-players-table-wrap::-webkit-scrollbar-thumb:hover {
+  background: #789bc1;
+}
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.admin-players-table {
+  width: 100%;
+  min-width: 1080px;
+
+  box-sizing: border-box;
+}
+
+.admin-players-table__head,
+.admin-players-table__row {
+  display: grid;
+
+  grid-template-columns:
+    1.25fr
+    0.82fr
+    0.92fr
+    0.58fr
+    0.55fr
+    0.9fr
+    0.9fr
+    0.9fr
+    0.72fr
+    0.72fr
+    0.68fr;
+
+  align-items: center;
+
+  column-gap: 14px;
+
+  width: 100%;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.admin-players-table__head {
+  min-height: 48px;
+
+  padding: 0 16px;
+
+  color: #637f9f;
+
+  background: linear-gradient(180deg, #f4f9ff, #edf5fc);
+
+  font-size: 14px;
+  font-weight: 900;
+
+  text-transform: uppercase;
+}
+
+.admin-players-table__head > * {
+  min-width: 0;
+}
+
+.admin-players-sort {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 5px;
+
+  min-width: 0;
+
+  padding: 0;
+
+  overflow: hidden;
+
+  color: inherit;
+
+  background: transparent;
+
+  border: 0;
+
+  font: inherit;
+  font-weight: 900;
+
+  text-align: left;
+  text-transform: inherit;
+
+  cursor: pointer;
+
+  transition: color 0.18s ease;
+}
+
+.admin-players-sort span {
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-players-sort svg {
+  flex: 0 0 auto;
+
+  opacity: 0.45;
+
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+}
+
+.admin-players-sort:hover {
+  color: #256ed8;
+}
+
+.admin-players-sort:hover svg {
+  opacity: 0.9;
+}
+
+.admin-players-sort:focus-visible {
+  outline: 2px solid #4d89ff;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.admin-players-sort--active {
+  color: #276fda;
+}
+
+.admin-players-sort--active svg {
+  opacity: 1;
+}
+
+.admin-players-actions-heading {
+  min-width: 0;
+
+  color: #637f9f;
+
+  font-size: 14px;
+  font-weight: 900;
+
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   BODY
+========================================================= */
+
+.admin-players-table__body {
+  width: 100%;
+}
+
+/* =========================================================
+   ROWS
+========================================================= */
+
+.admin-players-table__row {
+  min-height: 72px;
+
+  padding: 0 16px;
+
+  color: #294f78;
+
+  border-top: 1px solid #e1ebf6;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  transition: background 0.18s ease;
+}
+
+.admin-players-table__row > * {
+  min-width: 0;
+}
+
+.admin-players-table__row:nth-child(even) {
+  background: #ffffff;
+}
+
+.admin-players-table__row:nth-child(odd) {
+  background: #f1f3f6;
+}
+
+.admin-players-table__row:nth-child(even):hover {
+  background: #f8fbff;
+}
+
+.admin-players-table__row:nth-child(odd):hover {
+  background: #e9edf2;
+}
+
+/* =========================================================
+   GENERIC CELL
+========================================================= */
+
+.admin-player-table-cell {
+  display: flex;
+  align-items: center;
+
+  min-width: 0;
+}
+
+/* =========================================================
+   NICKNAME
+========================================================= */
+
+.admin-player-nickname {
+  display: block;
+
+  min-width: 0;
+
+  overflow: hidden;
+
+  color: #153d6d;
+
+  font-size: 16px;
+  font-weight: 900;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   TEXT / NUMBERS
+========================================================= */
+
+.admin-player-table-text {
+  min-width: 0;
+
+  overflow: hidden;
+
+  color: #315777;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-player-number {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+

@@ -1,0 +1,159 @@
+{
+  "title": "Користувачі та доступ",
+  "description": "Керування користувачами, ролями та індивідуальними правами.",
+
+  "tabs": {
+    "users": "Користувачі",
+    "requests": "Заявки"
+  },
+
+  "cards": {
+    "owner": {
+      "title": "Owner",
+      "description": "Повний доступ. Роль і права змінюються тільки вручну через Firebase."
+    },
+
+    "admin": {
+      "title": "Admin",
+      "description": "Повний робочий доступ. Не може керувати Owner або іншими Admin."
+    },
+
+    "consul": {
+      "title": "Consul",
+      "description": "Робота з таблицями гравців, розподілом по турелях та фінальним планом."
+    },
+
+    "requests": {
+      "title": "Заявки",
+      "description": "Нові заявки на доступ до адмінки, які очікують перевірки."
+    }
+  },
+
+  "roles": {
+    "owner": {
+      "title": "Owner",
+      "description": "Повний доступ. Роль і права змінюються тільки вручну через Firebase."
+    },
+
+    "admin": {
+      "title": "Admin",
+      "description": "Повний робочий доступ. Не може керувати Owner або іншими Admin."
+    },
+
+    "consul": {
+      "title": "Consul",
+      "description": "Робота з таблицями гравців, розподілом по турелях та фінальним планом."
+    }
+  },
+
+  "usersCount": "користувачів",
+  "requestsCount": "заявок",
+  "pendingCount": "очікують",
+
+  "columns": {
+    "user": "Користувач",
+    "role": "Роль",
+    "permissions": "Дозволи",
+    "status": "Статус",
+    "actions": "Дії"
+  },
+
+  "permissions": {
+    "owner": "Повний доступ"
+  },
+
+  "actions": {
+    "removeAccess": "Видалити доступ",
+    "ownerLocked": "Owner можна змінити тільки через Firebase",
+    "notAllowed": "Недостатньо прав",
+    "openUser": "Відкрити користувача",
+    "openRequests": "Відкрити заявки"
+  },
+
+  "modal": {
+    "role": "Роль",
+    "status": "Статус",
+    "createdAt": "Створений",
+    "updatedAt": "Оновлений",
+    "permissions": "Права доступу",
+    "permissionsCount": "дозволів",
+
+    "permissionsText": "Права можна обмежити для конкретного користувача в межах його ролі.",
+
+    "ownerPermissions": "Owner завжди має повний доступ. Його права не редагуються через сайт.",
+
+    "technicalInfo": "Технічна інформація",
+
+    "uid": "UID",
+
+    "saving": "Збереження..."
+  },
+
+  "permissionGroups": {
+    "access": {
+      "title": "Користувачі та доступ",
+      "description": "Керування ролями та доступом до адмінки."
+    },
+
+    "players": {
+      "title": "Таблиця гравців",
+      "description": "Перегляд та робота з даними гравців."
+    },
+
+    "distribution": {
+      "title": "Розподіл та фінальний план",
+      "description": "Робота з турелями та фінальним планом."
+    },
+
+    "registration": {
+      "title": "Реєстрація",
+      "description": "Керування налаштуваннями реєстрації."
+    },
+
+    "requests": {
+      "title": "Заявки",
+      "description": "Перегляд та обробка заявок на доступ."
+    },
+
+    "settings": {
+      "title": "Налаштування",
+      "description": "Доступ до імпорту, експорту та системних інструментів."
+    }
+  },
+
+  "permissionLabels": {
+    "view_access": "Перегляд користувачів та ролей",
+    "manage_access": "Редагування доступу",
+    "manage_consuls": "Керування Consul",
+    "grant_admin": "Призначення Admin",
+
+    "view_players": "Перегляд таблиці",
+    "edit_players": "Редагування гравців",
+    "delete_players": "Видалення гравців",
+
+    "view_distribution": "Перегляд розподілу",
+    "edit_distribution": "Редагування розподілу",
+
+    "view_registration_settings": "Перегляд налаштувань реєстрації",
+    "edit_registration_settings": "Редагування налаштувань реєстрації",
+
+    "view_requests": "Перегляд заявок",
+    "manage_requests": "Прийняття та відхилення заявок",
+
+    "view_settings": "Доступ до налаштувань"
+  },
+
+  "loading": "Завантаження користувачів...",
+
+  "errors": {
+    "load": "Не вдалося завантажити користувачів.",
+    "save": "Не вдалося зберегти права користувача.",
+    "changeRole": "Не вдалося змінити роль.",
+    "changeStatus": "Не вдалося змінити статус користувача.",
+    "delete": "Не вдалося видалити доступ."
+  },
+
+  "confirm": {
+    "removeAccess": "Видалити доступ для {{name}}?"
+  }
+}

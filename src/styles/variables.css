@@ -1,0 +1,16 @@
+:root {
+  --color-bg: #333335;
+  --color-surface: #1b1b1b;
+  --color-text: #ffffff;
+  --color-text-muted: #b3b3b3;
+  --color-accent: #4caf50;
+
+  --container-width: 1200px;
+
+  --header-height: 72px;
+  --footer-height: 60px;
+
+  --radius-small: 6px;
+  --radius-medium: 12px;
+  --radius-large: 20px;
+}

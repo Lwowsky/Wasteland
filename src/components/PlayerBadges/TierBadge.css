@@ -1,0 +1,262 @@
+.player-tier-badge {
+  position: relative;
+
+  min-width: 64px;
+  min-height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 14px;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  color: #ffffff;
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    inset 0 -7px 12px rgba(0, 0, 0, 0.14),
+    0 7px 17px rgba(44, 72, 105, 0.15);
+}
+
+/* Глянцевий верхній шар */
+.player-tier-badge::before {
+  content: "";
+
+  position: absolute;
+  z-index: 0;
+
+  top: 3px;
+  left: 8%;
+  right: 8%;
+
+  height: 40%;
+
+  border-radius: 999px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.52),
+    rgba(255, 255, 255, 0.08)
+  );
+
+  pointer-events: none;
+}
+
+/* Текст ЗАВЖДИ поверх глянцю */
+.player-tier-badge__text {
+  position: relative;
+  z-index: 1;
+
+  color: #ffffff;
+
+  font: inherit;
+  font-weight: 900;
+  line-height: 1;
+
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.55),
+    0 0 2px rgba(0, 0, 0, 0.22);
+}
+
+/* =========================================================
+   T1
+========================================================= */
+
+.player-tier-badge--t1 {
+  background: linear-gradient(180deg, #aeb8c2 0%, #788793 52%, #53616d 100%);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -7px 12px rgba(49, 57, 65, 0.22),
+    0 7px 17px rgba(73, 85, 96, 0.2);
+}
+
+/* =========================================================
+   T2
+========================================================= */
+
+.player-tier-badge--t2 {
+  background: linear-gradient(180deg, #97a5b2 0%, #687987 52%, #475765 100%);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -7px 12px rgba(36, 48, 58, 0.24),
+    0 7px 17px rgba(62, 79, 93, 0.22);
+}
+
+/* =========================================================
+   T3
+========================================================= */
+
+.player-tier-badge--t3 {
+  background: linear-gradient(180deg, #8197a8 0%, #566f83 52%, #354d61 100%);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -7px 12px rgba(48, 65, 78, 0.18),
+    0 7px 17px rgba(76, 96, 112, 0.2);
+}
+
+/* =========================================================
+   T4
+========================================================= */
+
+.player-tier-badge--t4 {
+  background: linear-gradient(180deg, #8fd0ff 0%, #579ff4 52%, #3478d6 100%);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -7px 12px rgba(24, 87, 164, 0.18),
+    0 7px 18px rgba(62, 137, 225, 0.22);
+}
+
+/* =========================================================
+   T5
+========================================================= */
+
+.player-tier-badge--t5 {
+  background: linear-gradient(180deg, #5baaff 0%, #267ce9 52%, #1558c4 100%);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -7px 12px rgba(12, 65, 151, 0.2),
+    0 7px 18px rgba(31, 103, 205, 0.25);
+}
+
+/* =========================================================
+   T6
+========================================================= */
+
+.player-tier-badge--t6 {
+  background: linear-gradient(180deg, #3f88ff 0%, #1359d8 52%, #0b38a7 100%);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -7px 12px rgba(7, 42, 115, 0.24),
+    0 7px 19px rgba(19, 83, 198, 0.28);
+}
+
+/* =========================================================
+   T7
+========================================================= */
+
+.player-tier-badge--t7 {
+  background: linear-gradient(180deg, #64e8f2 0%, #22c6d5 52%, #0794a7 100%);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -7px 12px rgba(0, 93, 105, 0.2),
+    0 7px 19px rgba(29, 185, 201, 0.26);
+}
+
+/* =========================================================
+   T8
+========================================================= */
+
+.player-tier-badge--t8 {
+  background: linear-gradient(180deg, #55e5db 0%, #16bdb4 52%, #07877f 100%);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.43),
+    inset 0 -7px 12px rgba(0, 85, 80, 0.2),
+    0 7px 19px rgba(21, 177, 167, 0.26);
+}
+
+/* =========================================================
+   T9
+========================================================= */
+
+.player-tier-badge--t9 {
+  background: linear-gradient(180deg, #64e99b 0%, #1bbd67 52%, #078849 100%);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.43),
+    inset 0 -7px 12px rgba(0, 89, 40, 0.2),
+    0 7px 19px rgba(22, 171, 91, 0.27);
+}
+
+/* =========================================================
+   T10
+========================================================= */
+
+.player-tier-badge--t10 {
+  background: linear-gradient(180deg, #ba79ff 0%, #8d45ed 52%, #6325c7 100%);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.43),
+    inset 0 -7px 12px rgba(66, 15, 135, 0.22),
+    0 7px 19px rgba(129, 64, 219, 0.28);
+}
+
+/* =========================================================
+   T11
+========================================================= */
+
+.player-tier-badge--t11 {
+  background: linear-gradient(180deg, #9956f6 0%, #6c25d7 52%, #4913aa 100%);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -7px 12px rgba(46, 6, 112, 0.25),
+    0 7px 20px rgba(101, 39, 200, 0.3);
+}
+
+/* =========================================================
+   T12
+========================================================= */
+
+.player-tier-badge--t12 {
+  background: linear-gradient(180deg, #ffd95c 0%, #e5a315 52%, #b96d00 100%);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -7px 12px rgba(135, 77, 0, 0.2),
+    0 7px 21px rgba(212, 151, 31, 0.32);
+}
+
+/* =========================================================
+   T13
+========================================================= */
+
+.player-tier-badge--t13 {
+  background: linear-gradient(180deg, #ffb34f 0%, #f27017 52%, #c74404 100%);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.48),
+    inset 0 -7px 12px rgba(139, 51, 0, 0.22),
+    0 7px 22px rgba(233, 99, 17, 0.34);
+}
+
+/* =========================================================
+   T14
+========================================================= */
+
+.player-tier-badge--t14 {
+  background: linear-gradient(180deg, #ff5555 0%, #df152c 52%, #9e0718 100%);
+
+  border: 2px solid #ffcc37;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -7px 13px rgba(91, 0, 12, 0.28),
+    0 0 8px rgba(255, 201, 42, 0.5),
+    0 0 15px rgba(255, 65, 31, 0.28),
+    0 8px 22px rgba(180, 22, 25, 0.33);
+}
+
+.player-tier-badge--compact {
+  min-width: 62px;
+  min-height: 32px;
+  padding-inline: 12px;
+  font-size: 13px;
+}

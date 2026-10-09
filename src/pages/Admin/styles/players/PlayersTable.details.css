@@ -1,0 +1,307 @@
+/* =========================================================
+   ALLIANCE
+========================================================= */
+
+.admin-player-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 58px;
+  min-height: 32px;
+
+  padding: 0 12px;
+
+  border-radius: 999px;
+
+  box-sizing: border-box;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.admin-player-pill--alliance {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 64px;
+  max-width: 100%;
+  min-height: 34px;
+
+  overflow: hidden;
+
+  padding: 0 14px;
+
+  color: #1f67d7;
+
+  background: linear-gradient(180deg, #f2f8ff 0%, #e0efff 52%, #cfe4fb 100%);
+
+  border: 1px solid #c9def5;
+  border-radius: 999px;
+
+  font-size: 14px;
+  font-weight: 900;
+
+  text-transform: none;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 5px 12px rgba(54, 115, 190, 0.1);
+}
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.admin-player-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  min-width: 0;
+}
+
+.admin-player-action {
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 auto;
+
+  width: 38px;
+  height: 38px;
+
+  padding: 0;
+
+  background: transparent;
+
+  border: 0;
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    filter 0.18s ease;
+}
+
+.admin-player-action:hover {
+  transform: translateY(-2px);
+
+  filter: brightness(1.06);
+}
+
+.admin-player-action:active {
+  transform: scale(0.97);
+}
+
+.admin-player-action:focus-visible {
+  outline: 2px solid #4d89ff;
+  outline-offset: 2px;
+}
+
+.admin-player-action--edit,
+.admin-player-action--delete {
+  background: transparent;
+  border: 0;
+}
+
+.admin-player-action__image {
+  display: block;
+
+  width: 28px;
+  height: 28px;
+
+  object-fit: contain;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+/* =========================================================
+   STATES
+========================================================= */
+
+.admin-players-state {
+  width: 100%;
+
+  padding: 36px;
+
+  color: #7089a6;
+
+  text-align: center;
+
+  border: 1px dashed #cbddee;
+  border-radius: 14px;
+
+  box-sizing: border-box;
+}
+
+.admin-players-state--error {
+  color: #cf4d5f;
+
+  background: #fff5f6;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .admin-players-table {
+    width: max-content;
+    min-width: 1080px;
+  }
+
+  .admin-players-table__head,
+  .admin-players-table__row {
+    column-gap: 11px;
+  }
+
+  .admin-players-table__head {
+    padding: 0 14px;
+
+    font-size: 12px;
+  }
+
+  .admin-players-table__row {
+    min-height: 68px;
+
+    padding: 0 14px;
+
+    font-size: 14px;
+  }
+
+  .admin-player-nickname,
+  .admin-player-table-text {
+    font-size: 14px;
+  }
+
+  .admin-player-pill--alliance {
+    min-width: 58px;
+    min-height: 32px;
+
+    padding: 0 10px;
+
+    font-size: 12px;
+  }
+
+  .admin-player-action {
+    width: 34px;
+    height: 34px;
+  }
+
+  .admin-player-action__image {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+  .admin-players-table-wrap {
+    border-radius: 13px;
+  }
+
+  .admin-players-table {
+    width: max-content;
+    min-width: 980px;
+  }
+
+  .admin-players-table__head,
+  .admin-players-table__row {
+    grid-template-columns:
+      145px
+      100px
+      110px
+      70px
+      70px
+      115px
+      115px
+      105px
+      90px
+      90px
+      90px;
+
+    column-gap: 8px;
+  }
+
+  .admin-players-table__head {
+    min-height: 44px;
+
+    padding: 0 12px;
+
+    font-size: 10px;
+  }
+
+  .admin-players-table__row {
+    min-height: 62px;
+
+    padding: 0 12px;
+
+    font-size: 13px;
+  }
+
+  .admin-player-nickname,
+  .admin-player-table-text {
+    font-size: 13px;
+  }
+
+  .admin-player-pill--alliance {
+    min-width: 52px;
+    min-height: 30px;
+
+    padding: 0 8px;
+
+    font-size: 11px;
+  }
+
+  .admin-player-action {
+    width: 32px;
+    height: 32px;
+  }
+
+  .admin-player-action__image {
+    width: 23px;
+    height: 23px;
+  }
+
+  .admin-players-state {
+    padding: 24px 16px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+  .admin-players-table {
+    width: max-content;
+    min-width: 940px;
+  }
+
+  .admin-players-table__head,
+  .admin-players-table__row {
+    grid-template-columns:
+      135px
+      94px
+      104px
+      66px
+      66px
+      110px
+      110px
+      98px
+      84px
+      84px
+      86px;
+  }
+}
+

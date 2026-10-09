@@ -1,0 +1,166 @@
+.extra-squads-toggle {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  margin-bottom: 12px;
+
+  color: #16375d;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.extra-squads-toggle input,
+.extra-squad__enable input {
+  width: 18px;
+  height: 18px;
+
+  accent-color: #347fff;
+}
+
+.extra-squads {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 10px;
+
+  transition: opacity 0.2s ease;
+}
+
+.extra-squads--disabled {
+  opacity: 0.5;
+}
+
+.extra-squad {
+  position: relative;
+
+  min-height: 210px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  gap: 9px;
+
+  padding: 14px;
+
+  overflow: hidden;
+
+  background-color: #eaf4ff;
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+
+  border: 1px solid #a3c3e7;
+  border-radius: 10px;
+}
+
+.extra-squad::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    90deg,
+    rgba(242, 249, 255, 0.94) 0%,
+    rgba(242, 249, 255, 0.66) 36%,
+    rgba(242, 249, 255, 0.16) 68%,
+    rgba(242, 249, 255, 0.01) 100%
+  );
+}
+
+.extra-squad--fighter {
+  background-image: url("/images/registration/fighter.webp");
+}
+
+.extra-squad--rider {
+  background-image: url("/images/registration/rider.webp");
+}
+
+.extra-squad--shooter {
+  background-image: url("/images/registration/shooter.webp");
+}
+
+.extra-squad > * {
+  position: relative;
+
+  z-index: 1;
+}
+
+.extra-squad__title {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  color: #071c3d;
+
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.95);
+}
+
+.extra-squad__title strong {
+  color: #071c3d;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.extra-squad__title svg {
+  color: #176fe5;
+}
+
+.extra-squad__enable {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color: #17385e;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.95);
+}
+
+.extra-squad select {
+  background: rgba(250, 253, 255, 0.96);
+
+  color: #0b1f3a;
+}
+
+.extra-squad select:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.65;
+}
+
+@media (max-width: 850px) {
+  .extra-squads {
+    grid-template-columns: 1fr;
+  }
+
+  .extra-squad {
+    min-height: 230px;
+  }
+}
+
+@media (max-width: 600px) {
+  .extra-squad::before {
+    background: linear-gradient(
+      90deg,
+      rgba(242, 249, 255, 0.96) 0%,
+      rgba(242, 249, 255, 0.75) 55%,
+      rgba(242, 249, 255, 0.14) 100%
+    );
+  }
+
+  .extra-squad {
+    min-height: 210px;
+    background-position: center;
+  }
+}

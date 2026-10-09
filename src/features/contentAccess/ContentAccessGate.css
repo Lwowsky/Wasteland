@@ -1,0 +1,114 @@
+.content-access-container {
+  min-height: 62vh;
+}
+
+.content-access-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 42px 0;
+}
+
+.content-access-panel {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  padding: 42px 28px;
+  text-align: center;
+}
+
+.content-access-icon {
+  width: 68px;
+  height: 68px;
+  display: grid;
+  place-items: center;
+  color: #356cf0;
+  background: linear-gradient(145deg, #edf5ff, #e5ecff);
+  border: 1px solid #cfdef6;
+  border-radius: 20px;
+}
+
+.content-access-panel h1,
+.content-access-panel h2,
+.content-access-panel p {
+  margin: 0;
+}
+
+.content-access-panel h1 {
+  color: #173a66;
+  font-size: clamp(26px, 4vw, 38px);
+}
+
+.content-access-panel h2 {
+  color: #31577f;
+  font-size: 18px;
+}
+
+.content-access-panel p {
+  max-width: 560px;
+  color: #6d8198;
+  line-height: 1.6;
+}
+
+.content-access-form {
+  width: min(100%, 460px);
+  display: grid;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.content-access-form label {
+  display: grid;
+  gap: 7px;
+  text-align: left;
+  color: #284d75;
+  font-weight: 800;
+}
+
+.content-access-form input {
+  min-height: 48px;
+  padding: 0 14px;
+  color: #173a66;
+  background: #ffffff;
+  border: 1px solid #c9daee;
+  border-radius: 12px;
+  outline: none;
+  font: inherit;
+  letter-spacing: 0.04em;
+}
+
+.content-access-form input:focus {
+  border-color: #5a7cf2;
+  box-shadow: 0 0 0 3px rgba(90, 124, 242, 0.13);
+}
+
+.content-access-form button {
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 18px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #2778f4, #6758ed);
+  border: 0;
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.content-access-form button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.content-access-error {
+  width: min(100%, 560px);
+  margin-top: 6px;
+  padding: 11px 13px;
+  color: #a6293a;
+  background: #fff2f4;
+  border: 1px solid #efc0c8;
+  border-radius: 11px;
+  font-weight: 800;
+}

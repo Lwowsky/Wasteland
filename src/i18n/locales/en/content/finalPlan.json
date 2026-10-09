@@ -1,0 +1,40 @@
+{
+  "title": "Final plan",
+  "shift1": "Shift 1",
+  "shift2": "Shift 2",
+  "firstHalf": "First half",
+  "secondHalf": "Second half",
+  "planLanguage": "Plan language",
+  "planLanguageText": "The primary language follows the website language. Extra languages can be added.",
+  "siteLanguage": "Website language",
+  "share": "Share",
+  "typeByCaptain": "Type selected by captain",
+  "noPlayers": "No assigned players",
+  "towers": {
+    "hub": "Tech Hub",
+    "north": "North Turret",
+    "west": "West Turret",
+    "east": "East Turret",
+    "south": "South Turret"
+  },
+  "troops": {
+    "fighter": "Fighters",
+    "rider": "Riders",
+    "shooter": "Shooters"
+  },
+  "columns": {
+    "nickname": "Nick",
+    "alliance": "Alliance",
+    "tier": "Tier",
+    "march": "March"
+  },
+  "signatureAlt": "Developed by Lwowsky",
+  "formats": {
+    "png": "PNG",
+    "txt": "TXT"
+  },
+  "textExport": {
+    "captain": "Captain: {{name}}",
+    "signature": "Developed by Lwowsky"
+  }
+}

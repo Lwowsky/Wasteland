@@ -1,0 +1,20 @@
+.route-loading {
+  min-height: 44vh;
+  display: grid;
+  place-items: center;
+}
+
+.route-loading__spinner {
+  width: 38px;
+  height: 38px;
+  border: 3px solid rgba(52, 127, 255, 0.2);
+  border-top-color: #347fff;
+  border-radius: 50%;
+  animation: route-loading-spin 0.75s linear infinite;
+}
+
+@keyframes route-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

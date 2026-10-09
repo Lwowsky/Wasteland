@@ -1,0 +1,463 @@
+.admin-registration-settings {
+  width: 100%;
+  min-width: 0;
+}
+
+.registration-settings-page-head {
+  gap: 18px;
+  margin-bottom: 16px;
+}
+
+.admin-registration-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding: 11px 14px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+
+.admin-registration-message--error {
+  color: #a52738;
+  background: #fff0f2;
+  border: 1px solid #f2c6cd;
+}
+
+/* =========================================================
+   OVERVIEW
+========================================================= */
+
+.registration-overview-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.registration-overview-card {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid #d7e5f4;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #ffffff 0%, #f9fbff 100%);
+  box-shadow: 0 9px 24px rgba(41, 85, 128, 0.05);
+}
+
+.registration-overview-card--wide {
+  grid-column: 1 / -1;
+}
+
+.registration-overview-card__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.registration-overview-card__identity {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  gap: 11px;
+}
+
+.registration-overview-card__icon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  place-items: center;
+  color: #2f78df;
+  background: #edf5ff;
+  border-radius: 12px;
+}
+
+.registration-overview-card__identity h3 {
+  margin: 0;
+  color: #173a63;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.registration-overview-card__identity p {
+  margin: 4px 0 0;
+  color: #7188a2;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.registration-overview-card__body {
+  margin-top: 13px;
+  padding-top: 13px;
+  border-top: 1px solid #e5edf6;
+}
+
+.registration-configure-button {
+  display: inline-flex;
+  min-height: 38px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 13px;
+  border: 1px solid #b8d3f3;
+  border-radius: 10px;
+  color: #2767b5;
+  background: #eef6ff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.registration-configure-button:hover:not(:disabled) {
+  background: #e4f1ff;
+}
+
+.registration-configure-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.registration-cycle-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(112px, 0.52fr);
+  gap: 9px;
+  align-items: stretch;
+}
+
+.registration-cycle-summary__item {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 11px;
+  border: 1px solid #dce8f4;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #ffffff 0%, #f8fbff 100%);
+}
+
+.registration-cycle-summary__icon {
+  display: block;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(35, 76, 145, 0.16));
+}
+
+.registration-cycle-summary__content {
+  min-width: 0;
+}
+
+.registration-cycle-summary__content > span,
+.registration-cycle-summary__content > small {
+  display: block;
+}
+
+.registration-cycle-summary__content > span {
+  margin-bottom: 4px;
+  color: #7b90a6;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.registration-cycle-summary__content > strong {
+  display: block;
+  color: #173a63;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.registration-cycle-summary__content > small {
+  margin-top: 3px;
+  color: #67809a;
+  font-size: 12px;
+}
+
+.registration-summary-badge {
+  display: flex;
+  min-width: 112px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  border: 1px solid #b8d3f3;
+  border-radius: 12px;
+  color: #2869b9;
+  background: linear-gradient(145deg, #eef6ff 0%, #e7efff 100%);
+  text-align: center;
+}
+
+.registration-summary-badge img {
+  display: block;
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(46, 83, 175, 0.16));
+}
+
+.registration-summary-badge span {
+  color: #2869b9;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.registration-summary-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.registration-summary-tags span {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  padding: 0 10px;
+  border: 1px solid #bdd7f5;
+  border-radius: 999px;
+  color: #2d6198;
+  background: #eef6ff;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.registration-summary-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 16px;
+  color: #607b98;
+  font-size: 14px;
+}
+
+.registration-summary-details b {
+  color: #244e79;
+}
+
+
+@media (max-width: 820px) {
+  .registration-overview-list {
+    grid-template-columns: 1fr;
+  }
+
+  .registration-overview-card--wide {
+    grid-column: auto;
+  }
+
+  .registration-cycle-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .registration-summary-badge {
+    min-height: 50px;
+  }
+
+  .registration-cycle-summary__icon {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .registration-summary-badge img {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+@media (max-width: 620px) {
+  .registration-overview-card__head {
+    flex-direction: column;
+  }
+
+  .registration-configure-button {
+    width: 100%;
+  }
+
+  .registration-cycle-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+.registration-defaults-button {
+  flex: 0 0 auto;
+}
+
+.registration-settings-toast {
+  position: fixed;
+  top: 22px;
+  right: 22px;
+  z-index: 1600;
+  max-width: min(420px, calc(100vw - 32px));
+  padding: 13px 16px;
+  border: 1px solid #a9ddbd;
+  border-radius: 14px;
+  background: #effbf3;
+  color: #1f6b3b;
+  font-size: 15px;
+  font-weight: 800;
+  box-shadow: 0 14px 34px rgba(26, 74, 47, 0.16);
+}
+
+@media (max-width: 680px) {
+  .registration-settings-page-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .registration-defaults-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .registration-settings-toast {
+    top: 12px;
+    right: 12px;
+    left: 12px;
+    max-width: none;
+  }
+}
+
+/* =========================================================
+   REGISTRATION SETTINGS — FANTASY ACCENT ICONS
+   Scoped only to the registration settings tab.
+========================================================= */
+.admin-registration-settings .registration-overview-card {
+  position: relative;
+  overflow: hidden;
+  border-color: #cfe0f3;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(84, 101, 239, 0.075), transparent 34%),
+    linear-gradient(145deg, #ffffff 0%, #f8fbff 100%);
+}
+
+.admin-registration-settings .registration-overview-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.admin-registration-settings .registration-overview-card__icon {
+  width: 46px;
+  height: 46px;
+  flex-basis: 46px;
+  overflow: hidden;
+  padding: 4px;
+  border: 1px solid rgba(116, 158, 219, 0.28);
+  border-radius: 14px;
+  background: linear-gradient(145deg, #eaf4ff, #dfeaff);
+  box-shadow:
+    0 8px 18px rgba(42, 91, 156, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.admin-registration-settings .registration-overview-card__icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: saturate(1.06) contrast(1.03);
+}
+
+.admin-registration-settings .registration-configure-button,
+.admin-registration-settings .registration-defaults-button {
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.admin-registration-settings .registration-configure-button:hover:not(:disabled),
+.admin-registration-settings .registration-defaults-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: #91bdf2;
+  background: #e8f3ff;
+  box-shadow: 0 8px 18px rgba(43, 106, 184, 0.14);
+}
+
+.admin-registration-settings .registration-button-icon {
+  display: block;
+  width: 23px;
+  height: 23px;
+  object-fit: contain;
+}
+
+/* =========================================================
+   PATCH 028.1 — cycle summary photo backgrounds
+   Reuses the same existing background artwork as Cycle modal.
+========================================================= */
+
+.registration-cycle-summary__item {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow:
+    0 7px 18px rgba(32, 72, 122, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.registration-cycle-summary__item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-position: center;
+  background-size: cover;
+  transform: scale(1.035);
+  opacity: 0.48;
+  filter: saturate(1.04) contrast(0.96);
+}
+
+.registration-cycle-summary__item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.92) 0%,
+    rgba(255, 255, 255, 0.82) 54%,
+    rgba(255, 255, 255, 0.68) 100%
+  );
+}
+
+.registration-cycle-summary__item--blue::before {
+  background-image: url("/images/admin/stats/flexible-shift.webp");
+}
+
+.registration-cycle-summary__item--red::before {
+  background-image: url("/images/admin/stats/shift-3.webp");
+}
+
+.registration-cycle-summary__item--gold::before {
+  background-image: url("/images/admin/stats/shift-1.webp");
+}
+
+.registration-cycle-summary__item--blue {
+  border-color: rgba(91, 168, 240, 0.52);
+}
+
+.registration-cycle-summary__item--red {
+  border-color: rgba(225, 102, 126, 0.44);
+}
+
+.registration-cycle-summary__item--gold {
+  border-color: rgba(218, 163, 70, 0.48);
+}
+
+.registration-cycle-summary__item .registration-cycle-summary__icon,
+.registration-cycle-summary__item .registration-cycle-summary__content {
+  position: relative;
+  z-index: 1;
+}

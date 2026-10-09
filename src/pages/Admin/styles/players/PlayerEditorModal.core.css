@@ -1,0 +1,290 @@
+/* =========================================================
+   PLAYER EDITOR MODAL
+========================================================= */
+
+.player-editor-site-modal {
+  width: min(1080px, calc(100vw - 48px));
+
+  min-width: 0;
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.player-editor-form {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+}
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.player-editor-section {
+  width: 100%;
+  min-width: 0;
+
+  padding: 20px;
+
+  overflow: hidden;
+
+  background: rgba(255, 255, 255, 0.88);
+
+  border: 1px solid #d7e7f6;
+  border-radius: 18px;
+}
+
+.player-editor-section--participation {
+  background: linear-gradient(135deg, #f4f8ff, #edf5ff);
+}
+
+.player-editor-section__heading {
+  min-width: 0;
+
+  margin-bottom: 16px;
+}
+
+.player-editor-section__heading h3 {
+  margin: 0;
+
+  color: #173d6b;
+
+  font-size: 19px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.player-editor-section__heading p {
+  margin: 4px 0 0;
+
+  color: #758aa5;
+
+  font-size: 13px;
+  line-height: 1.45;
+
+  overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   GRIDS
+========================================================= */
+
+.player-editor-participation-grid,
+.player-editor-fields-grid,
+.player-extra-squads {
+  width: 100%;
+  min-width: 0;
+}
+
+.player-editor-participation-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+.player-editor-fields-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 15px;
+}
+
+/* =========================================================
+   FIELD
+========================================================= */
+
+.player-editor-field {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.player-editor-field > span {
+  min-width: 0;
+
+  color: #506d8d;
+
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.25;
+
+  overflow-wrap: anywhere;
+}
+
+.player-editor-field input,
+.player-editor-field select,
+.player-editor-field textarea {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+
+  box-sizing: border-box;
+
+  color: #183e6b;
+  background: #ffffff;
+
+  border: 1px solid #ccdeef;
+  border-radius: 12px;
+
+  outline: 0;
+
+  font: inherit;
+  font-weight: 600;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.player-editor-field input,
+.player-editor-field select {
+  height: 46px;
+
+  padding: 0 13px;
+}
+
+.player-editor-field textarea {
+  min-height: 90px;
+
+  padding: 12px 13px;
+
+  resize: vertical;
+}
+
+.player-editor-field input:focus,
+.player-editor-field select:focus,
+.player-editor-field textarea:focus {
+  border-color: #6aa4f4;
+
+  box-shadow: 0 0 0 3px rgba(73, 138, 237, 0.12);
+}
+
+.player-editor-field input:disabled,
+.player-editor-field select:disabled,
+.player-editor-field textarea:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.65;
+}
+
+/* =========================================================
+   EXTRA SQUADS
+========================================================= */
+
+.player-extra-squads {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.player-extra-squad {
+  width: 100%;
+  min-width: 0;
+  min-height: 68px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding: 12px 14px;
+
+  background: #f9fcff;
+
+  border: 1px solid #d4e3f1;
+  border-radius: 14px;
+}
+
+.player-extra-squad--active {
+  background: #f0f6ff;
+
+  border-color: #91b9f5;
+}
+
+.player-extra-squad--main {
+  background: #f2f5f8;
+
+  opacity: 0.72;
+}
+
+/* =========================================================
+   EXTRA SQUAD TOGGLE
+========================================================= */
+
+.player-extra-squad__toggle {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  color: #284e79;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.player-extra-squad__toggle input {
+  width: 18px;
+  height: 18px;
+
+  flex: 0 0 auto;
+
+  accent-color: #4b82ef;
+}
+
+.player-extra-squad__toggle span {
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   EXTRA SQUAD TIER
+========================================================= */
+
+.player-extra-squad select {
+  min-width: 84px;
+  max-width: 110px;
+  height: 40px;
+
+  flex: 0 0 auto;
+
+  padding: 0 9px;
+
+  color: #2d5682;
+  background: #ffffff;
+
+  border: 1px solid #cbdced;
+  border-radius: 10px;
+
+  font: inherit;
+  font-weight: 700;
+}
+
+.player-extra-squad select:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.55;
+}
+

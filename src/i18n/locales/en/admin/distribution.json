@@ -1,0 +1,101 @@
+{
+  "title": "Turret distribution",
+  "description": "Plan turrets, captains, reserve players and the final distribution.",
+  "localNote": "This is currently a local UI mock without Firebase. Distribution logic will be connected after the design is finished.",
+  "subtabs": {
+    "settings": "Settings",
+    "turrets": "Turret settings",
+    "players": "Player status",
+    "final": "Final plan"
+  },
+  "players": "players",
+  "towers": {
+    "hub": "Tech Hub",
+    "north": "North Turret",
+    "west": "West Turret",
+    "east": "East Turret",
+    "south": "South Turret"
+  },
+  "summary": {
+    "shift1": "Shift 1",
+    "shift2": "Shift 2",
+    "total": "Total",
+    "inTurrets": "In turrets",
+    "separate": "Separate from the main plan",
+    "reserve": "Reserve",
+    "flexible": "Any shift"
+  },
+  "actions": {
+    "redistribute": "Apply redistribution",
+    "fill": "Fill turrets",
+    "publish": "Publish",
+    "restore": "Restore published",
+    "clear": "Clear"
+  },
+  "refill": {
+    "title": "Turret refill mode",
+    "mode": "Mode",
+    "balanced": "Balanced",
+    "maxMarch": "Maximum march",
+    "manual": "Manual",
+    "onlyCaptains": "Captains only in captain slot",
+    "respectShift": "Respect player shift",
+    "sameTroopType": "Same troop type only",
+    "allowFlexible": "Use flexible-shift players"
+  },
+  "limits": {
+    "allianceTitle": "Flexible players and alliance player limits",
+    "manual": "Edit limits manually",
+    "addShift1": "Add to shift 1",
+    "addShift2": "Add to shift 2",
+    "tierTitle": "March limit by tier",
+    "useSaved": "Use saved limits",
+    "tierText": "These limits can be reviewed after imports or player-data updates."
+  },
+  "turret": {
+    "noCaptain": "No captain",
+    "typeByCaptain": "Type selected by captain",
+    "captain": "Captain",
+    "setCaptain": "Set captain",
+    "autofill": "Autofill",
+    "clear": "Clear turret",
+    "captainMarch": "Captain march",
+    "rally": "Rally size",
+    "total": "Total",
+    "free": "Free space",
+    "settingsAndLimits": "Turret settings · march limits by tier",
+    "addManual": "Add player manually",
+    "logicLater": "The logic for this block will be added after Firebase is connected.",
+    "playersInTurret": "Players in turret",
+    "captainAndPlayers": "Captain and players",
+    "player": "Player"
+  },
+  "status": {
+    "inTurrets": "In turrets",
+    "reserve": "Outside turrets",
+    "total": "Total",
+    "realNow": "Currently assigned to turrets",
+    "notAssigned": "Not assigned to a turret",
+    "allPlayers": "Total players",
+    "all": "All",
+    "toReserve": "To reserve",
+    "assign": "Assign"
+  },
+  "final": {
+    "language": "Plan language",
+    "publish": "Publish",
+    "firstHalf": "First half",
+    "noPlayers": "No assigned players"
+  },
+  "columns": {
+    "player": "Player",
+    "alliance": "Alliance",
+    "role": "Role",
+    "roleTier": "Role / Tier",
+    "tier": "Tier",
+    "march": "March",
+    "status": "Status",
+    "turret": "Turret",
+    "actions": "Actions"
+  }
+}

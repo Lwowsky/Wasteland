@@ -1,0 +1,248 @@
+/* =========================
+   TABLE
+   ========================= */
+
+.players-table {
+  width: 100%;
+  max-width: 1180px;
+
+  margin: 0 auto;
+
+  padding: 12px 16px;
+
+  background: linear-gradient(145deg, #ffffff, #f3f8fe);
+
+  border: 1px solid #c7daf3;
+  border-radius: 18px;
+
+  box-shadow: 0 8px 22px rgba(45, 87, 140, 0.06);
+}
+
+.players-table__head,
+.players-table__row {
+  display: grid;
+  grid-template-columns:
+    minmax(180px, 1.5fr)
+    minmax(110px, 0.9fr)
+    minmax(112px, 0.9fr)
+    minmax(90px, 0.7fr)
+    minmax(116px, 0.95fr)
+    minmax(104px, 0.85fr)
+    minmax(120px, 1fr);
+  align-items: center;
+  column-gap: 18px;
+}
+
+.players-table__head {
+  min-height: 42px;
+
+  padding: 0 12px;
+
+  color: #6d82a2;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  border-bottom: 1px solid #d9e7f5;
+}
+
+.players-table__row {
+  min-height: 68px;
+
+  padding: 10px 12px;
+
+  border-bottom: 1px solid #e1ebf6;
+}
+
+.players-table__row:last-child {
+  border-bottom: none;
+}
+
+.players-table__nickname {
+  color: #102b55;
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.players-table__time {
+  color: #61758f;
+
+  font-size: 15px;
+
+  white-space: nowrap;
+}
+
+/* =========================
+   BADGES
+   ========================= */
+
+.player-badge {
+  min-width: 70px;
+  min-height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 7px 14px;
+
+  border-radius: 999px;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  line-height: 1;
+
+  white-space: nowrap;
+
+  box-shadow: 0 4px 12px rgba(52, 91, 145, 0.08);
+}
+
+/* ALLIANCE */
+
+.player-badge--alliance {
+  color: #245eb8;
+
+  background: linear-gradient(145deg, #f7fbff, #e5f0ff);
+
+  border: 1px solid #c4d9f4;
+}
+
+/* Shared glossy troop / tier / shift / captain badges live in
+   src/components/PlayerBadges. The public table keeps only the alliance pill here. */
+
+/* EMPTY */
+
+.players-table__empty {
+  padding: 28px 10px;
+
+  color: #687e98;
+
+  font-size: 14px;
+
+  text-align: center;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 1200px) {
+  .players-stats-groups {
+    grid-template-columns: 1fr;
+  }
+
+  .players-stat-card {
+    height: 130px;
+  }
+
+  .players-filters__row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .players-filter--search {
+    grid-column: span 2;
+  }
+
+  .players-filters__reset {
+    width: 100%;
+  }
+
+  .players-table {
+    overflow-x: auto;
+  }
+
+  .players-table__head,
+  .players-table__row {
+    min-width: 940px;
+  }
+}
+
+@media (max-width: 700px) {
+  .players-page__title {
+    font-size: 24px;
+  }
+
+  .players-stats-group {
+    padding: 10px;
+  }
+
+  .players-stats-group__cards--two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .players-stats-group__cards--three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .players-stat-card {
+    height: 112px;
+  }
+
+  .players-stat-card__content {
+    padding: 10px 8px;
+  }
+
+  .players-stat-card__content span {
+    max-width: 80%;
+    font-size: 9px;
+  }
+
+  .players-stat-card__content strong {
+    font-size: 28px;
+  }
+
+  .players-filters__row {
+    grid-template-columns: 1fr;
+  }
+
+  .players-filter--search {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .players-stats-group__cards--three {
+    gap: 6px;
+  }
+
+  .players-stat-card {
+    height: 105px;
+  }
+
+  .players-stat-card__content strong {
+    font-size: 25px;
+  }
+}
+
+.players-table__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 8px 4px;
+  color: #395779;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.players-table__pagination button {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #176fe5;
+  background: #eef6ff;
+  border: 1px solid #bfd6ef;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.players-table__pagination button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

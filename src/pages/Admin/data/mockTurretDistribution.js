@@ -1,0 +1,93 @@
+export const TURRET_IDS = ["hub", "north", "west", "east", "south"];
+
+export const MOCK_TURRET_PLAYERS = [
+  {
+    id: "1",
+    nickname: "Lwowsky",
+    alliance: "YYY",
+    troopType: "fighter",
+    tier: "T12",
+    marchSize: 473100,
+    rallySize: 2585000,
+    shift: "shift1",
+    captain: true,
+    turretId: "hub",
+    inReserve: false,
+  },
+  {
+    id: "2",
+    nickname: "Shadow",
+    alliance: "MIR",
+    troopType: "shooter",
+    tier: "T11",
+    marchSize: 420000,
+    rallySize: 2100000,
+    shift: "shift2",
+    captain: false,
+    turretId: null,
+    inReserve: true,
+  },
+  {
+    id: "3",
+    nickname: "Kira",
+    alliance: "R5",
+    troopType: "rider",
+    tier: "T10",
+    marchSize: 395000,
+    rallySize: 1900000,
+    shift: "flexible",
+    captain: false,
+    turretId: null,
+    inReserve: true,
+  },
+];
+
+export const MOCK_TURRETS = {
+  shift1: {
+    hub: {
+      id: "hub",
+      troopType: "fighter",
+      captainId: "1",
+      playerIds: ["1"],
+      onlyCaptains: true,
+      respectShift: true,
+      sameTroopType: true,
+      allowFlexible: false,
+    },
+    north: { id: "north", troopType: null, captainId: null, playerIds: [] },
+    west: { id: "west", troopType: null, captainId: null, playerIds: [] },
+    east: { id: "east", troopType: null, captainId: null, playerIds: [] },
+    south: { id: "south", troopType: null, captainId: null, playerIds: [] },
+  },
+  shift2: {
+    hub: { id: "hub", troopType: null, captainId: null, playerIds: [] },
+    north: { id: "north", troopType: null, captainId: null, playerIds: [] },
+    west: { id: "west", troopType: null, captainId: null, playerIds: [] },
+    east: { id: "east", troopType: null, captainId: null, playerIds: [] },
+    south: { id: "south", troopType: null, captainId: null, playerIds: [] },
+  },
+};
+
+export const DEFAULT_TURRET_DISTRIBUTION_SETTINGS = {
+  mode: "balanced",
+  onlyCaptains: true,
+  respectShift: true,
+  sameTroopType: true,
+  allowFlexible: false,
+  allianceLimits: false,
+  shift1Limit: 100,
+  shift2Limit: 100,
+  shift1Extra: 0,
+  shift2Extra: 0,
+  tierLimitsEnabled: false,
+  tierLimits: {
+    T14: 300000,
+    T13: 250000,
+    T12: 200000,
+    T11: 150000,
+    T10: 100000,
+    T9: 80000,
+    T8: 60000,
+    T7: 40000,
+  },
+};

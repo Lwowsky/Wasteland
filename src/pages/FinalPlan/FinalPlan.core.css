@@ -1,0 +1,281 @@
+.final-plan-container {
+  max-width: 1580px;
+}
+
+.final-plan-page {
+  position: relative;
+
+  left: 50%;
+
+  width: min(1580px, calc(100vw - 40px));
+
+  max-width: none;
+
+  transform: translateX(-50%);
+}
+
+.final-plan-panel {
+  width: 100%;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+.final-plan-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 18px;
+}
+
+.final-plan-header h1 {
+  margin: 0;
+
+  color: #102b55;
+
+  font-size: 30px;
+}
+
+/* =========================
+   TOOLBAR
+   ========================= */
+
+.final-plan-toolbar {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 18px;
+  padding: 12px;
+
+  background: linear-gradient(145deg, #ffffff, #edf6ff);
+
+  border: 1px solid #c4daf1;
+  border-radius: 16px;
+}
+
+.final-plan-toolbar__button {
+  min-height: 44px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 9px 16px;
+
+  color: #365271;
+
+  background: #f8fbff;
+
+  border: 1px solid #bdd2e9;
+  border-radius: 11px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.final-plan-toolbar__button:hover {
+  color: #176fe5;
+
+  border-color: #86afe0;
+}
+
+.final-plan-toolbar__button--active {
+  color: #ffffff;
+
+  background: linear-gradient(135deg, #347fff, #5a67ef);
+
+  border-color: transparent;
+
+  box-shadow: 0 6px 15px rgba(52, 127, 255, 0.22);
+}
+
+/* =========================
+   LANGUAGE
+   ========================= */
+
+.final-plan-language {
+  position: relative;
+}
+
+
+.final-plan-language-menu {
+  position: absolute;
+
+  top: calc(100% + 8px);
+  left: 0;
+
+  z-index: 30;
+
+  width: 340px;
+
+  padding: 14px;
+
+  background: rgba(248, 252, 255, 0.98);
+
+  border: 1px solid #bdd3eb;
+  border-radius: 15px;
+
+  box-shadow: 0 18px 40px rgba(32, 68, 115, 0.18);
+}
+
+.final-plan-language-menu__head {
+  margin-bottom: 12px;
+}
+
+.final-plan-language-menu__head strong {
+  color: #15355f;
+
+  font-size: 15px;
+}
+
+.final-plan-language-menu__head p {
+  margin: 3px 0 0;
+
+  color: #687e98;
+
+  font-size: 11px;
+}
+
+.final-plan-language-list {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 7px;
+}
+
+.final-plan-language-option {
+  min-height: 44px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 8px 10px;
+
+  color: #45617e;
+
+  background: #ffffff;
+
+  border: 1px solid #d0dfef;
+  border-radius: 9px;
+
+  cursor: pointer;
+}
+
+.final-plan-language-option span {
+  flex: 1;
+
+  text-align: left;
+
+  font-weight: 700;
+}
+
+.final-plan-language-option small {
+  color: #7190b0;
+
+  font-size: 9px;
+}
+
+.final-plan-language-option--active {
+  color: #176fe5;
+
+  background: #edf5ff;
+
+  border-color: #9fc0e8;
+}
+
+.final-plan-language-option:disabled {
+  cursor: default;
+
+  opacity: 1;
+}
+
+/* =========================
+   BOARD
+   ========================= */
+
+.final-plan-board {
+  width: 100%;
+
+  padding: 20px;
+
+  overflow: hidden;
+
+  background: linear-gradient(180deg, #f8fbff, #e7f1fc);
+
+  border: 1px solid #bad3ed;
+  border-radius: 19px;
+
+  box-sizing: border-box;
+}
+
+.final-plan-board__title {
+  position: relative;
+
+  margin: 0 0 18px;
+
+  color: #17345e;
+
+  font-size: 22px;
+  font-weight: 900;
+
+  text-align: center;
+}
+
+.final-plan-board__title::before,
+.final-plan-board__title::after {
+  content: "";
+
+  position: absolute;
+
+  top: 50%;
+
+  width: 19%;
+  height: 1px;
+
+  background: linear-gradient(90deg, transparent, #8db3df);
+}
+
+.final-plan-board__title::before {
+  left: 0;
+}
+
+.final-plan-board__title::after {
+  right: 0;
+
+  transform: rotate(180deg);
+}
+
+/* =========================
+   TOWERS
+   ========================= */
+
+.final-plan-towers {
+  display: grid;
+
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+
+  gap: 12px;
+
+  align-items: stretch;
+
+  width: 100%;
+}
+

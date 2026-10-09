@@ -1,0 +1,257 @@
+/* =========================================================
+   GRID
+========================================================= */
+
+.region-alliance-grid {
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.region-alliance-card {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+
+  overflow: hidden;
+
+  padding: 16px;
+
+  border: 1px solid #d5e4f3;
+  border-radius: 18px;
+
+  background: linear-gradient(145deg, #ffffff 0%, #f7fbff 100%);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 12px 28px rgba(37, 81, 126, 0.06);
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.region-alliance-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 17px 34px rgba(37, 81, 126, 0.1);
+}
+
+.region-alliance-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 4px;
+
+  background: linear-gradient(90deg, #387ff2 0%, #665be9 50%, #22bfc9 100%);
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.region-alliance-card__header {
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(130px, 1fr)
+    minmax(86px, 0.55fr)
+    minmax(86px, 0.55fr);
+
+  gap: 9px;
+
+  align-items: stretch;
+
+  margin-bottom: 14px;
+}
+
+/* =========================================================
+   ALLIANCE
+========================================================= */
+
+.region-alliance-card__identity {
+  min-width: 0;
+  min-height: 78px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 10px 11px;
+
+  background: linear-gradient(145deg, #ffffff, #f5f9ff);
+
+  border: 1px solid #dce8f4;
+  border-radius: 15px;
+}
+
+.region-alliance-card__main-icon {
+  width: 48px;
+  height: 48px;
+
+  flex: 0 0 auto;
+
+  display: grid;
+  place-items: center;
+}
+
+.region-alliance-card__main-image {
+  width: 48px;
+  height: 48px;
+
+  display: block;
+
+  object-fit: contain;
+}
+
+.region-alliance-card__identity-text {
+  min-width: 0;
+}
+
+.region-alliance-card__identity-text > span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #7389a2;
+
+  font-size: 10px;
+  font-weight: 900;
+
+  letter-spacing: 0.04em;
+
+  text-transform: uppercase;
+}
+
+.region-alliance-card__identity h3 {
+  margin: 0;
+
+  max-width: 100%;
+
+  overflow: hidden;
+
+  color: #173b68;
+
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1.1;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   PLAYERS + CAPTAINS
+========================================================= */
+
+.region-alliance-card__compact-stat {
+  min-width: 0;
+  min-height: 78px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 4px;
+
+  padding: 8px;
+
+  background: linear-gradient(145deg, #ffffff, #f6faff);
+
+  border: 1px solid #dce8f4;
+  border-radius: 15px;
+
+  cursor: default;
+}
+
+.region-alliance-card__compact-stat strong {
+  color: #173c68;
+
+  font-size: 21px;
+  font-weight: 900;
+  line-height: 1;
+
+  font-variant-numeric: tabular-nums;
+}
+
+.region-alliance-card__stat-image {
+  width: 48px;
+  height: 48px;
+
+  display: block;
+
+  object-fit: contain;
+
+  flex: 0 0 auto;
+}
+
+/* =========================================================
+   BREAKDOWN
+========================================================= */
+
+.region-alliance-card__breakdown {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+/* =========================================================
+   SHIFT ROW
+========================================================= */
+
+.region-alliance-card__shift-row {
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(78px, 1fr));
+
+  gap: 9px;
+}
+
+/* =========================================================
+   TROOP ROW
+========================================================= */
+
+.region-alliance-card__troop-row {
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 9px;
+
+  padding-top: 10px;
+
+  border-top: 1px solid #dde8f3;
+}
+

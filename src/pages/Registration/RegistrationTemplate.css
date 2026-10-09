@@ -1,0 +1,49 @@
+.registration-template-save {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 12px;
+}
+
+.registration-template-save__button {
+  min-height: 42px;
+
+  padding: 9px 16px;
+
+  color: #176fe5;
+  background: #eef5ff;
+
+  border: 1px solid #b8d0ee;
+  border-radius: 9px;
+
+  font-weight: 700;
+}
+
+.registration-template-save__button:hover:not(:disabled) {
+  background: #e2efff;
+}
+
+.registration-template-save__button:disabled {
+  opacity: 0.45;
+
+  cursor: default;
+}
+
+.registration-template-save__message {
+  color: #178653;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .registration-template-save {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .registration-template-save__button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,208 @@
+
+.home-recent-table {
+  width: 100%;
+}
+
+.home-recent-head,
+.home-recent-row {
+  display: grid;
+  grid-template-columns:
+    minmax(85px, 1.3fr)
+    52px
+    minmax(70px, 0.9fr)
+    46px
+    82px;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+.home-recent-head {
+  padding: 0 8px 8px;
+
+  color: #6b7f99;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+.home-recent-row {
+  min-height: 48px;
+
+  padding: 8px;
+
+  border-top: 1px solid #dce8f5;
+}
+
+.home-recent-row strong {
+  overflow: hidden;
+
+  color: #18355f;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-recent-row > span {
+  overflow: hidden;
+
+  color: #526985;
+
+  font-size: 12px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-recent-row > .home-recent-alliance {
+  color: #18355f;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+.home-recent-row > .home-recent-tier {
+  color: #176fe5;
+
+  font-size: 13px;
+}
+
+.home-recent-row > .home-recent-time {
+  color: #667b96;
+
+  text-align: right;
+
+  white-space: nowrap;
+}
+
+/* NAVIGATION */
+
+.home-navigation {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+
+  margin-top: 16px;
+}
+
+.home-nav-card {
+  min-height: 130px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  position: relative;
+
+  padding: 22px;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.home-nav-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 12px 30px rgba(45, 87, 140, 0.14);
+}
+
+.home-nav-card--registration {
+  background: linear-gradient(135deg, #ffffff, #e6f1ff);
+}
+
+.home-nav-card--players {
+  background: linear-gradient(135deg, #ffffff, #e5f3ff);
+}
+
+.home-nav-card--plan {
+  background: linear-gradient(135deg, #fffdf8, #ffedda);
+}
+
+.home-nav-card--settings {
+  background: linear-gradient(135deg, #faf9ff, #eee9ff);
+}
+
+.home-nav-card__icon {
+  width: 60px;
+  height: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  color: #ffffff;
+
+  background: linear-gradient(135deg, #287cff, #566dff);
+
+  border-radius: 14px;
+}
+
+.home-nav-card--plan .home-nav-card__icon {
+  background: linear-gradient(135deg, #ff9f36, #f27b14);
+}
+
+.home-nav-card--settings .home-nav-card__icon {
+  background: linear-gradient(135deg, #7458ee, #5e47d8);
+}
+
+.home-nav-card__content {
+  min-width: 0;
+}
+
+.home-nav-card h2 {
+  margin: 0 0 5px;
+
+  color: #102b55;
+
+  font-size: 22px;
+}
+
+.home-nav-card p {
+  margin: 0;
+
+  max-width: 420px;
+
+  color: #536b88;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.home-nav-card__arrow {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+
+  right: 18px;
+
+  color: #176fe5;
+  background: rgba(255, 255, 255, 0.72);
+
+  border: 1px solid rgba(70, 130, 220, 0.24);
+  border-radius: 50%;
+
+  font-size: 20px;
+}
+
+.home-loading {
+  color: #536b88;
+
+  text-align: center;
+}
+

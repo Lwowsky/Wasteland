@@ -1,0 +1,220 @@
+/* =========================================================
+   PLAYERS FILTERS
+========================================================= */
+
+.admin-players-filters {
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(220px, 1.45fr)
+    repeat(5, minmax(125px, 0.85fr))
+    minmax(110px, 0.65fr)
+    auto;
+
+  gap: 10px;
+
+  margin-bottom: 14px;
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.admin-players-search {
+  min-width: 0;
+  min-height: 46px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 0 13px;
+
+  color: #7190b2;
+  background: #ffffff;
+
+  border: 1px solid #cfe0f3;
+  border-radius: 11px;
+}
+
+.admin-players-search svg {
+  flex: 0 0 auto;
+}
+
+.admin-players-search input {
+  width: 100%;
+  min-width: 0;
+
+  padding: 0;
+
+  color: #183a68;
+  background: transparent;
+
+  border: 0;
+  outline: 0;
+
+  font: inherit;
+  font-size: 15px;
+}
+
+.admin-players-search input::placeholder {
+  color: #849bb4;
+}
+
+/* =========================================================
+   SELECTS
+========================================================= */
+
+.admin-players-filters select {
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+
+  padding: 0 12px;
+
+  overflow: hidden;
+
+  color: #244a77;
+  background: #ffffff;
+
+  border: 1px solid #cfe0f3;
+  border-radius: 11px;
+
+  font: inherit;
+  font-size: 15px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  cursor: pointer;
+}
+
+.admin-players-page-size {
+  font-weight: 700;
+}
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+.admin-players-search:focus-within,
+.admin-players-filters select:focus-visible {
+  border-color: #7fb0f2;
+
+  box-shadow: 0 0 0 3px rgba(60, 121, 232, 0.1);
+
+  outline: none;
+}
+
+/* =========================================================
+   RESET BUTTON
+========================================================= */
+
+.admin-players-reset {
+  min-width: 0;
+  min-height: 46px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 0 14px;
+
+  color: #3477dd;
+  background: #f4f9ff;
+
+  border: 1px solid #c8dcf5;
+  border-radius: 11px;
+
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.admin-players-reset svg {
+  flex: 0 0 auto;
+}
+
+.admin-players-reset:hover {
+  background: #eaf4ff;
+
+  border-color: #a9caef;
+
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   SMALL DESKTOP
+========================================================= */
+
+@media (max-width: 1200px) {
+  .admin-players-filters {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .admin-players-search {
+    grid-column: span 2;
+  }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+  .admin-players-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-players-search {
+    grid-column: 1 / -1;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+  .admin-players-filters {
+    grid-template-columns: 1fr;
+
+    gap: 8px;
+
+    margin-bottom: 12px;
+  }
+
+  .admin-players-search {
+    grid-column: auto;
+  }
+
+  .admin-players-search,
+  .admin-players-filters select,
+  .admin-players-reset {
+    min-height: 44px;
+  }
+
+  .admin-players-search input,
+  .admin-players-filters select {
+    font-size: 14px;
+  }
+
+  .admin-players-reset {
+    font-size: 13px;
+  }
+}

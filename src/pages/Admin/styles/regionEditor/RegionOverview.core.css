@@ -1,0 +1,282 @@
+/* =========================================================
+   REGION PLAYER OVERVIEW
+========================================================= */
+
+.region-player-overview {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+
+  box-sizing: border-box;
+
+  overflow-x: hidden;
+}
+
+.region-player-overview *,
+.region-player-overview *::before,
+.region-player-overview *::after {
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   SHARED CARDS
+========================================================= */
+
+.region-player-overview__identity,
+.region-player-overview__cell,
+.region-player-overview__comment {
+  min-width: 0;
+
+  border: 1px solid #d5e4f3;
+  border-radius: 16px;
+
+  background: linear-gradient(145deg, #ffffff 0%, #f7fbff 100%);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 8px 20px rgba(42, 83, 126, 0.05);
+}
+
+/* =========================================================
+   TOP ROW
+========================================================= */
+
+.region-player-overview__top {
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(240px, 1.55fr)
+    minmax(135px, 0.7fr)
+    minmax(170px, 0.9fr)
+    minmax(140px, 0.7fr);
+
+  gap: 12px;
+}
+
+/* =========================================================
+   BOTTOM ROW
+========================================================= */
+
+.region-player-overview__bottom {
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+/* =========================================================
+   PLAYER
+========================================================= */
+
+.region-player-overview__identity {
+  min-height: 102px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 14px 16px;
+}
+
+.region-player-overview__avatar {
+  width: 58px;
+  height: 58px;
+
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 auto;
+}
+
+.region-player-overview__avatar-image {
+  width: 54px;
+  height: 54px;
+
+  display: block;
+
+  object-fit: contain;
+
+  filter: drop-shadow(0 5px 8px rgba(28, 101, 205, 0.18));
+}
+
+.region-player-overview__identity-text {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.region-player-overview__identity-text strong {
+  width: 100%;
+  min-width: 0;
+
+  overflow: hidden;
+
+  color: #173b68;
+
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1.15;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.region-player-overview__identity-text small {
+  min-width: 0;
+
+  overflow: hidden;
+
+  color: #6b84a1;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   NORMAL CELLS
+========================================================= */
+
+.region-player-overview__cell {
+  min-width: 0;
+  min-height: 102px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  gap: 10px;
+
+  padding: 13px 15px;
+}
+
+.region-player-overview__cell--center {
+  align-items: center;
+
+  text-align: center;
+}
+
+.region-player-overview__cell--center .region-player-overview__label,
+.region-player-overview__cell--center .region-player-overview__number {
+  text-align: center;
+}
+
+/* =========================================================
+   LABELS
+========================================================= */
+
+.region-player-overview__label {
+  display: block;
+
+  max-width: 100%;
+
+  color: #66819f;
+
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1.2;
+
+  letter-spacing: 0.03em;
+
+  text-align: inherit;
+  text-transform: uppercase;
+
+  overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   CELL HEADING
+========================================================= */
+
+.region-player-overview__cell-heading {
+  min-width: 0;
+  max-width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color: #3476d8;
+}
+
+.region-player-overview__info-icon {
+  width: 29px;
+  height: 29px;
+
+  display: block;
+
+  flex: 0 0 auto;
+
+  object-fit: contain;
+}
+
+/* =========================================================
+   NUMBERS
+========================================================= */
+
+.region-player-overview__number {
+  max-width: 100%;
+
+  color: #173c68;
+
+  font-size: 19px;
+  font-weight: 900;
+  line-height: 1;
+
+  font-variant-numeric: tabular-nums;
+
+  overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+.region-player-overview__cell .player-tier-badge {
+  min-width: 68px;
+  min-height: 36px;
+
+  max-width: 100%;
+
+  padding: 0 14px;
+}
+
+.region-player-overview__cell .player-troop-badge {
+  min-width: 112px;
+  min-height: 38px;
+
+  max-width: 100%;
+
+  padding: 0 15px;
+
+  font-size: 14px;
+}
+
+.region-player-overview__cell .player-status-badge {
+  min-width: 112px;
+  min-height: 38px;
+
+  max-width: 100%;
+
+  padding: 0 15px;
+
+  font-size: 14px;
+}
+

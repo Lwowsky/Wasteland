@@ -1,0 +1,63 @@
+{
+  "dashboard": {
+    "registered": "Registered players",
+    "allianceCount": "Alliances",
+    "captains": "Captains",
+    "finalPlanPlayers": "In final plan",
+    "registrationCountdown": {
+      "title": "Registration closes in",
+      "subtitle": "Registration is open",
+      "open": "Open"
+    },
+    "eventCountdown": {
+      "title": "Wasteland starts in",
+      "subtitle": "Next regional event"
+    },
+    "time": {
+      "days": "days",
+      "hours": "hours",
+      "minutes": "minutes",
+      "seconds": "seconds"
+    },
+    "recent": {
+      "title": "Recent registrations",
+      "text": "5 most recent players who submitted their application.",
+      "nickname": "Nickname",
+      "alliance": "Alliance",
+      "troop": "Troops",
+      "tier": "Tier",
+      "time": "When",
+      "timeAgo": {
+        "justNow": "just now",
+        "minutes": "{{count}} min ago",
+        "hours": "{{count}} h ago",
+        "days": "{{count}} d ago"
+      }
+    },
+    "allianceStats": {
+      "title": "Alliance statistics",
+      "text": "Distribution of registered players.",
+      "players": "players",
+      "other": "Other"
+    },
+    "navigation": {
+      "registration": {
+        "title": "Registration",
+        "text": "Fill in or update your information for the Wasteland event."
+      },
+      "players": {
+        "title": "Player table",
+        "text": "View all player applications in the region."
+      },
+      "finalPlan": {
+        "title": "Final plan",
+        "text": "Teams, captains and shift assignments."
+      },
+      "settings": {
+        "title": "Settings",
+        "text": "Language, time and local browser preferences."
+      }
+    },
+    "loading": "Loading data..."
+  }
+}

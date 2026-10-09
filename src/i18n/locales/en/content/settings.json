@@ -1,0 +1,58 @@
+{
+  "title": "Settings",
+  "text": "Local website settings for this browser.",
+  "tabs": {
+    "settings": "Settings",
+    "templates": "My templates"
+  },
+  "language": {
+    "title": "Language",
+    "text": "Choose the website interface language."
+  },
+  "time": {
+    "title": "Time display",
+    "text": "Choose how event and shift times are displayed.",
+    "local": "Local time",
+    "utc": "UTC"
+  },
+  "timeZone": {
+    "title": "Time zone",
+    "text": "Choose the time zone used for dates and times.",
+    "options": {
+      "local": "Device local time",
+      "utc": "UTC",
+      "tokyo": "Tokyo (GMT+9)",
+      "kyiv": "Kyiv",
+      "london": "London",
+      "newYork": "New York"
+    }
+  },
+  "reset": {
+    "title": "Reset settings",
+    "text": "Restore local settings to default values. Player templates will not be deleted.",
+    "button": "Reset"
+  },
+  "templates": {
+    "title": "My player templates",
+    "text": "Saved templates for quickly filling the registration form.",
+    "add": "Add template",
+    "edit": "Edit",
+    "delete": "Delete",
+    "nickname": "Nickname",
+    "alliance": "Alliance",
+    "troopType": "Troop type",
+    "tier": "Tier",
+    "lairLevel": "Lair level",
+    "marchSize": "March size",
+    "rallySize": "Rally size",
+    "shift": "Shift",
+    "shift1": "Shift 1",
+    "shift2": "Shift 2",
+    "save": "Save",
+    "cancel": "Cancel",
+    "empty": "You do not have any saved templates yet.",
+    "shift3": "Shift 3",
+    "shift4": "Shift 4",
+    "flexible": "Any shift"
+  }
+}

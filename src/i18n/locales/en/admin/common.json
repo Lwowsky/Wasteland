@@ -1,0 +1,48 @@
+{
+  "title": "Region admin",
+  "subtitle": "Manage access, players, turrets and registration.",
+
+  "checkingAccess": "Checking access...",
+
+  "navigationLabel": "Admin navigation",
+
+  "tabs": {
+    "access": "Roles & access",
+    "players": "Player table",
+    "distribution": "Turret distribution",
+    "registration": "Registration settings",
+    "settings": "Settings"
+  },
+
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "close": "Close",
+    "logout": "Log out",
+    "reset": "Reset",
+    "add": "Add",
+    "removeAccess": "Delete access"
+  },
+
+  "status": {
+    "active": "Active",
+    "blocked": "Blocked",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected"
+  },
+
+  "yes": "Yes",
+  "no": "No",
+
+  "roles": {
+    "owner": "Owner",
+    "admin": "Admin",
+    "consul": "Consul"
+  },
+
+  "loading": "Loading...",
+  "unknown": "Unknown"
+}

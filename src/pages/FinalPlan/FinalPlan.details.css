@@ -1,0 +1,301 @@
+/* =========================
+   SINGLE TOWER
+   ========================= */
+
+.final-plan-tower {
+  min-width: 0;
+  min-height: 460px;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  background: linear-gradient(180deg, #ffffff, #f8fbff);
+
+  border: 1px solid #b5cde7;
+  border-radius: 15px;
+
+  box-shadow: 0 7px 18px rgba(46, 84, 132, 0.07);
+}
+
+.final-plan-tower__header {
+  padding: 13px 10px 10px;
+
+  text-align: center;
+
+  background: linear-gradient(180deg, #eaf3fd, #d7e6f6);
+
+  border-bottom: 1px solid #bed3e9;
+}
+
+.final-plan-tower__header h3 {
+  min-height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0;
+
+  color: #14335d;
+
+  font-size: 15px;
+  font-weight: 900;
+
+  line-height: 1.2;
+}
+
+.final-plan-tower__troop {
+  min-height: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 2px;
+
+  color: #5a718e;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* =========================
+   TOWER STATS
+   ========================= */
+
+.final-plan-tower__stats {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 8px;
+
+  margin-top: 11px;
+}
+
+.final-plan-tower__stat {
+  min-width: 0;
+  min-height: 31px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  padding: 5px 6px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.final-plan-tower__stat--blue {
+  color: #245caf;
+
+  background: linear-gradient(180deg, #e5efff, #d5e5ff);
+}
+
+.final-plan-tower__stat--green {
+  color: #168253;
+
+  background: linear-gradient(180deg, #e7f8ef, #d7f1e3);
+}
+
+.final-plan-tower__stat--gold {
+  color: #99630d;
+
+  background: linear-gradient(180deg, #fff4d7, #ffe9af);
+}
+
+/* =========================
+   COLUMN HEADERS
+   ========================= */
+
+.final-plan-tower__columns {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.25fr)
+    0.55fr
+    0.42fr
+    0.78fr;
+
+  gap: 5px;
+
+  align-items: center;
+
+  min-height: 31px;
+
+  padding: 6px 8px;
+
+  color: #7185a0;
+
+  background: #f5f9fd;
+
+  border-bottom: 1px solid #dde8f4;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  text-transform: uppercase;
+}
+
+.final-plan-tower__columns span:last-child {
+  text-align: right;
+}
+
+/* =========================
+   PLAYERS
+   ========================= */
+
+.final-plan-tower__players {
+  flex: 1;
+
+  min-height: 280px;
+
+  background: #ffffff;
+}
+
+.final-plan-player-row {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.25fr)
+    0.55fr
+    0.42fr
+    0.78fr;
+
+  gap: 5px;
+
+  align-items: center;
+
+  min-height: 34px;
+
+  padding: 6px 8px;
+
+  color: #405d7d;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e2ebf5;
+
+  font-size: 11px;
+  line-height: 1.15;
+}
+
+.final-plan-player-row > * {
+  min-width: 0;
+}
+
+.final-plan-player-row__nickname,
+.final-plan-player-row__alliance,
+.final-plan-player-row__tier,
+.final-plan-player-row__march {
+  overflow: hidden;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+.final-plan-player-row__nickname {
+  color: #16365f;
+
+  font-weight: 900;
+}
+
+.final-plan-player-row__alliance {
+  color: #596f89;
+
+  text-align: center;
+}
+
+.final-plan-player-row__tier {
+  color: #176fe5;
+
+  font-weight: 900;
+
+  text-align: center;
+}
+
+.final-plan-player-row__march {
+  color: #294b70;
+
+  font-weight: 800;
+
+  text-align: right;
+}
+
+/* CAPTAIN — аналогічно старому сайту */
+
+.final-plan-player-row--captain {
+  background: linear-gradient(180deg, #fff6d9, #ffe9ae);
+
+  border-left: 4px solid #d79a25;
+}
+
+.final-plan-player-row--captain .final-plan-player-row__nickname {
+  color: #69450b;
+}
+
+.final-plan-player-row--captain .final-plan-player-row__alliance,
+.final-plan-player-row--captain .final-plan-player-row__tier,
+.final-plan-player-row--captain .final-plan-player-row__march {
+  color: #765111;
+}
+
+/* =========================
+   EMPTY
+   ========================= */
+
+.final-plan-empty {
+  min-height: 280px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: 8px;
+
+  padding: 20px;
+
+  color: #9bb0c8;
+
+  text-align: center;
+}
+
+.final-plan-empty span {
+  max-width: 190px;
+
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* =========================
+   SIGNATURE
+   ========================= */
+
+.final-plan-signature {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 18px;
+}
+
+.final-plan-signature img {
+  display: block;
+
+  width: 280px;
+  max-width: calc(100% - 30px);
+
+  height: auto;
+
+  filter: drop-shadow(0 6px 12px rgba(30, 48, 76, 0.2));
+}
+

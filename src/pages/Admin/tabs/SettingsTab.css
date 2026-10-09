@@ -1,0 +1,254 @@
+.admin-system-settings {
+  display: grid;
+  gap: 12px;
+}
+
+.settings-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.settings-tool-card {
+  min-width: 0;
+  min-height: 0;
+  padding: 16px;
+  text-align: center;
+  background: linear-gradient(145deg, #ffffff, #f4f9ff);
+  border: 1px solid #c6daf0;
+  border-radius: 16px;
+}
+
+.settings-tool-card h3,
+.settings-export-card h3 {
+  margin: 0 0 5px;
+  color: #173a66;
+}
+
+.settings-tool-card > p:not(.admin-empty-state) {
+  margin: 0 0 10px;
+  color: #6a8099;
+  font-size: 12px;
+}
+
+.settings-import-card,
+.settings-export-card,
+.settings-backup-card,
+.settings-access-card {
+  align-self: stretch;
+}
+
+/* Compact overrides for statically loaded setting cards. Base styles live with each component. */
+.settings-import-dropzone {
+  min-height: 86px;
+  gap: 3px;
+  padding: 14px;
+}
+
+.settings-tool-card > p.settings-import-mapping-note,
+.settings-backup-note,
+.settings-access-note {
+  margin-top: 7px;
+}
+
+.settings-backup-actions {
+  margin-top: 0;
+}
+
+.settings-backup-actions button {
+  min-height: 38px;
+}
+
+.backup-restore-content {
+  gap: 10px;
+}
+
+.settings-access-card__icon {
+  width: 42px;
+  height: 42px;
+  flex-basis: 42px;
+}
+
+.settings-access-tabs {
+  margin-top: 10px;
+}
+
+.settings-access-tabs button {
+  min-height: 36px;
+}
+
+.settings-access-loading,
+.settings-access-body {
+  margin-top: 10px;
+}
+
+.settings-access-body {
+  gap: 8px;
+}
+
+.settings-access-field select {
+  min-height: 36px;
+}
+
+/* Compact export card. Export modal styles live in ExportSettingsModal.css. */
+.settings-export-card--compact {
+  padding: 14px;
+}
+
+.admin-export-compact {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.admin-export-compact__intro {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.admin-export-compact__intro .admin-export-icon {
+  flex: 0 0 62px;
+  width: 50px;
+  height: 50px;
+  margin: 0;
+}
+
+.admin-export-compact__intro h3,
+.admin-export-compact__intro p {
+  margin: 0;
+}
+
+.admin-export-compact__intro p {
+  margin-top: 4px;
+  color: #667d97;
+  font-size: 12px;
+}
+
+.admin-export-compact__intro span {
+  display: inline-block;
+  margin-top: 7px;
+  color: #2c6db2;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.admin-export-compact__controls {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-export-compact__controls .admin-field {
+  margin: 0;
+}
+
+.admin-export-compact__buttons {
+  display: flex;
+  justify-content: stretch;
+  gap: 9px;
+}
+
+.admin-export-compact__buttons button {
+  min-height: 38px;
+  flex: 1;
+}
+
+.settings-danger-zone {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  background: linear-gradient(145deg, #fffafa, #fff4f5);
+  border: 1px solid #f2bcc3;
+  border-radius: 16px;
+}
+
+.settings-danger-zone__icon {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  display: grid;
+  place-items: center;
+  color: #d93f4f;
+  background: #ffe8eb;
+  border-radius: 15px;
+}
+
+.settings-danger-zone__content {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.settings-danger-zone__eyebrow {
+  display: block;
+  margin-bottom: 4px;
+  color: #c63747;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.settings-danger-zone h3 {
+  margin: 0 0 6px;
+  color: #6e1f2a;
+}
+
+.settings-danger-zone p {
+  max-width: 760px;
+  margin: 0 0 5px;
+  color: #775862;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.settings-danger-zone__preserved {
+  color: #2f6c4e;
+  font-size: 12px;
+}
+
+.settings-danger-zone__button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #e04758, #bd2639);
+  border: 0;
+  border-radius: 11px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(189, 38, 57, 0.2);
+}
+
+.settings-danger-zone__button:hover {
+  filter: brightness(1.04);
+}
+
+@media (max-width: 900px) {
+  .settings-tools-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-export-compact__buttons {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .settings-danger-zone__content {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .settings-danger-zone__button {
+    width: 100%;
+  }
+}

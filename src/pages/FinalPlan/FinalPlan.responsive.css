@@ -1,0 +1,172 @@
+/* =========================
+   RESPONSIVE — TABLET
+   ========================= */
+
+@media (max-width: 1200px) {
+  .final-plan-board {
+    padding: 14px;
+  }
+
+  .final-plan-towers {
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+
+    gap: 12px;
+  }
+
+  .final-plan-tower {
+    min-height: 410px;
+  }
+
+  .final-plan-tower__players,
+  .final-plan-empty {
+    min-height: 230px;
+  }
+}
+
+/* =========================
+   RESPONSIVE — MOBILE
+   ========================= */
+
+@media (max-width: 700px) {
+  .final-plan-board {
+    padding: 10px;
+  }
+
+  .final-plan-board__title {
+    margin-bottom: 10px;
+
+    font-size: 16px;
+  }
+
+  .final-plan-board__title::before,
+  .final-plan-board__title::after {
+    display: none;
+  }
+
+  .final-plan-towers {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+  .final-plan-tower {
+    min-height: 0;
+  }
+
+  .final-plan-tower__header {
+    padding: 12px 10px 10px;
+  }
+
+  .final-plan-tower__header h3 {
+    min-height: 0;
+
+    font-size: 15px;
+  }
+
+  .final-plan-tower__troop {
+    min-height: 0;
+
+    margin-top: 5px;
+
+    font-size: 11px;
+  }
+
+  .final-plan-tower__players {
+    min-height: 0;
+  }
+
+  .final-plan-empty {
+    min-height: 90px;
+
+    padding: 15px;
+  }
+
+  .final-plan-empty svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .final-plan-player-row {
+    grid-template-columns:
+      minmax(0, 1.2fr)
+      0.52fr
+      0.42fr
+      0.78fr;
+
+    padding: 7px;
+
+    font-size: 11px;
+  }
+
+  .final-plan-tower__columns {
+    grid-template-columns:
+      minmax(0, 1.2fr)
+      0.52fr
+      0.42fr
+      0.78fr;
+
+    padding: 6px 7px;
+
+    font-size: 7px;
+  }
+
+  .final-plan-signature {
+    margin-top: 13px;
+  }
+
+  .final-plan-signature img {
+    width: 190px;
+  }
+}
+
+/* =========================
+   VERY SMALL MOBILE
+   ========================= */
+
+@media (max-width: 480px) {
+  .final-plan-board {
+    padding: 8px;
+  }
+
+  .final-plan-player-row {
+    grid-template-columns:
+      minmax(0, 1.08fr)
+      0.48fr
+      0.38fr
+      0.74fr;
+
+    gap: 4px;
+
+    padding: 6px;
+
+    font-size: 10px;
+  }
+
+  .final-plan-tower__columns {
+    grid-template-columns:
+      minmax(0, 1.08fr)
+      0.48fr
+      0.38fr
+      0.74fr;
+
+    gap: 4px;
+
+    padding: 5px 6px;
+
+    font-size: 7px;
+  }
+
+  .final-plan-tower__stats {
+    gap: 6px;
+  }
+
+  .final-plan-tower__stat {
+    min-height: 29px;
+
+    font-size: 10px;
+  }
+
+  .final-plan-signature img {
+    width: 180px;
+  }
+}

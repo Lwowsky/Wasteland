@@ -1,0 +1,23 @@
+{
+  "home": "Головна",
+  "registration": "Реєстрація",
+  "players": "Таблиця гравців",
+  "finalPlan": "Фінальний план",
+  "settings": "Налаштування",
+  "language": "Мова",
+  "region": "Регіон",
+  "wastelandDate": "Дата Пустоші",
+  "registrationOpens": "Реєстрація з",
+  "registrationDeadline": "Реєстрація до",
+  "organizerAlliance": "Альянс-організатор",
+  "governor": "Губернатор",
+  "localTime": "Місцевий час",
+  "loading": "Завантаження...",
+  "loadError": "Не вдалося завантажити дані.",
+  "brand": "Wasteland King",
+  "utc": "UTC",
+  "admin": "Адмінка",
+  "openNavigation": "Відкрити навігацію",
+  "closeNavigation": "Закрити навігацію",
+  "toggleTimeZone": "Перемкнути часовий пояс"
+}

@@ -1,0 +1,220 @@
+/* =========================
+   BADGES
+========================= */
+
+.admin-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: fit-content;
+  min-width: 64px;
+
+  padding: 6px 11px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+.admin-badge--blue {
+  color: #176fe5;
+  background: #e5f0ff;
+}
+
+
+
+.admin-badge--gray {
+  color: #8290a4;
+  background: #eef2f6;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.admin-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  width: fit-content;
+
+  padding: 7px 12px;
+
+  border: 0;
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.admin-status--active {
+  color: #138250;
+  background: #dff7e9;
+}
+
+.admin-status--active::before {
+  content: "";
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #1aa261;
+}
+
+.admin-status--blocked {
+  color: #bd3f4c;
+  background: #fff0f1;
+}
+
+.admin-status--blocked::before {
+  content: "";
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #d94b59;
+}
+
+/* =========================
+   FORMS
+========================= */
+
+
+.admin-form-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-form-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+
+.admin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-field > span {
+  color: #58718d;
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.admin-field input,
+.admin-field select {
+  width: 100%;
+  min-height: 42px;
+
+  padding: 8px 11px;
+
+  box-sizing: border-box;
+
+  color: #17365f;
+
+  background: #ffffff;
+
+  border: 1px solid #bfd4eb;
+  border-radius: 10px;
+
+  outline: none;
+}
+
+
+/* =========================
+   FEEDBACK
+========================= */
+
+.admin-loading {
+  margin: 0 0 14px;
+
+  color: #667d97;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.admin-error {
+  margin: 0 0 14px;
+
+  padding: 11px 13px;
+
+  color: #c74252;
+
+  background: #fff0f2;
+
+  border: 1px solid #efc5cb;
+  border-radius: 10px;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.admin-empty-state {
+  padding: 25px;
+
+  color: #71849a;
+
+  background: #f8fbff;
+
+  border: 1px dashed #c7d9ec;
+  border-radius: 13px;
+
+  text-align: center;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+
+@media (max-width: 700px) {
+  .admin-page-container {
+    width: calc(100% - 18px);
+  }
+
+  .admin-page {
+    padding-block: 18px;
+  }
+
+  .admin-panel {
+    padding: 14px;
+
+    border-radius: 20px;
+  }
+
+  .admin-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .admin-header__right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+
+  .admin-section {
+    padding: 14px;
+  }
+
+  .admin-section__head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-form-grid--two {
+    grid-template-columns: 1fr;
+  }
+}

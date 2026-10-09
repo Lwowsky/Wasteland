@@ -1,0 +1,154 @@
+{
+  "title": "Users & access",
+  "description": "Manage users, roles and individual permissions.",
+
+  "tabs": {
+    "users": "Users",
+    "requests": "Requests"
+  },
+
+  "cards": {
+    "owner": {
+      "title": "Owner",
+      "description": "Full access. Role and permissions can only be changed manually through Firebase."
+    },
+
+    "admin": {
+      "title": "Admin",
+      "description": "Full operational access. Cannot manage the Owner or other Admin users."
+    },
+
+    "consul": {
+      "title": "Consul",
+      "description": "Works with player tables, turret distribution and the final plan."
+    },
+
+    "requests": {
+      "title": "Requests",
+      "description": "New admin access requests waiting for review."
+    }
+  },
+
+  "roles": {
+    "owner": {
+      "title": "Owner",
+      "description": "Full access. Role and permissions can only be changed manually through Firebase."
+    },
+
+    "admin": {
+      "title": "Admin",
+      "description": "Full operational access. Cannot manage the Owner or other Admin users."
+    },
+
+    "consul": {
+      "title": "Consul",
+      "description": "Works with player tables, turret distribution and the final plan."
+    }
+  },
+
+  "usersCount": "users",
+  "requestsCount": "requests",
+  "pendingCount": "pending",
+
+  "columns": {
+    "user": "User",
+    "role": "Role",
+    "permissions": "Permissions",
+    "status": "Status",
+    "actions": "Actions"
+  },
+
+  "permissions": {
+    "owner": "Full access"
+  },
+
+  "actions": {
+    "removeAccess": "Delete access",
+    "ownerLocked": "Owner can only be changed through Firebase",
+    "notAllowed": "Insufficient permissions",
+    "openUser": "Open user",
+    "openRequests": "Open requests"
+  },
+
+  "modal": {
+    "role": "Role",
+    "status": "Status",
+    "createdAt": "Created",
+    "updatedAt": "Updated",
+    "permissions": "Permissions",
+    "permissionsCount": "permissions",
+    "permissionsText": "Permissions can be restricted for an individual user within the limits of their role.",
+    "ownerPermissions": "Owner always has full access. Owner permissions cannot be edited through the site.",
+    "technicalInfo": "Technical information",
+    "uid": "UID",
+    "saving": "Saving..."
+  },
+
+  "permissionGroups": {
+    "access": {
+      "title": "Users & access",
+      "description": "Manage roles and administrative access."
+    },
+
+    "players": {
+      "title": "Player table",
+      "description": "View and manage player data."
+    },
+
+    "distribution": {
+      "title": "Distribution & final plan",
+      "description": "Manage turrets and the final plan."
+    },
+
+    "registration": {
+      "title": "Registration",
+      "description": "Manage registration settings."
+    },
+
+    "requests": {
+      "title": "Requests",
+      "description": "View and process access requests."
+    },
+
+    "settings": {
+      "title": "Settings",
+      "description": "Access import, export and system tools."
+    }
+  },
+
+  "permissionLabels": {
+    "view_access": "View users and roles",
+    "manage_access": "Edit access",
+    "manage_consuls": "Manage Consul users",
+    "grant_admin": "Grant Admin role",
+
+    "view_players": "View player table",
+    "edit_players": "Edit players",
+    "delete_players": "Delete players",
+
+    "view_distribution": "View distribution",
+    "edit_distribution": "Edit distribution",
+
+    "view_registration_settings": "View registration settings",
+    "edit_registration_settings": "Edit registration settings",
+
+    "view_requests": "View requests",
+    "manage_requests": "Approve and reject requests",
+
+    "view_settings": "Access settings"
+  },
+
+  "loading": "Loading users...",
+
+  "errors": {
+    "load": "Failed to load users.",
+    "save": "Failed to save user permissions.",
+    "changeRole": "Failed to change role.",
+    "changeStatus": "Failed to change user status.",
+    "delete": "Failed to delete access."
+  },
+
+  "confirm": {
+    "removeAccess": "Delete access for {{name}}?"
+  }
+}
