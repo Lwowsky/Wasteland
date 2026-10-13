@@ -22,7 +22,7 @@ function resolveOrganizerAlliance(settings) {
     return `${tag} — ${match.name}`;
   }
 
-  return tag || match?.name || "—";
+  return tag || match?.name || "";
 }
 
 function buildEvent(settings = {}) {
@@ -34,7 +34,7 @@ function buildEvent(settings = {}) {
     registrationOpensAt: new Date(schedule.openAtMs),
     registrationDeadline: new Date(schedule.closeAtMs),
     organizerAlliance: resolveOrganizerAlliance(settings),
-    governor: String(settings.governor || "").trim() || "—",
+    governor: String(settings.governor || "").trim(),
   };
 }
 
@@ -101,6 +101,16 @@ function useEvent() {
       handleSettingsUpdated,
     );
 
+    function handleStorage(event) {
+      if (event.key === "wasteland-registration-settings-updated") {
+        handleSettingsUpdated();
+      }
+    }
+
+    // Browser tabs may have cached an old public registration state.
+    window.addEventListener("storage", handleStorage);
+    window.addEventListener("focus", handleSettingsUpdated);
+
     return () => {
       cancelled = true;
       requestVersion += 1;
@@ -109,6 +119,8 @@ function useEvent() {
         "registration-settings-updated",
         handleSettingsUpdated,
       );
+      window.removeEventListener("storage", handleStorage);
+      window.removeEventListener("focus", handleSettingsUpdated);
     };
   }, []);
 

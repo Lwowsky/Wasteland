@@ -94,6 +94,14 @@
   border-top: 1px solid #e5edf6;
 }
 
+.registration-overview-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
 .registration-configure-button {
   display: inline-flex;
   min-height: 38px;
@@ -146,12 +154,17 @@
 }
 
 .registration-cycle-summary__icon {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 42px;
   height: 42px;
   flex: 0 0 42px;
-  object-fit: contain;
-  filter: drop-shadow(0 4px 8px rgba(35, 76, 145, 0.16));
+  color: #2f73c8;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96);
+  filter: drop-shadow(0 4px 8px rgba(35, 76, 145, 0.1));
 }
 
 .registration-cycle-summary__content {
@@ -200,12 +213,24 @@
   text-align: center;
 }
 
-.registration-summary-badge img {
-  display: block;
+.registration-summary-badge__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 38px;
   height: 38px;
-  object-fit: contain;
+  color: #2869b9;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.58);
   filter: drop-shadow(0 4px 8px rgba(46, 83, 175, 0.16));
+}
+
+.registration-summary-badge > img {
+  display: block;
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  flex: 0 0 48px;
 }
 
 .registration-summary-badge span {
@@ -213,6 +238,27 @@
   font-size: 13px;
   font-weight: 900;
   line-height: 1.2;
+}
+
+.registration-summary-badge__status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.registration-summary-badge__status--open {
+  color: #1f7d34;
+  background: rgba(91, 190, 103, 0.18);
+}
+
+.registration-summary-badge__status--closed {
+  color: #ab3852;
+  background: rgba(225, 102, 126, 0.16);
 }
 
 .registration-summary-tags {
@@ -270,7 +316,8 @@
     flex-basis: 38px;
   }
 
-  .registration-summary-badge img {
+  .registration-summary-badge img,
+  .registration-summary-badge svg {
     width: 34px;
     height: 34px;
   }
@@ -365,7 +412,8 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-.admin-registration-settings .registration-overview-card__icon img {
+.admin-registration-settings .registration-overview-card__icon img,
+.admin-registration-settings .registration-overview-card__icon svg {
   display: block;
   width: 100%;
   height: 100%;
@@ -407,6 +455,7 @@
   position: absolute;
   inset: 0;
   z-index: -2;
+  background-image: var(--registration-cycle-card-bg);
   background-position: center;
   background-size: cover;
   transform: scale(1.035);
@@ -428,17 +477,6 @@
   );
 }
 
-.registration-cycle-summary__item--blue::before {
-  background-image: url("/images/admin/stats/flexible-shift.webp");
-}
-
-.registration-cycle-summary__item--red::before {
-  background-image: url("/images/admin/stats/shift-3.webp");
-}
-
-.registration-cycle-summary__item--gold::before {
-  background-image: url("/images/admin/stats/shift-1.webp");
-}
 
 .registration-cycle-summary__item--blue {
   border-color: rgba(91, 168, 240, 0.52);

@@ -1,4 +1,5 @@
 import { REGISTRATION_FIELD_ICONS } from "../../playerTemplates/templateAssets.js";
+import { publicAsset } from "../../../utils/publicAsset.js";
 import "./ReadinessSection.css";
 
 function ReadinessSection({
@@ -51,6 +52,9 @@ function ReadinessSection({
                 : ""
             }`}
             data-registration-field="readyAttack"
+            style={{
+              "--choice-card-image": `url(${publicAsset("/images/registration/attack-region.webp")})`,
+            }}
           >
             <input
               type="checkbox"
@@ -80,6 +84,9 @@ function ReadinessSection({
                 : ""
             }`}
             data-registration-field="captain"
+            style={{
+              "--choice-card-image": `url(${publicAsset("/images/registration/captain.webp")})`,
+            }}
           >
             <input
               type="checkbox"

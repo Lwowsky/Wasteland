@@ -21,6 +21,7 @@
   overflow: hidden;
 
   background-color: #edf6ff;
+  background-image: var(--shift-card-image);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -44,26 +45,6 @@
     rgba(242, 249, 255, 0.18) 70%,
     rgba(242, 249, 255, 0.02) 100%
   );
-}
-
-.shift-card--shift1 {
-  background-image: url("/images/registration/shift-1.webp");
-}
-
-.shift-card--shift2 {
-  background-image: url("/images/registration/shift-2.webp");
-}
-
-.shift-card--shift3 {
-  background-image: url("/images/registration/shift-3.webp");
-}
-
-.shift-card--shift4 {
-  background-image: url("/images/registration/shift-4.webp");
-}
-
-.shift-card--flexible {
-  background-image: url("/images/registration/shift-flexible.webp");
 }
 
 .shift-card input,

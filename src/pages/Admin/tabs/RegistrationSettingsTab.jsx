@@ -77,7 +77,9 @@ function RegistrationSettingsTab({
         settings={settings}
         summary={controller.summary}
         canEdit={canEdit}
+        saving={Boolean(controller.savingSection)}
         onOpen={controller.setActiveModal}
+        onToggleRegistration={controller.requestToggleRegistration}
       />
 
       <RegistrationSettingsModals

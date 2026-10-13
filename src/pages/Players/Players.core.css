@@ -37,6 +37,12 @@
   box-shadow: 0 7px 18px rgba(60, 100, 220, 0.18);
 }
 
+.players-page__header-icon img {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+}
+
 .players-page__title {
   margin: 0;
 
@@ -239,11 +245,12 @@
   align-items: center;
 }
 
-.players-filter--search {
+.players-filter {
   position: relative;
 }
 
-.players-filter--search svg {
+.players-filter--search svg,
+.players-filter__icon {
   position: absolute;
 
   top: 50%;
@@ -280,6 +287,21 @@
   padding-left: 42px;
 }
 
+
+.players-filter--select select {
+  padding-left: 40px;
+  appearance: none;
+}
+
+.players-filter__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 18px;
+  height: 18px;
+}
+
 .players-filters input:focus,
 .players-filters select:focus {
   border-color: #347fff;
@@ -287,6 +309,11 @@
 
 .players-filters__reset {
   min-height: 42px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 
   padding: 9px 14px;
 

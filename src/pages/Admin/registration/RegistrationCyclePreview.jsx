@@ -29,10 +29,12 @@ function PreviewItem({
   r,
   iconSrc,
   tone,
+  imageSrc,
 }) {
   return (
     <div
       className={`registration-cycle-preview__item registration-cycle-preview__item--${tone}`}
+      style={{ "--registration-cycle-card-bg": `url("${imageSrc}")` }}
     >
       <div className="registration-cycle-preview__icon">
         <img src={iconSrc} alt="" aria-hidden="true" />
@@ -72,6 +74,7 @@ export default function RegistrationCyclePreview({
           localTimeZone={localTimeZone}
           r={r}
           iconSrc={publicAsset("/images/registration-settings/cycle-open-icon.webp")}
+          imageSrc={publicAsset("/images/admin/stats/flexible-shift.webp")}
           tone="blue"
         />
         <PreviewItem
@@ -82,6 +85,7 @@ export default function RegistrationCyclePreview({
           localTimeZone={localTimeZone}
           r={r}
           iconSrc={publicAsset("/images/registration-settings/cycle-close-icon.webp")}
+          imageSrc={publicAsset("/images/admin/stats/shift-3.webp")}
           tone="red"
         />
         <PreviewItem
@@ -91,6 +95,7 @@ export default function RegistrationCyclePreview({
           localTimeZone={localTimeZone}
           r={r}
           iconSrc={publicAsset("/images/registration-settings/cycle-start-icon.webp")}
+          imageSrc={publicAsset("/images/admin/stats/shift-1.webp")}
           tone="gold"
         />
         <PreviewItem
@@ -100,6 +105,7 @@ export default function RegistrationCyclePreview({
           localTimeZone={localTimeZone}
           r={r}
           iconSrc={publicAsset("/images/registration-settings/cycle-end-icon.webp")}
+          imageSrc={publicAsset("/images/admin/stats/shift-2.webp")}
           tone="violet"
         />
       </div>

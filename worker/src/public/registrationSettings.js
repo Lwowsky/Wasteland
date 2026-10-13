@@ -28,12 +28,18 @@ export async function handlePublicRegistrationSettings(env) {
     : null;
 
   const registeredCount = Number(registered?.registered ?? 0);
-  const enabled = Boolean(period && isPeriodOpen(period));
+  const periodOpen = Boolean(period && isPeriodOpen(period));
+  const enabled = periodOpen && settings.publicRegistration !== false;
 
   return json({
     success: true,
     enabled,
-    reason: enabled ? null : "REGISTRATION_CLOSED",
+    reason:
+      settings.publicRegistration === false
+        ? "REGISTRATION_DISABLED"
+        : enabled
+          ? null
+          : "REGISTRATION_CLOSED",
     registered: registeredCount,
     remaining: null,
     period: {

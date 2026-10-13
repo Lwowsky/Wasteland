@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 
 import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } from "../config/site.js";
+import { savePreferredLanguage } from "../utils/language.js";
 
 import Header from "../components/Header/Header.jsx";
 import Footer from "../components/Footer/Footer.jsx";
@@ -29,7 +30,11 @@ function MainLayout() {
 
   useEffect(() => {
     document.documentElement.lang = language;
-  }, [language]);
+
+    if (isSupported) {
+      savePreferredLanguage(language);
+    }
+  }, [isSupported, language]);
 
   if (!isSupported) {
     return <NotFound />;

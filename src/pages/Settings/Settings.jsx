@@ -10,7 +10,7 @@ import { LANGUAGES, SUPPORTED_LANGUAGES } from "../../config/site.js";
 
 import { ROUTES } from "../../config/routes.js";
 
-import { getLanguagePath } from "../../utils/language.js";
+import { getLanguagePath, savePreferredLanguage } from "../../utils/language.js";
 
 import {
   createPlayerTemplate,
@@ -109,6 +109,7 @@ function Settings() {
       return;
     }
 
+    savePreferredLanguage(newLanguage);
     navigate(getLanguagePath(location.pathname, newLanguage));
   }
 

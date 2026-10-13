@@ -4,7 +4,7 @@ PRAGMA foreign_keys = OFF;
 -- REGISTRATION SETTINGS: persist frontend form rules
 -- =========================================================
 ALTER TABLE registration_settings
-ADD COLUMN available_tiers_json TEXT NOT NULL DEFAULT '{"T1":false,"T2":false,"T3":false,"T4":false,"T5":false,"T6":false,"T7":false,"T8":true,"T9":true,"T10":true,"T11":true,"T12":true,"T13":true,"T14":true}';
+ADD COLUMN available_tiers_json TEXT NOT NULL DEFAULT '{"T1":false,"T2":false,"T3":false,"T4":false,"T5":false,"T6":false,"T7":false,"T8":false,"T9":true,"T10":true,"T11":true,"T12":true,"T13":true,"T14":true}';
 
 ALTER TABLE registration_settings
 ADD COLUMN visible_fields_json TEXT NOT NULL DEFAULT '{"nickname":true,"alliance":true,"troopType":true,"tier":true,"lairLevel":true,"marchSize":true,"rallySize":true,"shift":true,"readyAttack":true,"captain":true,"extraSquads":true,"comment":true}';

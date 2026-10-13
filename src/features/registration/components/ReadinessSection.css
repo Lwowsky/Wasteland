@@ -21,6 +21,7 @@
   overflow: hidden;
 
   background-color: #edf6ff;
+  background-image: var(--choice-card-image);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -46,13 +47,6 @@
   );
 }
 
-.choice-card--attack {
-  background-image: url("/images/registration/attack-region.webp");
-}
-
-.choice-card--captain {
-  background-image: url("/images/registration/captain.webp");
-}
 
 .choice-card input,
 .choice-card__content {

@@ -7,6 +7,7 @@ function RegistrationSectionCard({
   description,
   actionLabel,
   onAction,
+  actions = null,
   disabled = false,
   className = "",
   children,
@@ -14,6 +15,18 @@ function RegistrationSectionCard({
   const classes = ["registration-overview-card", className]
     .filter(Boolean)
     .join(" ");
+
+  const actionNode = actions || (
+    <button
+      type="button"
+      className="registration-configure-button"
+      disabled={disabled}
+      onClick={onAction}
+    >
+      <span>{actionLabel}</span>
+      <ChevronRight size={17} aria-hidden="true" />
+    </button>
+  );
 
   return (
     <section className={classes}>
@@ -33,15 +46,7 @@ function RegistrationSectionCard({
           </div>
         </div>
 
-        <button
-          type="button"
-          className="registration-configure-button"
-          disabled={disabled}
-          onClick={onAction}
-        >
-          <span>{actionLabel}</span>
-          <ChevronRight size={17} aria-hidden="true" />
-        </button>
+        <div className="registration-overview-card__actions">{actionNode}</div>
       </div>
 
       <div className="registration-overview-card__body">{children}</div>

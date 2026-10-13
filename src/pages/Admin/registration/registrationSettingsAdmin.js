@@ -112,6 +112,24 @@ export function getRegistrationConfirmContent(confirmState, r) {
     return null;
   }
 
+  if (confirmState.kind === "status") {
+    return confirmState.closing
+      ? {
+          title: r.confirm.closeRegistrationTitle,
+          description: r.confirm.closeRegistrationDescription,
+          details: [r.confirm.closeRegistrationDetail],
+          primaryLabel: r.sections.cycle.closeRegistration,
+          secondaryLabel: "",
+        }
+      : {
+          title: r.confirm.openRegistrationTitle,
+          description: r.confirm.openRegistrationDescription,
+          details: [r.confirm.openRegistrationDetail],
+          primaryLabel: r.sections.cycle.openRegistration,
+          secondaryLabel: "",
+        };
+  }
+
   if (confirmState.kind === "cycle") {
     return {
       title: confirmState.startsImmediately

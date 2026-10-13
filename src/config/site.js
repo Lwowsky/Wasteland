@@ -10,11 +10,17 @@ export const LANGUAGES = {
   uk: {
     code: "uk",
     label: "UA",
+    nativeLabel: "Українська",
+    englishLabel: "Ukrainian",
+    badge: "UA",
   },
 
   en: {
     code: "en",
     label: "EN",
+    nativeLabel: "English",
+    englishLabel: "English",
+    badge: "EN",
   },
 };
 

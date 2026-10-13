@@ -1,10 +1,11 @@
+import { useState } from "react";
+
 import { publicAsset } from "../../../utils/publicAsset.js";
 
 import { getEnabledRegistrationTiers } from "../registrationTiers.js";
 import { REGISTRATION_TROOP_TYPES } from "../../../../shared/registrationConfig.js";
 
 import "./ExtraSquadsSection.css";
-
 
 function ExtraSquadsSection({
   t,
@@ -25,6 +26,8 @@ function ExtraSquadsSection({
   );
 
   const hasAnyExtra = enabledExtraTypes.length > 0;
+  const [extrasExpanded, setExtrasExpanded] = useState(hasAnyExtra);
+  const extrasVisible = extrasExpanded || hasAnyExtra;
 
   function resetExtraSquads() {
     setData((current) => ({
@@ -37,35 +40,13 @@ function ExtraSquadsSection({
     }));
   }
 
-  function enableFirstAvailableSquad() {
-    const firstAvailable = REGISTRATION_TROOP_TYPES.find((type) => type !== mainTroopType);
-
-    if (!firstAvailable) {
-      return;
-    }
-
-    setData((current) => ({
-      ...current,
-      extraSquads: {
-        ...current.extraSquads,
-        [firstAvailable]: {
-          ...current.extraSquads[firstAvailable],
-          enabled: true,
-        },
-      },
-    }));
-  }
-
   function handleMasterToggle(event) {
     const checked = event.target.checked;
 
+    setExtrasExpanded(checked);
     if (!checked) {
       resetExtraSquads();
       return;
-    }
-
-    if (!hasAnyExtra) {
-      enableFirstAvailableSquad();
     }
   }
 
@@ -104,7 +85,13 @@ function ExtraSquadsSection({
     const isMain = mainTroopType === type;
 
     return (
-      <div className={`extra-squad extra-squad--${type}`}>
+      <div
+        key={type}
+        className={`extra-squad extra-squad--${type}${isMain ? " extra-squad--main" : ""}`}
+        style={{
+          "--extra-squad-image": `url(${publicAsset(`/images/registration/${type}.webp`)})`,
+        }}
+      >
         <div className="extra-squad__title">
           <img src={publicAsset(`/images/admin/troops/${type}.webp`)} alt="" aria-hidden="true" />
           <strong>{t.registration.troops[type]}</strong>
@@ -116,9 +103,7 @@ function ExtraSquadsSection({
             name={`extra-${type}`}
             checked={!isMain && squad.enabled}
             disabled={isMain || !mainTroopType}
-            onChange={(event) =>
-              updateSquad(type, "enabled", event.target.checked)
-            }
+            onChange={(event) => updateSquad(type, "enabled", event.target.checked)}
           />
 
           {isMain ? t.registration.player.troopType : t.registration.extra.enable}
@@ -171,19 +156,18 @@ function ExtraSquadsSection({
       <label className="extra-squads-toggle">
         <input
           type="checkbox"
-          checked={hasAnyExtra}
+          checked={extrasVisible}
           required={required}
-          disabled={!mainTroopType}
           onChange={handleMasterToggle}
         />
         <span>{t.registration.extra.hasExtra}</span>
       </label>
 
-      <div className={`extra-squads ${!hasAnyExtra ? "extra-squads--disabled" : ""}`}>
-        {renderSquad("fighter")}
-        {renderSquad("rider")}
-        {renderSquad("shooter")}
-      </div>
+      {extrasVisible && (
+        <div className="extra-squads">
+          {REGISTRATION_TROOP_TYPES.map(renderSquad)}
+        </div>
+      )}
     </section>
   );
 }

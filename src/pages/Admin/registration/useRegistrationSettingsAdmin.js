@@ -140,6 +140,20 @@ export default function useRegistrationSettingsAdmin({
     setConfirmState(createDefaultsConfirmState(settings));
   }
 
+  function requestToggleRegistration(nextState) {
+    const candidate = buildRegistrationCandidate(settings, {
+      publicRegistration: nextState,
+    });
+
+    setErrorKey("");
+    setConfirmState({
+      kind: "status",
+      section: "cycleStatus",
+      candidate,
+      closing: nextState === false,
+    });
+  }
+
   function saveConfirmedState() {
     if (!confirmState) {
       return;
@@ -180,6 +194,7 @@ export default function useRegistrationSettingsAdmin({
     summary,
     requestSave,
     requestRestoreDefaults,
+    requestToggleRegistration,
     saveRulesForNextCycle,
     saveConfirmedState,
     saveShiftRemap,

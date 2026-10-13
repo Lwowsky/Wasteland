@@ -7,7 +7,7 @@
 
   color: #ffffff;
 
-  background: url("/images/footer-bg.webp") center 68% / cover no-repeat;
+  background: var(--footer-bg-image) center 68% / cover no-repeat;
 }
 
 .footer__overlay {

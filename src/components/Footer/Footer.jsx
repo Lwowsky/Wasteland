@@ -2,6 +2,7 @@ import { Crown, UserRound } from "lucide-react";
 
 import Container from "../Container/Container.jsx";
 import { resolveEffectiveFooter } from "../../features/site/footerSettings.js";
+import { publicAsset } from "../../utils/publicAsset.js";
 
 import "./Footer.css";
 
@@ -20,7 +21,12 @@ function Footer({ t, language, siteSettings }) {
   const copy = resolveFooterCopy(t.footer, siteSettings, language);
 
   return (
-    <footer className="footer">
+    <footer
+      className="footer"
+      style={{
+        "--footer-bg-image": `url(${publicAsset("/images/footer-bg.webp")})`,
+      }}
+    >
       <div className="footer__overlay" />
 
       <Container className="footer__container">

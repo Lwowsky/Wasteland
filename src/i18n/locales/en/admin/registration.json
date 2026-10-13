@@ -17,7 +17,11 @@
       "closes": "Closes",
       "wasteland": "Wasteland",
       "automatic": "Automatic",
-      "manual": "Manual"
+      "manual": "Manual",
+      "openRegistration": "Open registration",
+      "closeRegistration": "Close registration",
+      "statusOpen": "Open",
+      "statusClosed": "Closed"
     },
     "shifts": {
       "title": "Available shifts",
@@ -191,7 +195,13 @@
     "defaultsDescription": "The standard cycle, shifts, tiers and form fields will be restored.",
     "defaultsDetailRules": "Default: Shift 1, Shift 2, Any shift; tiers T9–T14; standard form fields.",
     "defaultsDetailAlliances": "Alliances, names, rotation, host alliance and governor remain unchanged.",
-    "restoreDefaults": "Restore defaults"
+    "restoreDefaults": "Restore defaults",
+    "closeRegistrationTitle": "Close registration?",
+    "closeRegistrationDescription": "Are you sure you want to close registration? New submissions will be rejected even while the registration period is still active.",
+    "closeRegistrationDetail": "Existing registrations will remain in the player table. You can reopen registration using the same button.",
+    "openRegistrationTitle": "Open registration?",
+    "openRegistrationDescription": "Are you sure you want to allow new submissions?",
+    "openRegistrationDetail": "Manual closure will be removed. Registration will still only be available within the configured cycle dates."
   },
   "shiftRemap": {
     "title": "Move players between shifts",

@@ -72,10 +72,16 @@ function sanitizeSettings(body, current = {}) {
     visibleFields,
   );
   const alliances = sanitizeAlliances(body.alliances ?? current.alliances);
+  const publicRegistration = Object.prototype.hasOwnProperty.call(
+    body,
+    "publicRegistration",
+  )
+    ? body.publicRegistration !== false
+    : current.publicRegistration !== false;
 
   return {
     ...current,
-    publicRegistration: true,
+    publicRegistration,
     maxPlayers: Number(current.maxPlayers ?? 300),
     cycleMode: body.cycleMode === "manual" ? "manual" : "automatic",
     wastelandAnchorAt:

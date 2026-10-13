@@ -34,6 +34,7 @@ export function getDefaultRegistrationCycleDraft() {
     autoCloseRegistration: DEFAULT_REGISTRATION_SETTINGS.autoCloseRegistration,
     opensAt: DEFAULT_REGISTRATION_SETTINGS.opensAt,
     closesAt: DEFAULT_REGISTRATION_SETTINGS.closesAt,
+    publicRegistration: DEFAULT_REGISTRATION_SETTINGS.publicRegistration !== false,
   };
 }
 
@@ -70,6 +71,7 @@ export function createRegistrationCycleDraft(settings) {
     autoCloseRegistration: settings.autoCloseRegistration !== false,
     opensAt: settings.opensAt || "",
     closesAt: settings.closesAt || "",
+    publicRegistration: settings.publicRegistration !== false,
   };
 }
 
@@ -86,6 +88,6 @@ export function createRegistrationCycleSavePatch(draft, schedule) {
       draft.cycleMode === "automatic" ? true : draft.autoOpenRegistration,
     autoCloseRegistration:
       draft.cycleMode === "automatic" ? true : draft.autoCloseRegistration,
-    publicRegistration: true,
+    publicRegistration: draft.publicRegistration !== false,
   };
 }

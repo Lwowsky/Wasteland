@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 
-import { Users } from "lucide-react";
 import { useOutletContext } from "react-router-dom";
 
 import Page from "../../components/Page/Page.jsx";
+import { publicAsset } from "../../utils/publicAsset.js";
 import PageMeta from "../../components/PageMeta/PageMeta.jsx";
 import PagePanel from "../../components/PagePanel/PagePanel.jsx";
 import { ROUTES } from "../../config/routes.js";
@@ -45,7 +45,7 @@ function Players() {
           <PagePanel>
             <div className="players-page__header">
               <div className="players-page__header-icon">
-                <Users size={26} aria-hidden="true" />
+                <img src={publicAsset("/images/admin/icons/actions/players.webp")} alt="" aria-hidden="true" />
               </div>
 
               <div>

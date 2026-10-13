@@ -59,7 +59,17 @@ function ShiftSection({
 
       <div className="shift-grid">
         {enabledShifts.map((shift) => (
-          <label key={shift} className={`shift-card shift-card--${shift}`}>
+          <label
+            key={shift}
+            className={`shift-card shift-card--${shift}`}
+            style={{
+              "--shift-card-image": `url(${publicAsset(
+                `/images/registration/${
+                  shift === "flexible" ? "shift-flexible" : shift.replace(/^shift(\d+)$/, "shift-$1")
+                }.webp`,
+              )})`,
+            }}
+          >
             <input
               type="radio"
               name="shift"

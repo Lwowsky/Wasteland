@@ -173,6 +173,11 @@ function validateCustomFields(body, settings) {
 export async function handleRegistration(request, env) {
   const body = await request.json();
   const globalSettings = await getRegistrationSettings(env);
+
+  if (globalSettings.publicRegistration === false) {
+    return json({ success: false, error: "REGISTRATION_DISABLED" }, 403);
+  }
+
   const { period } = await ensureCurrentRegistrationPeriod(env, globalSettings);
 
   if (!period || !isPeriodOpen(period)) {

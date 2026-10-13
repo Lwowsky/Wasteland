@@ -10,7 +10,9 @@ export default function RegistrationSettingsOverview({
   settings,
   summary,
   canEdit,
+  saving = false,
   onOpen,
+  onToggleRegistration,
 }) {
   const localTimeZone = getUserTimeZone();
   const {
@@ -21,6 +23,7 @@ export default function RegistrationSettingsOverview({
     allianceCount,
     rotation,
   } = summary;
+  const registrationAllowed = settings.publicRegistration !== false;
 
   return (
     <div className="registration-overview-list">
@@ -29,12 +32,42 @@ export default function RegistrationSettingsOverview({
         iconSrc={publicAsset("/images/registration-settings/registration-cycle-icon.webp")}
         title={r.sections.cycle.title}
         description={r.sections.cycle.description}
-        actionLabel={r.common.configure}
-        disabled={!canEdit}
-        onAction={() => onOpen("cycle")}
+        disabled={!canEdit || saving}
+        actions={
+          <>
+            <button
+              type="button"
+              className="registration-configure-button"
+              disabled={!canEdit || saving}
+              onClick={() => onToggleRegistration(!registrationAllowed)}
+            >
+              <img
+                className="registration-button-icon"
+                src={publicAsset(registrationAllowed
+                  ? "/images/registration-settings/cycle-close-icon.webp"
+                  : "/images/registration-settings/cycle-open-icon.webp")}
+                alt=""
+                aria-hidden="true"
+              />
+              <span>{registrationAllowed
+                ? r.sections.cycle.closeRegistration
+                : r.sections.cycle.openRegistration}</span>
+            </button>
+            <button
+              type="button"
+              className="registration-configure-button"
+              disabled={!canEdit || saving}
+              onClick={() => onOpen("cycle")}
+            >
+              <span>{r.common.configure}</span>
+            </button>
+          </>
+        }
       >
         <div className="registration-cycle-summary registration-cycle-summary--compact">
-          <div className="registration-cycle-summary__item registration-cycle-summary__item--blue">
+          <div className="registration-cycle-summary__item registration-cycle-summary__item--blue"
+            style={{"--registration-cycle-card-bg": `url("${publicAsset("/images/admin/stats/flexible-shift.webp")}")`}}
+          >
             <img
               className="registration-cycle-summary__icon"
               src={publicAsset("/images/registration-settings/cycle-open-icon.webp")}
@@ -57,7 +90,9 @@ export default function RegistrationSettingsOverview({
             </div>
           </div>
 
-          <div className="registration-cycle-summary__item registration-cycle-summary__item--red">
+          <div className="registration-cycle-summary__item registration-cycle-summary__item--red"
+            style={{"--registration-cycle-card-bg": `url("${publicAsset("/images/admin/stats/shift-3.webp")}")`}}
+          >
             <img
               className="registration-cycle-summary__icon"
               src={publicAsset("/images/registration-settings/cycle-close-icon.webp")}
@@ -80,7 +115,9 @@ export default function RegistrationSettingsOverview({
             </div>
           </div>
 
-          <div className="registration-cycle-summary__item registration-cycle-summary__item--gold">
+          <div className="registration-cycle-summary__item registration-cycle-summary__item--gold"
+            style={{"--registration-cycle-card-bg": `url("${publicAsset("/images/admin/stats/shift-1.webp")}")`}}
+          >
             <img
               className="registration-cycle-summary__icon"
               src={publicAsset("/images/registration-settings/cycle-start-icon.webp")}
@@ -123,6 +160,17 @@ export default function RegistrationSettingsOverview({
                 ? r.sections.cycle.manual
                 : r.sections.cycle.automatic}
             </span>
+            <small
+              className={`registration-summary-badge__status ${
+                registrationAllowed
+                  ? "registration-summary-badge__status--open"
+                  : "registration-summary-badge__status--closed"
+              }`}
+            >
+              {registrationAllowed
+                ? r.sections.cycle.statusOpen
+                : r.sections.cycle.statusClosed}
+            </small>
           </div>
         </div>
       </RegistrationSectionCard>
@@ -181,6 +229,15 @@ export default function RegistrationSettingsOverview({
             <b>{r.sections.wasteland.rotation}:</b>{" "}
             {rotation.length ? rotation.join(" → ") : r.common.notSet}
           </span>
+          <small className={`registration-summary-badge__status ${
+            registrationAllowed
+              ? "registration-summary-badge__status--open"
+              : "registration-summary-badge__status--closed"
+          }`}>
+            {registrationAllowed
+              ? r.sections.cycle.statusOpen
+              : r.sections.cycle.statusClosed}
+          </small>
         </div>
       </RegistrationSectionCard>
 

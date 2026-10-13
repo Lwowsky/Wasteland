@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 
 import RouteLoading from "./components/RouteLoading/RouteLoading.jsx";
 import { ROUTES } from "./config/routes.js";
-import { DEFAULT_LANGUAGE } from "./config/site.js";
+import { resolvePreferredLanguage } from "./utils/language.js";
 
 const MainLayout = lazy(() => import("./layouts/MainLayout.jsx"));
 const Home = lazy(() => import("./pages/Home/Home.jsx"));
@@ -28,7 +28,7 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<Navigate to={`/${DEFAULT_LANGUAGE}`} replace />}
+          element={<Navigate to={`/${resolvePreferredLanguage()}`} replace />}
         />
 
         <Route path="/:lang" element={<MainLayout />}>

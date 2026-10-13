@@ -10,6 +10,7 @@
 
   font-size: 13px;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .extra-squads-toggle input,
@@ -50,12 +51,33 @@
   overflow: hidden;
 
   background-color: #eaf4ff;
+  background-image: var(--extra-squad-image);
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
 
   border: 1px solid #a3c3e7;
   border-radius: 10px;
+}
+
+/* A player's primary troop remains visible, but cannot be selected twice. */
+.extra-squad--main {
+  border-style: dashed;
+  border-color: #a3b9d0;
+}
+
+.extra-squad--main::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(237, 245, 253, 0.46);
+  z-index: 0;
+}
+
+.extra-squad--main .extra-squad__title,
+.extra-squad--main .extra-squad__enable {
+  opacity: 0.77;
 }
 
 .extra-squad::before {
@@ -73,17 +95,6 @@
   );
 }
 
-.extra-squad--fighter {
-  background-image: url("/images/registration/fighter.webp");
-}
-
-.extra-squad--rider {
-  background-image: url("/images/registration/rider.webp");
-}
-
-.extra-squad--shooter {
-  background-image: url("/images/registration/shooter.webp");
-}
 
 .extra-squad > * {
   position: relative;
@@ -153,7 +164,27 @@
 }
 
 @media (max-width: 600px) {
-  .extra-squad::before {
+  /* A player's primary troop remains visible, but cannot be selected twice. */
+.extra-squad--main {
+  border-style: dashed;
+  border-color: #a3b9d0;
+}
+
+.extra-squad--main::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(237, 245, 253, 0.46);
+  z-index: 0;
+}
+
+.extra-squad--main .extra-squad__title,
+.extra-squad--main .extra-squad__enable {
+  opacity: 0.77;
+}
+
+.extra-squad::before {
     background: linear-gradient(
       90deg,
       rgba(242, 249, 255, 0.96) 0%,
@@ -167,3 +198,4 @@
     background-position: center;
   }
 }
+

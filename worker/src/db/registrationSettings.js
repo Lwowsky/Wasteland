@@ -294,7 +294,7 @@ export async function saveRegistrationSettings(env, settings) {
     `,
   )
     .bind(
-      1,
+      settings.publicRegistration === false ? 0 : 1,
       Number(settings.maxPlayers ?? DEFAULT_SETTINGS.maxPlayers),
       settings.cycleMode === "manual" ? "manual" : "automatic",
       normalizeIso(settings.wastelandAnchorAt) || DEFAULT_SETTINGS.wastelandAnchorAt,

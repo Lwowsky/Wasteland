@@ -2,20 +2,15 @@ import { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import {
-  Home,
-  ClipboardList,
-  Users,
-  Map,
-  Settings,
+  Globe2,
   ChevronRight,
   X,
 } from "lucide-react";
 
 import { LANGUAGES, SUPPORTED_LANGUAGES } from "../../config/site.js";
-
 import { ROUTES, getRoute } from "../../config/routes.js";
-
-import { getLanguagePath } from "../../utils/language.js";
+import { publicAsset } from "../../utils/publicAsset.js";
+import { getLanguagePath, savePreferredLanguage } from "../../utils/language.js";
 
 import "./BurgerMenu.css";
 
@@ -40,8 +35,8 @@ function BurgerMenu({
   }
 
   function changeLanguage(newLanguage) {
+    savePreferredLanguage(newLanguage);
     navigate(getLanguagePath(location.pathname, newLanguage));
-
     closeMenu();
   }
 
@@ -49,32 +44,32 @@ function BurgerMenu({
     {
       key: "home",
       label: t.header.home,
-      icon: Home,
+      iconSrc: "/images/navigation/home-icon.webp",
       route: ROUTES.home,
       end: true,
     },
     {
       key: "registration",
       label: t.header.registration,
-      icon: ClipboardList,
+      iconSrc: "/images/registration-settings/registration-fields-icon.webp",
       route: ROUTES.registration,
     },
     {
       key: "players",
       label: t.home.dashboard.navigation.players.title,
-      icon: Users,
+      iconSrc: "/images/admin/icons/actions/players.webp",
       route: ROUTES.players,
     },
     {
       key: "finalPlan",
       label: t.home.dashboard.navigation.finalPlan.title,
-      icon: Map,
+      iconSrc: "/images/admin/icons/final-plan.webp",
       route: ROUTES.finalPlan,
     },
     {
       key: "settings",
       label: t.home.dashboard.navigation.settings.title,
-      icon: Settings,
+      iconSrc: "/images/admin/icons/settings.webp",
       route: ROUTES.settings,
     },
   ];
@@ -105,7 +100,9 @@ function BurgerMenu({
           <aside className="burger-menu__panel">
             <div className="burger-menu__header">
               <div>
-                <strong className="burger-menu__brand">{brandText || t.header.brand}</strong>
+                <strong className="burger-menu__brand">
+                  {brandText || t.header.brand}
+                </strong>
 
                 {event && (
                   <p className="burger-menu__region">
@@ -128,7 +125,7 @@ function BurgerMenu({
             <div className="burger-menu__divider" />
 
             <nav className="burger-menu__nav">
-              {menuItems.map(({ key, label, icon: Icon, route, end }) => (
+              {menuItems.map(({ key, label, icon: Icon, iconSrc, route, end }) => (
                 <NavLink
                   key={key}
                   to={getRoute(language, route)}
@@ -141,7 +138,11 @@ function BurgerMenu({
                   }
                 >
                   <span className="burger-menu__icon">
-                    <Icon size={22} />
+                    {iconSrc ? (
+                      <img src={publicAsset(iconSrc)} alt="" aria-hidden="true" />
+                    ) : (
+                      <Icon size={22} aria-hidden="true" />
+                    )}
                   </span>
 
                   <span className="burger-menu__label">{label}</span>
@@ -160,7 +161,11 @@ function BurgerMenu({
                     className="burger-menu__link burger-menu__admin"
                   >
                     <span className="burger-menu__icon">
-                      <Settings size={22} />
+                      <img
+                        src={publicAsset("/images/admin/icons/admin.webp")}
+                        alt=""
+                        aria-hidden="true"
+                      />
                     </span>
 
                     <span className="burger-menu__label">{t.header.admin}</span>
@@ -172,25 +177,53 @@ function BurgerMenu({
             </nav>
 
             <div className="burger-menu__languages">
-              <span className="burger-menu__languages-title">
-                {t.header.language}
-              </span>
+              <div className="burger-menu__languages-head">
+                <span className="burger-menu__languages-title">
+                  {t.header.language}
+                </span>
+                <span className="burger-menu__languages-note">
+                  <Globe2 size={16} aria-hidden="true" />
+                  {SUPPORTED_LANGUAGES.length}
+                </span>
+              </div>
 
-              <div className="burger-menu__language-buttons">
-                {SUPPORTED_LANGUAGES.map((languageCode) => (
-                  <button
-                    key={languageCode}
-                    type="button"
-                    className={
-                      language === languageCode
-                        ? "burger-menu__language burger-menu__language--active"
-                        : "burger-menu__language"
-                    }
-                    onClick={() => changeLanguage(languageCode)}
-                  >
-                    {LANGUAGES[languageCode].label}
-                  </button>
-                ))}
+              <div className="burger-menu__language-list" role="list">
+                {SUPPORTED_LANGUAGES.map((languageCode) => {
+                  const translatedLanguage =
+                    t.header.languageOptions?.[languageCode] || {};
+                  const languageMeta = {
+                    badge:
+                      translatedLanguage.badge ||
+                      LANGUAGES[languageCode]?.badge ||
+                      languageCode.toUpperCase(),
+                    nativeLabel:
+                      translatedLanguage.label || languageCode.toUpperCase(),
+                    englishLabel:
+                      translatedLanguage.description || languageCode.toUpperCase(),
+                  };
+
+                  return (
+                    <button
+                      key={languageCode}
+                      type="button"
+                      className={
+                        language === languageCode
+                          ? "burger-menu__language burger-menu__language--active"
+                          : "burger-menu__language"
+                      }
+                      onClick={() => changeLanguage(languageCode)}
+                    >
+                      <span className="burger-menu__language-badge">
+                        {languageMeta.badge || languageMeta.label}
+                      </span>
+
+                      <span className="burger-menu__language-copy">
+                        <strong>{languageMeta.nativeLabel || languageMeta.label}</strong>
+                        <small>{languageMeta.englishLabel || languageMeta.label}</small>
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </aside>

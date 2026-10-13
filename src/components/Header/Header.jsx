@@ -1,6 +1,7 @@
 import Container from "../Container/Container.jsx";
 import BurgerMenu from "../BurgerMenu/BurgerMenu.jsx";
 
+import { publicAsset } from "../../utils/publicAsset.js";
 import { formatDate, getUserTimeZone } from "../../utils/date.js";
 
 import "./Header.css";
@@ -15,13 +16,19 @@ function Header({
   loading,
   error,
 }) {
-
   const localTimeZone = getUserTimeZone();
-
   const activeTimeZone = useLocalTime ? localTimeZone : "UTC";
+  const showOrganizerAlliance = Boolean(event?.organizerAlliance);
+  const showGovernor = Boolean(event?.governor);
 
   return (
-    <header className="header" id="home">
+    <header
+      className="header"
+      id="home"
+      style={{
+        "--header-bg-image": `url(${publicAsset("/images/header.webp")})`,
+      }}
+    >
       <Container>
         <div className="header__top">
           <div className="header__brand">{siteSettings?.brandText || t.header.brand}</div>
@@ -70,7 +77,13 @@ function Header({
                 </div>
               </div>
 
-              <div className="header__info">
+              <div className={`header__info ${
+                  !showGovernor && !showOrganizerAlliance
+                    ? "header__info--three"
+                    : showGovernor !== showOrganizerAlliance
+                      ? "header__info--four"
+                      : ""
+                }`}>
                 <div className="header__info-card">
                   <div className="header__info-header">
                     <span className="header__info-title">
@@ -134,21 +147,23 @@ function Header({
                   </strong>
                 </div>
 
-                <div className="header__info-card">
-                  <span className="header__info-title">
-                    {t.header.organizerAlliance}
-                  </span>
+                {showOrganizerAlliance && (
+                  <div className="header__info-card">
+                    <span className="header__info-title">
+                      {t.header.organizerAlliance}
+                    </span>
 
-                  <strong>{event.organizerAlliance}</strong>
-                </div>
+                    <strong>{event.organizerAlliance}</strong>
+                  </div>
+                )}
 
-                <div className="header__info-card">
-                  <span className="header__info-title">
-                    {t.header.governor}
-                  </span>
+                {showGovernor && (
+                  <div className="header__info-card">
+                    <span className="header__info-title">{t.header.governor}</span>
 
-                  <strong>{event.governor}</strong>
-                </div>
+                    <strong>{event.governor}</strong>
+                  </div>
+                )}
               </div>
             </>
           )}

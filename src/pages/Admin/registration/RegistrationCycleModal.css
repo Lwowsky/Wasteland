@@ -267,6 +267,7 @@
   position: absolute;
   inset: 0;
   z-index: -2;
+  background-image: var(--registration-cycle-card-bg);
   background-position: center;
   background-size: cover;
   transform: scale(1.03);
@@ -291,19 +292,6 @@
     rgba(255, 255, 255, 0.69) 100%
   );
   backdrop-filter: blur(0.4px);
-}
-
-.registration-cycle-site-modal .registration-cycle-preview__item--blue::before{
-  background-image: url("/images/admin/stats/flexible-shift.webp");
-}
-.registration-cycle-site-modal .registration-cycle-preview__item--red::before{
-  background-image: url("/images/admin/stats/shift-3.webp");
-}
-.registration-cycle-site-modal .registration-cycle-preview__item--gold::before{
-  background-image: url("/images/admin/stats/shift-1.webp");
-}
-.registration-cycle-site-modal .registration-cycle-preview__item--violet::before{
-  background-image: url("/images/admin/stats/shift-2.webp");
 }
 
 .registration-cycle-site-modal .registration-cycle-preview__item--blue{
@@ -345,7 +333,8 @@
   box-shadow: none;
 }
 
-.registration-cycle-site-modal .registration-cycle-preview__icon img{
+.registration-cycle-site-modal .registration-cycle-preview__icon img,
+.registration-cycle-site-modal .registration-cycle-preview__icon svg{
   width: 38px;
   height: 38px;
   object-fit: contain;
@@ -454,6 +443,7 @@
   .registration-cycle-site-modal .registration-cycle-modal-heading > img{ width: 40px; height: 40px; flex-basis: 40px; }
   .registration-cycle-site-modal .registration-mode-switch button img{ width: 30px; height: 30px; flex-basis: 30px; }
   .registration-cycle-site-modal .registration-cycle-preview__icon{ height: 34px; }
-  .registration-cycle-site-modal .registration-cycle-preview__icon img{ width: 34px; height: 34px; }
+  .registration-cycle-site-modal .registration-cycle-preview__icon img,
+.registration-cycle-site-modal .registration-cycle-preview__icon svg{ width: 34px; height: 34px; }
   .registration-cycle-site-modal .registration-cycle-section-title img{ width: 34px; height: 34px; flex-basis: 34px; }
 }

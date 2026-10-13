@@ -23,5 +23,12 @@ export async function saveAdminRegistrationSettings(settings, options = {}) {
 
   window.dispatchEvent(new CustomEvent("registration-settings-updated"));
 
+  // Notify other tabs on the same origin, not only this tab.
+  try {
+    localStorage.setItem("wasteland-registration-settings-updated", String(Date.now()));
+  } catch {
+    // Browser storage can be disabled.
+  }
+
   return result;
 }

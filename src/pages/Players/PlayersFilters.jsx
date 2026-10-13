@@ -1,4 +1,28 @@
-import { Filter, Search } from "lucide-react";
+import { publicAsset } from "../../utils/publicAsset.js";
+
+import {
+  Search,
+  Flag,
+  Swords,
+  Clock3,
+  UserRoundCheck,
+  Rows3,
+  RotateCcw,
+} from "lucide-react";
+
+function FilterSelect({ icon: Icon, value, onChange, children, ariaLabel }) {
+  return (
+    <div className="players-filter players-filter--select">
+      <span className="players-filter__icon" aria-hidden="true">
+        <Icon size={16} />
+      </span>
+
+      <select value={value} onChange={onChange} aria-label={ariaLabel}>
+        {children}
+      </select>
+    </div>
+  );
+}
 
 function PlayersFilters({
   t,
@@ -13,7 +37,13 @@ function PlayersFilters({
   return (
     <section className="players-filters">
       <div className="players-filters__title">
-        <Filter size={18} aria-hidden="true" />
+        <img
+          src={publicAsset("/images/navigation/filter-icon.webp")}
+          width={28}
+          height={28}
+          alt=""
+          aria-hidden="true"
+        />
         <span>{t.players.filters.title}</span>
       </div>
 
@@ -29,9 +59,11 @@ function PlayersFilters({
           />
         </div>
 
-        <select
+        <FilterSelect
+          icon={Flag}
           value={filters.alliance}
           onChange={(event) => onFilterChange("alliance", event.target.value)}
+          ariaLabel={t.players.filters.alliance}
         >
           <option value="all">
             {t.players.filters.alliance}: {t.players.filters.all}
@@ -42,11 +74,13 @@ function PlayersFilters({
               {alliance}
             </option>
           ))}
-        </select>
+        </FilterSelect>
 
-        <select
+        <FilterSelect
+          icon={Swords}
           value={filters.troop}
           onChange={(event) => onFilterChange("troop", event.target.value)}
+          ariaLabel={t.players.filters.troopType}
         >
           <option value="all">
             {t.players.filters.troopType}: {t.players.filters.all}
@@ -54,11 +88,13 @@ function PlayersFilters({
           <option value="fighter">{t.players.troops.fighter}</option>
           <option value="rider">{t.players.troops.rider}</option>
           <option value="shooter">{t.players.troops.shooter}</option>
-        </select>
+        </FilterSelect>
 
-        <select
+        <FilterSelect
+          icon={Clock3}
           value={filters.shift}
           onChange={(event) => onFilterChange("shift", event.target.value)}
+          ariaLabel={t.players.filters.shift}
         >
           <option value="all">
             {t.players.filters.shift}: {t.players.filters.all}
@@ -69,36 +105,40 @@ function PlayersFilters({
               {t.players.shifts[shift]}
             </option>
           ))}
-        </select>
+        </FilterSelect>
 
-        <select
+        <FilterSelect
+          icon={UserRoundCheck}
           value={filters.captain}
           onChange={(event) => onFilterChange("captain", event.target.value)}
+          ariaLabel={t.players.filters.captain}
         >
           <option value="all">
             {t.players.filters.captain}: {t.players.filters.all}
           </option>
           <option value="yes">{t.players.filters.readyCaptain}</option>
           <option value="no">{t.players.filters.notCaptain}</option>
-        </select>
+        </FilterSelect>
 
-        <select
+        <FilterSelect
+          icon={Rows3}
           value={pageSize}
           onChange={(event) => onPageSizeChange(event.target.value)}
-          aria-label={t.players.filters.perPage}
+          ariaLabel={t.players.filters.perPage}
         >
           <option value={10}>{t.players.filters.perPage10}</option>
           <option value={20}>{t.players.filters.perPage20}</option>
           <option value={50}>{t.players.filters.perPage50}</option>
           <option value="all">{t.players.filters.perPageAll}</option>
-        </select>
+        </FilterSelect>
 
         <button
           type="button"
           className="players-filters__reset"
           onClick={onReset}
         >
-          {t.players.filters.reset}
+          <RotateCcw size={16} aria-hidden="true" />
+          <span>{t.players.filters.reset}</span>
         </button>
       </div>
     </section>

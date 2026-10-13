@@ -19,5 +19,17 @@
   "admin": "Admin",
   "openNavigation": "Open navigation",
   "closeNavigation": "Close navigation",
-  "toggleTimeZone": "Toggle time zone"
+  "toggleTimeZone": "Toggle time zone",
+  "languageOptions": {
+    "en": {
+      "badge": "EN",
+      "label": "English",
+      "description": "English"
+    },
+    "uk": {
+      "badge": "UA",
+      "label": "Українська",
+      "description": "Ukrainian"
+    }
+  }
 }
