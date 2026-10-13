@@ -1,0 +1,66 @@
+{
+  "title": "Player table",
+  "text": "Submitted registrations in a simplified public view.",
+  "empty": "There are no applications yet.",
+  "stats": {
+    "total": "Total players",
+    "captains": "Captains ready"
+  },
+  "troops": {
+    "fighter": "Fighters",
+    "rider": "Riders",
+    "shooter": "Shooters"
+  },
+  "shifts": {
+    "shift1": "Shift 1",
+    "shift2": "Shift 2",
+    "shift3": "Shift 3",
+    "shift4": "Shift 4",
+    "flexible": "Any shift"
+  },
+  "filters": {
+    "title": "Filters",
+    "search": "Search",
+    "searchPlaceholder": "Nickname or alliance",
+    "alliance": "Alliance",
+    "troopType": "Troop type",
+    "shift": "Shift",
+    "captain": "Captain",
+    "readyCaptain": "Ready to be captain",
+    "notCaptain": "Not captain",
+    "all": "All",
+    "reset": "Reset filters",
+    "perPage": "Players per page",
+    "perPage10": "10 per page",
+    "perPage20": "20 per page",
+    "perPage50": "50 per page",
+    "perPageAll": "All"
+  },
+  "table": {
+    "nickname": "Nickname",
+    "alliance": "Alliance",
+    "troops": "Troops",
+    "tier": "Tier",
+    "shift": "Shift",
+    "captain": "Captain",
+    "when": "When",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "loading": "Loading...",
+  "errors": {
+    "load": "Failed to load players."
+  },
+  "time": {
+    "justNow": "just now",
+    "minutesAgo": "{{count}} min ago",
+    "hoursAgo": "{{count}} h ago",
+    "daysAgo": "{{count}} d ago"
+  },
+  "pagination": {
+    "label": "Player table pages",
+    "previous": "Previous page",
+    "next": "Next page",
+    "pageOf": "{{page}} / {{pages}}"
+  }
+}

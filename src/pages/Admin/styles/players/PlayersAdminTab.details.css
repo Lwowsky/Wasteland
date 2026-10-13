@@ -1,0 +1,396 @@
+/* =========================
+   LOCAL IMPORT TOOLBAR
+========================= */
+
+.admin-local-import-toolbar {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.admin-local-import__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border: 1px solid #d8e7f8;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #ffffff, #f5f9ff);
+}
+
+.admin-local-import__summary > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #2e6edb;
+}
+
+.admin-local-import__summary span {
+  display: grid;
+  gap: 3px;
+}
+
+.admin-local-import__summary strong {
+  color: #183a68;
+}
+
+.admin-local-import__summary small {
+  color: #7790ad;
+}
+
+.admin-local-import__counters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.admin-local-import__counters span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.admin-local-import__counters .is-ready {
+  color: #087947;
+  background: #e9f9f1;
+}
+
+.admin-local-import__counters .is-problem {
+  color: #b35c00;
+  background: #fff4df;
+}
+
+.admin-local-import__counters .is-imported {
+  color: #3569c8;
+  background: #edf4ff;
+}
+
+.admin-local-import__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.admin-local-import__actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.admin-local-import__clear {
+  min-height: 38px;
+  padding: 0 12px;
+  margin-left: auto;
+  border: 1px solid #f0c9ce;
+  border-radius: 10px;
+  color: #c93e4b;
+  background: #fff5f6;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.admin-local-import__message {
+  padding: 10px 12px;
+  border: 1px solid #d7e6f8;
+  border-radius: 11px;
+  color: #5f7897;
+  background: #f7fbff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.admin-local-import__message.is-success {
+  color: #087947;
+  border-color: #bdebd3;
+  background: #effbf5;
+}
+
+.admin-local-import__message.is-error {
+  color: #b8323e;
+  border-color: #f0c5ca;
+  background: #fff3f4;
+}
+
+
+@media (max-width: 760px) {
+  .admin-local-import__summary {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-local-import__clear {
+    margin-left: 0;
+  }
+
+  .admin-players-source-tabs {
+    width: 100%;
+  }
+
+  .admin-players-source-tabs button {
+    flex: 1;
+  }
+}
+
+/* =========================
+   LOCAL TRANSFER MODAL
+========================= */
+
+.local-transfer-modal__content {
+  display: grid;
+  gap: 14px;
+}
+
+.local-transfer-modal__summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.local-transfer-modal__summary span {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border: 1px solid #d8e7f8;
+  border-radius: 12px;
+  color: #6d86a4;
+  background: #f8fbff;
+  font-size: 13px;
+}
+
+.local-transfer-modal__summary strong {
+  color: #183a68;
+  font-size: 20px;
+}
+
+.local-transfer-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 14px;
+  border: 1px solid #d8e7f8;
+  border-radius: 14px;
+  background: #fff;
+  color: #234a78;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.local-transfer-option:hover:not(:disabled),
+.local-transfer-option.is-active {
+  border-color: #7fb1f5;
+  background: #f2f7ff;
+  box-shadow: 0 8px 20px rgba(60, 106, 238, 0.1);
+}
+
+.local-transfer-option:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.local-transfer-option > span:last-child {
+  display: grid;
+  gap: 4px;
+}
+
+.local-transfer-option small {
+  color: #718aa8;
+  line-height: 1.45;
+}
+
+.local-transfer-option__icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 12px;
+}
+
+.local-transfer-option__icon.is-safe {
+  color: #1e72e9;
+  background: #eaf3ff;
+}
+
+.local-transfer-option__icon.is-danger {
+  color: #cc3444;
+  background: #fff0f2;
+}
+
+.local-transfer-option--danger.is-active {
+  border-color: #ef9ca6;
+  background: #fff6f7;
+}
+
+.local-transfer-modal__warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 12px 14px;
+  border: 1px solid #f0c2c8;
+  border-radius: 12px;
+  color: #a92f3b;
+  background: #fff3f4;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.local-transfer-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.local-transfer-modal__footer .admin-primary-button.is-danger {
+  background: linear-gradient(135deg, #e04452, #bd2e3c);
+  box-shadow: 0 8px 20px rgba(190, 46, 60, 0.2);
+}
+
+@media (max-width: 700px) {
+  .local-transfer-modal__summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.admin-players-clear-database {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 16px;
+  color: #c43e4c;
+  background: #fff5f6;
+  border: 1px solid #f1c7cc;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.18s ease;
+}
+
+.admin-players-clear-database:hover:not(:disabled) {
+  background: #fff0f2;
+  border-color: #e9aab2;
+  transform: translateY(-1px);
+}
+
+.admin-players-clear-database:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.admin-local-import__guide {
+  display: grid;
+  gap: 4px;
+  padding: 11px 13px;
+  border: 1px solid #cfe1f7;
+  border-radius: 12px;
+  color: #5f7897;
+  background: #f4f9ff;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.admin-local-import__guide strong {
+  color: #1d4f87;
+}
+
+@media (max-width: 560px) {
+  .admin-local-import-toolbar {
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .admin-local-import__summary {
+    padding: 10px 11px;
+    gap: 9px;
+  }
+
+  .admin-local-import__summary > div:first-child {
+    align-items: flex-start;
+  }
+
+  .admin-local-import__summary > div:first-child > svg {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+  }
+
+  .admin-local-import__summary strong {
+    font-size: 14px;
+  }
+
+  .admin-local-import__summary small {
+    font-size: 11px;
+  }
+
+  .admin-local-import__counters {
+    width: 100%;
+    gap: 5px;
+  }
+
+  .admin-local-import__counters span {
+    padding: 4px 7px;
+    font-size: 10px;
+  }
+
+  .admin-local-import__guide {
+    padding: 9px 10px;
+    font-size: 11px;
+  }
+
+  .admin-local-import__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+  }
+
+  .admin-local-import__actions button {
+    min-height: 38px;
+    width: 100%;
+    padding-left: 9px;
+    padding-right: 9px;
+    font-size: 12px;
+  }
+
+  .admin-local-import__actions .admin-secondary-button:first-child {
+    display: none;
+  }
+
+  .admin-local-import__clear {
+    margin-left: 0;
+  }
+
+  .local-transfer-option {
+    padding: 11px;
+    gap: 10px;
+  }
+
+  .local-transfer-option__icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .local-transfer-option strong {
+    font-size: 13px;
+  }
+
+  .local-transfer-option small {
+    font-size: 11px;
+  }
+
+  .local-transfer-modal__footer {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}

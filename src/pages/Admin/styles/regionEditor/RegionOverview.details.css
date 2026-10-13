@@ -1,0 +1,371 @@
+/* =========================================================
+   COMMENT
+========================================================= */
+
+.region-player-overview__comment {
+  width: 100%;
+  min-width: 0;
+
+  min-height: 92px;
+
+  padding: 16px 18px;
+}
+
+.region-player-overview__comment-title {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 10px;
+
+  color: #3476d8;
+}
+
+.region-player-overview__comment-title span {
+  color: #647f9d;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  letter-spacing: 0.03em;
+
+  text-transform: uppercase;
+}
+
+.region-player-overview__comment p {
+  margin: 0;
+
+  color: #173c68;
+
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.55;
+
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   SMALL DESKTOP / TABLET
+   <= 1150px
+========================================================= */
+
+@media (max-width: 1150px) {
+  /*
+    TOP:
+    player займає весь перший рядок.
+    tier / troop / lair = 3 картки.
+  */
+
+  .region-player-overview__top {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .region-player-overview__identity {
+    grid-column: 1 / -1;
+  }
+
+  /*
+    BOTTOM:
+    march / rally / shift = 3 зверху.
+    captain / ready = 2 знизу.
+  */
+
+  .region-player-overview__bottom {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .region-player-overview__bottom .region-player-overview__cell:nth-child(1),
+  .region-player-overview__bottom .region-player-overview__cell:nth-child(2),
+  .region-player-overview__bottom .region-player-overview__cell:nth-child(3) {
+    grid-column: span 2;
+  }
+
+  .region-player-overview__bottom .region-player-overview__cell:nth-child(4),
+  .region-player-overview__bottom .region-player-overview__cell:nth-child(5) {
+    grid-column: span 3;
+  }
+
+  .region-player-overview__cell {
+    align-items: center;
+
+    padding-left: 10px;
+    padding-right: 10px;
+
+    text-align: center;
+  }
+
+  .region-player-overview__cell-heading {
+    justify-content: center;
+  }
+
+  .region-player-overview__label {
+    text-align: center;
+  }
+}
+
+/* =========================================================
+   MOBILE / NARROW TABLET
+   <= 760px
+========================================================= */
+
+@media (max-width: 760px) {
+  .region-player-overview {
+    gap: 10px;
+  }
+
+  /*
+    TOP:
+    player full width.
+    tier / troop / lair = 3 в ряд.
+  */
+
+  .region-player-overview__top {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 8px;
+  }
+
+  .region-player-overview__identity {
+    grid-column: 1 / -1;
+
+    min-height: 90px;
+
+    padding: 12px 14px;
+  }
+
+  .region-player-overview__avatar {
+    width: 52px;
+    height: 52px;
+  }
+
+  .region-player-overview__avatar-image {
+    width: 50px;
+    height: 50px;
+  }
+
+  .region-player-overview__identity-text strong {
+    font-size: 18px;
+  }
+
+  .region-player-overview__identity-text small {
+    font-size: 12px;
+  }
+
+  .region-player-overview__top .region-player-overview__cell {
+    min-height: 92px;
+
+    padding: 10px 6px;
+  }
+
+  /*
+    BOTTOM:
+    march / rally = 50% + 50%.
+    shift / captain / ready = по 1/3.
+  */
+
+  .region-player-overview__bottom {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+
+    gap: 8px;
+  }
+
+  .region-player-overview__bottom .region-player-overview__cell:nth-child(1),
+  .region-player-overview__bottom .region-player-overview__cell:nth-child(2) {
+    grid-column: span 3;
+  }
+
+  .region-player-overview__bottom .region-player-overview__cell:nth-child(3),
+  .region-player-overview__bottom .region-player-overview__cell:nth-child(4),
+  .region-player-overview__bottom .region-player-overview__cell:nth-child(5) {
+    grid-column: span 2;
+  }
+
+  .region-player-overview__cell {
+    min-width: 0;
+    min-height: 92px;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 7px;
+
+    text-align: center;
+  }
+
+  .region-player-overview__cell-heading {
+    justify-content: center;
+
+    gap: 5px;
+  }
+
+  .region-player-overview__label {
+    font-size: 10px;
+    line-height: 1.15;
+
+    text-align: center;
+  }
+
+  .region-player-overview__number {
+    font-size: 17px;
+  }
+
+  .region-player-overview__info-icon {
+    width: 25px;
+    height: 25px;
+  }
+
+  .region-player-overview__cell .player-tier-badge {
+    min-width: 60px;
+    min-height: 34px;
+
+    padding: 0 9px;
+
+    font-size: 12px;
+  }
+
+  .region-player-overview__cell .player-troop-badge {
+    width: auto;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 36px;
+
+    padding: 0 9px;
+
+    font-size: 12px;
+  }
+
+  .region-player-overview__cell .player-status-badge {
+    width: auto;
+    min-width: 0;
+    max-width: 118px;
+    min-height: 36px;
+
+    padding: 0 8px;
+
+    font-size: 12px;
+  }
+
+  .region-player-overview__comment {
+    padding: 13px 14px;
+  }
+
+  .region-player-overview__comment p {
+    font-size: 14px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   <= 520px
+========================================================= */
+
+@media (max-width: 520px) {
+  /*
+    TOP:
+    player full width.
+    tier + troop = 2 картки.
+    lair = full width.
+  */
+
+  .region-player-overview__top {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .region-player-overview__identity {
+    grid-column: 1 / -1;
+  }
+
+  .region-player-overview__top .region-player-overview__cell:last-child {
+    grid-column: 1 / -1;
+  }
+
+  /*
+    BOTTOM:
+    march / rally
+    shift / captain
+    ready = full width.
+  */
+
+  .region-player-overview__bottom {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .region-player-overview__bottom .region-player-overview__cell:nth-child(1),
+  .region-player-overview__bottom .region-player-overview__cell:nth-child(2),
+  .region-player-overview__bottom .region-player-overview__cell:nth-child(3),
+  .region-player-overview__bottom .region-player-overview__cell:nth-child(4) {
+    grid-column: auto;
+  }
+
+  .region-player-overview__bottom .region-player-overview__cell:nth-child(5) {
+    grid-column: 1 / -1;
+  }
+
+  .region-player-overview__cell {
+    min-height: 86px;
+
+    padding: 9px 7px;
+  }
+
+  .region-player-overview__cell .player-status-badge {
+    width: auto;
+    min-width: 100px;
+    max-width: 100%;
+  }
+
+  .region-player-overview__comment {
+    padding: 12px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE
+   <= 390px
+
+   На дуже вузькому екрані не стискаємо картки до абсурду.
+========================================================= */
+
+@media (max-width: 390px) {
+  .region-player-overview__top,
+  .region-player-overview__bottom {
+    grid-template-columns: 1fr;
+  }
+
+  .region-player-overview__identity,
+  .region-player-overview__top .region-player-overview__cell,
+  .region-player-overview__bottom .region-player-overview__cell {
+    grid-column: 1;
+  }
+
+  .region-player-overview__identity {
+    min-height: 82px;
+
+    padding: 10px 12px;
+  }
+
+  .region-player-overview__avatar {
+    width: 46px;
+    height: 46px;
+  }
+
+  .region-player-overview__avatar-image {
+    width: 44px;
+    height: 44px;
+  }
+
+  .region-player-overview__identity-text strong {
+    font-size: 16px;
+  }
+
+  .region-player-overview__cell {
+    min-height: 78px;
+
+    padding: 9px 10px;
+  }
+
+  .region-player-overview__comment {
+    padding: 11px 12px;
+  }
+}

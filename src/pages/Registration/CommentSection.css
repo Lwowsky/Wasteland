@@ -1,0 +1,19 @@
+.registration-section--comment {
+  padding: 13px 16px;
+}
+
+.registration-section--comment .registration-section__heading {
+  margin-bottom: 8px;
+}
+
+.registration__textarea {
+  min-height: 95px;
+
+  resize: vertical;
+}
+
+.registration-section__heading-image--comment {
+  width: 28px;
+  height: 28px;
+  flex-basis: 28px;
+}

@@ -1,0 +1,261 @@
+/* =========================================================
+   USER ACCESS MODAL
+========================================================= */
+
+.admin-user-site-modal {
+  min-width: 0;
+
+  color: #173a63;
+}
+
+.admin-user-site-modal .site-modal__body {
+  min-width: 0;
+
+  overflow-x: hidden;
+}
+
+.admin-user-site-modal .site-modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+}
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.admin-user-modal__profile {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+}
+
+.admin-user-modal__avatar {
+  width: 48px;
+  height: 48px;
+
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 auto;
+
+  color: #ffffff;
+
+  background: linear-gradient(135deg, #2f84ff, #6257ef);
+
+  border-radius: 50%;
+
+  box-shadow: 0 7px 18px rgba(55, 95, 234, 0.24);
+
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.admin-user-modal__profile-text {
+  min-width: 0;
+}
+
+.admin-user-modal__profile-text h2 {
+  max-width: 100%;
+
+  margin: 0;
+
+  overflow: hidden;
+
+  color: #12365f;
+
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.15;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-user-modal__profile-text p {
+  max-width: 100%;
+
+  margin: 4px 0 0;
+
+  overflow: hidden;
+
+  color: #6a819b;
+
+  font-size: 13px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.admin-user-modal__content {
+  width: 100%;
+  min-width: 0;
+}
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+.admin-user-modal__summary {
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 12px;
+
+  margin-bottom: 20px;
+}
+
+.admin-user-summary-card {
+  min-width: 0;
+  min-height: 86px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+
+  padding: 15px;
+
+  background: linear-gradient(145deg, #ffffff, #f7fbff);
+
+  border: 1px solid #cfdfef;
+  border-radius: 14px;
+}
+
+.admin-user-summary-card > span {
+  color: #6c829c;
+
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1.2;
+
+  text-transform: uppercase;
+
+  overflow-wrap: anywhere;
+}
+
+.admin-user-summary-card strong {
+  min-width: 0;
+
+  color: #173a63;
+
+  font-size: 14px;
+
+  overflow-wrap: anywhere;
+}
+
+.admin-user-summary-card select {
+  width: 100%;
+  min-width: 0;
+  height: 40px;
+
+  padding: 0 10px;
+
+  color: #173a63;
+  background: #ffffff;
+
+  border: 1px solid #bfd4eb;
+  border-radius: 9px;
+
+  outline: none;
+
+  font: inherit;
+
+  cursor: pointer;
+}
+
+.admin-user-summary-card select:focus {
+  border-color: #6aa4f4;
+
+  box-shadow: 0 0 0 3px rgba(73, 138, 237, 0.12);
+}
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.admin-user-status-toggle {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+}
+
+.admin-user-status-toggle input {
+  width: 18px;
+  height: 18px;
+
+  flex: 0 0 auto;
+
+  accent-color: #347fff;
+}
+
+/* =========================================================
+   PERMISSIONS HEADING
+========================================================= */
+
+.admin-user-modal__permissions-heading {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-bottom: 13px;
+}
+
+.admin-user-modal__permissions-heading > div:first-child {
+  min-width: 0;
+}
+
+.admin-user-modal__permissions-heading h3 {
+  margin: 0;
+
+  color: #12365f;
+
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.admin-user-modal__permissions-heading p {
+  margin: 5px 0 0;
+
+  color: #6c829a;
+
+  font-size: 13px;
+  line-height: 1.45;
+
+  overflow-wrap: anywhere;
+}
+
+.admin-user-modal__owner-lock {
+  width: 40px;
+  height: 40px;
+
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 auto;
+
+  color: #9a6715;
+  background: #fff2cc;
+
+  border-radius: 11px;
+}
+

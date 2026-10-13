@@ -1,0 +1,131 @@
+{
+  "title": "Users & access",
+  "description": "Manage users, roles and individual permissions.",
+  "tabs": {
+    "users": "Users",
+    "requests": "Requests"
+  },
+  "cards": {
+    "owner": {
+      "title": "Owner",
+      "description": "Full access. Role and permissions can only be changed manually through Firebase."
+    },
+    "admin": {
+      "title": "Admin",
+      "description": "All Owner permissions except region reset."
+    },
+    "consul": {
+      "title": "Consul",
+      "description": "All player, turret, registration and working settings tools. No role management, site appearance or region reset."
+    },
+    "requests": {
+      "title": "Requests",
+      "description": "New admin access requests waiting for review."
+    }
+  },
+  "roles": {
+    "owner": {
+      "title": "Owner",
+      "description": "Full access. Role and permissions can only be changed manually through Firebase."
+    },
+    "admin": {
+      "title": "Admin",
+      "description": "All Owner permissions except region reset."
+    },
+    "consul": {
+      "title": "Consul",
+      "description": "All player, turret, registration and working settings tools. No role management, site appearance or region reset."
+    }
+  },
+  "usersCount": "users",
+  "pendingCount": "pending",
+  "columns": {
+    "user": "User",
+    "role": "Role",
+    "permissions": "Permissions",
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "permissions": {
+    "owner": "Full access"
+  },
+  "actions": {
+    "removeAccess": "Delete access",
+    "ownerLocked": "Owner can only be changed through Firebase",
+    "notAllowed": "Insufficient permissions",
+    "openUser": "Open user"
+  },
+  "modal": {
+    "role": "Role",
+    "status": "Status",
+    "createdAt": "Created",
+    "updatedAt": "Updated",
+    "permissions": "Permissions",
+    "permissionsCount": "permissions",
+    "permissionsText": "Permissions can be restricted for an individual user within the limits of their role.",
+    "ownerPermissions": "Owner always has full access. Owner permissions cannot be edited through the site.",
+    "technicalInfo": "Technical information",
+    "uid": "UID",
+    "saving": "Saving...",
+    "restoreDefaults": "Restore role defaults",
+    "disableRolePermissions": "Disable all permissions"
+  },
+  "permissionGroups": {
+    "access": {
+      "title": "Users & access",
+      "description": "Manage roles and administrative access."
+    },
+    "players": {
+      "title": "Player table",
+      "description": "View and manage player data."
+    },
+    "distribution": {
+      "title": "Distribution & final plan",
+      "description": "Manage turrets and the final plan."
+    },
+    "registration": {
+      "title": "Registration",
+      "description": "Manage registration settings."
+    },
+    "requests": {
+      "title": "Requests",
+      "description": "View and process access requests."
+    },
+    "settings": {
+      "title": "Settings",
+      "description": "Access import, export and system tools."
+    }
+  },
+  "permissionLabels": {
+    "view_access": "View users and roles",
+    "manage_access": "Edit access",
+    "manage_consuls": "Manage Consul users",
+    "grant_admin": "Grant Admin role",
+    "view_players": "View player table",
+    "edit_players": "Edit players",
+    "delete_players": "Delete players",
+    "view_distribution": "View distribution",
+    "edit_distribution": "Edit distribution",
+    "view_registration_settings": "View registration settings",
+    "edit_registration_settings": "Edit registration settings",
+    "view_requests": "View requests",
+    "manage_requests": "Approve and reject requests",
+    "view_settings": "Access settings",
+    "import_players": "Import player table",
+    "clear_players": "Clear entire player table",
+    "publish_final_plan": "Publish and restore final plan",
+    "manage_content_access": "Manage public content access",
+    "manage_site_appearance": "Site appearance",
+    "manage_region_backup": "Region backup and restore",
+    "reset_region": "Reset region data"
+  },
+  "loading": "Loading users...",
+  "errors": {
+    "load": "Failed to load users.",
+    "save": "Failed to save user permissions.",
+    "delete": "Failed to delete access."
+  },
+  "confirm": {
+    "removeAccess": "Delete access for {{name}}?"
+  }
+}

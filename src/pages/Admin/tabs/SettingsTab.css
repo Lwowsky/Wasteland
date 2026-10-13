@@ -1,0 +1,294 @@
+.admin-system-settings {
+  display: grid;
+  gap: 12px;
+}
+
+.settings-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.settings-tool-card {
+  min-width: 0;
+  min-height: 0;
+  padding: 17px;
+  text-align: left;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(103, 164, 255, 0.09), transparent 45%),
+    linear-gradient(150deg, #ffffff 0%, #f5f9ff 100%);
+  border: 1px solid #c4daf3;
+  border-radius: 18px;
+  box-shadow: 0 7px 19px rgba(43, 92, 163, 0.06);
+}
+
+.settings-tool-card h3,
+.settings-export-card h3 {
+  margin: 0 0 5px;
+  color: #173a66;
+}
+
+.settings-tool-card > p:not(.admin-empty-state) {
+  margin: 0 0 10px;
+  color: #6a8099;
+  font-size: 12px;
+}
+
+.settings-import-card,
+.settings-export-card,
+.settings-backup-card,
+.settings-access-card {
+  align-self: stretch;
+}
+
+.admin-export-icon {
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  overflow: hidden;
+  background: linear-gradient(145deg, #eef5ff, #e8f1ff);
+  border: 1px solid #c8dbf1;
+  border-radius: 14px;
+  box-shadow: 0 8px 18px rgba(45, 92, 168, 0.08);
+}
+
+.settings-section-icon {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+  display: block;
+}
+
+.settings-button-icon-image {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  display: block;
+}
+
+.settings-tool-card > p.settings-import-mapping-note,
+.settings-access-note {
+  margin-top: 7px;
+}
+
+
+/* Compact export card. Export modal styles live in ExportSettingsModal.css. */
+.settings-export-card--compact {
+  padding: 14px;
+}
+
+.admin-export-compact {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.admin-export-compact__intro {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.admin-export-compact__intro .admin-export-icon {
+  flex: 0 0 58px;
+  width: 58px;
+  height: 58px;
+  margin: 0;
+}
+
+.admin-export-compact__intro h3,
+.admin-export-compact__intro p {
+  margin: 0;
+}
+
+.admin-export-compact__intro p {
+  margin-top: 4px;
+  color: #667d97;
+  font-size: 12px;
+}
+
+.admin-export-compact__intro span {
+  display: inline-block;
+  margin-top: 7px;
+  color: #2c6db2;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.admin-export-compact__controls {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-export-compact__controls .admin-field {
+  margin: 0;
+}
+
+.admin-export-compact__buttons {
+  display: flex;
+  justify-content: stretch;
+  gap: 9px;
+}
+
+.admin-export-compact__buttons button {
+  min-height: 38px;
+  flex: 1;
+}
+
+.settings-danger-zone {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  background: linear-gradient(145deg, #fffafa, #fff4f5);
+  border: 1px solid #f2bcc3;
+  border-radius: 16px;
+}
+
+.settings-danger-zone__icon {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: #d93f4f;
+  background: #ffe8eb;
+  border-radius: 15px;
+}
+
+.settings-danger-zone__content {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.settings-danger-zone__eyebrow {
+  display: block;
+  margin-bottom: 4px;
+  color: #c63747;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.settings-danger-zone h3 {
+  margin: 0 0 6px;
+  color: #6e1f2a;
+}
+
+.settings-danger-zone p {
+  max-width: 760px;
+  margin: 0 0 5px;
+  color: #775862;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.settings-danger-zone__preserved {
+  color: #2f6c4e;
+  font-size: 12px;
+}
+
+.settings-danger-zone__button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #e04758, #bd2639);
+  border: 0;
+  border-radius: 11px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(189, 38, 57, 0.2);
+}
+
+.settings-danger-zone__button:hover {
+  filter: brightness(1.04);
+}
+
+@media (max-width: 900px) {
+  .settings-tools-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-export-compact__buttons {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .settings-danger-zone__content {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .settings-danger-zone__button {
+    width: 100%;
+  }
+}
+
+.admin-system-settings .settings-access-card__head {
+  align-items: center;
+  min-width: 0;
+  margin-bottom: 15px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid #e0ebf7;
+}
+
+.admin-system-settings .settings-access-card__head > div:last-child {
+  min-width: 0;
+  flex: 1;
+}
+
+.admin-system-settings .settings-access-card__icon {
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+}
+
+.admin-system-settings .settings-export-card--compact {
+  padding: 17px;
+}
+
+.admin-system-settings .admin-export-compact__intro {
+  margin-bottom: 0;
+}
+
+.admin-system-settings .admin-export-compact__buttons button {
+  min-width: 0;
+}
+
+.admin-system-settings .settings-tool-card button:focus-visible,
+.admin-system-settings .settings-danger-zone__button:focus-visible {
+  outline: 3px solid #78a9ff;
+  outline-offset: 2px;
+}
+
+.admin-system-settings .settings-danger-zone {
+  box-shadow: 0 7px 18px rgba(195, 55, 75, 0.06);
+}
+
+@media (max-width: 520px) {
+  .admin-system-settings .settings-access-card__head {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .admin-system-settings .settings-access-card__icon {
+    width: 48px;
+    height: 48px;
+    flex-basis: 48px;
+  }
+}

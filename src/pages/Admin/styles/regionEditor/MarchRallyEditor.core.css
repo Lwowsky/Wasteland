@@ -1,0 +1,290 @@
+.region-combat-editor {
+  width: 100%;
+  min-width: 0;
+
+  overflow: hidden;
+
+  border: 1px solid #d4e4f5;
+  border-radius: 20px;
+
+  background: #ffffff;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.region-combat-editor__header {
+  width: 100%;
+  min-width: 0;
+  min-height: 96px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 16px 22px;
+
+  background: linear-gradient(145deg, #f4f9ff, #edf5ff);
+
+  border-bottom: 1px solid #dbe7f4;
+}
+
+.region-combat-editor__heading {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+}
+
+.region-combat-editor__heading-icon {
+  width: 48px;
+  height: 48px;
+
+  display: block;
+  flex: 0 0 auto;
+
+  object-fit: contain;
+}
+
+.region-combat-editor__heading-text {
+  min-width: 0;
+}
+
+.region-combat-editor__heading h3 {
+  margin: 0;
+
+  color: #173c68;
+
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.region-combat-editor__heading p {
+  margin: 5px 0 0;
+
+  color: #728aa5;
+
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* =========================================================
+   SORT
+========================================================= */
+
+.region-combat-editor__sort {
+  width: 300px;
+  min-width: 260px;
+  min-height: 50px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  flex: 0 0 auto;
+
+  padding: 0 14px;
+
+  background: #ffffff;
+
+  border: 1px solid #cfe0f2;
+  border-radius: 14px;
+}
+
+.region-combat-editor__sort-icon {
+  flex: 0 0 auto;
+
+  color: #3978cc;
+
+  font-size: 23px;
+  font-weight: 900;
+}
+
+.region-combat-editor__sort select {
+  width: 100%;
+  min-width: 0;
+
+  border: 0;
+  outline: 0;
+
+  color: #214a78;
+  background: transparent;
+
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+/* =========================================================
+   TABLE SCROLL
+========================================================= */
+
+.region-combat-editor__table {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  -webkit-overflow-scrolling: touch;
+
+  overscroll-behavior-x: contain;
+
+  scrollbar-width: thin;
+  scrollbar-color: #8eadd0 #edf4fb;
+}
+
+.region-combat-editor__table:focus-visible {
+  outline: 3px solid rgba(65, 126, 224, 0.2);
+  outline-offset: -3px;
+}
+
+.region-combat-editor__table::-webkit-scrollbar {
+  height: 9px;
+}
+
+.region-combat-editor__table::-webkit-scrollbar-track {
+  background: #edf4fb;
+}
+
+.region-combat-editor__table::-webkit-scrollbar-thumb {
+  background: #9db8d6;
+
+  border: 2px solid #edf4fb;
+  border-radius: 999px;
+}
+
+.region-combat-editor__table::-webkit-scrollbar-thumb:hover {
+  background: #779ac1;
+}
+
+/* =========================================================
+   INNER TABLE
+========================================================= */
+
+.region-combat-editor__table-inner {
+  width: 100%;
+  min-width: 0;
+}
+
+.region-combat-editor__table-head,
+.region-combat-editor__row {
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns:
+    42px
+    minmax(120px, 1.2fr)
+    minmax(125px, 1fr)
+    minmax(130px, 1fr)
+    minmax(130px, 1fr)
+    96px;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.region-combat-editor__table-head {
+  min-height: 48px;
+
+  padding: 0 16px;
+
+  color: #7088a5;
+  background: linear-gradient(180deg, #f7fbff, #edf5fc);
+
+  border-bottom: 1px solid #dce8f4;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.region-combat-editor__table-head > span {
+  min-width: 0;
+}
+
+/* =========================================================
+   ROWS
+========================================================= */
+
+.region-combat-editor__rows {
+  width: 100%;
+  min-width: 0;
+}
+
+.region-combat-editor__row {
+  min-height: 82px;
+
+  padding: 11px 16px;
+
+  border-bottom: 1px solid #e0eaf4;
+
+  transition:
+    background 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.region-combat-editor__row:last-child {
+  border-bottom: 0;
+}
+
+.region-combat-editor__row:nth-child(odd) {
+  background: #ffffff;
+}
+
+.region-combat-editor__row:nth-child(even) {
+  background: #f8fbfe;
+}
+
+.region-combat-editor__row:hover {
+  background: #edf6ff;
+}
+
+.region-combat-editor__row--changed {
+  background: #f4f7ff;
+}
+
+.region-combat-editor__row--changed:hover {
+  background: #edf3ff;
+}
+
+/* =========================================================
+   RANK
+========================================================= */
+
+.region-combat-editor__rank {
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  color: #3474dc;
+  background: #edf5ff;
+
+  border-radius: 12px;
+
+  font-size: 18px;
+  font-weight: 900;
+}
+

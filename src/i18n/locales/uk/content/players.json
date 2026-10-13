@@ -1,0 +1,66 @@
+{
+  "title": "Таблиця гравців",
+  "text": "Список поданих заявок у спрощеному вигляді.",
+  "empty": "Поки що немає заявок.",
+  "stats": {
+    "total": "Усього гравців",
+    "captains": "Капітани готові"
+  },
+  "troops": {
+    "fighter": "Бійці",
+    "rider": "Наїзники",
+    "shooter": "Стрільці"
+  },
+  "shifts": {
+    "shift1": "Зміна 1",
+    "shift2": "Зміна 2",
+    "shift3": "Зміна 3",
+    "shift4": "Зміна 4",
+    "flexible": "Будь-яка зміна"
+  },
+  "filters": {
+    "title": "Фільтри",
+    "search": "Пошук",
+    "searchPlaceholder": "Нік або альянс",
+    "alliance": "Альянс",
+    "troopType": "Тип військ",
+    "shift": "Зміна",
+    "captain": "Капітан",
+    "readyCaptain": "Готовий бути капітаном",
+    "notCaptain": "Не капітан",
+    "all": "Усі",
+    "reset": "Скинути фільтри",
+    "perPage": "Гравців на сторінці",
+    "perPage10": "По 10",
+    "perPage20": "По 20",
+    "perPage50": "По 50",
+    "perPageAll": "Усі"
+  },
+  "table": {
+    "nickname": "Нік",
+    "alliance": "Альянс",
+    "troops": "Війська",
+    "tier": "Тір",
+    "shift": "Зміна",
+    "captain": "Капітан",
+    "when": "Коли",
+    "yes": "Так",
+    "no": "Ні"
+  },
+  "loading": "Завантаження...",
+  "errors": {
+    "load": "Не вдалося завантажити список гравців."
+  },
+  "time": {
+    "justNow": "щойно",
+    "minutesAgo": "{{count}} хв тому",
+    "hoursAgo": "{{count}} год тому",
+    "daysAgo": "{{count}} дн тому"
+  },
+  "pagination": {
+    "label": "Сторінки таблиці гравців",
+    "previous": "Попередня сторінка",
+    "next": "Наступна сторінка",
+    "pageOf": "{{page}} / {{pages}}"
+  }
+}

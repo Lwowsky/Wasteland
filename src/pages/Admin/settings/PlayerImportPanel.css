@@ -1,0 +1,135 @@
+/* Player import card and local draft styles. */
+
+.settings-import-card {
+  text-align: left;
+}
+
+.settings-import-card .admin-export-icon {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.settings-import-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.settings-import-dropzone {
+  width: 100%;
+  min-height: 86px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 3px;
+  padding: 14px;
+  color: #2d6fba;
+  background: linear-gradient(145deg, #fafdff, #f2f8ff);
+  border: 1px dashed #9fc3ea;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.settings-import-dropzone:hover:not(:disabled) {
+  background: #f0f7ff;
+  border-color: #6fa7e6;
+}
+
+.settings-import-dropzone:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.settings-import-dropzone strong {
+  color: #173a66;
+}
+
+.settings-import-dropzone span {
+  color: #7890aa;
+  font-size: 11px;
+}
+
+.settings-tool-card > p.settings-import-mapping-note {
+  margin: 10px 0 0;
+  color: #5f7894;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.settings-import-reopen {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Import staging and manual value mapping */
+.settings-import-draft-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 11px 12px;
+  color: #214f86;
+  background: #f1f7ff;
+  border: 1px solid #bdd5f3;
+  border-radius: 12px;
+}
+
+.settings-import-draft-card > div:first-child {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.settings-import-draft-card span {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.settings-import-draft-card small {
+  color: #6d849d;
+  overflow-wrap: anywhere;
+}
+
+.settings-import-draft-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.settings-import-draft-delete {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  color: #b52f42;
+  background: #fff2f4;
+  border: 1px solid #efbcc4;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .settings-import-draft-card {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+.settings-import-draft-help {
+  max-width: 560px;
+  margin-top: 5px;
+  color: #5f7897;
+  line-height: 1.45;
+}
+
+.settings-import-draft-delete-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  display: block;
+}

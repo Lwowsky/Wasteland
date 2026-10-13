@@ -1,0 +1,300 @@
+@media (max-width: 900px) {
+  .settings-import-value-groups {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .settings-import-destination-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-import-value-row {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-import-value-row .settings-import-arrow {
+    display: none;
+  }
+}
+
+/* =========================
+   MOBILE SAFETY
+   Keep every import-wizard block inside the modal viewport. Native selects can
+   otherwise keep a large intrinsic width when Excel column names are long.
+   ========================= */
+
+.settings-import-wizard,
+.settings-import-wizard > section,
+.settings-import-mapping-grid,
+.settings-import-mapping-row,
+.settings-import-target-label,
+.settings-import-value-groups,
+.settings-import-value-group,
+.settings-import-value-row,
+.settings-import-destination-grid,
+.settings-import-preview-section {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.settings-import-mapping-row > *,
+.settings-import-value-row > *,
+.settings-import-destination-grid > button > span {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.settings-import-mapping-row select,
+.settings-import-value-row select,
+.settings-import-target-label input {
+  width: 100%;
+  max-width: 100%;
+}
+
+.settings-import-destination-grid strong,
+.settings-import-destination-grid small,
+.settings-import-section-head h3,
+.settings-import-section-head p,
+.settings-import-target-label strong,
+.settings-import-unknown-list span {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 700px) {
+  .settings-import-wizard {
+    gap: 10px;
+  }
+
+  .settings-import-file-summary,
+  .settings-import-mapping-section,
+  .settings-import-unknown-section,
+  .settings-import-preview-section,
+  .settings-import-destination-section,
+  .settings-import-value-section {
+    padding: 11px;
+    border-radius: 12px;
+  }
+
+  .settings-import-file-summary {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .settings-import-file-summary .admin-secondary-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .settings-import-destination-grid > button {
+    align-items: flex-start;
+    padding: 11px;
+  }
+
+  .settings-import-destination-grid > button > svg {
+    flex: 0 0 auto;
+    margin-top: 1px;
+  }
+
+  .settings-import-mapping-row {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 7px;
+    padding: 9px;
+    overflow: hidden;
+  }
+
+  .settings-import-target-label {
+    display: grid;
+    gap: 6px;
+  }
+
+  .settings-import-target-label small {
+    width: fit-content;
+  }
+
+  .settings-import-remove-field {
+    align-self: flex-end;
+    flex: 0 0 34px;
+  }
+
+  .settings-import-unknown-list > div {
+    min-width: 0;
+    max-width: 100%;
+    align-items: stretch;
+    flex: 1 1 100%;
+    flex-direction: column;
+  }
+
+  .settings-import-unknown-list button {
+    justify-content: center;
+  }
+
+  .settings-import-preview-table-wrap {
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .settings-import-modal-footer__actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+    gap: 8px;
+  }
+
+  .settings-import-modal-footer__actions button {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding-inline: 10px;
+    line-height: 1.2;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 430px) {
+  .settings-import-file-summary,
+  .settings-import-mapping-section,
+  .settings-import-unknown-section,
+  .settings-import-preview-section,
+  .settings-import-destination-section,
+  .settings-import-value-section {
+    padding: 10px;
+  }
+
+  .settings-import-section-head h3 {
+    font-size: 17px;
+  }
+
+  .settings-import-section-head p {
+    font-size: 10px;
+  }
+
+  .settings-import-modal-footer__actions {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.35fr);
+  }
+}
+
+/* Preview paging keeps large Excel imports readable without rendering one very
+   tall table inside the modal. */
+.settings-import-preview-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 8px 10px;
+  background: #f6faff;
+  border: 1px solid #d7e5f2;
+  border-radius: 10px;
+}
+
+.settings-import-preview-range {
+  color: #607a96;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.settings-import-preview-controls,
+.settings-import-pagination,
+.settings-import-page-size {
+  display: flex;
+  align-items: center;
+}
+
+.settings-import-preview-controls {
+  gap: 10px;
+}
+
+.settings-import-page-size {
+  gap: 6px;
+  color: #607a96;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.settings-import-page-size select {
+  min-width: 70px;
+  height: 32px;
+  padding: 0 26px 0 9px;
+  color: #173a66;
+  background: #ffffff;
+  border: 1px solid #bfd3e8;
+  border-radius: 8px;
+  font: inherit;
+  outline: none;
+}
+
+.settings-import-pagination {
+  gap: 7px;
+}
+
+.settings-import-pagination > span {
+  min-width: 48px;
+  color: #405f80;
+  font-size: 11px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.settings-import-pagination button {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: #226fc4;
+  background: #ffffff;
+  border: 1px solid #bfd5eb;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.settings-import-pagination button:hover:not(:disabled) {
+  background: #edf6ff;
+  border-color: #8dbbea;
+}
+
+.settings-import-pagination button:disabled {
+  color: #a9bacb;
+  background: #f4f7fa;
+  cursor: default;
+}
+
+@media (max-width: 700px) {
+  .settings-import-preview-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .settings-import-preview-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 430px) {
+  .settings-import-preview-toolbar {
+    padding: 8px;
+  }
+
+  .settings-import-preview-controls {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .settings-import-page-size,
+  .settings-import-pagination {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .settings-import-page-size select {
+    min-width: 96px;
+  }
+
+  .settings-import-pagination > span {
+    flex: 1;
+  }
+}

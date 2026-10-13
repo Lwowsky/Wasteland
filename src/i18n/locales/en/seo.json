@@ -1,0 +1,21 @@
+{
+  "home": {
+    "title": "Home",
+    "description": "Main page of the website."
+  },
+
+  "about": {
+    "title": "About",
+    "description": "Information about the website."
+  },
+
+  "contact": {
+    "title": "Contact",
+    "description": "Contact information."
+  },
+
+  "notFound": {
+    "title": "404",
+    "description": "Page not found."
+  }
+}

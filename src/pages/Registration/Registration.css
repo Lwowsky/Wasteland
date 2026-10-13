@@ -1,0 +1,383 @@
+.registration {
+  width: 100%;
+  max-width: 1280px;
+
+  margin: 0 auto;
+
+  color: #0b1f3a;
+}
+
+.registration h1,
+.registration h2,
+.registration h3,
+.registration strong,
+.registration label {
+  color: #0b1f3a;
+}
+
+.registration__panel {
+  padding: 24px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(250, 253, 255, 0.98),
+    rgba(229, 241, 252, 0.98)
+  );
+
+  border: 1px solid rgba(65, 125, 220, 0.35);
+  border-radius: 18px;
+
+  box-shadow:
+    0 24px 60px rgba(7, 30, 65, 0.16),
+    0 0 0 1px rgba(255, 255, 255, 0.75) inset;
+}
+
+/* HEADER FORM */
+
+.registration__header {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  margin-bottom: 22px;
+}
+
+.registration__header-icon {
+  width: 60px;
+  height: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background: transparent;
+}
+
+.registration__header-icon img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+}
+
+.registration__title {
+  margin: 0;
+
+  color: #0d2a55;
+
+  font-size: 32px;
+  line-height: 1.1;
+}
+
+.registration__text {
+  margin: 5px 0 0;
+
+  color: #2f496b;
+
+  font-size: 18px;
+  line-height: 1.55;
+  font-weight: 500;
+}
+
+.registration__form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+/* COMMON SECTION */
+
+.registration-section {
+  padding: 16px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(246, 251, 255, 0.96),
+    rgba(232, 243, 253, 0.96)
+  );
+
+  border: 1px solid rgba(85, 145, 225, 0.24);
+  border-radius: 14px;
+
+  box-shadow: 0 6px 18px rgba(39, 81, 140, 0.07);
+}
+
+.registration-section__title-row {
+  display: flex;
+  align-items: center;
+
+  gap: 0;
+
+  margin-bottom: 16px;
+}
+
+
+.registration-section__title {
+  margin: 0;
+
+  color: #123264;
+
+  font-size: 22px;
+}
+
+.registration-section__description {
+  margin: 2px 0 0;
+
+  color: #334f73;
+
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.registration-section__heading {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 12px;
+
+  color: #176bd9;
+}
+
+.registration-section__heading h2 {
+  margin: 0;
+
+  color: #123264;
+
+  font-size: 22px;
+}
+
+.registration-section__heading p {
+  margin: 2px 0 0;
+
+  color: #334f73;
+
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* PLAYER */
+.form-field {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+
+  padding: 10px;
+
+  background: rgba(255, 255, 255, 0.76);
+
+  border: 1px solid rgba(85, 145, 225, 0.18);
+  border-radius: 10px;
+}
+
+.form-field__label {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 7px;
+
+  color: #17335f;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.form-field__required {
+  color: #e84662;
+}
+
+.form-field input,
+.form-field select,
+.extra-squad select,
+.registration__textarea {
+  width: 100%;
+
+  padding: 11px 12px;
+
+  background: rgba(248, 252, 255, 0.96);
+
+  color: #0c234d;
+
+  border: 1px solid #aac7e8;
+  border-radius: 8px;
+
+  outline: none;
+
+  font: inherit;
+  font-size: 18px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.form-field input:hover,
+.form-field select:hover,
+.extra-squad select:hover,
+.registration__textarea:hover {
+  border-color: #7fa7d9;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.extra-squad select:focus,
+.registration__textarea:focus {
+  border-color: #347fff;
+
+  background: #ffffff;
+
+  box-shadow: 0 0 0 3px rgba(52, 127, 255, 0.11);
+}
+.registration__actions {
+  display: flex;
+
+  gap: 10px;
+
+  padding-top: 2px;
+}
+
+.registration__submit,
+.registration__reset {
+  min-height: 44px;
+
+  padding: 10px 20px;
+
+  border-radius: 9px;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.registration__submit {
+  color: #ffffff;
+
+  background: linear-gradient(135deg, #10b981, #22c55e);
+
+  border: 0;
+
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.22);
+}
+
+.registration__submit:hover {
+  transform: translateY(-1px);
+
+  box-shadow: 0 10px 24px rgba(16, 185, 129, 0.3);
+}
+
+.registration__reset {
+  color: #18345f;
+
+  background: rgba(255, 255, 255, 0.86);
+
+  border: 1px solid #acc6e6;
+}
+
+.registration__reset:hover {
+  background: #ffffff;
+}
+@media (max-width: 1000px) {
+  .registration {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .registration__panel {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .registration__header {
+    align-items: flex-start;
+  }
+
+  .registration__header-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .registration__title {
+    font-size: 25px;
+  }
+
+  .registration-section {
+    padding: 12px;
+  }
+
+  .registration__actions {
+    flex-direction: column;
+  }
+
+  .registration__submit,
+  .registration__reset {
+    width: 100%;
+  }
+}
+.registration .registration-field--invalid {
+  position: relative;
+
+  border-color: #f08c9a;
+
+  box-shadow:
+    0 0 0 2px rgba(240, 140, 154, 0.12),
+    0 8px 24px rgba(220, 45, 72, 0.07);
+
+  animation: registration-invalid-pulse 0.55s ease both;
+}
+
+.registration .registration-field--invalid .form-field__label,
+.registration .registration-field--invalid .registration-section__heading h2,
+.registration .registration-field--invalid .choice-card__content strong {
+  color: #b03a52;
+}
+
+.registration .registration-field--invalid input,
+.registration .registration-field--invalid select,
+.registration .registration-field--invalid textarea {
+  border-color: #ef9aaa;
+}
+@keyframes registration-invalid-pulse {
+  0% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-3px);
+  }
+
+  50% {
+    transform: translateX(3px);
+  }
+
+  75% {
+    transform: translateX(-2px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Reuse existing game artwork for registration section headings. */
+.registration-section__heading-image {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  object-fit: contain;
+}

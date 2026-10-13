@@ -1,0 +1,202 @@
+{
+  "title": "Registration settings",
+  "description": "Manage the cycle, shifts, tiers, Wasteland, alliances, and registration fields.",
+  "common": {
+    "configure": "Configure",
+    "cancel": "Cancel",
+    "close": "Close",
+    "saving": "Saving...",
+    "notSet": "Not set",
+    "localTime": "local time"
+  },
+  "sections": {
+    "cycle": {
+      "title": "Registration cycle",
+      "description": "Automatic or manual registration opening and closing.",
+      "opens": "Opens",
+      "closes": "Closes",
+      "wasteland": "Wasteland",
+      "automatic": "Automatic",
+      "manual": "Manual"
+    },
+    "shifts": {
+      "title": "Available shifts",
+      "description": "Shifts available during registration."
+    },
+    "tiers": {
+      "title": "Available tiers",
+      "description": "Tiers available during registration."
+    },
+    "wasteland": {
+      "title": "Alliances and Wasteland",
+      "description": "Wasteland settings, alliances, and their rotation.",
+      "hostAlliance": "Alliance",
+      "governor": "Governor",
+      "alliances": "Alliances",
+      "rotation": "Rotation"
+    },
+    "formFields": {
+      "title": "Registration form fields",
+      "description": "Fields shown on the form and marked as required.",
+      "required": "Required",
+      "total": "Total fields",
+      "visible": "Visible"
+    }
+  },
+  "cycle": {
+    "title": "Registration cycle",
+    "description": "Configure the automatic cycle or enter dates manually.",
+    "modeLabel": "Cycle mode",
+    "automaticMode": "Automatic",
+    "manualMode": "Manual",
+    "defaults": "Default settings",
+    "save": "Save cycle",
+    "wastelandTitle": "Wasteland cycle",
+    "anchor": "Base Wasteland start UTC",
+    "repeat": "Cycle repeat, days",
+    "duration": "Wasteland duration, hours",
+    "closeTitle": "Registration closing",
+    "closeMode": "Closing rule",
+    "closeGameDayReset": "Friday 00:00 UTC / new game day",
+    "closeHoursBefore": "N hours before Wasteland starts",
+    "closeBeforeHours": "Hours before Wasteland starts",
+    "openTitle": "Registration opening",
+    "openWeekday": "Opening day UTC",
+    "openTime": "Opening time UTC",
+    "weekdays": [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ],
+    "manualTitle": "Manual configuration",
+    "manualOpen": "Registration opens UTC",
+    "manualClose": "Registration closes UTC",
+    "previewTitle": "Calculated cycle",
+    "previewOpen": "Registration opens",
+    "previewClose": "Registration closes",
+    "previewStart": "Wasteland starts",
+    "previewEnd": "Wasteland ends",
+    "untilOpen": "Until opening",
+    "untilClose": "Until closing",
+    "daysShort": "d",
+    "hoursShort": "h",
+    "minutesShort": "m",
+    "passed": "Time reached",
+    "closeTime": "Closing time UTC",
+    "manualOpenFallback": "If no date is set, use the automatic opening time",
+    "manualCloseFallback": "If no date is set, use the automatic closing time",
+    "manualFallbackNote": "A manual date has priority. If the field is empty and the checkbox is enabled, the automatic cycle date is used."
+  },
+  "shiftsModal": {
+    "title": "Available shifts",
+    "description": "Enable the shifts available to players.",
+    "save": "Save shifts"
+  },
+  "tiersModal": {
+    "title": "Available tiers",
+    "description": "Enable the tiers available to players.",
+    "save": "Save tiers"
+  },
+  "wastelandModal": {
+    "title": "Alliances and Wasteland",
+    "description": "Configure Wasteland, alliances, and rotation.",
+    "save": "Save settings",
+    "tabsLabel": "Wasteland, alliance, and rotation settings",
+    "wastelandTab": "Wasteland",
+    "alliancesTab": "Alliances",
+    "rotationTab": "Rotation",
+    "detailsTitle": "Main information",
+    "hostAlliance": "Alliance hosting Wasteland",
+    "hostAlliancePlaceholder": "Select alliance",
+    "governor": "Governor",
+    "governorPlaceholder": "Governor nickname",
+    "captureRegion1": "Capture Region 1",
+    "captureRegion2": "Capture Region 2",
+    "alliancesTitle": "Alliance list",
+    "allianceTag": "Alliance tag",
+    "allianceTagPlaceholder": "MIR",
+    "allianceFullName": "Alliance name",
+    "allianceFullNamePlaceholder": "Full alliance name",
+    "addAlliance": "Add",
+    "alliancesEmpty": "No alliances have been added yet.",
+    "remove": "Remove alliance",
+    "rotationTitle": "Rotation order",
+    "rotationEmpty": "Add alliances to configure rotation.",
+    "moveUp": "Move up",
+    "moveDown": "Move down"
+  },
+  "formFieldsModal": {
+    "title": "Registration form fields",
+    "description": "Choose which fields are shown and which are required.",
+    "field": "Field",
+    "visible": "Visible",
+    "required": "Required",
+    "save": "Save fields",
+    "customTitle": "Custom fields",
+    "customDescription": "Add your own fields to the form.",
+    "customLabel": "Field name",
+    "customPlaceholder": "For example: Discord",
+    "addCustom": "Add field",
+    "customEmpty": "No custom fields have been added yet.",
+    "removeCustom": "Remove field",
+    "fields": {
+      "nickname": "Player nickname",
+      "alliance": "Alliance",
+      "troopType": "Main troop type",
+      "tier": "Tier",
+      "lairLevel": "Lair level",
+      "marchSize": "March size",
+      "rallySize": "Rally size",
+      "shift": "Shift",
+      "readyAttack": "Ready to attack",
+      "captain": "Ready to be captain",
+      "extraSquads": "Extra squads",
+      "comment": "Comment"
+    }
+  },
+  "errors": {
+    "load": "Failed to load registration settings.",
+    "save": "Failed to save registration settings.",
+    "period": "Closing time must be later than opening time.",
+    "periodMissing": "Enter valid opening and closing times.",
+    "shiftRequired": "At least one shift must remain available.",
+    "tierRequired": "At least one tier must remain available."
+  },
+  "defaultsButton": "Default settings",
+  "notifications": {
+    "saved": "Settings saved.",
+    "currentApplied": "Settings were applied to the current cycle.",
+    "defaultsRestored": "Default settings restored. Alliances and their rotation were not changed."
+  },
+  "confirm": {
+    "cycleTitle": "Change the registration cycle?",
+    "cycleDescription": "Changing cycle dates or mode can create a new registration period when the opening time is reached.",
+    "cycleImmediateTitle": "Start a new cycle now?",
+    "cycleImmediateDescription": "The new opening time has already been reached. Saving may create a new cycle with an empty player list.",
+    "cycleDetailPlayers": "Current players are not deleted from the database, but a new cycle starts with 0 players.",
+    "cycleDetailHistory": "The old cycle remains in history until it is automatically deleted after 30 days.",
+    "activeCycleTitle": "The current cycle is already open",
+    "activeCycleDescription": "Choose whether to save these rules only for the next cycle or also apply them to the current cycle.",
+    "tierExistingPlayers": "Players with tiers that become unavailable remain in the current list. New registrations can no longer select those tiers.",
+    "shiftExistingPlayers": "If you disable a shift that already has players, you must choose where those players should be moved.",
+    "formExistingPlayers": "New form rules apply to new submissions. Existing submissions are not changed.",
+    "nextCycleOnly": "Next cycle only",
+    "applyCurrent": "Apply to current cycle",
+    "saveCycle": "Save cycle",
+    "defaultsTitle": "Restore default settings?",
+    "defaultsDescription": "The standard cycle, shifts, tiers and form fields will be restored.",
+    "defaultsDetailRules": "Default: Shift 1, Shift 2, Any shift; tiers T9–T14; standard form fields.",
+    "defaultsDetailAlliances": "Alliances, names, rotation, host alliance and governor remain unchanged.",
+    "restoreDefaults": "Restore defaults"
+  },
+  "shiftRemap": {
+    "title": "Move players between shifts",
+    "description": "Some players are registered in shifts you are disabling. Choose a new shift for each group.",
+    "players": "players",
+    "apply": "Move and apply"
+  }
+}

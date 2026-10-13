@@ -1,0 +1,46 @@
+{
+  "title": "Access requests",
+  "description": "Review requests, adjust roles and grant access to the administrative part of the site.",
+
+  "loading": "Loading requests...",
+  "empty": "There are no requests yet.",
+
+  "columns": {
+    "user": "User",
+    "email": "Email",
+    "role": "Role",
+    "comment": "Comment",
+    "status": "Status",
+    "actions": "Actions"
+  },
+
+  "roles": {
+    "admin": "Admin",
+    "consul": "Consul"
+  },
+
+  "status": {
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected"
+  },
+
+  "actions": {
+    "approve": "Approve",
+    "reject": "Reject",
+    "delete": "Delete",
+    "notAllowed": "Insufficient permissions for this role"
+  },
+
+  "errors": {
+    "load": "Failed to load requests.",
+    "approve": "Failed to approve the request.",
+    "reject": "Failed to reject the request.",
+    "delete": "Failed to delete the request.",
+    "onlyOwnerAdmin": "Only the Owner can grant the Admin role."
+  },
+
+  "confirm": {
+    "delete": "Delete request {{name}}?"
+  }
+}

@@ -1,0 +1,182 @@
+/* Stage 2 assignment-only styles. Scoped to avoid legacy CSS overrides. */
+.turret-layout-view {
+  display:grid;
+  gap:10px;
+  min-width:0;
+}
+
+.turret-layout-view .turret-shift-switch {
+  margin-bottom:0;
+}
+
+.turret-draft-feedback {
+  padding:9px 11px;
+  background:#eaf8f0;
+  color:#22754f;
+  border:1px solid #b8e1ca;
+  border-radius:10px;
+  font-size:12px;
+  font-weight:800;
+}
+
+.turret-draft-feedback--warn {
+  background:#fff9e9;
+  color:#97651b;
+  border-color:#efd9a5;
+}
+
+.turret-draft-feedback--error {
+  background:#fff2f4;
+  color:#a52e48;
+  border-color:#e6b8c0;
+}
+
+.turret-detail-head__icon {
+  flex:0 0 78px;
+  width:78px;
+  height:78px;
+  background:transparent;
+}
+
+.turret-detail-head__icon img {
+  width:95%;
+  height:95%;
+  object-fit:contain;
+}
+
+.turret-captain-toolbar {
+  display:grid;
+  grid-template-columns:minmax(290px,1fr) max-content max-content;
+  gap:9px;
+  align-items:end;
+  margin-bottom:12px;
+}
+
+.turret-captain-row.turret-captain-row--editor {
+  grid-template-columns:minmax(160px,1fr) max-content;
+  gap:8px;
+  margin:0;
+  min-width:0;
+}
+
+.turret-captain-row--editor .admin-field { min-width:0; }
+.turret-captain-row--editor select { width:100%; font-size:14px; }
+
+.turret-toolbar-action {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  min-height:42px;
+  padding:6px 11px;
+  white-space:nowrap;
+  font-size:13px;
+}
+.turret-toolbar-action img {
+  width:25px;
+  height:25px;
+  object-fit:contain;
+  flex-shrink:0;
+}
+.turret-toolbar-action--danger {
+  color:#b6394b;
+  border-color:#efc8d1;
+  background:#fff6f7;
+}
+
+.turret-captain-row--editor button {
+  min-height:39px;
+  padding:0 12px;
+}
+
+.turret-action-strip {
+  display:flex;
+  justify-content:flex-start;
+  align-items:center;
+  gap:10px;
+  margin:5px 0 11px;
+}
+
+.turret-action-strip span {
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  color:#587b9e;
+  font-size:14px;
+  font-weight:800;
+}
+
+.turret-assigned-table.turret-assigned-table--actions {
+  grid-template-columns:minmax(160px,2fr) minmax(90px,1fr) minmax(114px,1fr) 76px minmax(98px,.9fr) 48px;
+  width:100%;
+}
+
+/* The captain is distinguished by a calm blue row, not by another badge. */
+.turret-assigned-table--captain {
+  background:linear-gradient(105deg,#d9eaff 0%,#e8f2ff 55%,#f3f8ff 100%);
+  box-shadow:inset 5px 0 #367cf2,inset 0 1px 0 #c0d9fb,inset 0 -1px 0 #c0d9fb;
+  color:#214b7f;
+}
+.turret-assigned-table--captain strong { color:#123b78; }
+.turret-captain-role { color:#2055a2; font-weight:800; }
+.turret-assigned-table--actions > span { min-width:0; }
+.turret-assigned-table--actions > strong { overflow-wrap:anywhere; }
+.turret-assigned-table--actions .player-tier-badge { vertical-align:middle; }
+.turret-helper-role { font-weight:700; color:#557493; }
+.turret-assigned-march { white-space:nowrap; font-variant-numeric:tabular-nums; }
+.turret-assigned-table--actions button {
+  padding:5px;
+  justify-self:center;
+}
+
+.turret-empty-players {
+  margin:0;
+  padding:14px;
+  color:#7a91aa;
+  font-size:14px;
+}
+
+.turret-capacity-notice {
+  display:flex;
+  gap:7px;
+  align-items:center;
+  margin-top:12px;
+  color:#627e9f;
+  font-size:13px;
+}
+
+@media(max-width:900px) {
+  .turret-captain-toolbar { grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
+  .turret-captain-row.turret-captain-row--editor { grid-column:1 / -1; }
+}
+
+@media(max-width:700px) {
+  .turret-captain-row.turret-captain-row--editor {
+    grid-template-columns:minmax(0,1fr) max-content;
+  }
+  .turret-assigned-table.turret-assigned-table--actions {
+    min-width:760px;
+  }
+  .turret-detail-head {
+    align-items:flex-start;
+    flex-wrap:wrap;
+  }
+  .turret-action-strip {
+    flex-wrap:wrap;
+  }
+}
+
+
+.turret-layout-view .turret-draft-feedback--warn:has(button) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media(max-width:520px) {
+  .turret-captain-toolbar { grid-template-columns:minmax(0,1fr); }
+  .turret-captain-row.turret-captain-row--editor { grid-column:auto; grid-template-columns:minmax(0,1fr); }
+  .turret-toolbar-action { width:100%; }
+}

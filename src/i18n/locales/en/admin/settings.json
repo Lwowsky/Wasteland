@@ -1,0 +1,436 @@
+{
+  "title": "Settings",
+  "description": "Manage the site appearance, player import/export, backups, access and system tools.",
+  "sections": {
+    "import": "Import",
+    "export": "Export",
+    "backup": "Backups",
+    "system": "System",
+    "access": "Access"
+  },
+  "siteIdentity": {
+    "eyebrow": "Site appearance",
+    "title": "Name, region and footer",
+    "description": "Change the site name, brand text, region number and name, and footer content.",
+    "edit": "Configure site",
+    "ownerOnly": "Editing is available to the Owner only.",
+    "saved": "Site settings saved.",
+    "summary": {
+      "siteName": "Site name",
+      "region": "Region",
+      "brand": "Logo text"
+    },
+    "identity": {
+      "title": "Main site details",
+      "description": "These values are used in the site header, browser-tab title and region information."
+    },
+    "footer": {
+      "title": "Footer content",
+      "description": "Configure separate footer text for each supported site language.",
+      "languageLabel": "Footer language",
+      "languageHelp": "JSON translations are shown by default. Only changed fields are saved as overrides in D1. An empty field falls back to its default text after saving. Ukrainian and English are edited separately.",
+      "restoreDefaults": "Restore default text",
+      "restoreHelp": "Restore the selected language from the JSON translations. Save to apply the change."
+    },
+    "fields": {
+      "siteName": "Site name",
+      "brandText": "Logo / brand text",
+      "regionNumber": "Region number",
+      "regionName": "Region name",
+      "footerDescription": "Footer site description",
+      "authorLabel": "Author block label",
+      "author": "Author name",
+      "authorDescription": "Author description",
+      "projectDescription": "Project description",
+      "copyright": "Copyright text"
+    },
+    "help": {
+      "siteName": "Used in the browser-tab title and SEO title.",
+      "brandText": "Displayed in the site header and footer."
+    },
+    "modal": {
+      "title": "Site settings",
+      "subtitle": "Change the main name, region and footer content without editing code.",
+      "footerHint": "Changes are applied immediately after saving.",
+      "unsaved": "Unsaved changes"
+    },
+    "actions": {
+      "close": "Close",
+      "cancel": "Cancel",
+      "save": "Save changes",
+      "saving": "Saving…"
+    },
+    "errors": {
+      "load": "Could not load site settings.",
+      "save": "Could not save site settings."
+    },
+    "unsaved": {
+      "title": "Discard unsaved changes?",
+      "message": "You have changed site settings or footer text. Closing this window now will discard those changes.",
+      "discard": "Discard changes",
+      "keepEditing": "Keep editing"
+    }
+  },
+  "import": {
+    "title": "Import players",
+    "description": "Import only into the current cycle player table from XLSX, XLS or CSV.",
+    "chooseFile": "Choose player file",
+    "reading": "Reading file…",
+    "formats": "XLSX · XLS · CSV",
+    "cancel": "Cancel",
+    "importing": "Importing…",
+    "success": "Successfully imported: {{count}} players.",
+    "fixBeforeImport": "Fix file errors and duplicates before importing.",
+    "preview": {
+      "title": "Preview validation",
+      "total": " rows",
+      "valid": " ready",
+      "invalid": " errors",
+      "duplicates": " duplicates",
+      "problems": "What needs fixing",
+      "row": "Row {{row}}",
+      "rowShort": "Row",
+      "showing": "Showing {{from}}–{{to}} of {{total}}",
+      "perPage": "Per page",
+      "all": "All",
+      "page": "{{page}} / {{pages}}",
+      "previous": "Previous page",
+      "next": "Next page"
+    },
+    "errors": {
+      "readFile": "Could not read the file. Check the XLSX/XLS/CSV format.",
+      "emptyFile": "The file contains no player rows.",
+      "importFailed": "Import failed. Do not assume the data was imported; check the Worker and file.",
+      "duplicateExisting": "this nickname already exists in the current cycle",
+      "duplicateFile": "this nickname is duplicated in the file",
+      "invalidField": {
+        "nickname": "nickname is missing",
+        "alliance": "alliance is missing",
+        "troopType": "unknown troop type",
+        "tier": "tier must be T1–T14",
+        "shift": "unknown shift",
+        "captain": "unknown captain value — choose Yes/No manually",
+        "readyAttack": "unknown readiness value — choose Yes/No manually"
+      },
+      "saveDraftFailed": "Could not save the local import draft."
+    },
+    "close": "Close",
+    "fields": {
+      "nickname": "Nickname",
+      "alliance": "Alliance",
+      "troopType": "Troop type",
+      "tier": "Tier",
+      "lairLevel": "Lair level",
+      "marchSize": "March size",
+      "rallySize": "Rally size",
+      "shift": "Shift",
+      "readyAttack": "Ready to attack",
+      "captain": "Captain",
+      "comment": "Comment",
+      "extraFighterTier": "Extra squad — Fighters",
+      "extraRiderTier": "Extra squad — Riders",
+      "extraShooterTier": "Extra squad — Shooters"
+    },
+    "mapping": {
+      "cardHint": "After choosing a file, a mapping window opens so every Excel column can be matched to a player field.",
+      "title": "Player import settings",
+      "subtitle": "File: {{file}}. Choose which columns match the site fields.",
+      "fileSummary": "Columns: {{columns}} · rows: {{rows}}",
+      "fieldsTitle": "Column mapping",
+      "fieldsText": "The site field is on the left and the uploaded column is on the right. Unused columns can be added as extra player fields.",
+      "required": "required for import",
+      "custom": "extra field",
+      "customName": "Extra field name",
+      "skip": "— Do not import —",
+      "unknownTitle": "Unrecognized file columns",
+      "unknownText": "If the file has information that does not exist on the site yet, add that column as an extra player field.",
+      "addCustom": "Add as field",
+      "removeCustom": "Remove extra field",
+      "previewText": "Values are normalized before import: Tier 10 → T10, первая половина / 1st shift → shift1, вторая половина / 2nd shift → shift2, оба подходят / both are suitable → Any shift.",
+      "status": "Status",
+      "ok": "Ready",
+      "ready": "{{count}} players are ready to import.",
+      "importCount": "Import {{count}}",
+      "saveMapping": "Save column mapping",
+      "saved": "Mapping saved",
+      "continueMapping": "Continue file setup"
+    },
+    "destination": {
+      "title": "Where to prepare players",
+      "text": "It is recommended to save the file to a local draft first, review the values, and only then move players into the current cycle.",
+      "staging": "Local draft",
+      "stagingText": "Nothing is written to the database. You can fix mappings and continue later.",
+      "current": "Current cycle",
+      "currentText": "Write players directly to the active cycle. Available only when there are no errors or duplicates.",
+      "saveDraft": "Save {{count}} to draft",
+      "draftWithErrors": "The draft can be saved even with errors. These rows will not be written to the database."
+    },
+    "draft": {
+      "title": "Local import draft",
+      "summary": "{{file}} · {{count}} rows",
+      "open": "Open draft",
+      "clear": "Delete draft",
+      "saved": "Saved {{count}} rows to the local draft.",
+      "help": "The draft is stored only in this browser. To add players to the database and site tables, open “Player table” → “Local table” and press “Move”."
+    },
+    "valueMapping": {
+      "title": "Value mapping",
+      "text": "If the site does not recognize a troop type, tier, shift, captain or readiness value, choose the correct value manually. Unknown values are no longer silently converted to “No”.",
+      "choose": "— Choose manually —",
+      "troops": {
+        "fighter": "Fighters",
+        "rider": "Riders",
+        "shooter": "Shooters"
+      },
+      "shifts": {
+        "shift1": "Shift 1",
+        "shift2": "Shift 2",
+        "shift3": "Shift 3",
+        "shift4": "Shift 4",
+        "flexible": "Any shift"
+      },
+      "yes": "Yes",
+      "no": "No"
+    }
+  },
+  "export": {
+    "title": "Export players",
+    "description": "Export only player-table data.",
+    "excel": "Excel export",
+    "fileName": "File name",
+    "download": "Download Excel",
+    "options": {
+      "players": "Player basic information",
+      "readiness": "Readiness and captain",
+      "extraSquads": "Extra squads",
+      "comments": "Comments"
+    },
+    "excelLabels": {
+      "sheets": {
+        "players": "Players"
+      },
+      "columns": {
+        "nickname": "Nickname",
+        "alliance": "Alliance",
+        "troop": "Troop",
+        "tier": "Tier",
+        "lair": "Lair",
+        "march": "March",
+        "rally": "Rally",
+        "shift": "Shift",
+        "submitted": "Submitted",
+        "captain": "Captain",
+        "readyAttack": "Ready to attack",
+        "comment": "Comment",
+        "setting": "Setting",
+        "value": "Value",
+        "role": "Role",
+        "permissions": "Permissions",
+        "active": "Active",
+        "extraFighterTier": "Extra squad — Fighters",
+        "extraRiderTier": "Extra squad — Riders",
+        "extraShooterTier": "Extra squad — Shooters"
+      }
+    },
+    "settingsButton": "Settings",
+    "selectedSummary": "Selected columns: {{count}}",
+    "modal": {
+      "title": "Export settings",
+      "subtitle": "Choose which player-table fields should be included in Excel.",
+      "close": "Close",
+      "selectAll": "Select all",
+      "clearAll": "Clear all",
+      "selected": "Selected: {{count}}",
+      "customField": "Extra field",
+      "done": "Done"
+    }
+  },
+  "backup": {
+    "title": "Backups",
+    "description": "Download a full region backup to your computer or restore the site from a JSON file.",
+    "ownerOnly": "Creating and restoring full backups is available to the Owner only.",
+    "create": "Create & download",
+    "creating": "Creating backup…",
+    "restore": "Restore from file",
+    "created": "Backup created and downloaded.",
+    "restored": "Backup restored.",
+    "note": "The backup is not stored in the database; it is a local JSON file. Users and roles are not included.",
+    "errors": {
+      "create": "Could not create the backup.",
+      "invalidFile": "This is not a supported Wasteland backup file.",
+      "restore": "Could not restore the backup. Do not assume the current data was fully restored."
+    },
+    "restoreModal": {
+      "title": "Restore backup",
+      "subtitle": "Current region data will be replaced with data from the selected file.",
+      "warningTitle": "Current data will be overwritten",
+      "warningText": "Before restore, the system automatically downloads an emergency backup of the current state. Firebase Auth and adminUsers are unchanged.",
+      "createdAt": "Backup created",
+      "players": "Players",
+      "periods": "Cycles",
+      "alliances": "Alliance rotation rows",
+      "requests": "Access requests",
+      "phraseLabel": "To confirm, type the exact phrase:",
+      "help": "The restore button also unlocks after 10 seconds.",
+      "cancel": "Cancel",
+      "confirm": "Restore data",
+      "restoring": "Restoring…",
+      "phrase": "RESTORE REGION DATA"
+    }
+  },
+  "factoryReset": {
+    "eyebrow": "Danger zone",
+    "title": "Reset region data",
+    "description": "Completely clears selected region data and restores default settings.",
+    "preserved": {
+      "title": "Users and roles are protected",
+      "text": "Firebase Auth and the adminUsers collection are preserved. Owner, Admin, Consul and assigned access remain."
+    },
+    "open": "Reset region data",
+    "modal": {
+      "title": "Reset region data",
+      "subtitle": "Choose exactly what to clear. This action deletes data from the databases."
+    },
+    "warning": {
+      "title": "This is a destructive action",
+      "text": "Selected data is physically deleted from the site database. It cannot be restored without a backup."
+    },
+    "deleteAll": {
+      "title": "Delete all region data",
+      "description": "Select every category below and prepare the site as a clean new region."
+    },
+    "options": {
+      "players": {
+        "title": "Players and registrations",
+        "description": "Delete registrations, public_players and player statistics."
+      },
+      "cycles": {
+        "title": "Registration cycles",
+        "description": "Delete all cycle history. Players are also removed because they belong to cycles."
+      },
+      "alliances": {
+        "title": "Alliances and rotation",
+        "description": "Clear alliances, rotation, host alliance and governor."
+      },
+      "registrationSettings": {
+        "title": "Registration settings",
+        "description": "Restore cycle, T9–T14, Shift 1/2/Any, form fields and public access to factory defaults."
+      },
+      "accessRequests": {
+        "title": "Access requests",
+        "description": "Delete old/pending accessRequests from Firestore without touching adminUsers."
+      },
+      "browserData": {
+        "title": "Local data on this browser",
+        "description": "Clear player templates, Final Plan preferences and local time settings on this device."
+      }
+    },
+    "preview": {
+      "title": "Data currently stored",
+      "loading": "Checking databases…",
+      "players": "Player registrations",
+      "periods": "Cycles",
+      "stats": "Cycle stats",
+      "alliances": "Rotation records",
+      "requests": "Access requests"
+    },
+    "confirmation": {
+      "label": "Type the exact phrase to confirm:",
+      "help": "The delete button also stays disabled for 10 seconds.",
+      "phrase": "DELETE REGION DATA"
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "delete": "Delete selected data",
+      "deleting": "Deleting…"
+    },
+    "errors": {
+      "preview": "Could not load the data preview.",
+      "reset": "Reset failed. Do not assume everything was cleared; check the Worker and try again.",
+      "backup": "The backup could not be downloaded, so the reset was stopped. Disable this option only if you intentionally want to continue without a backup."
+    },
+    "preservedSummary": "User accounts, Owner/Admin/Consul and their roles are never deleted.",
+    "backupBeforeReset": {
+      "title": "Download a backup before reset",
+      "description": "Before deleting, the system collects the current site data and downloads a JSON file to this device. No backup remains in the database."
+    }
+  },
+  "access": {
+    "title": "Access",
+    "description": "Control who can open the player table and final plan.",
+    "resourceLabel": "Resource to configure",
+    "resources": {
+      "players": "Player table",
+      "final_plan": "Final plan"
+    },
+    "loading": "Loading access settings…",
+    "cycle": "Cycle #{{cycle}}",
+    "cycleNote": "Codes and private links are bound to the current cycle. When a new cycle becomes current, old credentials automatically stop working.",
+    "noPeriod": "There is no current cycle. A cycle must exist before a code or private link can be created.",
+    "modeLabel": "Access mode",
+    "modes": {
+      "public": "Public — visible to everyone",
+      "private": "Closed — public page unavailable",
+      "code": "Access code",
+      "link": "Private link"
+    },
+    "status": {
+      "public": "Public access",
+      "private": "Access closed",
+      "active": "Private access active",
+      "needsToken": "Create a new code/link"
+    },
+    "useLimit": {
+      "label": "Activation limit",
+      "once": "1 time",
+      "twice": "2 times",
+      "five": "5 times",
+      "ten": "10 times",
+      "unlimited": "Unlimited"
+    },
+    "session": {
+      "label": "Session after activation"
+    },
+    "tokenLifetime": {
+      "label": "Code / link lifetime"
+    },
+    "duration": {
+      "minutes30": "30 minutes",
+      "hours2": "2 hours",
+      "hours24": "24 hours",
+      "cycle": "Until the end of the current cycle"
+    },
+    "currentToken": {
+      "title": "Current access",
+      "hint": "Identifier: ••••{{hint}}",
+      "uses": "Used: {{used}} / {{limit}}",
+      "unlimited": "Uses: unlimited",
+      "expires": "Valid until: {{date}}"
+    },
+    "generated": {
+      "title": "New access created",
+      "once": "Save or copy it now. The full value is not shown again after the page is refreshed."
+    },
+    "actions": {
+      "save": "Save",
+      "generateCode": "Create new code",
+      "generateLink": "Create new link",
+      "copy": "Copy",
+      "revoke": "Revoke"
+    },
+    "messages": {
+      "saved": "Access settings saved.",
+      "generated": "New access created. The previous code or link was revoked.",
+      "revoked": "The current code or link was revoked.",
+      "copied": "Copied."
+    },
+    "errors": {
+      "load": "Could not load access settings.",
+      "save": "Could not save access settings.",
+      "generate": "Could not create a code or private link.",
+      "revoke": "Could not revoke access.",
+      "copy": "Could not copy.",
+      "noPeriod": "There is no current cycle for private access."
+    }
+  }
+}

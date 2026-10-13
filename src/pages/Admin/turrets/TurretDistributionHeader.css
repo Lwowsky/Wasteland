@@ -1,0 +1,49 @@
+/* Turret page heading and responsive navigation. */
+/* The saved/shared status belongs beside the section heading, not inside tab navigation. */
+.turret-distribution-heading {
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.turret-distribution-heading__title { min-width: 220px; flex: 1 1 280px; }
+.turret-distribution-heading .turret-workspace-status {
+  margin-left: 0;
+  justify-content: flex-end;
+  flex: 0 1 auto;
+}
+@media (max-width: 880px) {
+  .turret-distribution-heading .turret-workspace-status__label { flex: 0 1 auto; }
+}
+
+/* Narrow screens: the admin header switches to a column. Its desktop
+   flex-basis was reserving ~280px of EMPTY vertical space. */
+@media (max-width: 880px) {
+  .admin-section__head.turret-distribution-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 12px;
+    min-width: 0;
+  }
+  .turret-distribution-heading__title {
+    flex: none;
+    width: 100%;
+    min-width: 0;
+  }
+  .turret-distribution-heading .turret-workspace-status {
+    flex: none;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    justify-content: flex-start;
+  }
+}
+@media (max-width: 520px) {
+  .turret-subtabs { min-width: 0; max-width: 100%; padding: 6px; }
+  .turret-subtab { white-space: nowrap; min-height: 40px; font-size: 13px; }
+  .turret-distribution-heading__title h2 { font-size: 21px; }
+  .turret-distribution-heading__title p { font-size: 13px; }
+  .turret-workspace-status__save,
+  .turret-workspace-status__secondary { min-width: 0; }
+}

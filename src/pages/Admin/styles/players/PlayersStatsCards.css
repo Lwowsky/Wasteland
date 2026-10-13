@@ -1,0 +1,498 @@
+/* =========================================================
+   GRID
+========================================================= */
+
+.players-shift-stats {
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 16px;
+
+  margin: 20px 0;
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.players-shift-card {
+  --card-accent: #6c63ff;
+  --card-glow: rgba(108, 99, 255, 0.18);
+
+  position: relative;
+
+  min-width: 0;
+  min-height: 270px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid #cadff3;
+  border-radius: 22px;
+
+  box-shadow:
+    0 14px 35px rgba(32, 76, 125, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.players-shift-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 18px 42px rgba(32, 76, 125, 0.14),
+    0 0 22px var(--card-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.players-shift-card__background {
+  position: absolute;
+
+  inset: 0;
+
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.75) 0%,
+      rgba(255, 255, 255, 0.72) 38%,
+      rgba(247, 251, 255, 0.87) 68%,
+      rgba(241, 247, 253, 0.96) 100%
+    ),
+    var(--stats-card-image);
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  pointer-events: none;
+}
+
+.players-shift-card__background::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background: radial-gradient(
+    circle at 50% -10%,
+    rgba(255, 255, 255, 0.9),
+    transparent 48%
+  );
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   ACCENT
+========================================================= */
+
+.players-shift-card::before {
+  content: "";
+
+  position: absolute;
+
+  z-index: 3;
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+
+  width: 6px;
+
+  background: var(--card-accent);
+
+  box-shadow: 0 0 18px var(--card-glow);
+}
+
+.players-shift-card--shift1 {
+  --card-accent: linear-gradient(180deg, #c57cff 0%, #924ef5 48%, #672bd5 100%);
+
+  --card-glow: rgba(145, 71, 235, 0.22);
+}
+
+.players-shift-card--shift2 {
+  --card-accent: linear-gradient(180deg, #70baff 0%, #3f8df7 48%, #2361d8 100%);
+
+  --card-glow: rgba(49, 119, 235, 0.22);
+}
+
+.players-shift-card--shift3 {
+  --card-accent: linear-gradient(180deg, #8edc9c 0%, #45ba62 48%, #208b3b 100%);
+  --card-glow: rgba(48, 163, 76, 0.22);
+}
+
+.players-shift-card--shift4 {
+  --card-accent: linear-gradient(180deg, #ffbd73 0%, #f28736 48%, #c45a1b 100%);
+  --card-glow: rgba(222, 111, 35, 0.22);
+}
+
+.players-shift-card--flexible {
+  --card-accent: linear-gradient(180deg, #62e8eb 0%, #1bc8d5 48%, #0692a7 100%);
+
+  --card-glow: rgba(19, 184, 198, 0.22);
+}
+
+.players-shift-card--total {
+  --card-accent: linear-gradient(180deg, #69e69e 0%, #24c46c 48%, #07994d 100%);
+
+  --card-glow: rgba(24, 179, 91, 0.22);
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.players-shift-card__content {
+  position: relative;
+
+  z-index: 2;
+
+  min-width: 0;
+  min-height: 270px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 17px 18px 16px;
+}
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.players-shift-card__content > h3 {
+  min-width: 0;
+
+  margin: 0 0 10px;
+
+  overflow: hidden;
+
+  color: #163d6d;
+
+  font-size: 21px;
+  font-weight: 900;
+  line-height: 1.15;
+
+  text-align: center;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* =========================================================
+   PLAYERS + CAPTAINS
+========================================================= */
+
+.players-shift-card__main-stats {
+  width: 78%;
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+
+  margin: 0 auto 8px;
+}
+
+.players-shift-card__main-stat {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+}
+
+.players-shift-card__main-stat img {
+  width: 52px;
+  height: 52px;
+
+  display: block;
+
+  flex: 0 0 auto;
+
+  object-fit: contain;
+
+  filter: drop-shadow(0 5px 8px rgba(35, 77, 132, 0.16));
+}
+
+.players-shift-card__main-stat--captains img {
+  filter: drop-shadow(0 5px 9px rgba(189, 127, 0, 0.2));
+}
+
+.players-shift-card__main-stat strong {
+  min-width: 0;
+
+  color: #123d72;
+
+  font-size: 31px;
+  font-weight: 900;
+  line-height: 1;
+
+  font-variant-numeric: tabular-nums;
+
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* =========================================================
+   META
+========================================================= */
+
+.players-shift-card__meta {
+  min-width: 0;
+  min-height: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  margin-top: 4px;
+
+  color: #5d7898;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  text-align: center;
+
+  white-space: nowrap;
+}
+
+.players-shift-card__meta strong {
+  color: #244f7b;
+
+  font-weight: 900;
+}
+
+.players-shift-card__separator {
+  color: #91a7bd;
+}
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+.players-shift-card__divider {
+  width: 100%;
+  height: 1px;
+
+  margin: 13px 0 11px;
+
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(149, 177, 205, 0.55) 15%,
+    rgba(149, 177, 205, 0.55) 85%,
+    transparent 100%
+  );
+}
+
+/* =========================================================
+   TROOPS
+========================================================= */
+
+.players-shift-card__troops {
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 8px;
+
+  margin-top: auto;
+}
+
+.players-shift-troop {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 3px;
+}
+
+.players-shift-troop__icon {
+  width: 100%;
+  max-width: 86px;
+  height: 72px;
+
+  display: block;
+
+  object-fit: contain;
+
+  filter: drop-shadow(0 5px 7px rgba(34, 42, 58, 0.2));
+}
+
+.players-shift-troop__count {
+  color: #153e70;
+
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1;
+
+  font-variant-numeric: tabular-nums;
+
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* =========================================================
+   BACKGROUND POSITION
+========================================================= */
+
+.players-shift-card--shift1 .players-shift-card__background {
+  background-position: 34% center;
+}
+
+.players-shift-card--shift2 .players-shift-card__background {
+  background-position: center;
+}
+
+.players-shift-card--shift3 .players-shift-card__background,
+.players-shift-card--shift4 .players-shift-card__background {
+  background-position: center;
+}
+
+.players-shift-card--flexible .players-shift-card__background {
+  background-position: 58% center;
+}
+
+.players-shift-card--total .players-shift-card__background {
+  background-position: 62% center;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1200px) {
+  .players-shift-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+  .players-shift-stats {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+
+    margin: 14px 0;
+  }
+
+  .players-shift-card,
+  .players-shift-card__content {
+    min-height: 245px;
+  }
+
+  .players-shift-card {
+    border-radius: 18px;
+  }
+
+  .players-shift-card__content {
+    padding: 15px 14px 14px;
+  }
+
+  .players-shift-card__content > h3 {
+    font-size: 20px;
+  }
+
+  .players-shift-card__main-stats {
+    width: min(72%, 270px);
+  }
+
+  .players-shift-card__main-stat img {
+    width: 46px;
+    height: 46px;
+  }
+
+  .players-shift-card__main-stat strong {
+    font-size: 28px;
+  }
+
+  .players-shift-card__meta {
+    font-size: 12px;
+
+    white-space: normal;
+  }
+
+  .players-shift-troop__icon {
+    width: 54px;
+    height: 54px;
+  }
+
+  .players-shift-troop__count {
+    font-size: 20px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 390px) {
+  .players-shift-card__content {
+    padding: 14px 11px 13px;
+  }
+
+  .players-shift-card__content > h3 {
+    font-size: 18px;
+  }
+
+  .players-shift-card__main-stats {
+    width: 88%;
+
+    gap: 8px;
+  }
+
+  .players-shift-card__main-stat {
+    gap: 5px;
+  }
+
+  .players-shift-card__main-stat img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .players-shift-card__main-stat strong {
+    font-size: 25px;
+  }
+
+  .players-shift-card__troops {
+    gap: 5px;
+  }
+
+  .players-shift-troop__icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .players-shift-troop__count {
+    font-size: 18px;
+  }
+}

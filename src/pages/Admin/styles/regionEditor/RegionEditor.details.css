@@ -1,0 +1,236 @@
+/* =========================================================
+   SIDEBAR TIER
+========================================================= */
+
+.region-editor-player__tier {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  flex: 0 0 auto;
+}
+
+.region-editor-player__tier .player-tier-badge {
+  min-width: 48px;
+  min-height: 28px;
+
+  padding: 0 8px;
+
+  font-size: 11px;
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.region-editor-main {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  background: #f9fcff;
+}
+
+/* =========================================================
+   MOBILE PLAYER SELECTOR
+========================================================= */
+
+.region-editor-mobile-player-trigger {
+  display: none;
+}
+
+.region-editor-mobile-backdrop {
+  display: none;
+}
+
+/* =========================================================
+   TABS
+========================================================= */
+
+.region-editor-tabs {
+  width: 100%;
+  min-width: 0;
+
+  flex: 0 0 auto;
+
+  display: flex;
+
+  gap: 8px;
+
+  padding: 16px 18px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #d7e5f3;
+
+  scrollbar-width: none;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+.region-editor-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.region-editor-tab {
+  min-height: 48px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  flex: 0 0 auto;
+
+  padding: 0 15px;
+
+  color: #5f7c9c;
+  background: #f8fbff;
+
+  border: 1px solid #d3e2f1;
+  border-radius: 11px;
+
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+.region-editor-tab:hover {
+  transform: translateY(-1px);
+
+  border-color: #aac8ec;
+}
+
+.region-editor-tab--active {
+  color: #ffffff;
+
+  background: linear-gradient(135deg, #347fff, #5d65ed);
+
+  border-color: transparent;
+
+  box-shadow: 0 8px 18px rgba(62, 99, 220, 0.18);
+}
+
+/* =========================================================
+   TAB ICONS
+========================================================= */
+
+.region-editor-tab__image {
+  width: 30px;
+  height: 30px;
+
+  display: block;
+
+  flex: 0 0 auto;
+
+  object-fit: contain;
+
+  transition:
+    transform 0.18s ease,
+    filter 0.18s ease;
+}
+
+.region-editor-tab:hover .region-editor-tab__image {
+  transform: scale(1.08);
+}
+
+.region-editor-tab--active .region-editor-tab__image {
+  filter: drop-shadow(0 4px 7px rgba(0, 58, 190, 0.24));
+}
+
+/* =========================================================
+   CONTENT
+
+   ВАЖЛИВО:
+   horizontal scroll тут НЕ робимо.
+   Він має бути тільки всередині конкретної таблиці.
+========================================================= */
+
+.region-editor-content {
+  flex: 1 1 auto;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 20px;
+
+  overscroll-behavior-y: contain;
+
+  scrollbar-width: thin;
+  scrollbar-color: #9bb8d8 transparent;
+}
+
+.region-editor-content > * {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.region-editor-content::-webkit-scrollbar {
+  width: 7px;
+}
+
+.region-editor-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.region-editor-content::-webkit-scrollbar-thumb {
+  background: #aec4dc;
+
+  border-radius: 999px;
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.region-editor-empty {
+  padding: 20px;
+
+  color: #758ba2;
+
+  text-align: center;
+}
+
+.region-editor-empty--large {
+  padding: 50px 20px;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+  .region-editor-layout {
+    grid-template-columns: 240px minmax(0, 1fr);
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
