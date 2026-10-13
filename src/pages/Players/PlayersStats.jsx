@@ -1,62 +1,64 @@
+import { publicAsset } from "../../utils/publicAsset.js";
+
 const STAT_CARDS = [
   {
     key: "total",
     group: "general",
-    image: "/images/players/players-overview.webp",
+    image: publicAsset("/images/players/players-overview.webp"),
     position: "25% center",
   },
   {
     key: "captains",
     group: "general",
-    image: "/images/players/players-captain.webp",
+    image: publicAsset("/images/players/players-captain.webp"),
     position: "30% center",
   },
   {
     key: "fighters",
     group: "troops",
-    image: "/images/players/players-fighter.webp",
+    image: publicAsset("/images/players/players-fighter.webp"),
     position: "48% center",
   },
   {
     key: "riders",
     group: "troops",
-    image: "/images/players/players-rider.webp",
+    image: publicAsset("/images/players/players-rider.webp"),
     position: "56% center",
   },
   {
     key: "shooters",
     group: "troops",
-    image: "/images/players/players-shooter.webp",
+    image: publicAsset("/images/players/players-shooter.webp"),
     position: "8% center",
   },
   {
     key: "shift1",
     group: "shifts",
-    image: "/images/players/players-shift-1.webp",
+    image: publicAsset("/images/players/players-shift-1.webp"),
     position: "68% center",
   },
   {
     key: "shift2",
     group: "shifts",
-    image: "/images/players/players-shift-2.webp",
+    image: publicAsset("/images/players/players-shift-2.webp"),
     position: "65% center",
   },
   {
     key: "shift3",
     group: "shifts",
-    image: "/images/players/players-shift-3.webp",
+    image: publicAsset("/images/players/players-shift-3.webp"),
     position: "65% center",
   },
   {
     key: "shift4",
     group: "shifts",
-    image: "/images/players/players-shift-4.webp",
+    image: publicAsset("/images/players/players-shift-4.webp"),
     position: "65% center",
   },
   {
     key: "flexible",
     group: "shifts",
-    image: "/images/players/players-shift-flexible.webp",
+    image: publicAsset("/images/players/players-shift-flexible.webp"),
     position: "55% center",
   },
 ];

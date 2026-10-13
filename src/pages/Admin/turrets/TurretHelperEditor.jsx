@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { formatMarch } from "../../../utils/formatMarch.js";
 import TierBadge from "../../../components/PlayerBadges/TierBadge.jsx";
 import { comparePlayersByTier } from "../../../features/turrets/tierPriority.js";
@@ -39,7 +41,7 @@ function TurretHelperEditor({ a, language, shift, tower, assignments, players, d
               aria-label={`${a.distribution.towerEditor.editTitle}: ${player.nickname}`}
               title={a.distribution.towerEditor.editTitle} disabled={disabled}
               onClick={() => onEdit(id)}>
-              <img src="/images/admin/icons/actions/edit.webp" alt="" aria-hidden="true" />
+              <img src={publicAsset("/images/admin/icons/actions/edit.webp")} alt="" aria-hidden="true" />
             </button>
           </div>
         );

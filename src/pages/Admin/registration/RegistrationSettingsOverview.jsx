@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { formatNumericDateTime, getUserTimeZone } from "../../../utils/date.js";
 import RegistrationSectionCard from "./RegistrationSectionCard.jsx";
 
@@ -24,7 +26,7 @@ export default function RegistrationSettingsOverview({
     <div className="registration-overview-list">
       <RegistrationSectionCard
         className="registration-overview-card--wide"
-        iconSrc="/images/registration-settings/registration-cycle-icon.webp"
+        iconSrc={publicAsset("/images/registration-settings/registration-cycle-icon.webp")}
         title={r.sections.cycle.title}
         description={r.sections.cycle.description}
         actionLabel={r.common.configure}
@@ -35,7 +37,7 @@ export default function RegistrationSettingsOverview({
           <div className="registration-cycle-summary__item registration-cycle-summary__item--blue">
             <img
               className="registration-cycle-summary__icon"
-              src="/images/registration-settings/cycle-open-icon.webp"
+              src={publicAsset("/images/registration-settings/cycle-open-icon.webp")}
               alt=""
               aria-hidden="true"
             />
@@ -58,7 +60,7 @@ export default function RegistrationSettingsOverview({
           <div className="registration-cycle-summary__item registration-cycle-summary__item--red">
             <img
               className="registration-cycle-summary__icon"
-              src="/images/registration-settings/cycle-close-icon.webp"
+              src={publicAsset("/images/registration-settings/cycle-close-icon.webp")}
               alt=""
               aria-hidden="true"
             />
@@ -81,7 +83,7 @@ export default function RegistrationSettingsOverview({
           <div className="registration-cycle-summary__item registration-cycle-summary__item--gold">
             <img
               className="registration-cycle-summary__icon"
-              src="/images/registration-settings/cycle-start-icon.webp"
+              src={publicAsset("/images/registration-settings/cycle-start-icon.webp")}
               alt=""
               aria-hidden="true"
             />
@@ -110,8 +112,8 @@ export default function RegistrationSettingsOverview({
             <img
               src={
                 settings.cycleMode === "manual"
-                  ? "/images/registration-settings/registration-fields-icon.webp"
-                  : "/images/registration-settings/registration-cycle-icon.webp"
+                  ? publicAsset("/images/registration-settings/registration-fields-icon.webp")
+                  : publicAsset("/images/registration-settings/registration-cycle-icon.webp")
               }
               alt=""
               aria-hidden="true"
@@ -126,7 +128,7 @@ export default function RegistrationSettingsOverview({
       </RegistrationSectionCard>
 
       <RegistrationSectionCard
-        iconSrc="/images/registration-settings/available-shifts-icon.webp"
+        iconSrc={publicAsset("/images/registration-settings/available-shifts-icon.webp")}
         title={r.sections.shifts.title}
         description={r.sections.shifts.description}
         actionLabel={r.common.configure}
@@ -141,7 +143,7 @@ export default function RegistrationSettingsOverview({
       </RegistrationSectionCard>
 
       <RegistrationSectionCard
-        iconSrc="/images/registration-settings/available-tiers-icon.webp"
+        iconSrc={publicAsset("/images/registration-settings/available-tiers-icon.webp")}
         title={r.sections.tiers.title}
         description={r.sections.tiers.description}
         actionLabel={r.common.configure}
@@ -156,7 +158,7 @@ export default function RegistrationSettingsOverview({
       </RegistrationSectionCard>
 
       <RegistrationSectionCard
-        iconSrc="/images/registration-settings/alliances-and-wasteland-icon.webp"
+        iconSrc={publicAsset("/images/registration-settings/alliances-and-wasteland-icon.webp")}
         title={r.sections.wasteland.title}
         description={r.sections.wasteland.description}
         actionLabel={r.common.configure}
@@ -183,7 +185,7 @@ export default function RegistrationSettingsOverview({
       </RegistrationSectionCard>
 
       <RegistrationSectionCard
-        iconSrc="/images/registration-settings/registration-fields-icon.webp"
+        iconSrc={publicAsset("/images/registration-settings/registration-fields-icon.webp")}
         title={r.sections.formFields.title}
         description={r.sections.formFields.description}
         actionLabel={r.common.configure}

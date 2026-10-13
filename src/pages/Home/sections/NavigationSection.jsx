@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { Link } from "react-router-dom";
 import { ROUTES, getRoute } from "../../../config/routes.js";
 
@@ -6,28 +8,28 @@ function NavigationSection({ t, language }) {
     {
       title: t.home.dashboard.navigation.registration.title,
       text: t.home.dashboard.navigation.registration.text,
-      icon: "/images/registration-settings/registration-fields-icon.webp",
+      icon: publicAsset("/images/registration-settings/registration-fields-icon.webp"),
       route: ROUTES.registration,
       className: "home-nav-card--registration",
     },
     {
       title: t.home.dashboard.navigation.players.title,
       text: t.home.dashboard.navigation.players.text,
-      icon: "/images/admin/icons/actions/players.webp",
+      icon: publicAsset("/images/admin/icons/actions/players.webp"),
       route: ROUTES.players,
       className: "home-nav-card--players",
     },
     {
       title: t.home.dashboard.navigation.finalPlan.title,
       text: t.home.dashboard.navigation.finalPlan.text,
-      icon: "/images/admin/icons/final-plan.webp",
+      icon: publicAsset("/images/admin/icons/final-plan.webp"),
       route: ROUTES.finalPlan,
       className: "home-nav-card--plan",
     },
     {
       title: t.home.dashboard.navigation.settings.title,
       text: t.home.dashboard.navigation.settings.text,
-      icon: "/images/admin/icons/settings.webp",
+      icon: publicAsset("/images/admin/icons/settings.webp"),
       route: ROUTES.settings,
       className: "home-nav-card--settings",
     },

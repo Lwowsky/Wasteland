@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { canGrantRole, ROLES } from "../../../features/auth/permissions.js";
 
 function AccessRequestsView({
@@ -166,7 +168,7 @@ function AccessRequestsView({
                     onClick={() => onApprove(request)}
                   >
                     <img
-                      src="/images/admin/icons/actions/approve.webp"
+                      src={publicAsset("/images/admin/icons/actions/approve.webp")}
                       alt=""
                       aria-hidden="true"
                     />
@@ -181,7 +183,7 @@ function AccessRequestsView({
                     onClick={() => onReject(request)}
                   >
                     <img
-                      src="/images/admin/icons/actions/reject.webp"
+                      src={publicAsset("/images/admin/icons/actions/reject.webp")}
                       alt=""
                       aria-hidden="true"
                     />
@@ -196,7 +198,7 @@ function AccessRequestsView({
                     onClick={() => onDelete(request)}
                   >
                     <img
-                      src="/images/admin/icons/actions/delete.webp"
+                      src={publicAsset("/images/admin/icons/actions/delete.webp")}
                       alt=""
                       aria-hidden="true"
                     />

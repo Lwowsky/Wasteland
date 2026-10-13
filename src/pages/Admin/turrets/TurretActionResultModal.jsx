@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { useEffect, useRef } from "react";
 import { Check } from "lucide-react";
 import Modal from "../../../components/Modal/Modal.jsx";
@@ -42,7 +44,7 @@ export default function TurretActionResultModal({ notice, onDismiss, labels }) {
   >
     <div className="turret-action-result__content">
       <div className="turret-action-result__icon" aria-hidden="true">
-        <img className="turret-action-result__image" src={image} alt="" />
+        <img className="turret-action-result__image" src={publicAsset(image)} alt="" />
       </div>
       <div className="turret-action-result__details">
         <span className="turret-action-result__status">{labels[label]}</span>

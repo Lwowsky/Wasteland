@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import useNow from "../../../hooks/useNow.js";
 import { formatNumericDateTime } from "../../../utils/date.js";
 import { formatRemainingTime } from "../../../features/registration/registrationCycle.js";
@@ -69,7 +71,7 @@ export default function RegistrationCyclePreview({
           language={language}
           localTimeZone={localTimeZone}
           r={r}
-          iconSrc="/images/registration-settings/cycle-open-icon.webp"
+          iconSrc={publicAsset("/images/registration-settings/cycle-open-icon.webp")}
           tone="blue"
         />
         <PreviewItem
@@ -79,7 +81,7 @@ export default function RegistrationCyclePreview({
           language={language}
           localTimeZone={localTimeZone}
           r={r}
-          iconSrc="/images/registration-settings/cycle-close-icon.webp"
+          iconSrc={publicAsset("/images/registration-settings/cycle-close-icon.webp")}
           tone="red"
         />
         <PreviewItem
@@ -88,7 +90,7 @@ export default function RegistrationCyclePreview({
           language={language}
           localTimeZone={localTimeZone}
           r={r}
-          iconSrc="/images/registration-settings/cycle-start-icon.webp"
+          iconSrc={publicAsset("/images/registration-settings/cycle-start-icon.webp")}
           tone="gold"
         />
         <PreviewItem
@@ -97,7 +99,7 @@ export default function RegistrationCyclePreview({
           language={language}
           localTimeZone={localTimeZone}
           r={r}
-          iconSrc="/images/registration-settings/cycle-end-icon.webp"
+          iconSrc={publicAsset("/images/registration-settings/cycle-end-icon.webp")}
           tone="violet"
         />
       </div>

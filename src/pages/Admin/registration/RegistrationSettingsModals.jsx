@@ -1,9 +1,11 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { lazy, Suspense } from "react";
 
 import { getRegistrationConfirmContent } from "./registrationSettingsAdmin.js";
 import "./RegistrationAdminModal.css";
 
-const CONFIRM_WARNING_ICON = "/images/registration-settings/warning-icon.webp";
+const CONFIRM_WARNING_ICON = publicAsset("/images/registration-settings/warning-icon.webp");
 
 const RegistrationConfirmModal = lazy(() =>
   import("./RegistrationConfirmModal.jsx"),

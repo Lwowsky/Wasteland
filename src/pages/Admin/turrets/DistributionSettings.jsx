@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import DistributionSummary from "./DistributionSummary.jsx";
 import DistributionLimits from "./DistributionLimits.jsx";
 
@@ -27,7 +29,7 @@ function DistributionSettings({
       {!editable && <p className="planner-source-error">{p.readonly}</p>}
       <section className="planner-auto-panel" aria-label={autoT.title}>
         <div>
-          <strong><img className="planner-auto-panel__icon" src="/images/admin/icons/turret-distribution.webp" alt="" aria-hidden="true" />{autoT.title}</strong>
+          <strong><img className="planner-auto-panel__icon" src={publicAsset("/images/admin/icons/turret-distribution.webp")} alt="" aria-hidden="true" />{autoT.title}</strong>
           <p>{autoT.shortDescription}</p>
           {settings.mode === "manual" && <small>{autoT.manualDisabled}</small>}
         </div>
@@ -39,10 +41,10 @@ function DistributionSettings({
                 message: autoT.confirmRedistribute,
                 onConfirm: () => onAuto?.({ operation: "redistribute" }),
               });
-            }}><img className="planner-auto-panel__action-icon" src="/images/admin/icons/actions/redistribute-helpers.webp" alt="" aria-hidden="true" />{a.distribution.actions.redistribute}</button>
+            }}><img className="planner-auto-panel__action-icon" src={publicAsset("/images/admin/icons/actions/redistribute-helpers.webp")} alt="" aria-hidden="true" />{a.distribution.actions.redistribute}</button>
           <button type="button" className="admin-primary-button" disabled={automationDisabled}
             onClick={() => onAuto?.({ operation: "fill" })}>
-            <img className="planner-auto-panel__action-icon" src="/images/admin/icons/actions/fill-turrets.webp" alt="" aria-hidden="true" />{a.distribution.actions.fill}
+            <img className="planner-auto-panel__action-icon" src={publicAsset("/images/admin/icons/actions/fill-turrets.webp")} alt="" aria-hidden="true" />{a.distribution.actions.fill}
           </button>
           <button type="button" className="admin-secondary-button planner-auto-panel__clear" disabled={clearDisabled}
             onClick={() => requestConfirm?.({
@@ -51,7 +53,7 @@ function DistributionSettings({
               tone: "danger",
               onConfirm: () => onClearHelpers?.(),
             })}>
-            <img className="planner-auto-panel__delete-icon" src="/images/admin/icons/actions/delete.webp" alt="" aria-hidden="true" />{a.distribution.actions.clearHelpers}
+            <img className="planner-auto-panel__delete-icon" src={publicAsset("/images/admin/icons/actions/delete.webp")} alt="" aria-hidden="true" />{a.distribution.actions.clearHelpers}
           </button>
         </div>
       </section>

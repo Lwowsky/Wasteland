@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { forwardRef } from "react";
 
 import FinalPlanTower from "./FinalPlanTower.jsx";
@@ -35,13 +37,13 @@ const FinalPlanBoard = forwardRef(function FinalPlanBoard(
 
       <div className="final-plan-signature">
         <img
-          src="/images/final-plan/board-signature-flatflags.svg"
+          src={publicAsset("/images/final-plan/board-signature-flatflags.svg")}
           alt={t.finalPlan.signatureAlt}
           onError={(event) => {
             event.currentTarget.onerror = null;
 
             event.currentTarget.src =
-              "/images/final-plan/board-signature-flatflags.png";
+              publicAsset("/images/final-plan/board-signature-flatflags.png");
           }}
         />
       </div>

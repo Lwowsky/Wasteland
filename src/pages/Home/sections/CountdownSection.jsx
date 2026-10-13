@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import CountdownValue from "../components/CountdownValue.jsx";
 import useNow from "../../../hooks/useNow.js";
 import { getCountdown } from "../utils/time.js";
@@ -58,8 +60,8 @@ function CountdownSection({ t, registrationConfig }) {
             <img
               className="home-countdown-card__icon"
               src={registrationOpen
-                ? "/images/registration-settings/cycle-open-icon.webp"
-                : "/images/registration-settings/cycle-close-icon.webp"}
+                ? publicAsset("/images/registration-settings/cycle-open-icon.webp")
+                : publicAsset("/images/registration-settings/cycle-close-icon.webp")}
               alt=""
               aria-hidden="true"
             />
@@ -88,8 +90,8 @@ function CountdownSection({ t, registrationConfig }) {
             <img
               className="home-countdown-card__icon"
               src={eventActive
-                ? "/images/registration-settings/alliances-and-wasteland-icon.webp"
-                : "/images/registration-settings/cycle-start-icon.webp"}
+                ? publicAsset("/images/registration-settings/alliances-and-wasteland-icon.webp")
+                : publicAsset("/images/registration-settings/cycle-start-icon.webp")}
               alt=""
               aria-hidden="true"
             />

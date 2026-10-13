@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { useEffect, useMemo, useState } from "react";
 
 import Modal from "../../../components/Modal/Modal.jsx";
@@ -13,9 +15,9 @@ import "./FactoryResetModal.css";
 
 const COUNTDOWN_SECONDS = 10;
 
-const RESET_ICON = "/images/admin/icons/settings/data-reset.webp";
-const ACCESS_CONTROL_ICON = "/images/admin/icons/settings/access-control.webp";
-const DELETE_ICON = "/images/admin/icons/actions/delete.webp";
+const RESET_ICON = publicAsset("/images/admin/icons/settings/data-reset.webp");
+const ACCESS_CONTROL_ICON = publicAsset("/images/admin/icons/settings/access-control.webp");
+const DELETE_ICON = publicAsset("/images/admin/icons/actions/delete.webp");
 
 const RESET_KEYS = [
   "players",

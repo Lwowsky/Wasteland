@@ -58,8 +58,9 @@ function PageMeta({
     }
 
     const cleanPath = path ? `/${path}` : "";
-    const siteOrigin = SITE_URL || window.location.origin;
-    const canonicalUrl = `${siteOrigin}/${language}${cleanPath}`;
+    const siteBase = (SITE_URL || new URL(import.meta.env.BASE_URL, window.location.origin).href)
+      .replace(/\/+$/, "");
+    const canonicalUrl = `${siteBase}/${language}${cleanPath}`;
 
     let canonicalLink = canonical;
 
@@ -80,7 +81,7 @@ function PageMeta({
 
       link.rel = "alternate";
       link.hreflang = lang;
-      link.href = `${siteOrigin}/${lang}${cleanPath}`;
+      link.href = `${siteBase}/${lang}${cleanPath}`;
 
       document.head.appendChild(link);
     });
@@ -89,7 +90,7 @@ function PageMeta({
 
     defaultLink.rel = "alternate";
     defaultLink.hreflang = "x-default";
-    defaultLink.href = `${siteOrigin}/${DEFAULT_LANGUAGE}${cleanPath}`;
+    defaultLink.href = `${siteBase}/${DEFAULT_LANGUAGE}${cleanPath}`;
 
     document.head.appendChild(defaultLink);
   }, [title, description, language, path, noIndex, siteName]);

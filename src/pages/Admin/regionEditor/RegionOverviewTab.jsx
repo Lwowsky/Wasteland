@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { MessageSquareText } from "lucide-react";
 
 import StatusBadge from "../../../components/PlayerBadges/StatusBadge.jsx";
@@ -40,7 +42,7 @@ function RegionOverviewTab({ t, shared, language, player }) {
         <div className="region-player-overview__identity">
           <div className="region-player-overview__avatar">
             <img
-              src="/images/admin/region-editor/player.webp"
+              src={publicAsset("/images/admin/region-editor/player.webp")}
               alt=""
               aria-hidden="true"
               className="region-player-overview__avatar-image"
@@ -93,7 +95,7 @@ function RegionOverviewTab({ t, shared, language, player }) {
       <div className="region-player-overview__bottom">
         <div className="region-player-overview__cell">
           <div className="region-player-overview__cell-heading">
-            <RegionInfoIcon src="/images/admin/region-editor/march.webp" />
+            <RegionInfoIcon src={publicAsset("/images/admin/region-editor/march.webp")} />
 
             <span className="region-player-overview__label">
               {t.players.march}
@@ -107,7 +109,7 @@ function RegionOverviewTab({ t, shared, language, player }) {
 
         <div className="region-player-overview__cell">
           <div className="region-player-overview__cell-heading">
-            <RegionInfoIcon src="/images/admin/region-editor/rally.webp" />
+            <RegionInfoIcon src={publicAsset("/images/admin/region-editor/rally.webp")} />
 
             <span className="region-player-overview__label">
               {t.players.rally}

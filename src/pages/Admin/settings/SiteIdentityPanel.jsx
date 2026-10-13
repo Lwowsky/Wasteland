@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { useEffect, useState } from "react";
 
 import { clearSiteSettingsCache, getSiteSettings } from "../../../features/site/siteSettingsApi.js";
@@ -6,11 +8,11 @@ import SiteIdentityModal from "./SiteIdentityModal.jsx";
 
 import "./SiteIdentity.css";
 
-const SITE_APPEARANCE_ICON = "/images/admin/icons/settings/site-appearance.webp";
-const EDIT_ICON = "/images/admin/icons/actions/edit.webp";
-const SITE_NAME_ICON = "/images/admin/icons/settings/identity-site-name.webp";
-const REGION_ICON = "/images/admin/icons/settings/identity-region-pin.webp";
-const BRAND_ICON = "/images/admin/icons/settings/identity-brand-text.webp";
+const SITE_APPEARANCE_ICON = publicAsset("/images/admin/icons/settings/site-appearance.webp");
+const EDIT_ICON = publicAsset("/images/admin/icons/actions/edit.webp");
+const SITE_NAME_ICON = publicAsset("/images/admin/icons/settings/identity-site-name.webp");
+const REGION_ICON = publicAsset("/images/admin/icons/settings/identity-region-pin.webp");
+const BRAND_ICON = publicAsset("/images/admin/icons/settings/identity-brand-text.webp");
 
 function SiteIdentityPanel({ t, isOwner }) {
   const [settings, setSettings] = useState(null);

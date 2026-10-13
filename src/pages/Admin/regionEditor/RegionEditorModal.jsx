@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { ChevronDown } from "lucide-react";
 import { useMemo, useState } from "react";
 
@@ -91,7 +93,7 @@ function RegionEditorModal({
             aria-expanded={mobilePlayersOpen}
           >
             <img
-              src="/images/admin/region-editor/player.webp"
+              src={publicAsset("/images/admin/region-editor/player.webp")}
               alt=""
               aria-hidden="true"
             />

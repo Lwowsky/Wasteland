@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { useEffect, useMemo, useState } from "react";
 
 import Modal from "../../../components/Modal/Modal.jsx";
@@ -14,12 +16,12 @@ import {
   SITE_SETTINGS_LIMITS,
 } from "../../../../shared/siteSettingsConfig.js";
 
-const SITE_APPEARANCE_ICON = "/images/admin/icons/settings/site-appearance.webp";
-const SITE_NAME_ICON = "/images/admin/icons/settings/identity-site-name.webp";
-const BRAND_ICON = "/images/admin/icons/settings/identity-brand-text.webp";
-const REGION_PIN_ICON = "/images/admin/icons/settings/identity-region-pin.webp";
-const REGION_NAME_ICON = "/images/admin/icons/settings/identity-region-name.webp";
-const RESTORE_DEFAULTS_ICON = "/images/registration-settings/reset-defaults-icon.webp";
+const SITE_APPEARANCE_ICON = publicAsset("/images/admin/icons/settings/site-appearance.webp");
+const SITE_NAME_ICON = publicAsset("/images/admin/icons/settings/identity-site-name.webp");
+const BRAND_ICON = publicAsset("/images/admin/icons/settings/identity-brand-text.webp");
+const REGION_PIN_ICON = publicAsset("/images/admin/icons/settings/identity-region-pin.webp");
+const REGION_NAME_ICON = publicAsset("/images/admin/icons/settings/identity-region-name.webp");
+const RESTORE_DEFAULTS_ICON = publicAsset("/images/registration-settings/reset-defaults-icon.webp");
 
 function SiteIdentityModal({
   open,

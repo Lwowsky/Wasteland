@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { RotateCcw } from "lucide-react";
 import { useRef, useState } from "react";
 
@@ -13,8 +15,8 @@ import "./SystemSettingsModal.css";
 import "./RegionBackupPanel.css";
 
 const COUNTDOWN_SECONDS = 10;
-const BACKUPS_CLOUD_ICON = "/images/admin/icons/settings/backups-cloud.webp";
-const PLAYERS_IMPORT_ICON = "/images/admin/icons/settings/players-import.webp";
+const BACKUPS_CLOUD_ICON = publicAsset("/images/admin/icons/settings/backups-cloud.webp");
+const PLAYERS_IMPORT_ICON = publicAsset("/images/admin/icons/settings/players-import.webp");
 
 function formatCount(value) {
   return Number.isFinite(Number(value)) ? Number(value).toLocaleString() : "0";

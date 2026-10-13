@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import {
   AlertTriangle,
   ArrowDown,
@@ -371,7 +373,7 @@ function PlayersTable({
                         title={t.actions.edit}
                       >
                         <img
-                          src="/images/admin/icons/actions/edit.webp"
+                          src={publicAsset("/images/admin/icons/actions/edit.webp")}
                           alt=""
                           aria-hidden="true"
                           className="admin-player-action__image"
@@ -388,7 +390,7 @@ function PlayersTable({
                         title={t.actions.delete}
                       >
                         <img
-                          src="/images/admin/icons/actions/delete.webp"
+                          src={publicAsset("/images/admin/icons/actions/delete.webp")}
                           alt=""
                           aria-hidden="true"
                           className="admin-player-action__image"

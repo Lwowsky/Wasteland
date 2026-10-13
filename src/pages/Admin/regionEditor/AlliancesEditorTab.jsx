@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { useMemo } from "react";
 
 import TierBadge from "../../../components/PlayerBadges/TierBadge.jsx";
@@ -9,11 +11,11 @@ import { getAllianceStats } from "./regionEditorUtils.js";
 import "../styles/regionEditor/AllianceCards.css";
 
 const TROOP_ICONS = {
-  fighter: "/images/admin/troops/fighter.webp",
+  fighter: publicAsset("/images/admin/troops/fighter.webp"),
 
-  shooter: "/images/admin/troops/shooter.webp",
+  shooter: publicAsset("/images/admin/troops/shooter.webp"),
 
-  rider: "/images/admin/troops/rider.webp",
+  rider: publicAsset("/images/admin/troops/rider.webp"),
 };
 
 function ShiftStat({ label, value, variant }) {
@@ -45,8 +47,8 @@ function TroopStat({ type, label, value }) {
 function CompactHeaderStat({ type, label, value }) {
   const icon =
     type === "captains"
-      ? "/images/admin/region-editor/captain.webp"
-      : "/images/admin/icons/actions/players.webp";
+      ? publicAsset("/images/admin/region-editor/captain.webp")
+      : publicAsset("/images/admin/icons/actions/players.webp");
 
   return (
     <div
@@ -89,7 +91,7 @@ function AlliancesEditorTab({ t, shared, players, availableShifts = {} }) {
             <div className="region-alliance-card__identity">
               <div className="region-alliance-card__main-icon">
                 <img
-                  src="/images/admin/region-editor/alliances.webp"
+                  src={publicAsset("/images/admin/region-editor/alliances.webp")}
                   alt=""
                   aria-hidden="true"
                   className="region-alliance-card__main-image"
@@ -155,7 +157,7 @@ function AlliancesEditorTab({ t, shared, players, availableShifts = {} }) {
             <div className="region-alliance-card__tiers">
               <div className="region-alliance-card__tiers-heading">
                 <img
-                  src="/images/admin/region-editor/tier.webp"
+                  src={publicAsset("/images/admin/region-editor/tier.webp")}
                   alt=""
                   aria-hidden="true"
                   className="region-alliance-card__tiers-icon"

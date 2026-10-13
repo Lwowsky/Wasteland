@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { lazy, Suspense, useMemo, useState } from "react";
 import { hasPermission, PERMISSIONS } from "../../../features/auth/permissions.js";
 
@@ -20,13 +22,13 @@ const FactoryResetModal = lazy(() =>
 );
 
 const SETTINGS_TAB_ICONS = {
-  export: "/images/admin/icons/settings/players-export.webp",
-  reset: "/images/admin/icons/settings/data-reset.webp",
+  export: publicAsset("/images/admin/icons/settings/players-export.webp"),
+  reset: publicAsset("/images/admin/icons/settings/data-reset.webp"),
 };
 
 const BUTTON_ICONS = {
-  settings: "/images/admin/icons/settings.webp",
-  export: "/images/admin/icons/settings/players-export.webp",
+  settings: publicAsset("/images/admin/icons/settings.webp"),
+  export: publicAsset("/images/admin/icons/settings/players-export.webp"),
 };
 
 function SettingsTab({

@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { Save } from "lucide-react";
 import { useMemo, useState } from "react";
 
@@ -105,7 +107,7 @@ function MarchRallyEditorTab({ t, players = [], canEdit, saving, onUpdate }) {
       <header className="region-combat-editor__header">
         <div className="region-combat-editor__heading">
           <img
-            src="/images/admin/region-editor/march.webp"
+            src={publicAsset("/images/admin/region-editor/march.webp")}
             alt=""
             aria-hidden="true"
             className="region-combat-editor__heading-icon"
@@ -200,7 +202,7 @@ function MarchRallyEditorTab({ t, players = [], canEdit, saving, onUpdate }) {
                   <div className="region-combat-editor__field">
                     <div className="region-combat-editor__input-wrap region-combat-editor__input-wrap--march">
                       <img
-                        src="/images/admin/region-editor/march.webp"
+                        src={publicAsset("/images/admin/region-editor/march.webp")}
                         alt=""
                         aria-hidden="true"
                       />
@@ -225,7 +227,7 @@ function MarchRallyEditorTab({ t, players = [], canEdit, saving, onUpdate }) {
                   <div className="region-combat-editor__field">
                     <div className="region-combat-editor__input-wrap region-combat-editor__input-wrap--rally">
                       <img
-                        src="/images/admin/region-editor/rally.webp"
+                        src={publicAsset("/images/admin/region-editor/rally.webp")}
                         alt=""
                         aria-hidden="true"
                       />

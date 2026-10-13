@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import {
   AlertCircle,
   CheckCircle2,
@@ -25,8 +27,8 @@ const PlayerImportMappingModal = lazy(() =>
 );
 
 const MAPPING_STORAGE_PREFIX = "wasteland-player-import-mapping:";
-const PLAYERS_IMPORT_ICON = "/images/admin/icons/settings/players-import.webp";
-const DELETE_ICON = "/images/admin/icons/actions/delete.webp";
+const PLAYERS_IMPORT_ICON = publicAsset("/images/admin/icons/settings/players-import.webp");
+const DELETE_ICON = publicAsset("/images/admin/icons/actions/delete.webp");
 
 function getMappingStorageKey(headers) {
   return `${MAPPING_STORAGE_PREFIX}${headers

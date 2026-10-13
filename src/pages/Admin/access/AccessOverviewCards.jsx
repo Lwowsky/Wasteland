@@ -1,24 +1,26 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { ROLES } from "../../../features/auth/permissions.js";
 
 const ROLE_IMAGES = {
-  [ROLES.OWNER]: "/images/admin/icons/owner.webp",
-  [ROLES.ADMIN]: "/images/admin/icons/admin.webp",
-  [ROLES.CONSUL]: "/images/admin/icons/consul.webp",
-  requests: "/images/admin/icons/access-requests.webp",
+  [ROLES.OWNER]: publicAsset("/images/admin/icons/owner.webp"),
+  [ROLES.ADMIN]: publicAsset("/images/admin/icons/admin.webp"),
+  [ROLES.CONSUL]: publicAsset("/images/admin/icons/consul.webp"),
+  requests: publicAsset("/images/admin/icons/access-requests.webp"),
 };
 
 const BACKGROUND_IMAGES = {
-  [ROLES.OWNER]: "/images/admin/access/owner-bg.webp",
-  [ROLES.ADMIN]: "/images/admin/access/admin-bg.webp",
-  [ROLES.CONSUL]: "/images/admin/access/consul-bg.webp",
-  requests: "/images/admin/access/requests-bg.webp",
+  [ROLES.OWNER]: publicAsset("/images/admin/access/owner-bg.webp"),
+  [ROLES.ADMIN]: publicAsset("/images/admin/access/admin-bg.webp"),
+  [ROLES.CONSUL]: publicAsset("/images/admin/access/consul-bg.webp"),
+  requests: publicAsset("/images/admin/access/requests-bg.webp"),
 };
 
 const COUNTER_IMAGES = {
-  [ROLES.OWNER]: "/images/admin/icons/actions/players.webp",
-  [ROLES.ADMIN]: "/images/admin/icons/actions/players.webp",
-  [ROLES.CONSUL]: "/images/admin/icons/actions/players.webp",
-  requests: "/images/admin/icons/requests-count.webp",
+  [ROLES.OWNER]: publicAsset("/images/admin/icons/actions/players.webp"),
+  [ROLES.ADMIN]: publicAsset("/images/admin/icons/actions/players.webp"),
+  [ROLES.CONSUL]: publicAsset("/images/admin/icons/actions/players.webp"),
+  requests: publicAsset("/images/admin/icons/requests-count.webp"),
 };
 
 function AccessOverviewCards({

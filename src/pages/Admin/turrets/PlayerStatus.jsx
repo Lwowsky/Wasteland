@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { formatMarch } from "../../../utils/formatMarch.js";
 import TierBadge from "../../../components/PlayerBadges/TierBadge.jsx";
 import TroopBadge from "../../../components/PlayerBadges/TroopBadge.jsx";
@@ -41,7 +43,7 @@ function PlayerStatus({ a, language, players, assignments, apply, editable, load
         ]).map(([key, label, detail, image]) => (
           <article className={`turret-status-card turret-status-card--${key}`} key={key}>
             <span className="turret-status-card__image" aria-hidden="true">
-              <img src={image} alt="" loading="lazy" />
+              <img src={publicAsset(image)} alt="" loading="lazy" />
             </span>
             <div className="turret-status-card__content">
               <span className="turret-status-card__label">{s[label]}</span>

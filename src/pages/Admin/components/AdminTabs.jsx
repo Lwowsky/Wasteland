@@ -1,13 +1,15 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 const TAB_ICONS = {
-  access: "/images/admin/icons/roles-access.webp",
+  access: publicAsset("/images/admin/icons/roles-access.webp"),
 
-  players: "/images/admin/icons/actions/players.webp",
+  players: publicAsset("/images/admin/icons/actions/players.webp"),
 
-  distribution: "/images/admin/icons/turret-distribution.webp",
+  distribution: publicAsset("/images/admin/icons/turret-distribution.webp"),
 
-  registration: "/images/admin/icons/registration-settings.webp",
+  registration: publicAsset("/images/admin/icons/registration-settings.webp"),
 
-  settings: "/images/admin/icons/settings.webp",
+  settings: publicAsset("/images/admin/icons/settings.webp"),
 };
 
 function AdminTabs({ tabs, activeTab, onChange, ariaLabel }) {

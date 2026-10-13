@@ -1,26 +1,28 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 const STATS = [
   {
     key: "registered",
     label: "registered",
-    icon: "/images/admin/icons/actions/players.webp",
+    icon: publicAsset("/images/admin/icons/actions/players.webp"),
     className: "home-stat-card--players",
   },
   {
     key: "alliances",
     label: "allianceCount",
-    icon: "/images/admin/region-editor/alliances.webp",
+    icon: publicAsset("/images/admin/region-editor/alliances.webp"),
     className: "home-stat-card--alliances",
   },
   {
     key: "captains",
     label: "captains",
-    icon: "/images/admin/region-editor/captain.webp",
+    icon: publicAsset("/images/admin/region-editor/captain.webp"),
     className: "home-stat-card--captains",
   },
   {
     key: "finalPlayers",
     label: "finalPlanPlayers",
-    icon: "/images/admin/icons/final-plan.webp",
+    icon: publicAsset("/images/admin/icons/final-plan.webp"),
     className: "home-stat-card--final",
   },
 ];

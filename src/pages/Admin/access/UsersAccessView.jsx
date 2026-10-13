@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { lazy, Suspense, useState } from "react";
 
 import { canManageUser, ROLES } from "../../../features/auth/permissions.js";
@@ -7,14 +9,14 @@ import AccessOverviewCards from "./AccessOverviewCards.jsx";
 const UserAccessModal = lazy(() => import("./UserAccessModal.jsx"));
 
 const ROLE_ICONS = {
-  [ROLES.OWNER]: "/images/admin/icons/owner.webp",
-  [ROLES.ADMIN]: "/images/admin/icons/admin.webp",
-  [ROLES.CONSUL]: "/images/admin/icons/consul.webp",
+  [ROLES.OWNER]: publicAsset("/images/admin/icons/owner.webp"),
+  [ROLES.ADMIN]: publicAsset("/images/admin/icons/admin.webp"),
+  [ROLES.CONSUL]: publicAsset("/images/admin/icons/consul.webp"),
 };
 
 const ACTION_ICONS = {
-  delete: "/images/admin/icons/actions/delete.webp",
-  lock: "/images/admin/icons/actions/lock.webp",
+  delete: publicAsset("/images/admin/icons/actions/delete.webp"),
+  lock: publicAsset("/images/admin/icons/actions/lock.webp"),
 };
 
 function UsersAccessView({

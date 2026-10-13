@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { useCallback, useState } from "react";
 import ConfirmModal from "../../../components/ConfirmModal/ConfirmModal.jsx";
 import TurretActionResultModal from "./TurretActionResultModal.jsx";
@@ -118,8 +120,8 @@ function TurretDistributionCycle({ t, language, publicT, players, periodId, load
       <ConfirmModal open={Boolean(dialog)} className="turret-confirm-modal" title={dialog?.title || a.distribution.title}
         message={dialog?.message || ""} tone={dialog?.tone || "warning"}
         iconSrc={dialog?.tone === "danger"
-          ? "/images/admin/icons/actions/delete.webp"
-          : dialog?.tone === "info" ? undefined : "/images/registration-settings/warning-icon.webp"}
+          ? publicAsset("/images/admin/icons/actions/delete.webp")
+          : dialog?.tone === "info" ? undefined : publicAsset("/images/registration-settings/warning-icon.webp")}
         confirmLabel={a.distribution.confirm?.accept || a.distribution.actions.publish}
         cancelLabel={a.distribution.confirm?.cancel || a.distribution.actions.clear}
         onConfirm={confirm} onCancel={closeConfirm} />

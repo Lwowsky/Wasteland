@@ -1,7 +1,9 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 const TAB_ICONS = {
-  players: "/images/admin/icons/actions/players.webp",
-  alliances: "/images/admin/region-editor/alliances.webp",
-  combat: "/images/admin/region-editor/march.webp",
+  players: publicAsset("/images/admin/icons/actions/players.webp"),
+  alliances: publicAsset("/images/admin/region-editor/alliances.webp"),
+  combat: publicAsset("/images/admin/region-editor/march.webp"),
 };
 
 function RegionEditorTabs({ t, activeTab, onChange }) {

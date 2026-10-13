@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 const ITEMS = [
   {
     id: "settings",
@@ -32,7 +34,7 @@ function TurretDistributionNav({ labels, active, onChange, ariaLabel }) {
             }
             onClick={() => onChange(item.id)}
           >
-            <img className="turret-subtab__image" src={item.image} alt="" aria-hidden="true" />
+            <img className="turret-subtab__image" src={publicAsset(item.image)} alt="" aria-hidden="true" />
 
             <span>{labels[item.id]}</span>
           </button>

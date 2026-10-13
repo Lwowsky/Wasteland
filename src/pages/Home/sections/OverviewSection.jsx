@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { useState } from "react";
 
 import { getTimeAgo } from "../utils/time.js";
@@ -17,7 +19,7 @@ function OverviewSection({ t, dashboardStats, recentPlayers }) {
     <section className="home-middle-grid">
       <div className="home-alliance-panel">
         <div className="home-section-title">
-          <img className="home-section-title__image" src="/images/admin/region-editor/alliances.webp" alt="" aria-hidden="true" />
+          <img className="home-section-title__image" src={publicAsset("/images/admin/region-editor/alliances.webp")} alt="" aria-hidden="true" />
 
           <div>
             <h2>{t.home.dashboard.allianceStats.title}</h2>
@@ -74,7 +76,7 @@ function OverviewSection({ t, dashboardStats, recentPlayers }) {
 
       <div className="home-recent-panel">
         <div className="home-section-title">
-          <img className="home-section-title__image" src="/images/registration-settings/registration-fields-icon.webp" alt="" aria-hidden="true" />
+          <img className="home-section-title__image" src={publicAsset("/images/registration-settings/registration-fields-icon.webp")} alt="" aria-hidden="true" />
 
           <div>
             <h2>{t.home.dashboard.recent.title}</h2>

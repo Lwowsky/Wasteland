@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import {
   fromUtcDateTimeLocalValue,
   toUtcDateTimeLocalValue,
@@ -17,7 +19,7 @@ function AutomaticCycleFields({ draft, schedule, canEdit, r, update }) {
   return (
     <>
       <section className="registration-modal-section registration-modal-section--compact">
-        <SectionTitle icon="/images/registration-settings/alliances-and-wasteland-icon.webp">
+        <SectionTitle icon={publicAsset("/images/registration-settings/alliances-and-wasteland-icon.webp")}>
           {r.cycle.wastelandTitle}
         </SectionTitle>
 
@@ -69,7 +71,7 @@ function AutomaticCycleFields({ draft, schedule, canEdit, r, update }) {
 
       <div className="registration-cycle-pair">
         <section className="registration-modal-section registration-modal-section--compact">
-          <SectionTitle icon="/images/registration-settings/cycle-close-icon.webp">
+          <SectionTitle icon={publicAsset("/images/registration-settings/cycle-close-icon.webp")}>
             {r.cycle.closeTitle}
           </SectionTitle>
 
@@ -120,7 +122,7 @@ function AutomaticCycleFields({ draft, schedule, canEdit, r, update }) {
         </section>
 
         <section className="registration-modal-section registration-modal-section--compact">
-          <SectionTitle icon="/images/registration-settings/cycle-open-icon.webp">
+          <SectionTitle icon={publicAsset("/images/registration-settings/cycle-open-icon.webp")}>
             {r.cycle.openTitle}
           </SectionTitle>
 
@@ -163,7 +165,7 @@ function AutomaticCycleFields({ draft, schedule, canEdit, r, update }) {
 function ManualCycleFields({ draft, canEdit, r, update }) {
   return (
     <section className="registration-modal-section registration-modal-section--compact">
-      <SectionTitle icon="/images/registration-settings/registration-fields-icon.webp">
+      <SectionTitle icon={publicAsset("/images/registration-settings/registration-fields-icon.webp")}>
         {r.cycle.manualTitle}
       </SectionTitle>
 

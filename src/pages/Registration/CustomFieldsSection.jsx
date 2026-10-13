@@ -1,3 +1,5 @@
+import { publicAsset } from "../../utils/publicAsset.js";
+
 import "./CustomFieldsSection.css";
 
 function CustomFieldsSection({
@@ -16,7 +18,7 @@ function CustomFieldsSection({
       <div className="registration-section__heading">
         <img
           className="registration-section__heading-image"
-          src="/images/registration-settings/registration-fields-icon.webp"
+          src={publicAsset("/images/registration-settings/registration-fields-icon.webp")}
           alt=""
           aria-hidden="true"
         />

@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { useMemo } from "react";
 
 import { getEnabledRegistrationShifts } from "../../../features/registration/registrationShifts.js";
@@ -7,30 +9,30 @@ import "../styles/players/PlayersStatsCards.css";
 const TROOPS = [
   {
     key: "fighter",
-    icon: "/images/admin/troops/fighter.webp",
+    icon: publicAsset("/images/admin/troops/fighter.webp"),
   },
   {
     key: "rider",
-    icon: "/images/admin/troops/rider.webp",
+    icon: publicAsset("/images/admin/troops/rider.webp"),
   },
   {
     key: "shooter",
-    icon: "/images/admin/troops/shooter.webp",
+    icon: publicAsset("/images/admin/troops/shooter.webp"),
   },
 ];
 
 const CARD_BACKGROUNDS = {
-  shift1: "/images/admin/stats/shift-1.webp",
-  shift2: "/images/admin/stats/shift-2.webp",
-  shift3: "/images/admin/stats/shift-3.webp",
-  shift4: "/images/admin/stats/shift-4.webp",
-  flexible: "/images/admin/stats/flexible-shift.webp",
-  total: "/images/admin/stats/total.webp",
+  shift1: publicAsset("/images/admin/stats/shift-1.webp"),
+  shift2: publicAsset("/images/admin/stats/shift-2.webp"),
+  shift3: publicAsset("/images/admin/stats/shift-3.webp"),
+  shift4: publicAsset("/images/admin/stats/shift-4.webp"),
+  flexible: publicAsset("/images/admin/stats/flexible-shift.webp"),
+  total: publicAsset("/images/admin/stats/total.webp"),
 };
 
 const STAT_ICONS = {
-  players: "/images/admin/icons/actions/players.webp",
-  captains: "/images/admin/region-editor/captain.webp",
+  players: publicAsset("/images/admin/icons/actions/players.webp"),
+  captains: publicAsset("/images/admin/region-editor/captain.webp"),
 };
 
 function isAssignedToTurret(player) {

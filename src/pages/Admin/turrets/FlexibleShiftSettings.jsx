@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { useState } from "react";
 import { ArrowLeftRight } from "lucide-react";
 import { PLANNER_SHIFTS } from "../../../features/turrets/plannerConstants.js";
@@ -77,18 +79,18 @@ function FlexibleShiftSettings({ a, settings, setSettings, disabled, registratio
     <div className="planner-section-actions">
       <button type="button" className="admin-primary-button"
         disabled={disabled || countRequested === 0 || invalid} onClick={apply}>
-        <img className="planner-section-actions__icon" src="/images/admin/icons/actions/approve.webp" alt="" aria-hidden="true" />{t.apply}
+        <img className="planner-section-actions__icon" src={publicAsset("/images/admin/icons/actions/approve.webp")} alt="" aria-hidden="true" />{t.apply}
       </button>
       <button type="button" className="admin-secondary-button"
         disabled={disabled || allocated.length === 0} onClick={restore}>
-        <img className="planner-section-actions__icon" src="/images/admin/icons/actions/redistribute-helpers.webp" alt="" aria-hidden="true" />{t.restore}
+        <img className="planner-section-actions__icon" src={publicAsset("/images/admin/icons/actions/redistribute-helpers.webp")} alt="" aria-hidden="true" />{t.restore}
       </button>
     </div>
     <div className="planner-quota-divider" />
     <label className="planner-switch">
       <input type="checkbox" disabled={disabled} checked={settings.allianceLimits}
         onChange={(event) => update("allianceLimits", event.target.checked)} />
-      <span><img className="planner-quota-icon" src="/images/admin/region-editor/alliances.webp" alt="" aria-hidden="true" />{t.manual}</span>
+      <span><img className="planner-quota-icon" src={publicAsset("/images/admin/region-editor/alliances.webp")} alt="" aria-hidden="true" />{t.manual}</span>
     </label>
     <p>{t.quotaExplanation}</p>
     {settings.allianceLimits && (

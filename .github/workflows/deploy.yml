@@ -34,11 +34,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Check public Worker endpoint
+        env:
+          VITE_API_URL: ${{ vars.VITE_API_URL }}
+        run: |
+          if [[ ! "$VITE_API_URL" =~ ^https:// ]]; then
+            echo "Configure VITE_API_URL (https://...workers.dev) in Actions variables first."
+            exit 1
+          fi
+
       - name: Build Vite project
         run: npm run build
         env:
           GITHUB_PAGES: "true"
-          VITE_SITE_URL: https://lwowsky.github.io/Wasteland
           VITE_API_URL: ${{ vars.VITE_API_URL }}
           VITE_FIREBASE_API_KEY: ${{ vars.VITE_FIREBASE_API_KEY }}
           VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.VITE_FIREBASE_AUTH_DOMAIN }}

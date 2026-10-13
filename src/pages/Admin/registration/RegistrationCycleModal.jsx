@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { useMemo, useState } from "react";
 
 import Modal from "../../../components/Modal/Modal.jsx";
@@ -45,7 +47,7 @@ function RegistrationCycleModal({
       headerContent={
         <div className="registration-cycle-modal-heading">
           <img
-            src="/images/registration-settings/registration-cycle-icon.webp"
+            src={publicAsset("/images/registration-settings/registration-cycle-icon.webp")}
             alt=""
             aria-hidden="true"
           />
@@ -65,7 +67,7 @@ function RegistrationCycleModal({
             onClick={() => setDraft(getDefaultRegistrationCycleDraft())}
           >
             <img
-              src="/images/registration-settings/reset-defaults-icon.webp"
+              src={publicAsset("/images/registration-settings/reset-defaults-icon.webp")}
               alt=""
               aria-hidden="true"
             />
@@ -88,7 +90,7 @@ function RegistrationCycleModal({
               onClick={handleSave}
             >
               <img
-                src="/images/admin/icons/registration/save.svg"
+                src={publicAsset("/images/admin/icons/actions/approve.webp")}
                 alt=""
                 aria-hidden="true"
               />
@@ -110,7 +112,7 @@ function RegistrationCycleModal({
             onClick={() => update("cycleMode", "automatic")}
           >
             <img
-              src="/images/registration-settings/registration-cycle-icon.webp"
+              src={publicAsset("/images/registration-settings/registration-cycle-icon.webp")}
               alt=""
               aria-hidden="true"
             />
@@ -122,7 +124,7 @@ function RegistrationCycleModal({
             onClick={() => update("cycleMode", "manual")}
           >
             <img
-              src="/images/registration-settings/registration-fields-icon.webp"
+              src={publicAsset("/images/registration-settings/registration-fields-icon.webp")}
               alt=""
               aria-hidden="true"
             />

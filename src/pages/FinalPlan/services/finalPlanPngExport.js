@@ -1,9 +1,11 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 // Capture a stable, desktop-width copy of the board without changing the live UI.
 // Use the site's PNG signature for export: DOM clones don't retain React's SVG
 // onError fallback, and an image still loading can disappear from html-to-image.
 export const FINAL_PLAN_PNG_WIDTH = 1480;
 export const FINAL_PLAN_PNG_PIXEL_RATIO = 2;
-export const FINAL_PLAN_SIGNATURE_PNG = "/images/final-plan/board-signature-flatflags.png";
+export const FINAL_PLAN_SIGNATURE_PNG = publicAsset("/images/final-plan/board-signature-flatflags.png");
 const SIGNATURE_BOTTOM_SPACE = 42;
 
 export function createFinalPlanExportBoard(board) {

@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { formatMarch } from "../../../utils/formatMarch.js";
 import { useState } from "react";
 import { AlertTriangle, CheckCircle2 } from "lucide-react";
@@ -146,12 +148,12 @@ function TurretSettings({ a, language, shift, setShift, draft, players, settings
             <button type="button" className="admin-secondary-button turret-toolbar-action" disabled={autoDisabled}
               title={settings.mode === "manual" ? a.distribution.auto.manualDisabled : undefined}
               onClick={() => onAuto?.({ operation: "tower", shift, tower: selectedId })}>
-              <img src="/images/admin/icons/actions/fill-turrets.webp" alt="" aria-hidden="true" />
+              <img src={publicAsset("/images/admin/icons/actions/fill-turrets.webp")} alt="" aria-hidden="true" />
               {a.distribution.turret.autofill}
             </button>
             <button type="button" className="admin-secondary-button turret-toolbar-action turret-toolbar-action--danger"
               disabled={disabled || (!slot.captainId && !slot.helperIds.length)} onClick={clearSelected}>
-              <img src="/images/admin/icons/actions/delete.webp" alt="" aria-hidden="true" />
+              <img src={publicAsset("/images/admin/icons/actions/delete.webp")} alt="" aria-hidden="true" />
               {a.distribution.turret.clear}
             </button>
           </div>

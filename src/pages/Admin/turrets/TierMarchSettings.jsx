@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { getEnabledRegistrationTiers } from "../../../features/registration/registrationTiers.js";
 import { updateOrderedTierLimits } from "../../../features/turrets/plannerTierDisplay.js";
 import { updatePlannerSettings } from "../../../features/turrets/plannerSettings.js";
@@ -15,7 +17,7 @@ function TierMarchSettings({ a, settings, setSettings, disabled, registrationSet
     <section className="planner-panel planner-tier-panel">
       <div className="planner-section-heading">
         <div>
-          <h3 className="planner-tier-heading"><img src="/images/admin/region-editor/march.webp" alt="" aria-hidden="true" />{t.tierTitle}</h3>
+          <h3 className="planner-tier-heading"><img src={publicAsset("/images/admin/region-editor/march.webp")} alt="" aria-hidden="true" />{t.tierTitle}</h3>
           <p>{settings.tierLimitsEnabled ? t.tierCustomDescription : t.tierAutoDescription}</p>
         </div>
       </div>

@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 function AccessNav({
   t,
   activeTab,
@@ -18,7 +20,7 @@ function AccessNav({
       >
         <span className="admin-access-nav__icon">
           <img
-            src="/images/admin/icons/roles-access.webp"
+            src={publicAsset("/images/admin/icons/roles-access.webp")}
             alt=""
             aria-hidden="true"
           />
@@ -42,7 +44,7 @@ function AccessNav({
         >
           <span className="admin-access-nav__icon">
             <img
-              src="/images/admin/icons/access-requests.webp"
+              src={publicAsset("/images/admin/icons/access-requests.webp")}
               alt=""
               aria-hidden="true"
             />

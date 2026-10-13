@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import RegistrationSettingsModals from "../registration/RegistrationSettingsModals.jsx";
 import RegistrationSettingsOverview from "../registration/RegistrationSettingsOverview.jsx";
 import useRegistrationSettingsAdmin from "../registration/useRegistrationSettingsAdmin.js";
@@ -48,7 +50,7 @@ function RegistrationSettingsTab({
         >
           <img
             className="registration-button-icon"
-            src="/images/registration-settings/reset-defaults-icon.webp"
+            src={publicAsset("/images/registration-settings/reset-defaults-icon.webp")}
             alt=""
             aria-hidden="true"
           />

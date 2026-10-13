@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { Copy, RefreshCw } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
@@ -12,17 +14,17 @@ import {
 import "./ContentAccessPanel.css";
 
 const RESOURCES = ["players", "final_plan"];
-const ACCESS_CONTROL_ICON = "/images/admin/icons/settings/access-control.webp";
+const ACCESS_CONTROL_ICON = publicAsset("/images/admin/icons/settings/access-control.webp");
 const ACCESS_UI_ICONS = {
-  players: "/images/admin/icons/actions/players.webp",
-  finalPlan: "/images/admin/icons/actions/lock.webp",
-  public: "/images/admin/icons/actions/approve.webp",
-  private: "/images/admin/icons/actions/lock.webp",
-  active: "/images/admin/icons/settings/access-control.webp",
-  warning: "/images/admin/icons/actions/reject.webp",
-  code: "/images/admin/icons/actions/lock.webp",
-  link: "/images/admin/icons/settings/access-control.webp",
-  revoke: "/images/admin/icons/actions/reject.webp",
+  players: publicAsset("/images/admin/icons/actions/players.webp"),
+  finalPlan: publicAsset("/images/admin/icons/actions/lock.webp"),
+  public: publicAsset("/images/admin/icons/actions/approve.webp"),
+  private: publicAsset("/images/admin/icons/actions/lock.webp"),
+  active: publicAsset("/images/admin/icons/settings/access-control.webp"),
+  warning: publicAsset("/images/admin/icons/actions/reject.webp"),
+  code: publicAsset("/images/admin/icons/actions/lock.webp"),
+  link: publicAsset("/images/admin/icons/settings/access-control.webp"),
+  revoke: publicAsset("/images/admin/icons/actions/reject.webp"),
 };
 
 function createDraft(resource) {
@@ -162,7 +164,10 @@ function ContentAccessPanel({ t, language }) {
         selectedResource === "players" ? ROUTES.players : ROUTES.finalPlan;
       const value =
         result.resource?.mode === "link"
-          ? `${window.location.origin}${getRoute(language, route)}?access=${encodeURIComponent(result.token)}`
+          ? new URL(
+              `${import.meta.env.BASE_URL}${getRoute(language, route).slice(1)}?access=${encodeURIComponent(result.token)}`,
+              window.location.origin,
+            ).toString()
           : result.token;
 
       setGenerated({

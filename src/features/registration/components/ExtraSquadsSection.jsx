@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { getEnabledRegistrationTiers } from "../registrationTiers.js";
 import { REGISTRATION_TROOP_TYPES } from "../../../../shared/registrationConfig.js";
 
@@ -152,7 +154,7 @@ function ExtraSquadsSection({
       <div className="registration-section__heading">
         <img
           className="registration-section__heading-image"
-          src="/images/admin/icons/actions/players.webp"
+          src={publicAsset("/images/admin/icons/actions/players.webp")}
           alt=""
           aria-hidden="true"
         />

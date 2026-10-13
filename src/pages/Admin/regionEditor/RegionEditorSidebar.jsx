@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { Search, X } from "lucide-react";
 
 import TierBadge from "../../../components/PlayerBadges/TierBadge.jsx";
@@ -68,7 +70,7 @@ function RegionEditorSidebar({
               >
                 <div className="region-editor-player__avatar">
                   <img
-                    src="/images/admin/region-editor/player.webp"
+                    src={publicAsset("/images/admin/region-editor/player.webp")}
                     alt=""
                     aria-hidden="true"
                     className="region-editor-player__avatar-image"

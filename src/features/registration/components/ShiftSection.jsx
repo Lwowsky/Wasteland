@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { formatShiftTime } from "../../../utils/date.js";
 import { getEnabledRegistrationShifts } from "../registrationShifts.js";
 import "./ShiftSection.css";
@@ -41,7 +43,7 @@ function ShiftSection({
       <div className="registration-section__heading">
         <img
           className="registration-section__heading-image"
-          src="/images/admin/icons/settings/time-display-mode.webp"
+          src={publicAsset("/images/admin/icons/settings/time-display-mode.webp")}
           alt=""
           aria-hidden="true"
         />

@@ -1,3 +1,5 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
+
 import { AlertTriangle, Trash2 } from "lucide-react";
 import { lazy, Suspense, useState } from "react";
 
@@ -148,7 +150,7 @@ function PlayersAdminTab({
         <div className="admin-players-header__title">
           <div className="admin-players-header__icon">
             <img
-              src="/images/admin/icons/actions/players.webp"
+              src={publicAsset("/images/admin/icons/actions/players.webp")}
               alt=""
               aria-hidden="true"
               className="admin-players-header__icon-image"
@@ -173,7 +175,7 @@ function PlayersAdminTab({
             >
               <span className="admin-players-region-editor__icon">
                 <img
-                  src="/images/admin/icons/actions/region-editor.webp"
+                  src={publicAsset("/images/admin/icons/actions/region-editor.webp")}
                   alt=""
                   aria-hidden="true"
                   className="admin-players-button-icon"
@@ -189,7 +191,7 @@ function PlayersAdminTab({
                 onClick={openCreate}
               >
                 <img
-                  src="/images/admin/icons/actions/add-player.webp"
+                  src={publicAsset("/images/admin/icons/actions/add-player.webp")}
                   alt=""
                   aria-hidden="true"
                   className="admin-players-button-icon"
