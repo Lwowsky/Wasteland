@@ -1,5 +1,3 @@
-import { Clock3 } from "lucide-react";
-
 import { formatShiftTime } from "../../../utils/date.js";
 import { getEnabledRegistrationShifts } from "../registrationShifts.js";
 import "./ShiftSection.css";
@@ -41,7 +39,12 @@ function ShiftSection({
       data-registration-field="shift"
     >
       <div className="registration-section__heading">
-        <Clock3 size={22} aria-hidden="true" />
+        <img
+          className="registration-section__heading-image"
+          src="/images/admin/icons/settings/time-display-mode.webp"
+          alt=""
+          aria-hidden="true"
+        />
 
         <div>
           <h2>

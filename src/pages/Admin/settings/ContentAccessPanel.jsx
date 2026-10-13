@@ -1,13 +1,4 @@
-import {
-  Copy,
-  Globe2,
-  KeyRound,
-  Link2,
-  LockKeyhole,
-  RefreshCw,
-  ShieldCheck,
-  XCircle,
-} from "lucide-react";
+import { Copy, RefreshCw } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 import { ROUTES, getRoute } from "../../../config/routes.js";
@@ -21,6 +12,18 @@ import {
 import "./ContentAccessPanel.css";
 
 const RESOURCES = ["players", "final_plan"];
+const ACCESS_CONTROL_ICON = "/images/admin/icons/settings/access-control.webp";
+const ACCESS_UI_ICONS = {
+  players: "/images/admin/icons/actions/players.webp",
+  finalPlan: "/images/admin/icons/actions/lock.webp",
+  public: "/images/admin/icons/actions/approve.webp",
+  private: "/images/admin/icons/actions/lock.webp",
+  active: "/images/admin/icons/settings/access-control.webp",
+  warning: "/images/admin/icons/actions/reject.webp",
+  code: "/images/admin/icons/actions/lock.webp",
+  link: "/images/admin/icons/settings/access-control.webp",
+  revoke: "/images/admin/icons/actions/reject.webp",
+};
 
 function createDraft(resource) {
   return {
@@ -213,27 +216,31 @@ function ContentAccessPanel({ t, language }) {
     if (!active) return null;
 
     if (active.mode === "public") {
-      return { icon: Globe2, label: t.status.public, className: "is-public" };
+      return { icon: ACCESS_UI_ICONS.public, label: t.status.public, className: "is-public" };
     }
 
     if (active.mode === "private") {
-      return { icon: LockKeyhole, label: t.status.private, className: "is-private" };
+      return { icon: ACCESS_UI_ICONS.private, label: t.status.private, className: "is-private" };
     }
 
     if (active.token?.active) {
-      return { icon: ShieldCheck, label: t.status.active, className: "is-active" };
+      return { icon: ACCESS_UI_ICONS.active, label: t.status.active, className: "is-active" };
     }
 
-    return { icon: XCircle, label: t.status.needsToken, className: "is-warning" };
+    return { icon: ACCESS_UI_ICONS.warning, label: t.status.needsToken, className: "is-warning" };
   }, [active, t.status]);
 
-  const StatusIcon = status?.icon || ShieldCheck;
+  const statusIcon = status?.icon || ACCESS_UI_ICONS.active;
 
   return (
     <article className="settings-tool-card settings-access-card">
       <div className="settings-access-card__head">
-        <div className="settings-access-card__icon">
-          <ShieldCheck size={30} aria-hidden="true" />
+        <div className="settings-access-card__icon" aria-hidden="true">
+          <img
+            className="settings-section-icon"
+            src={ACCESS_CONTROL_ICON}
+            alt=""
+          />
         </div>
         <div>
           <h3>{t.title}</h3>
@@ -251,11 +258,12 @@ function ContentAccessPanel({ t, language }) {
             className={selectedResource === resource ? "is-active" : ""}
             onClick={() => selectResource(resource)}
           >
-            {resource === "players" ? (
-              <KeyRound size={16} aria-hidden="true" />
-            ) : (
-              <Link2 size={16} aria-hidden="true" />
-            )}
+            <img
+              className="settings-access-inline-icon"
+              src={resource === "players" ? ACCESS_UI_ICONS.players : ACCESS_UI_ICONS.finalPlan}
+              alt=""
+              aria-hidden="true"
+            />
             {t.resources[resource]}
           </button>
         ))}
@@ -270,7 +278,7 @@ function ContentAccessPanel({ t, language }) {
         <div className="settings-access-body">
           {status && (
             <div className={`settings-access-status ${status.className}`}>
-              <StatusIcon size={16} aria-hidden="true" />
+              <img className="settings-access-status-icon" src={statusIcon} alt="" aria-hidden="true" />
               <span>{status.label}</span>
               {active?.period?.cycleNumber && (
                 <small>
@@ -408,11 +416,12 @@ function ContentAccessPanel({ t, language }) {
                 onClick={generate}
                 disabled={busy || !active?.period}
               >
-                {draft.mode === "code" ? (
-                  <KeyRound size={17} aria-hidden="true" />
-                ) : (
-                  <Link2 size={17} aria-hidden="true" />
-                )}
+                <img
+                  className="settings-access-inline-icon"
+                  src={draft.mode === "code" ? ACCESS_UI_ICONS.code : ACCESS_UI_ICONS.link}
+                  alt=""
+                  aria-hidden="true"
+                />
                 {draft.mode === "code"
                   ? t.actions.generateCode
                   : t.actions.generateLink}
@@ -426,7 +435,7 @@ function ContentAccessPanel({ t, language }) {
                 onClick={revoke}
                 disabled={busy}
               >
-                <XCircle size={16} aria-hidden="true" />
+                <img className="settings-access-inline-icon" src={ACCESS_UI_ICONS.revoke} alt="" aria-hidden="true" />
                 {t.actions.revoke}
               </button>
             )}

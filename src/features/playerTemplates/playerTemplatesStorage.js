@@ -1,4 +1,30 @@
+import { REGISTRATION_TROOP_TYPES } from "../../../shared/registrationConfig.js";
+
 const STORAGE_KEY = "wasteland-player-templates";
+
+// Primary troops must never be an enabled extra squad, including legacy drafts.
+export function normalizeTemplateExtraSquads(extraSquads = {}, troopType = "") {
+  return Object.fromEntries(
+    REGISTRATION_TROOP_TYPES.map((type) => [
+      type,
+      {
+        enabled: type !== troopType && extraSquads?.[type]?.enabled === true,
+        tier: extraSquads?.[type]?.tier || "T10",
+      },
+    ]),
+  );
+}
+
+export function normalizePlayerTemplate(template = {}) {
+  return {
+    ...template,
+    shift: template.shift === "both" ? "flexible" : template.shift,
+    extraSquads: normalizeTemplateExtraSquads(
+      template.extraSquads,
+      template.troopType,
+    ),
+  };
+}
 
 export function getPlayerTemplates() {
   const saved = localStorage.getItem(STORAGE_KEY);
@@ -14,17 +40,18 @@ export function getPlayerTemplates() {
       return [];
     }
 
-    return parsed.map((template) => ({
-      ...template,
-      shift: template.shift === "both" ? "flexible" : template.shift,
-    }));
+    return parsed.filter((template) => template && typeof template === "object")
+      .map(normalizePlayerTemplate);
   } catch {
     return [];
   }
 }
 
 export function savePlayerTemplates(templates) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(templates));
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(templates.map(normalizePlayerTemplate)),
+  );
 }
 
 export function createPlayerTemplateDraft(data = {}, fallbackShift = "") {
@@ -37,20 +64,7 @@ export function createPlayerTemplateDraft(data = {}, fallbackShift = "") {
     marchSize: data.marchSize || "",
     rallySize: data.rallySize || "",
     shift: data.shift || fallbackShift,
-    extraSquads: {
-      fighter: {
-        enabled: data.extraSquads?.fighter?.enabled ?? false,
-        tier: data.extraSquads?.fighter?.tier || "T10",
-      },
-      rider: {
-        enabled: data.extraSquads?.rider?.enabled ?? false,
-        tier: data.extraSquads?.rider?.tier || "T10",
-      },
-      shooter: {
-        enabled: data.extraSquads?.shooter?.enabled ?? false,
-        tier: data.extraSquads?.shooter?.tier || "T10",
-      },
-    },
+    extraSquads: normalizeTemplateExtraSquads(data.extraSquads, data.troopType || "fighter"),
   };
 }
 

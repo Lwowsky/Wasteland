@@ -1,5 +1,4 @@
-import { ownerDenied } from "./ownerAccess.js";
-import { getBearerToken, verifyAdminRequest } from "../auth/adminAuth.js";
+import { getBearerToken, verifyAdminRequest, adminHasPermission } from "../auth/adminAuth.js";
 import { clearPublicCaches } from "../utils/cache.js";
 import {
   listFirestoreDocuments,
@@ -14,6 +13,8 @@ const TABLES = [
   "registration_settings",
   "site_settings",
   "registration_periods",
+  "turret_plan_drafts",
+  "turret_plan_publications",
   "registrations",
   "public_players",
   "stats",
@@ -23,6 +24,8 @@ const TABLES = [
 ];
 
 const DELETE_ORDER = [
+  "turret_plan_publications",
+  "turret_plan_drafts",
   "content_access_sessions",
   "content_access_tokens",
   "public_players",
@@ -40,6 +43,8 @@ const INSERT_ORDER = [
   "site_settings",
   "content_access_settings",
   "registration_periods",
+  "turret_plan_drafts",
+  "turret_plan_publications",
   "registrations",
   "public_players",
   "stats",
@@ -97,8 +102,8 @@ export async function createRegionBackupSnapshot(request, env) {
 export async function handleRegionBackupCreate(request, env) {
   const admin = await verifyAdminRequest(request, env);
 
-  if (!admin.ok || admin.role !== "owner") {
-    return ownerDenied(admin);
+  if (!admin.ok || !adminHasPermission(admin, "manage_region_backup")) {
+    return json({ success: false, error: admin.ok ? "FORBIDDEN" : admin.error }, admin.ok ? 403 : admin.status);
   }
 
   const backup = await createRegionBackupSnapshot(request, env);
@@ -177,8 +182,8 @@ async function restoreD1(env, d1) {
 export async function handleRegionBackupRestore(request, env) {
   const admin = await verifyAdminRequest(request, env);
 
-  if (!admin.ok || admin.role !== "owner") {
-    return ownerDenied(admin);
+  if (!admin.ok || !adminHasPermission(admin, "manage_region_backup")) {
+    return json({ success: false, error: admin.ok ? "FORBIDDEN" : admin.error }, admin.ok ? 403 : admin.status);
   }
 
   const body = await request.json().catch(() => ({}));

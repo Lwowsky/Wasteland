@@ -1,4 +1,3 @@
-import { AlertTriangle, ShieldCheck, Trash2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 import Modal from "../../../components/Modal/Modal.jsx";
@@ -13,6 +12,10 @@ import "./SystemSettingsModal.css";
 import "./FactoryResetModal.css";
 
 const COUNTDOWN_SECONDS = 10;
+
+const RESET_ICON = "/images/admin/icons/settings/data-reset.webp";
+const ACCESS_CONTROL_ICON = "/images/admin/icons/settings/access-control.webp";
+const DELETE_ICON = "/images/admin/icons/actions/delete.webp";
 
 const RESET_KEYS = [
   "players",
@@ -198,7 +201,7 @@ function FactoryResetModal({ open, onClose, t, onCompleted }) {
             disabled={!canConfirm}
             onClick={handleReset}
           >
-            <Trash2 size={18} aria-hidden="true" />
+            <img className="factory-reset-icon-image factory-reset-icon-image--button" src={DELETE_ICON} alt="" aria-hidden="true" />
             {secondsLeft > 0
               ? `${t.actions.delete} (${secondsLeft})`
               : busy
@@ -210,7 +213,7 @@ function FactoryResetModal({ open, onClose, t, onCompleted }) {
     >
       <div className="factory-reset-content">
         <div className="factory-reset-warning">
-          <AlertTriangle size={28} aria-hidden="true" />
+          <img className="factory-reset-icon-image" src={RESET_ICON} alt="" aria-hidden="true" />
           <div>
             <strong>{t.warning.title}</strong>
             <p>{t.warning.text}</p>
@@ -218,7 +221,7 @@ function FactoryResetModal({ open, onClose, t, onCompleted }) {
         </div>
 
         <div className="factory-reset-preserved">
-          <ShieldCheck size={22} aria-hidden="true" />
+          <img className="factory-reset-icon-image factory-reset-icon-image--shield" src={ACCESS_CONTROL_ICON} alt="" aria-hidden="true" />
           <div>
             <strong>{t.preserved.title}</strong>
             <p>{t.preserved.text}</p>

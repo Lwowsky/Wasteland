@@ -50,6 +50,71 @@ function resolveRelativeImport(fromFile, specifier) {
   return "MISSING";
 }
 
+
+function getNamedRelativeImports(file) {
+  if (![".js", ".jsx"].includes(path.extname(file))) return [];
+
+  const source = fs.readFileSync(file, "utf8");
+  const imports = [];
+  const pattern = /\bimport\s*\{([\s\S]*?)\}\s*from\s*["']([^"']+)["']/g;
+
+  for (const match of source.matchAll(pattern)) {
+    const specifier = match[2];
+    if (!specifier?.startsWith(".")) continue;
+
+    const names = match[1]
+      .split(",")
+      .map((part) => part.trim())
+      .filter(Boolean)
+      .map((part) => part.split(/\s+as\s+/)[0]?.trim())
+      .filter(Boolean);
+
+    imports.push({ specifier, names });
+  }
+
+  return imports;
+}
+
+const exportNameCache = new Map();
+
+function getExportedNames(file, stack = new Set()) {
+  const normalized = path.normalize(file);
+  if (exportNameCache.has(normalized)) return exportNameCache.get(normalized);
+  if (stack.has(normalized)) return new Set();
+
+  stack.add(normalized);
+  const source = fs.readFileSync(normalized, "utf8");
+  const names = new Set();
+
+  for (const match of source.matchAll(
+    /\bexport\s+(?:async\s+)?(?:function|class|const|let|var)\s+([A-Za-z_$][\w$]*)/g,
+  )) {
+    names.add(match[1]);
+  }
+
+  for (const match of source.matchAll(/\bexport\s*\{([\s\S]*?)\}(?:\s*from\s*["'][^"']+["'])?/g)) {
+    for (const part of match[1].split(",")) {
+      const trimmed = part.trim();
+      if (!trimmed) continue;
+      const pieces = trimmed.split(/\s+as\s+/);
+      names.add((pieces[1] || pieces[0]).trim());
+    }
+  }
+
+  for (const match of source.matchAll(/\bexport\s*\*\s*from\s*["']([^"']+)["']/g)) {
+    const specifier = match[1];
+    const resolved = resolveRelativeImport(normalized, specifier);
+    if (!resolved || resolved === "MISSING") continue;
+
+    for (const exportedName of getExportedNames(resolved, new Set(stack))) {
+      names.add(exportedName);
+    }
+  }
+
+  exportNameCache.set(normalized, names);
+  return names;
+}
+
 function getRelativeImports(file) {
   const source = fs.readFileSync(file, "utf8");
   const imports = [];
@@ -97,6 +162,23 @@ for (const file of allSourceFiles) {
   graph.set(file, resolvedImports);
 }
 
+for (const file of allSourceFiles) {
+  for (const { specifier, names } of getNamedRelativeImports(file)) {
+    const resolved = resolveRelativeImport(file, specifier);
+    if (!resolved || resolved === "MISSING") continue;
+    if (![".js", ".jsx"].includes(path.extname(resolved))) continue;
+
+    const exportedNames = getExportedNames(resolved);
+    for (const name of names) {
+      if (!exportedNames.has(name)) {
+        errors.push(
+          `Missing named export: ${path.relative(ROOT, file)} imports ${name} from ${specifier}`,
+        );
+      }
+    }
+  }
+}
+
 const reachable = new Set();
 const queue = ENTRY_FILES.map((file) => path.normalize(file));
 
@@ -107,7 +189,9 @@ while (queue.length) {
   queue.push(...(graph.get(file) || []));
 }
 
-const unreachable = allSourceFiles.filter((file) => !reachable.has(file));
+// Node test runner discovers these independently; they are not app import entrypoints.
+const isTestFile = (file) => /\.(?:test|spec)\.[cm]?[jt]sx?$/.test(file);
+const unreachable = allSourceFiles.filter((file) => !reachable.has(file) && !isTestFile(file));
 for (const file of unreachable) {
   errors.push(`Unreachable source file: ${path.relative(ROOT, file)}`);
 }

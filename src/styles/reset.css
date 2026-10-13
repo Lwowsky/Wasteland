@@ -10,10 +10,6 @@ body,
   min-height: 100%;
 }
 
-body {
-  min-width: 320px;
-}
-
 img {
   display: block;
   max-width: 100%;

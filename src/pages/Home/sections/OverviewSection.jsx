@@ -1,4 +1,4 @@
-import { ClipboardList, Users } from "lucide-react";
+import { useState } from "react";
 
 import { getTimeAgo } from "../utils/time.js";
 import useNow from "../../../hooks/useNow.js";
@@ -6,6 +6,8 @@ import useNow from "../../../hooks/useNow.js";
 function OverviewSection({ t, dashboardStats, recentPlayers }) {
   const now = useNow(60_000);
   const allianceStats = dashboardStats.allianceStats || [];
+  const [showAllAlliances, setShowAllAlliances] = useState(false);
+  const visibleAlliances = showAllAlliances ? allianceStats : allianceStats.slice(0, 5);
 
   function getTroopLabel(troopType) {
     return t.players?.troops?.[troopType] || troopType;
@@ -15,7 +17,7 @@ function OverviewSection({ t, dashboardStats, recentPlayers }) {
     <section className="home-middle-grid">
       <div className="home-alliance-panel">
         <div className="home-section-title">
-          <Users size={24} />
+          <img className="home-section-title__image" src="/images/admin/region-editor/alliances.webp" alt="" aria-hidden="true" />
 
           <div>
             <h2>{t.home.dashboard.allianceStats.title}</h2>
@@ -25,7 +27,7 @@ function OverviewSection({ t, dashboardStats, recentPlayers }) {
         </div>
 
         <div className="home-alliance-list">
-          {allianceStats.map((alliance, index) => {
+          {visibleAlliances.map((alliance, index) => {
             const percent =
               dashboardStats.registered > 0
                 ? Math.round(
@@ -56,11 +58,23 @@ function OverviewSection({ t, dashboardStats, recentPlayers }) {
             );
           })}
         </div>
+        {allianceStats.length > 5 && (
+          <button
+            className="home-alliance-toggle"
+            type="button"
+            aria-expanded={showAllAlliances}
+            onClick={() => setShowAllAlliances((current) => !current)}
+          >
+            {showAllAlliances
+              ? t.home.dashboard.allianceStats.showLess
+              : t.home.dashboard.allianceStats.showAll}
+          </button>
+        )}
       </div>
 
       <div className="home-recent-panel">
         <div className="home-section-title">
-          <ClipboardList size={24} />
+          <img className="home-section-title__image" src="/images/registration-settings/registration-fields-icon.webp" alt="" aria-hidden="true" />
 
           <div>
             <h2>{t.home.dashboard.recent.title}</h2>

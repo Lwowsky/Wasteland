@@ -1,34 +1,34 @@
 import { forwardRef } from "react";
 
 import FinalPlanTower from "./FinalPlanTower.jsx";
+import { PlanLegend } from "./FinalPlanMetrics.jsx";
 
-const TOWERS = ["hub", "north", "west", "east", "south"];
+import { TURRET_IDS } from "../../../features/turrets/plannerConstants.js";
+import { getPlanShiftHeading } from "../data/finalPlanLanguages.js";
 
 const FinalPlanBoard = forwardRef(function FinalPlanBoard(
-  { t, activeShift, plan },
+  { t, activeShift, plan, language, languages },
   ref,
 ) {
-  const shiftLabel =
-    activeShift === "shift1" ? t.finalPlan.shift1 : t.finalPlan.shift2;
-
-  const halfLabel =
-    activeShift === "shift1" ? t.finalPlan.firstHalf : t.finalPlan.secondHalf;
+  const shiftLabel = languages?.length ? getPlanShiftHeading(activeShift, languages) :
+    (t.finalPlan[activeShift] || activeShift);
 
   return (
     <div className="final-plan-board" ref={ref}>
       <h2 className="final-plan-board__title">
         {shiftLabel}
-        {" • "}
-        {halfLabel}
       </h2>
 
+      <PlanLegend t={t} />
+
       <div className="final-plan-towers">
-        {TOWERS.map((towerId) => (
+        {TURRET_IDS.map((towerId) => (
           <FinalPlanTower
             key={towerId}
             t={t}
+            language={language}
             towerId={towerId}
-            data={plan[towerId]}
+            data={plan?.[towerId]}
           />
         ))}
       </div>

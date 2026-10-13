@@ -1,11 +1,5 @@
-import {
-  AlertTriangle,
-  DatabaseBackup,
-  Download,
-  FileSpreadsheet,
-  SlidersHorizontal,
-} from "lucide-react";
 import { lazy, Suspense, useMemo, useState } from "react";
+import { hasPermission, PERMISSIONS } from "../../../features/auth/permissions.js";
 
 import {
   exportAdminWorkbook,
@@ -25,6 +19,16 @@ const FactoryResetModal = lazy(() =>
   import("../settings/FactoryResetModal.jsx"),
 );
 
+const SETTINGS_TAB_ICONS = {
+  export: "/images/admin/icons/settings/players-export.webp",
+  reset: "/images/admin/icons/settings/data-reset.webp",
+};
+
+const BUTTON_ICONS = {
+  settings: "/images/admin/icons/settings.webp",
+  export: "/images/admin/icons/settings/players-export.webp",
+};
+
 function SettingsTab({
   t,
   players,
@@ -40,7 +44,12 @@ function SettingsTab({
   const [resetOpen, setResetOpen] = useState(false);
   const [exportSettingsOpen, setExportSettingsOpen] = useState(false);
 
+  const can = (permission) => hasPermission(currentAdmin?.role, permission, currentAdmin?.permissions);
   const isOwner = currentAdmin?.role === "owner";
+  const canAppearance = can(PERMISSIONS.MANAGE_SITE_APPEARANCE);
+  const canBackup = can(PERMISSIONS.MANAGE_REGION_BACKUP);
+  const canContentAccess = can(PERMISSIONS.MANAGE_CONTENT_ACCESS);
+  const canImport = can(PERMISSIONS.IMPORT_PLAYERS);
 
   const exportLabels = useMemo(
     () => ({
@@ -94,22 +103,26 @@ function SettingsTab({
         </div>
       </div>
 
-      <SiteIdentityPanel t={s.siteIdentity} isOwner={isOwner} />
+      {canAppearance && <SiteIdentityPanel t={s.siteIdentity} isOwner={canAppearance} />}
 
       <div className="settings-tools-grid">
-        <PlayerImportPanel
+        {canImport && <PlayerImportPanel
           t={s.import}
           players={players}
           registrationSettings={registrationSettings}
           currentPeriod={currentPeriod}
           onImported={onPlayersImported}
-        />
+        />}
 
         <article className="settings-tool-card settings-export-card settings-export-card--compact">
           <div className="admin-export-compact">
             <div className="admin-export-compact__intro">
-              <div className="admin-export-icon">
-                <FileSpreadsheet size={34} />
+              <div className="admin-export-icon" aria-hidden="true">
+                <img
+                  className="settings-section-icon"
+                  src={SETTINGS_TAB_ICONS.export}
+                  alt=""
+                />
               </div>
               <div>
                 <h3>{s.export.title}</h3>
@@ -135,7 +148,12 @@ function SettingsTab({
                   className="admin-secondary-button"
                   onClick={() => setExportSettingsOpen(true)}
                 >
-                  <SlidersHorizontal size={17} />
+                  <img
+                    className="settings-button-icon-image"
+                    src={BUTTON_ICONS.settings}
+                    alt=""
+                    aria-hidden="true"
+                  />
                   {s.export.settingsButton}
                 </button>
 
@@ -145,7 +163,12 @@ function SettingsTab({
                   onClick={exportExcel}
                   disabled={exportSelectedCount === 0}
                 >
-                  <Download size={18} />
+                  <img
+                    className="settings-button-icon-image"
+                    src={BUTTON_ICONS.export}
+                    alt=""
+                    aria-hidden="true"
+                  />
                   {s.export.download}
                 </button>
               </div>
@@ -155,30 +178,26 @@ function SettingsTab({
       </div>
 
       <div className="settings-tools-grid">
-        {isOwner ? (
+        {canBackup && (
           <RegionBackupPanel
             t={s.backup}
             onRestored={() =>
               onFactoryResetCompleted?.({ clearBrowserData: false })
             }
           />
-        ) : (
-          <article className="settings-tool-card">
-            <div className="admin-export-icon">
-              <DatabaseBackup size={30} />
-            </div>
-            <h3>{s.backup.title}</h3>
-            <p>{s.backup.ownerOnly}</p>
-          </article>
         )}
 
-        <ContentAccessPanel t={s.access} language={language} />
+        {canContentAccess && <ContentAccessPanel t={s.access} language={language} />}
       </div>
 
       {isOwner && (
         <section className="settings-danger-zone">
           <div className="settings-danger-zone__icon" aria-hidden="true">
-            <AlertTriangle size={28} />
+            <img
+              className="settings-section-icon"
+              src={SETTINGS_TAB_ICONS.reset}
+              alt=""
+            />
           </div>
 
           <div className="settings-danger-zone__content">
@@ -198,7 +217,12 @@ function SettingsTab({
               className="settings-danger-zone__button"
               onClick={() => setResetOpen(true)}
             >
-              <AlertTriangle size={18} aria-hidden="true" />
+              <img
+                className="settings-button-icon-image"
+                src={SETTINGS_TAB_ICONS.reset}
+                alt=""
+                aria-hidden="true"
+              />
               {s.factoryReset.open}
             </button>
           </div>

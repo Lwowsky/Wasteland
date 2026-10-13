@@ -1,18 +1,13 @@
 import { Crown, UserRound } from "lucide-react";
 
 import Container from "../Container/Container.jsx";
+import { resolveEffectiveFooter } from "../../features/site/footerSettings.js";
 
 import "./Footer.css";
 
 function resolveFooterCopy(baseCopy, siteSettings, language) {
   const custom = siteSettings?.footerByLanguage?.[language] || {};
-  const copy = { ...baseCopy };
-
-  Object.entries(custom).forEach(([key, value]) => {
-    if (typeof value === "string") {
-      copy[key] = value;
-    }
-  });
+  const copy = { ...baseCopy, ...resolveEffectiveFooter(baseCopy, custom) };
 
   if (siteSettings?.brandText) {
     copy.brand = siteSettings.brandText;

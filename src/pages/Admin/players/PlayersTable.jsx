@@ -12,6 +12,7 @@ import StatusBadge from "../../../components/PlayerBadges/StatusBadge.jsx";
 import TierBadge from "../../../components/PlayerBadges/TierBadge.jsx";
 import TroopBadge from "../../../components/PlayerBadges/TroopBadge.jsx";
 import { getPlayerRuleIssues } from "./playerRuleIssues.js";
+import { getTotalPages, getVisiblePlayers } from "../../../features/players/playerPagination.js";
 
 import "../styles/players/PlayersTable.css";
 
@@ -128,10 +129,10 @@ function PlayersTable({
     });
   }, [players, sort, language]);
 
-  const totalPages = useMemo(() => {
-    if (pageSize === "all") return 1;
-    return Math.max(1, Math.ceil(sortedPlayers.length / pageSize));
-  }, [pageSize, sortedPlayers.length]);
+  const totalPages = useMemo(
+    () => getTotalPages(sortedPlayers.length, pageSize),
+    [pageSize, sortedPlayers.length],
+  );
 
   useEffect(() => {
     if (page > totalPages) {
@@ -139,11 +140,10 @@ function PlayersTable({
     }
   }, [page, totalPages, onPageChange]);
 
-  const visiblePlayers = useMemo(() => {
-    if (pageSize === "all") return sortedPlayers;
-    const start = (page - 1) * pageSize;
-    return sortedPlayers.slice(start, start + pageSize);
-  }, [page, pageSize, sortedPlayers]);
+  const visiblePlayers = useMemo(
+    () => getVisiblePlayers(sortedPlayers, page, pageSize),
+    [page, pageSize, sortedPlayers],
+  );
 
   function handleSort(field) {
     setSort((current) => {

@@ -29,7 +29,7 @@ const CARD_BACKGROUNDS = {
 };
 
 const STAT_ICONS = {
-  players: "/images/admin/region-editor/players.webp",
+  players: "/images/admin/icons/actions/players.webp",
   captains: "/images/admin/region-editor/captain.webp",
 };
 
@@ -51,8 +51,10 @@ function getCaptainCount(players) {
   return players.filter((player) => player.captain === true).length;
 }
 
-function buildCard(players, key, title) {
-  const inTurrets = players.filter(isAssignedToTurret).length;
+function buildCard(players, key, title, assignedPlayerIds = null) {
+  const inTurrets = assignedPlayerIds instanceof Set
+    ? players.filter((player) => assignedPlayerIds.has(String(player.id))).length
+    : players.filter(isAssignedToTurret).length;
 
   return {
     key,
@@ -152,7 +154,7 @@ function StatsCard({ card, t }) {
   );
 }
 
-function PlayersStatsCards({ t, players = [], availableShifts = {} }) {
+function PlayersStatsCards({ t, players = [], availableShifts = {}, assignedPlayerIds = null }) {
   const enabledShifts = useMemo(
     () => getEnabledRegistrationShifts(availableShifts),
     [availableShifts],
@@ -162,11 +164,11 @@ function PlayersStatsCards({ t, players = [], availableShifts = {} }) {
     const shiftCards = enabledShifts.map((shift) => {
       const shiftPlayers = players.filter((player) => player.shift === shift);
 
-      return buildCard(shiftPlayers, shift, t.shifts[shift]);
+      return buildCard(shiftPlayers, shift, t.shifts[shift], assignedPlayerIds);
     });
 
-    return [...shiftCards, buildCard(players, "total", t.stats.total)];
-  }, [players, enabledShifts, t]);
+    return [...shiftCards, buildCard(players, "total", t.stats.total, assignedPlayerIds)];
+  }, [players, enabledShifts, t, assignedPlayerIds]);
 
   return (
     <section className="players-shift-stats">

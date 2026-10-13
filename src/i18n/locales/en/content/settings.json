@@ -19,12 +19,7 @@
     "title": "Time zone",
     "text": "Choose the time zone used for dates and times.",
     "options": {
-      "local": "Device local time",
-      "utc": "UTC",
-      "tokyo": "Tokyo (GMT+9)",
-      "kyiv": "Kyiv",
-      "london": "London",
-      "newYork": "New York"
+      "local": "Device local time"
     }
   },
   "reset": {
@@ -53,6 +48,8 @@
     "empty": "You do not have any saved templates yet.",
     "shift3": "Shift 3",
     "shift4": "Shift 4",
-    "flexible": "Any shift"
+    "flexible": "Any shift",
+    "extraSquads": "Extra squads",
+    "extraSquadsText": "Add optional extra squads to your player template."
   }
 }

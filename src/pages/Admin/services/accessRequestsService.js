@@ -9,7 +9,7 @@ import {
 
 import { db } from "../../../config/firebaseDb.js";
 
-import { getDefaultPermissionsForRole } from "../../../features/auth/permissions.js";
+import { getDefaultPermissionsForRole, canGrantRole } from "../../../features/auth/permissions.js";
 
 const APPROVABLE_ROLES = ["admin", "consul"];
 
@@ -26,16 +26,15 @@ export async function approveAccessRequest({
   request,
   selectedRole,
   currentUserRole,
+  canManageRequests = true,
+  canGrantAdmin = true,
 }) {
   if (!APPROVABLE_ROLES.includes(selectedRole)) {
     throw new Error("INVALID_ACCESS_ROLE");
   }
 
-  if (currentUserRole === "admin" && selectedRole === "admin") {
-    throw new Error("ADMIN_CANNOT_GRANT_ADMIN");
-  }
-
-  if (currentUserRole !== "owner" && currentUserRole !== "admin") {
+  if (!canManageRequests || !canGrantRole(currentUserRole, selectedRole) ||
+      (selectedRole === "admin" && !canGrantAdmin)) {
     throw new Error("ACCESS_DENIED");
   }
 

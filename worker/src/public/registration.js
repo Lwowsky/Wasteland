@@ -5,8 +5,7 @@ import {
 import { normalizeNickname, toInt } from "../utils/normalize.js";
 import { findDuplicateRegistration } from "../db/registrationQueries.js";
 import {
-  preparePublicPlayerInsert,
-  prepareRegistrationInsert,
+  prepareCreateRegistrationStatements,
 } from "../db/registrationWrites.js";
 import { json } from "../utils/response.js";
 import { clearPublicCaches } from "../utils/cache.js";
@@ -16,7 +15,6 @@ import {
   isPeriodOpen,
 } from "../db/periods.js";
 import { getRegistrationSettings } from "../db/registrationSettings.js";
-import { rebuildStats } from "../db/stats.js";
 import { sanitizeCustomFieldValues } from "../services/registrationRules.js";
 
 const VALID_TROOP_TYPES = new Set(REGISTRATION_TROOP_TYPES);
@@ -256,22 +254,15 @@ export async function handleRegistration(request, env) {
     customFields: customFields.values,
   };
 
-  const registrationResult = await prepareRegistrationInsert(
-    env,
-    period.id,
-    registrationRecord,
-  ).run();
+  const [registrationResult] = await env.DB.batch(
+    prepareCreateRegistrationStatements(env, period.id, registrationRecord),
+  );
   const registrationId = registrationResult.meta.last_row_id;
-
-  await preparePublicPlayerInsert(
-    env,
-    registrationId,
-    period.id,
-    registrationRecord,
-  ).run();
-
-  await rebuildStats(env, period.id);
-  await clearPublicCaches(request);
+  try {
+    await clearPublicCaches(request);
+  } catch {
+    // Committed registration remains successful if cache deletion fails.
+  }
 
   return json({
     success: true,

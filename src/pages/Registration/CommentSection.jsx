@@ -1,4 +1,4 @@
-import { MessageSquare } from "lucide-react";
+import { REGISTRATION_FIELD_ICONS } from "../../features/playerTemplates/templateAssets.js";
 import "./CommentSection.css";
 
 function CommentSection({
@@ -21,10 +21,15 @@ function CommentSection({
       data-registration-field="comment"
     >
       <div className="registration-section__heading">
-        <MessageSquare size={22} aria-hidden="true" />
+        <img
+          className="registration-section__heading-image registration-section__heading-image--comment"
+          src={REGISTRATION_FIELD_ICONS.comment}
+          alt=""
+          aria-hidden="true"
+        />
         <h2>
           {t.registration.comment}
-          {required && <span className="form-field__required"> *</span>}
+          {required && <span className="form-field__required" aria-hidden="true">*</span>}
         </h2>
       </div>
 

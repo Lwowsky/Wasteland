@@ -1,5 +1,5 @@
 import { normalizeIso, normalizeText } from "../utils/normalize.js";
-import { verifyAdminRequest } from "../auth/adminAuth.js";
+import { verifyAdminRequest, adminHasPermission } from "../auth/adminAuth.js";
 import {
   ensureCurrentRegistrationPeriod,
   getPeriodRules,
@@ -213,6 +213,10 @@ export async function handleAdminRegistrationSettingsPut(request, env) {
 
   if (!admin.ok) {
     return json({ success: false, error: admin.error }, admin.status);
+  }
+
+  if (!adminHasPermission(admin, "edit_registration_settings")) {
+    return json({ success: false, error: "FORBIDDEN" }, 403);
   }
 
   const body = await request.json();

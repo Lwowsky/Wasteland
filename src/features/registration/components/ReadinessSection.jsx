@@ -1,4 +1,4 @@
-import { Crosshair } from "lucide-react";
+import { REGISTRATION_FIELD_ICONS } from "../../playerTemplates/templateAssets.js";
 import "./ReadinessSection.css";
 
 function ReadinessSection({
@@ -29,7 +29,12 @@ function ReadinessSection({
   return (
     <section className="registration-section">
       <div className="registration-section__heading">
-        <Crosshair size={22} />
+        <img
+          className="registration-section__heading-image"
+          src={REGISTRATION_FIELD_ICONS.readiness}
+          alt=""
+          aria-hidden="true"
+        />
 
         <div>
           <h2>{t.registration.readiness.title}</h2>

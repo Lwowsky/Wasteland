@@ -21,6 +21,8 @@ function UsersAccessView({
   t,
   language,
   currentUserRole,
+  canManageAccess,
+  canGrantAdmin,
   adminUsers,
   requests = [],
   canViewRequests,
@@ -103,7 +105,7 @@ function UsersAccessView({
             </div>
 
             {adminUsers.map((user) => {
-              const manageable = canManageUser(currentUserRole, user.role);
+              const manageable = canManageAccess && canManageUser(currentUserRole, user.role);
 
               const isOwner = user.role === ROLES.OWNER;
 
@@ -222,6 +224,8 @@ function UsersAccessView({
             language={language}
             user={selectedUser}
             currentUserRole={currentUserRole}
+            canManageAccess={canManageAccess}
+            canGrantAdmin={canGrantAdmin}
             saving={processingUserId === selectedUser.id}
             onClose={closeUser}
             onSave={handleSave}

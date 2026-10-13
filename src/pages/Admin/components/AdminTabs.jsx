@@ -1,7 +1,7 @@
 const TAB_ICONS = {
   access: "/images/admin/icons/roles-access.webp",
 
-  players: "/images/admin/icons/players.webp",
+  players: "/images/admin/icons/actions/players.webp",
 
   distribution: "/images/admin/icons/turret-distribution.webp",
 

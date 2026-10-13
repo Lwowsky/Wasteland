@@ -1,0 +1,124 @@
+/* A visible, centered result dialog instead of a bottom-edge toast. */
+.site-modal-backdrop.turret-action-result-backdrop {
+  align-items: center;
+  justify-content: center;
+  padding: max(16px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right))
+    max(16px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+}
+.site-modal.turret-action-result-modal {
+  width: min(430px, 100%);
+  max-height: min(88dvh, 620px);
+  border-radius: 16px;
+}
+.turret-action-result-modal .site-modal__header {
+  min-height: 54px; padding-block: 12px;
+  background: #f7fbff;
+}
+.turret-action-result-modal .site-modal__body { padding: 16px 18px; }
+.turret-action-result-modal .site-modal__footer { justify-content: flex-end; padding-block: 12px; }
+.turret-action-result__content {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.turret-action-result__icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  color: #178b57;
+  background: #e9f8ef;
+}
+.turret-action-result__image {
+  display: block;
+  width: 32px;
+  height: 32px;
+  max-width: 100%;
+  object-fit: contain;
+}
+.turret-action-result__details { flex: 1; min-width: 0; }
+.turret-action-result__icon svg { width: 25px; height: 25px; }
+.turret-action-result__status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 27px;
+  padding: 3px 10px;
+  box-sizing: border-box;
+  border-radius: 999px;
+  background: #e9f8ef;
+  color: #167149;
+  font-size: 13px;
+  font-weight: 800;
+}
+.turret-action-result__details p {
+  margin: 8px 0 0;
+  color: #2f4b6a;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+}
+.turret-action-result-modal--info .turret-action-result__image { width: 36px; height: 36px; }
+.turret-action-result-modal--info .turret-action-result__icon,
+.turret-action-result-modal--info .turret-action-result__status {
+  color: #206bb7;
+  background: #eaf3ff;
+}
+.turret-action-result-modal--error .turret-action-result__icon,
+.turret-action-result-modal--error .turret-action-result__status {
+  color: #be3b4b;
+  background: #fff0f2;
+}
+.turret-action-result__acknowledge {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  min-height: 40px;
+  padding: 0 23px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #2d7df4, #5c55f5);
+  border: 0;
+  border-radius: 12px;
+  box-shadow: 0 8px 18px rgba(58, 93, 229, 0.20);
+  cursor: pointer;
+}
+.turret-action-result__acknowledge:hover { filter: brightness(1.05); }
+.turret-action-result__acknowledge:focus-visible { outline: 3px solid #9fc5ff; outline-offset: 3px; }
+@media (max-width: 760px) {
+  .site-modal-backdrop.turret-action-result-backdrop { align-items: center; }
+  .site-modal.turret-action-result-modal {
+    width: min(430px, 100%);
+    max-height: calc(100dvh - 32px);
+    border-radius: 16px;
+  }
+  .turret-action-result-modal .site-modal__body { padding: 14px 16px; }
+  .turret-action-result__icon { flex-basis: 48px; width: 48px; height: 48px; border-radius: 14px; }
+  .turret-action-result__details p { font-size: 14px; }
+  .turret-action-result__acknowledge { width: 100%; }
+}
+@media (max-width: 360px) {
+  .turret-action-result__content { gap: 12px; }
+  .turret-action-result__icon { flex-basis: 42px; width: 42px; height: 42px; }
+}
+
+
+/* Only turret-operation confirmations are compact; other confirmations are untouched. */
+.site-modal.turret-confirm-modal { width: min(460px, 100%); border-radius: 16px; }
+.turret-confirm-modal .site-modal__header { min-height: 55px; }
+.turret-confirm-modal .site-modal__body { padding: 17px 20px; }
+.turret-confirm-modal .site-modal__footer { padding-block: 12px; }
+.turret-confirm-modal .confirm-modal__content { gap: 12px; }
+.turret-confirm-modal .confirm-modal__icon { width: 42px; height: 42px; flex-basis: 42px; border-radius: 12px; }
+.turret-confirm-modal .confirm-modal__content p { font-size: 14px; line-height: 1.5; }
+.turret-confirm-modal .confirm-modal__button { min-height: 40px; padding-inline: 14px; }
+@media (max-width: 480px) {
+  .turret-confirm-modal .site-modal__body { padding: 14px 16px; }
+  .turret-confirm-modal .confirm-modal__footer { flex-wrap: wrap; }
+  .turret-confirm-modal .confirm-modal__button { flex: 1 1 120px; }
+}

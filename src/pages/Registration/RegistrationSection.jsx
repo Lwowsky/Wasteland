@@ -11,7 +11,6 @@ import RegistrationHeader from "./RegistrationHeader.jsx";
 import RegistrationUnavailable from "./RegistrationUnavailable.jsx";
 import { getSubmitErrorMessage } from "./registrationMessages.js";
 import useRegistrationForm from "./useRegistrationForm.js";
-import "./RegistrationTemplate.css";
 
 function RegistrationSection({
   t,
@@ -77,24 +76,13 @@ function RegistrationSection({
         />
 
         <form className="registration__form" onSubmit={handleSubmit} noValidate>
-          <PlayerTemplateSelector t={t} onApply={applyPlayerTemplate} />
-
-          <div className="registration-template-save">
-            <button
-              type="button"
-              className="registration-template-save__button"
-              disabled={!registrationData.nickname.trim()}
-              onClick={saveCurrentAsTemplate}
-            >
-              {t.registration.template.saveCurrent}
-            </button>
-
-            {templateMessage && (
-              <span className="registration-template-save__message">
-                {templateMessage}
-              </span>
-            )}
-          </div>
+          <PlayerTemplateSelector
+            t={t}
+            onApply={applyPlayerTemplate}
+            onSave={saveCurrentAsTemplate}
+            canSave={Boolean(registrationData.nickname.trim())}
+            templateMessage={templateMessage}
+          />
 
           <PlayerSection
             t={t}

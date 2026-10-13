@@ -1,5 +1,5 @@
 const TAB_ICONS = {
-  players: "/images/admin/region-editor/players.webp",
+  players: "/images/admin/icons/actions/players.webp",
   alliances: "/images/admin/region-editor/alliances.webp",
   combat: "/images/admin/region-editor/march.webp",
 };

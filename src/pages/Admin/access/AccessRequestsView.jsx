@@ -3,6 +3,8 @@ import { canGrantRole, ROLES } from "../../../features/auth/permissions.js";
 function AccessRequestsView({
   t,
   currentUserRole,
+  canGrantAdmin,
+  canManageRequests,
   requests,
   loading,
   error,
@@ -13,7 +15,7 @@ function AccessRequestsView({
   onDelete,
 }) {
   const availableRoles = [ROLES.ADMIN, ROLES.CONSUL].filter((role) =>
-    canGrantRole(currentUserRole, role),
+    canManageRequests && canGrantRole(currentUserRole, role) && (role !== ROLES.ADMIN || canGrantAdmin),
   );
 
   function getStatusClass(status) {
@@ -118,12 +120,15 @@ function AccessRequestsView({
                 <select
                   className="admin-request-role-select"
                   value={selectedRole}
-                  disabled={!isPending || processing}
+                  disabled={!isPending || processing || !canManageRequests}
                   aria-label={t.requests.columns.role}
                   onChange={(event) =>
                     onRoleChange(request.id, event.target.value)
                   }
                 >
+                  {!availableRoles.includes(selectedRole) && (
+                    <option value={selectedRole} disabled>{t.common.roles[selectedRole]}</option>
+                  )}
                   {availableRoles.map((role) => (
                     <option key={role} value={role}>
                       {t.common.roles[role]}
@@ -157,7 +162,7 @@ function AccessRequestsView({
                     className="admin-action-image-button"
                     title={t.requests.actions.approve}
                     aria-label={t.requests.actions.approve}
-                    disabled={!isPending || processing}
+                    disabled={!isPending || processing || !canManageRequests}
                     onClick={() => onApprove(request)}
                   >
                     <img
@@ -172,7 +177,7 @@ function AccessRequestsView({
                     className="admin-action-image-button"
                     title={t.requests.actions.reject}
                     aria-label={t.requests.actions.reject}
-                    disabled={!isPending || processing}
+                    disabled={!isPending || processing || !canManageRequests}
                     onClick={() => onReject(request)}
                   >
                     <img
@@ -187,7 +192,7 @@ function AccessRequestsView({
                     className="admin-action-image-button"
                     title={t.common.actions.delete}
                     aria-label={t.common.actions.delete}
-                    disabled={processing}
+                    disabled={processing || !canManageRequests}
                     onClick={() => onDelete(request)}
                   >
                     <img

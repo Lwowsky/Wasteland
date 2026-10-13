@@ -1,4 +1,4 @@
-import { verifyAdminRequest } from "../../auth/adminAuth.js";
+import { verifyAdminRequest, adminHasPermission } from "../../auth/adminAuth.js";
 import { json } from "../../utils/response.js";
 import { finalizeRegistrationWrite } from "./afterWrite.js";
 import { findRegistrationPeriod } from "../../db/registrationQueries.js";
@@ -13,6 +13,10 @@ export async function handleAdminDeleteRegistration(
 
   if (!admin.ok) {
     return json({ success: false, error: admin.error }, admin.status);
+  }
+
+  if (!adminHasPermission(admin, "delete_players")) {
+    return json({ success: false, error: "FORBIDDEN" }, 403);
   }
 
   const registration = await findRegistrationPeriod(env, registrationId);

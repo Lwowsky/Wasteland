@@ -25,3 +25,11 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Shared glossy WEBP assets in public registration field labels. */
+.form-field__icon {
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  object-fit: contain;
+}

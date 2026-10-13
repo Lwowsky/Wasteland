@@ -1,4 +1,5 @@
 import { adminRequest } from "./adminApi.js";
+import { TURRET_WORKSPACE_PREFIX } from "../../../features/turrets/localTurretWorkspace.js";
 
 const CLIENT_LOCAL_KEYS = [
   "wasteland-player-templates",
@@ -26,6 +27,11 @@ export function factoryResetRegion(payload) {
 
 export function clearWastelandClientData() {
   CLIENT_LOCAL_KEYS.forEach((key) => localStorage.removeItem(key));
+  // Browser reset must also delete every per-admin, per-cycle turret working copy.
+  for (let index = localStorage.length - 1; index >= 0; index -= 1) {
+    const key = localStorage.key(index);
+    if (key?.startsWith(TURRET_WORKSPACE_PREFIX)) localStorage.removeItem(key);
+  }
   CLIENT_SESSION_KEYS.forEach((key) => sessionStorage.removeItem(key));
 
   for (let index = sessionStorage.length - 1; index >= 0; index -= 1) {
@@ -109,13 +115,6 @@ export function downloadRegionBackup(backup, suffix = "backup") {
   URL.revokeObjectURL(url);
 }
 
-export function getAdminSiteSettings() {
-  return adminRequest(
-    "/api/admin/site-settings",
-    {},
-    "SITE_SETTINGS_REQUEST_FAILED",
-  );
-}
 
 export function saveAdminSiteSettings(payload) {
   return adminRequest(

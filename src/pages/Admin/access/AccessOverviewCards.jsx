@@ -15,9 +15,9 @@ const BACKGROUND_IMAGES = {
 };
 
 const COUNTER_IMAGES = {
-  [ROLES.OWNER]: "/images/admin/icons/users-count.webp",
-  [ROLES.ADMIN]: "/images/admin/icons/users-count.webp",
-  [ROLES.CONSUL]: "/images/admin/icons/users-count.webp",
+  [ROLES.OWNER]: "/images/admin/icons/actions/players.webp",
+  [ROLES.ADMIN]: "/images/admin/icons/actions/players.webp",
+  [ROLES.CONSUL]: "/images/admin/icons/actions/players.webp",
   requests: "/images/admin/icons/requests-count.webp",
 };
 
@@ -50,21 +50,21 @@ function AccessOverviewCards({
       title: t.access.roles.owner.title,
       description: t.access.roles.owner.description,
       count: ownerCount,
-      countText: t.access.cards.usersCount,
+      countText: t.access.usersCount,
     },
     {
       key: ROLES.ADMIN,
       title: t.access.roles.admin.title,
       description: t.access.roles.admin.description,
       count: adminCount,
-      countText: t.access.cards.usersCount,
+      countText: t.access.usersCount,
     },
     {
       key: ROLES.CONSUL,
       title: t.access.roles.consul.title,
       description: t.access.roles.consul.description,
       count: consulCount,
-      countText: t.access.cards.usersCount,
+      countText: t.access.usersCount,
     },
   ];
 
@@ -74,7 +74,7 @@ function AccessOverviewCards({
       title: t.access.cards.requests.title,
       description: t.access.cards.requests.description,
       count: pendingRequestsCount,
-      countText: t.access.cards.requests.pending,
+      countText: t.access.pendingCount,
       onClick: onOpenRequests,
     });
   }

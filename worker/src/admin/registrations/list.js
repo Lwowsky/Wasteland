@@ -1,4 +1,4 @@
-import { verifyAdminRequest } from "../../auth/adminAuth.js";
+import { verifyAdminRequest, adminHasPermission } from "../../auth/adminAuth.js";
 import { json } from "../../utils/response.js";
 import { getAdminRegistrationPeriod, toPeriodResponse } from "./period.js";
 import { getRegistrationRows } from "../../db/registrationQueries.js";
@@ -8,6 +8,10 @@ export async function handleAdminRegistrations(request, env) {
 
   if (!admin.ok) {
     return json({ success: false, error: admin.error }, admin.status);
+  }
+
+  if (!adminHasPermission(admin, "view_players")) {
+    return json({ success: false, error: "FORBIDDEN" }, 403);
   }
 
   const period = await getAdminRegistrationPeriod(env);

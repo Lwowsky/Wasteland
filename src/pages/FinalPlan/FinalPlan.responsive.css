@@ -38,11 +38,6 @@
     font-size: 16px;
   }
 
-  .final-plan-board__title::before,
-  .final-plan-board__title::after {
-    display: none;
-  }
-
   .final-plan-towers {
     grid-template-columns: 1fr;
 
@@ -98,17 +93,6 @@
     font-size: 11px;
   }
 
-  .final-plan-tower__columns {
-    grid-template-columns:
-      minmax(0, 1.2fr)
-      0.52fr
-      0.42fr
-      0.78fr;
-
-    padding: 6px 7px;
-
-    font-size: 7px;
-  }
 
   .final-plan-signature {
     margin-top: 13px;
@@ -142,23 +126,9 @@
     font-size: 10px;
   }
 
-  .final-plan-tower__columns {
-    grid-template-columns:
-      minmax(0, 1.08fr)
-      0.48fr
-      0.38fr
-      0.74fr;
 
-    gap: 4px;
-
-    padding: 5px 6px;
-
-    font-size: 7px;
-  }
-
-  .final-plan-tower__stats {
-    gap: 6px;
-  }
+  .final-plan-tower__stats { gap: 5px; }
+  .final-plan-legend { font-size: 10px; gap: 7px 11px; }
 
   .final-plan-tower__stat {
     min-height: 29px;
@@ -169,4 +139,65 @@
   .final-plan-signature img {
     width: 180px;
   }
+}
+
+/* Off-screen PNG poster: same layout regardless of browser media queries. */
+.final-plan-board--export {
+  width: 1480px;
+  min-width: 1480px;
+  max-width: 1480px;
+  padding: 20px 20px 42px;
+  overflow: visible;
+}
+.final-plan-board--export .final-plan-towers {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 9px;
+}
+.final-plan-board--export .final-plan-board__title {
+  margin-bottom: 18px;
+  font-size: 22px;
+}
+.final-plan-board--export .final-plan-legend {
+  gap: 8px 19px;
+  font-size: 12px;
+}
+.final-plan-board--export .final-plan-tower { min-height: 460px; }
+.final-plan-board--export .final-plan-tower__header { padding: 12px 10px 11px; }
+.final-plan-board--export .final-plan-tower__header h3 {
+  min-height: 34px;
+  font-size: 15px;
+}
+.final-plan-board--export .final-plan-tower__troop {
+  min-height: 22px;
+  margin-top: 3px;
+  font-size: 12px;
+}
+.final-plan-board--export .final-plan-tower__stats { gap: 6px; }
+.final-plan-board--export .final-plan-tower__stat {
+  min-height: 31px;
+  font-size: 12px;
+}
+.final-plan-board--export .final-plan-tower__players,
+.final-plan-board--export .final-plan-empty { min-height: 280px; }
+.final-plan-board--export .final-plan-player-row {
+  grid-template-columns: minmax(0, 1.25fr) .55fr .42fr .78fr;
+  gap: 5px;
+  min-height: 34px;
+  padding: 6px 8px;
+  font-size: 11px;
+}
+.final-plan-board--export .final-plan-signature {
+  display: flex;
+  position: static;
+  justify-content: center;
+  align-items: center;
+  margin-top: 24px;
+  min-height: 40px;
+}
+.final-plan-board--export .final-plan-signature img {
+  display: block;
+  width: 280px;
+  max-width: none;
+  height: auto;
+  visibility: visible;
 }

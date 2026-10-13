@@ -33,12 +33,19 @@ export function sanitizeFooterByLanguage(value = {}) {
     if (!/^[a-z0-9-]{2,12}$/.test(languageCode)) return;
     if (!copy || typeof copy !== "object" || Array.isArray(copy)) return;
 
-    result[languageCode] = Object.fromEntries(
-      SITE_FOOTER_FIELDS.map((field) => [
-        field,
-        String(copy[field] ?? "").trim().slice(0, SITE_FOOTER_LIMITS[field]),
-      ]),
-    );
+    const fields = {};
+    for (const field of SITE_FOOTER_FIELDS) {
+      // An absent or empty string is *not* an override: the locale JSON
+      // remains the fallback. In particular, don't recreate all missing
+      // fields as empty strings when writing footer_json to D1.
+      if (typeof copy[field] !== "string") continue;
+      const text = copy[field].trim().slice(0, SITE_FOOTER_LIMITS[field]);
+      if (text) fields[field] = text;
+    }
+
+    if (Object.keys(fields).length) {
+      result[languageCode] = fields;
+    }
   });
 
   return result;

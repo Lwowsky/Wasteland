@@ -162,10 +162,7 @@
         "rallyAsc": "Rally: lowest to highest"
       }
     },
-    "sort": {
-      "highest": "Highest to lowest",
-      "lowest": "Lowest to highest"
-    },
+    "sort": {},
     "march": {
       "title": "March size",
       "description": "Sort and edit player march size.",
@@ -187,8 +184,7 @@
     "players": "Players",
     "captains": "Captains",
     "inTurrets": "In turrets",
-    "reserve": "Reserve",
-    "flexiblePlayers": "Any shift"
+    "reserve": "Reserve"
   },
   "ruleStatus": {
     "attentionSummary": "Needs attention: {{count}} players",
@@ -214,8 +210,6 @@
     "clearImported": "Clear imported",
     "clearAll": "Delete local table",
     "clearConfirm": "Delete the entire local import table?",
-    "emptyTitle": "No local table yet",
-    "emptyText": "Save an import as a local draft in Settings first.",
     "ownerAdminOnly": "Only Owner or Admin can move local players to the database.",
     "duplicateD1": "Nickname already exists in the database",
     "duplicateLocal": "Duplicate in local table",
@@ -245,7 +239,7 @@
         "description": "The current player table will be replaced with the local table. New registrations through the site will still be accepted.",
         "onlyAllRows": "This option is available only when moving the entire local table."
       },
-      "replaceWarning": "The current cycle player table will be fully replaced. Registration will remain open.",
+      "replaceWarning": "The current cycle player table will be replaced in one safe transaction. The saved turret draft and published final plan for this cycle will be deleted and must be rebuilt. Registration remains open.",
       "cancel": "Cancel",
       "processing": "Moving...",
       "addButton": "Add new ({{count}})",
@@ -254,7 +248,7 @@
         "title": "Replace table and close registration",
         "description": "The current player table will be replaced with the local table, then new registrations through the site will stop."
       },
-      "replaceAndCloseWarning": "The current cycle player table will be fully replaced and registration will be closed early.",
+      "replaceAndCloseWarning": "The player table will be replaced and the current cycle turret draft and published final plan deleted. Registration will close early. Rebuild the plan after importing.",
       "replaceAndCloseButton": "Replace and close registration"
     },
     "clearTitle": "Delete local table",

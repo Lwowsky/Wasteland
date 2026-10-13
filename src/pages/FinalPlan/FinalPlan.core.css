@@ -47,6 +47,8 @@
 .final-plan-toolbar {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
 
   gap: 10px;
 
@@ -105,109 +107,6 @@
 }
 
 /* =========================
-   LANGUAGE
-   ========================= */
-
-.final-plan-language {
-  position: relative;
-}
-
-
-.final-plan-language-menu {
-  position: absolute;
-
-  top: calc(100% + 8px);
-  left: 0;
-
-  z-index: 30;
-
-  width: 340px;
-
-  padding: 14px;
-
-  background: rgba(248, 252, 255, 0.98);
-
-  border: 1px solid #bdd3eb;
-  border-radius: 15px;
-
-  box-shadow: 0 18px 40px rgba(32, 68, 115, 0.18);
-}
-
-.final-plan-language-menu__head {
-  margin-bottom: 12px;
-}
-
-.final-plan-language-menu__head strong {
-  color: #15355f;
-
-  font-size: 15px;
-}
-
-.final-plan-language-menu__head p {
-  margin: 3px 0 0;
-
-  color: #687e98;
-
-  font-size: 11px;
-}
-
-.final-plan-language-list {
-  display: grid;
-
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-
-  gap: 7px;
-}
-
-.final-plan-language-option {
-  min-height: 44px;
-
-  display: flex;
-  align-items: center;
-
-  gap: 7px;
-
-  padding: 8px 10px;
-
-  color: #45617e;
-
-  background: #ffffff;
-
-  border: 1px solid #d0dfef;
-  border-radius: 9px;
-
-  cursor: pointer;
-}
-
-.final-plan-language-option span {
-  flex: 1;
-
-  text-align: left;
-
-  font-weight: 700;
-}
-
-.final-plan-language-option small {
-  color: #7190b0;
-
-  font-size: 9px;
-}
-
-.final-plan-language-option--active {
-  color: #176fe5;
-
-  background: #edf5ff;
-
-  border-color: #9fc0e8;
-}
-
-.final-plan-language-option:disabled {
-  cursor: default;
-
-  opacity: 1;
-}
-
-/* =========================
    BOARD
    ========================= */
 
@@ -218,50 +117,28 @@
 
   overflow: hidden;
 
-  background: linear-gradient(180deg, #f8fbff, #e7f1fc);
+  background: linear-gradient(180deg, #e1e9f5, #d4dfed);
 
-  border: 1px solid #bad3ed;
+  border: 1px solid #bacce4;
   border-radius: 19px;
 
   box-sizing: border-box;
 }
 
 .final-plan-board__title {
-  position: relative;
-
   margin: 0 0 18px;
-
+  padding: 0 0 13px;
+  border-bottom: 1px solid #a9c7e8;
   color: #17345e;
-
   font-size: 22px;
   font-weight: 900;
-
+  line-height: 1.4;
   text-align: center;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 
-.final-plan-board__title::before,
-.final-plan-board__title::after {
-  content: "";
-
-  position: absolute;
-
-  top: 50%;
-
-  width: 19%;
-  height: 1px;
-
-  background: linear-gradient(90deg, transparent, #8db3df);
-}
-
-.final-plan-board__title::before {
-  left: 0;
-}
-
-.final-plan-board__title::after {
-  right: 0;
-
-  transform: rotate(180deg);
-}
+/* Decoration stays BELOW all language lines, never crossing the text. */
 
 /* =========================
    TOWERS
@@ -272,10 +149,32 @@
 
   grid-template-columns: repeat(5, minmax(0, 1fr));
 
-  gap: 12px;
+  gap: 9px;
 
   align-items: stretch;
 
   width: 100%;
 }
 
+
+.final-plan-state {
+  padding: 24px 20px;
+  color: #486889;
+  background: linear-gradient(145deg, #f8fbff, #edf5ff);
+  border: 1px solid #c8dff5;
+  border-radius: 14px;
+  text-align: center;
+  font-weight: 700;
+}
+.final-plan-state--error { color: #a32948; background: #fff4f5; border-color: #ecc2cb; }
+.final-plan-published-date { margin: 0 0 12px; color: #6682a0; font-size: 12px; }
+
+/* Shared admin/public toolbar: shift selector plus export/actions. */
+.final-plan-toolbar__shifts,
+.final-plan-toolbar__actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.final-plan-export-error { padding: 9px 12px; color: #a32443; border: 1px solid #efc4cb; border-radius: 8px; }
+@media (max-width: 700px) {
+  .final-plan-toolbar { align-items: stretch; }
+  .final-plan-toolbar__shifts, .final-plan-toolbar__actions { width: 100%; }
+  .final-plan-toolbar__actions .final-plan-toolbar__button { flex: 1 1 150px; }
+}

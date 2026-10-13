@@ -3,6 +3,7 @@ import { useEffect, useMemo } from "react";
 import { getEnabledRegistrationShifts } from "../../../features/registration/registrationShifts.js";
 import { getEnabledRegistrationTiers } from "../../../features/registration/registrationTiers.js";
 import { REGISTRATION_TROOP_TYPES } from "../../../../shared/registrationConfig.js";
+import { TEMPLATE_ASSETS } from "../../../features/playerTemplates/templateAssets.js";
 
 function PlayerTemplateForm({
   t,
@@ -209,7 +210,7 @@ function PlayerTemplateForm({
         </div>
 
         <div className="template-extra__grid">
-          {REGISTRATION_TROOP_TYPES.map((type) => {
+          {REGISTRATION_TROOP_TYPES.filter((type) => type !== templateForm.troopType).map((type) => {
             const squad = templateForm.extraSquads[type];
 
             return (
@@ -221,6 +222,12 @@ function PlayerTemplateForm({
                     : "template-extra__card"
                 }
               >
+                <img
+                  className="template-extra__image"
+                  src={TEMPLATE_ASSETS[type]}
+                  alt=""
+                  aria-hidden="true"
+                />
                 <label className="template-extra__toggle">
                   <input
                     type="checkbox"
@@ -266,6 +273,7 @@ function PlayerTemplateForm({
           className="template-form__save"
           disabled={enabledShifts.length === 0 || enabledTiers.length === 0}
         >
+          <img className="template-action-icon" src={TEMPLATE_ASSETS.save} alt="" aria-hidden="true" />
           {t.settings.templates.save}
         </button>
       </div>

@@ -114,6 +114,12 @@ async function resetD1(env, selection) {
   const statements = [];
   const resetSequences = new Set();
 
+  if (selection.players || selection.cycles || selection.registrationSettings) {
+    // Published plans cannot survive destructive changes to their source data.
+    statements.push(env.DB.prepare("DELETE FROM turret_plan_publications"));
+    statements.push(env.DB.prepare("DELETE FROM turret_plan_drafts"));
+  }
+
   if (selection.players || selection.cycles) {
     statements.push(env.DB.prepare("DELETE FROM public_players"));
     statements.push(env.DB.prepare("DELETE FROM registrations"));

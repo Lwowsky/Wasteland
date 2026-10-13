@@ -132,28 +132,22 @@
 }
 
 .home-nav-card__icon {
-  width: 60px;
-  height: 60px;
-
+  width: 78px;
+  height: 78px;
   display: flex;
   align-items: center;
   justify-content: center;
-
   flex-shrink: 0;
-
-  color: #ffffff;
-
-  background: linear-gradient(135deg, #287cff, #566dff);
-
-  border-radius: 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.42);
 }
 
-.home-nav-card--plan .home-nav-card__icon {
-  background: linear-gradient(135deg, #ff9f36, #f27b14);
-}
-
-.home-nav-card--settings .home-nav-card__icon {
-  background: linear-gradient(135deg, #7458ee, #5e47d8);
+.home-nav-card__icon img {
+  display: block;
+  width: 74px;
+  height: 74px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 5px rgba(22, 60, 111, 0.12));
 }
 
 .home-nav-card__content {

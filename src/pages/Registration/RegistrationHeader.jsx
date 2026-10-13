@@ -1,10 +1,10 @@
-import { ClipboardList } from "lucide-react";
+import { TEMPLATE_ASSETS } from "../../features/playerTemplates/templateAssets.js";
 
 function RegistrationHeader({ t }) {
   return (
     <div className="registration__header">
       <div className="registration__header-icon">
-        <ClipboardList size={26} aria-hidden="true" />
+        <img src={TEMPLATE_ASSETS.templates} alt="" aria-hidden="true" />
       </div>
 
       <div>

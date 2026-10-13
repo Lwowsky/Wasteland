@@ -21,7 +21,7 @@ import { EMPTY_PUBLIC_STATS } from "../../../shared/publicStatsConfig.js";
 import "./Home.css";
 
 function Home() {
-  const { t, language, event, eventLoading } = useOutletContext();
+  const { t, language, eventLoading, registrationConfig } = useOutletContext();
 
   const [dashboardStats, setDashboardStats] = useState(EMPTY_PUBLIC_STATS);
 
@@ -75,7 +75,7 @@ function Home() {
           <PagePanel>
             <StatsSection t={t} dashboardStats={dashboardStats} />
 
-            <CountdownSection t={t} event={event} />
+            <CountdownSection t={t} registrationConfig={registrationConfig} />
 
             <OverviewSection
               t={t}

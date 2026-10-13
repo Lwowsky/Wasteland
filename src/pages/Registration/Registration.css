@@ -44,8 +44,8 @@
 }
 
 .registration__header-icon {
-  width: 48px;
-  height: 48px;
+  width: 60px;
+  height: 60px;
 
   display: flex;
   align-items: center;
@@ -53,13 +53,13 @@
 
   flex-shrink: 0;
 
-  color: #ffffff;
+  background: transparent;
+}
 
-  background: linear-gradient(135deg, #307cff, #6558ff);
-
-  border-radius: 12px;
-
-  box-shadow: 0 8px 20px rgba(48, 124, 255, 0.24);
+.registration__header-icon img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
 }
 
 .registration__title {
@@ -76,8 +76,8 @@
 
   color: #2f496b;
 
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 18px;
+  line-height: 1.55;
   font-weight: 500;
 }
 
@@ -109,38 +109,18 @@
   display: flex;
   align-items: center;
 
-  gap: 12px;
+  gap: 0;
 
   margin-bottom: 16px;
 }
 
-.registration-section__number {
-  width: 34px;
-  height: 34px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  flex-shrink: 0;
-
-  color: #ffffff;
-
-  background: linear-gradient(135deg, #2679ff, #625cff);
-
-  border-radius: 9px;
-
-  font-weight: 700;
-
-  box-shadow: 0 5px 14px rgba(40, 100, 255, 0.2);
-}
 
 .registration-section__title {
   margin: 0;
 
   color: #123264;
 
-  font-size: 18px;
+  font-size: 22px;
 }
 
 .registration-section__description {
@@ -148,7 +128,7 @@
 
   color: #334f73;
 
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 500;
 }
 
@@ -168,7 +148,7 @@
 
   color: #123264;
 
-  font-size: 18px;
+  font-size: 22px;
 }
 
 .registration-section__heading p {
@@ -176,7 +156,7 @@
 
   color: #334f73;
 
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 500;
 }
 
@@ -198,19 +178,16 @@
 }
 
 .form-field__label {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  flex-wrap: wrap;
 
   gap: 7px;
 
   color: #17335f;
 
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 700;
-}
-
-.form-field__label svg {
-  color: #176fe5;
 }
 
 .form-field__required {
@@ -235,6 +212,7 @@
   outline: none;
 
   font: inherit;
+  font-size: 18px;
 
   transition:
     border-color 0.2s ease,
@@ -275,6 +253,7 @@
 
   border-radius: 9px;
 
+  font-size: 18px;
   font-weight: 700;
 
   cursor: pointer;
@@ -353,11 +332,11 @@
 .registration .registration-field--invalid {
   position: relative;
 
-  border-color: #ef5f71;
+  border-color: #f08c9a;
 
   box-shadow:
-    0 0 0 2px rgba(239, 95, 113, 0.14),
-    0 8px 24px rgba(220, 45, 72, 0.1);
+    0 0 0 2px rgba(240, 140, 154, 0.12),
+    0 8px 24px rgba(220, 45, 72, 0.07);
 
   animation: registration-invalid-pulse 0.55s ease both;
 }
@@ -365,13 +344,13 @@
 .registration .registration-field--invalid .form-field__label,
 .registration .registration-field--invalid .registration-section__heading h2,
 .registration .registration-field--invalid .choice-card__content strong {
-  color: #b4233c;
+  color: #b03a52;
 }
 
 .registration .registration-field--invalid input,
 .registration .registration-field--invalid select,
 .registration .registration-field--invalid textarea {
-  border-color: #ef8090;
+  border-color: #ef9aaa;
 }
 @keyframes registration-invalid-pulse {
   0% {
@@ -393,4 +372,12 @@
   100% {
     transform: translateX(0);
   }
+}
+
+/* Reuse existing game artwork for registration section headings. */
+.registration-section__heading-image {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  object-fit: contain;
 }

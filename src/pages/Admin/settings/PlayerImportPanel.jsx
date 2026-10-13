@@ -3,8 +3,6 @@ import {
   CheckCircle2,
   FileSpreadsheet,
   HardDrive,
-  Trash2,
-  Upload,
 } from "lucide-react";
 import { lazy, Suspense, useMemo, useRef, useState } from "react";
 
@@ -27,6 +25,8 @@ const PlayerImportMappingModal = lazy(() =>
 );
 
 const MAPPING_STORAGE_PREFIX = "wasteland-player-import-mapping:";
+const PLAYERS_IMPORT_ICON = "/images/admin/icons/settings/players-import.webp";
+const DELETE_ICON = "/images/admin/icons/actions/delete.webp";
 
 function getMappingStorageKey(headers) {
   return `${MAPPING_STORAGE_PREFIX}${headers
@@ -218,8 +218,12 @@ function PlayerImportPanel({
   return (
     <>
       <article className="settings-tool-card settings-import-card">
-        <div className="admin-export-icon">
-          <Upload size={30} />
+        <div className="admin-export-icon" aria-hidden="true">
+          <img
+            className="settings-section-icon"
+            src={PLAYERS_IMPORT_ICON}
+            alt=""
+          />
         </div>
 
         <h3>{t.title}</h3>
@@ -274,7 +278,7 @@ function PlayerImportPanel({
                 onClick={clearDraft}
                 aria-label={t.draft.clear}
               >
-                <Trash2 size={16} />
+                <img className="settings-import-draft-delete-icon" src={DELETE_ICON} alt="" aria-hidden="true" />
               </button>
             </div>
           </div>

@@ -7,17 +7,26 @@
     "registrationCountdown": {
       "title": "Registration closes in",
       "subtitle": "Registration is open",
-      "open": "Open"
+      "open": "Open",
+      "closedTitle": "Registration is closed",
+      "closedSubtitle": "Next registration opens in",
+      "closed": "Closed",
+      "disabledSubtitle": "Registration is temporarily unavailable",
+      "disabledCountdown": "Countdown unavailable while registration is disabled"
     },
     "eventCountdown": {
       "title": "Wasteland starts in",
-      "subtitle": "Next regional event"
+      "subtitle": "Next regional event",
+      "activeTitle": "Wasteland in progress",
+      "activeSubtitle": "Time until Wasteland ends",
+      "active": "In progress"
     },
     "time": {
       "days": "days",
       "hours": "hours",
       "minutes": "minutes",
-      "seconds": "seconds"
+      "seconds": "seconds",
+      "unscheduled": "The next opening date is not scheduled yet"
     },
     "recent": {
       "title": "Recent registrations",
@@ -38,7 +47,9 @@
       "title": "Alliance statistics",
       "text": "Distribution of registered players.",
       "players": "players",
-      "other": "Other"
+      "other": "Other",
+      "showAll": "Show all alliances",
+      "showLess": "Show fewer"
     },
     "navigation": {
       "registration": {

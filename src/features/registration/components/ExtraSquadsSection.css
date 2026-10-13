@@ -109,8 +109,11 @@
   font-weight: 700;
 }
 
-.extra-squad__title svg {
-  color: #176fe5;
+.extra-squad__title img {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  object-fit: contain;
 }
 
 .extra-squad__enable {

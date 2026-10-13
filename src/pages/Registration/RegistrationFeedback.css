@@ -2,10 +2,10 @@
   display: flex;
   align-items: center;
 
-  gap: 12px;
+  gap: 14px;
 
-  padding: 14px 16px;
-  margin-bottom: 18px;
+  padding: 16px 18px;
+  margin-bottom: 20px;
 
   color: #155b3c;
 
@@ -16,8 +16,8 @@
 }
 
 .registration-success__icon {
-  width: 40px;
-  height: 40px;
+  width: 46px;
+  height: 46px;
 
   display: flex;
   align-items: center;
@@ -34,23 +34,25 @@
 .registration-success strong {
   display: block;
 
-  font-size: 15px;
+  font-size: 20px;
 }
 
 .registration-success p {
-  margin: 3px 0 0;
+  margin: 5px 0 0;
 
-  color: #438064;
+  color: #4a6f63;
 
-  font-size: 12px;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 .registration-success--error {
   color: #8f2032;
 
-  background: linear-gradient(135deg, #fff2f4, #ffe8ec);
+  background: linear-gradient(135deg, #fff7f8, #ffeef1);
 
-  border-color: #f2a8b4;
+  border-color: #efb7c1;
+  box-shadow: 0 10px 26px rgba(190, 68, 92, 0.07);
 }
 
 .registration-success--error .registration-success__icon {
@@ -58,5 +60,15 @@
 }
 
 .registration-success--error p {
-  color: #a34555;
+  color: #a25161;
+}
+
+.registration-success__icon--required {
+  background: transparent;
+}
+
+.registration-success__icon--required img {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
 }

@@ -17,6 +17,9 @@ export default function useAdminAccessData({
   canViewUsers,
   canViewRequests,
   currentUserRole,
+  canManageRequests,
+  canGrantAdmin,
+  canManageAccess,
 }) {
   const [users, setUsers] = useState([]);
   const [usersLoading, setUsersLoading] = useState(false);
@@ -118,6 +121,7 @@ export default function useAdminAccessData({
   }, [enabled, canViewRequests, requestsLoaded]);
 
   async function saveUser(user, values) {
+    if (!canManageAccess) throw new Error("ACCESS_DENIED");
     setProcessingUserId(user.id);
     setUsersErrorKey("");
 
@@ -134,6 +138,7 @@ export default function useAdminAccessData({
   }
 
   async function deleteUser(user) {
+    if (!canManageAccess) return false;
     setProcessingUserId(user.id);
     setUsersErrorKey("");
 
@@ -161,6 +166,7 @@ export default function useAdminAccessData({
   }
 
   async function approveRequest(request) {
+    if (!canManageRequests) return;
     setProcessingRequestId(request.id);
     setRequestsErrorKey("");
 
@@ -169,6 +175,8 @@ export default function useAdminAccessData({
         request,
         selectedRole: request.requestedRole || "consul",
         currentUserRole,
+        canManageRequests,
+        canGrantAdmin,
       });
       setRequests((current) =>
         current.map((item) =>
@@ -189,6 +197,7 @@ export default function useAdminAccessData({
   }
 
   async function rejectRequest(request) {
+    if (!canManageRequests) return;
     setProcessingRequestId(request.id);
     setRequestsErrorKey("");
 
@@ -208,6 +217,7 @@ export default function useAdminAccessData({
   }
 
   async function deleteRequest(request) {
+    if (!canManageRequests) return;
     setProcessingRequestId(request.id);
     setRequestsErrorKey("");
 

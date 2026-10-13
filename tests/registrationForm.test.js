@@ -110,7 +110,7 @@ test("registration: required visible custom fields are validated, hidden ones ar
   assert.deepEqual(invalidFieldsFor(data, formRules), []);
 });
 
-test("registration: applying a template clears no-longer-allowed alliance, tier and shift", () => {
+test("registration: applying a template preserves custom alliance but clears unavailable tier and shift", () => {
   const { data, formRules } = createValidSetup();
   const template = {
     nickname: "Template",
@@ -131,7 +131,7 @@ test("registration: applying a template clears no-longer-allowed alliance, tier 
   });
 
   assert.equal(applied.nickname, "Template");
-  assert.equal(applied.alliance, "");
+  assert.equal(applied.alliance, "OLD");
   assert.equal(applied.tier, "");
   assert.equal(applied.shift, "");
   assert.equal(applied.extraSquads.fighter.enabled, false);

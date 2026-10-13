@@ -138,7 +138,7 @@
    LOCAL IMPORT MODE — SAME TABLE, COMPACT LAYOUT
 ========================================================= */
 .admin-players-table--selectable {
-  min-width: 1040px;
+  min-width: 1510px;
 }
 
 .admin-players-table--selectable .admin-players-table__head,
@@ -150,11 +150,11 @@
     minmax(92px, 0.82fr)
     minmax(58px, 0.5fr)
     minmax(50px, 0.42fr)
-    minmax(82px, 0.72fr)
-    minmax(88px, 0.78fr)
-    minmax(102px, 0.9fr)
-    minmax(78px, 0.64fr)
-    minmax(78px, 0.64fr)
+    minmax(125px, 0.72fr)
+    minmax(125px, 0.78fr)
+    minmax(125px, 0.9fr)
+    minmax(120px, 0.64fr)
+    minmax(120px, 0.64fr)
     minmax(72px, 0.58fr);
   column-gap: 8px;
 }

@@ -13,6 +13,7 @@ import { formatMediumDateTime } from "../../../utils/date.js";
 
 import {
   canManageUser,
+  getDefaultPermissionsForRole,
   PERMISSIONS,
   ROLES,
   sanitizePermissionsForRole,
@@ -30,13 +31,15 @@ const PERMISSION_GROUPS = [
       PERMISSIONS.VIEW_PLAYERS,
       PERMISSIONS.EDIT_PLAYERS,
       PERMISSIONS.DELETE_PLAYERS,
+      PERMISSIONS.IMPORT_PLAYERS,
+      PERMISSIONS.CLEAR_PLAYERS,
     ],
   },
 
   {
     key: "distribution",
 
-    permissions: [PERMISSIONS.VIEW_DISTRIBUTION, PERMISSIONS.EDIT_DISTRIBUTION],
+    permissions: [PERMISSIONS.VIEW_DISTRIBUTION, PERMISSIONS.EDIT_DISTRIBUTION, PERMISSIONS.PUBLISH_FINAL_PLAN],
   },
 
   {
@@ -68,7 +71,13 @@ const PERMISSION_GROUPS = [
   {
     key: "settings",
 
-    permissions: [PERMISSIONS.VIEW_SETTINGS],
+    permissions: [
+      PERMISSIONS.VIEW_SETTINGS,
+      PERMISSIONS.MANAGE_CONTENT_ACCESS,
+      PERMISSIONS.MANAGE_SITE_APPEARANCE,
+      PERMISSIONS.MANAGE_REGION_BACKUP,
+      PERMISSIONS.RESET_REGION,
+    ],
   },
 ];
 
@@ -77,6 +86,8 @@ function UserAccessModal({
   language,
   user,
   currentUserRole,
+  canManageAccess,
+  canGrantAdmin,
   saving,
   onClose,
   onSave,
@@ -92,11 +103,11 @@ function UserAccessModal({
 
   const [showTechnical, setShowTechnical] = useState(false);
 
-  const editable = canManageUser(currentUserRole, user.role);
+  const editable = canManageAccess && canManageUser(currentUserRole, user.role);
 
   const isOwner = user.role === ROLES.OWNER;
 
-  const canChangeRole = currentUserRole === ROLES.OWNER && !isOwner;
+  const canChangeRole = editable && canGrantAdmin && !isOwner;
 
   const roleOptions = useMemo(() => {
     if (!canChangeRole) {
@@ -110,6 +121,16 @@ function UserAccessModal({
     setRole(newRole);
 
     setPermissions(sanitizePermissionsForRole(newRole, permissions));
+  }
+
+  function handleRestoreDefaults() {
+    setPermissions(getDefaultPermissionsForRole(role));
+  }
+
+  function handleDisableAll() {
+    setPermissions(Object.fromEntries(
+      Object.keys(permissions).map((permission) => [permission, false]),
+    ));
   }
 
   function handlePermissionChange(permission, value) {
@@ -199,7 +220,6 @@ function UserAccessModal({
       onClose={onClose}
       width="1180px"
       headerContent={headerContent}
-      footer={footer}
       closeLabel={t.common.actions.close}
       ariaLabel={displayName}
       className="admin-user-site-modal"
@@ -269,6 +289,17 @@ function UserAccessModal({
             </p>
           </div>
 
+          {editable && (
+            <div className="admin-user-modal__permission-actions">
+              <button type="button" className="admin-secondary-button" onClick={handleRestoreDefaults} disabled={saving}>
+                {t.access.modal.restoreDefaults}
+              </button>
+              <button type="button" className="admin-secondary-button" onClick={handleDisableAll} disabled={saving}>
+                {t.access.modal.disableRolePermissions}
+              </button>
+            </div>
+          )}
+
           {isOwner && (
             <div className="admin-user-modal__owner-lock">
               <LockKeyhole size={18} aria-hidden="true" />
@@ -318,6 +349,10 @@ function UserAccessModal({
             </div>
           )}
         </div>
+
+        <footer className="site-modal__footer admin-user-modal__bottom-actions">
+          {footer}
+        </footer>
       </div>
     </Modal>
   );

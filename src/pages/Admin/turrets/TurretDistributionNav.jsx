@@ -1,21 +1,19 @@
-import { Map, Settings2, SlidersHorizontal, Users } from "lucide-react";
-
 const ITEMS = [
   {
     id: "settings",
-    icon: Settings2,
+    image: "/images/admin/icons/settings.webp",
   },
   {
     id: "turrets",
-    icon: SlidersHorizontal,
+    image: "/images/admin/icons/turret-distribution.webp",
   },
   {
     id: "players",
-    icon: Users,
+    image: "/images/admin/icons/actions/players.webp",
   },
   {
     id: "final",
-    icon: Map,
+    image: "/images/admin/icons/final-plan.webp",
   },
 ];
 
@@ -23,8 +21,6 @@ function TurretDistributionNav({ labels, active, onChange, ariaLabel }) {
   return (
     <nav className="turret-subtabs" aria-label={ariaLabel}>
       {ITEMS.map((item) => {
-        const Icon = item.icon;
-
         return (
           <button
             key={item.id}
@@ -36,7 +32,7 @@ function TurretDistributionNav({ labels, active, onChange, ariaLabel }) {
             }
             onClick={() => onChange(item.id)}
           >
-            <Icon size={16} />
+            <img className="turret-subtab__image" src={item.image} alt="" aria-hidden="true" />
 
             <span>{labels[item.id]}</span>
           </button>

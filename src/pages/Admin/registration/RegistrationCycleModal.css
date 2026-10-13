@@ -405,13 +405,17 @@
 
 .registration-cycle-site-modal .registration-cycle-reset-button img,
 .registration-cycle-site-modal .registration-cycle-save-button img{
-  width: 23px;
-  height: 23px;
+
   object-fit: contain;
   background: transparent;
   border: 0;
   border-radius: 0;
   box-shadow: none;
+}
+
+.registration-cycle-site-modal .registration-cycle-save-button img{
+  width: 23px;
+  height: 23px;
 }
 
 .registration-cycle-site-modal .registration-cycle-reset-button img{

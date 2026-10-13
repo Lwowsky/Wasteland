@@ -1,0 +1,99 @@
+/* Exclusively the turret-editor controls. No overrides of global modal rules. */
+.turret-tower-limits,.turret-manual-add { margin-bottom: 12px; }
+.turret-tower-limits__body,.turret-manual-add__body { display:grid; gap:12px; padding:14px; }
+.turret-tower-limits__max { min-width:0; width:180px; }
+.turret-tower-limits__max input { max-width:104px; }
+.turret-tower-limits__fields { display:grid; grid-template-columns:repeat(auto-fill,minmax(94px,108px)); gap:10px; }
+.turret-tower-limits__fields .admin-field { min-width:0; }
+.turret-tower-limits__fields input { width:100%; padding-inline:8px; font-size:14px; }
+.turret-tower-limits__footer { display:flex; align-items:end; justify-content:space-between; flex-wrap:wrap; gap:16px; padding-top:10px; border-top:1px solid #e4edf6; }
+.turret-tower-limits__body p,.turret-manual-add__body p { margin:0; font-size:13px; color:#65819c; }
+.turret-tower-limits__actions { display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-end; gap:8px; }
+.turret-tower-limits__actions button { min-height:39px; font-size:13px; }
+.turret-manual-add__grid,.turret-player-modal__grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.turret-player-modal__destination { display:flex; flex-wrap:wrap; gap:8px; justify-content:space-between;
+  align-items:center; padding:13px; border:1px solid #d3e2f5; background:#f2f7ff; border-radius:12px; color:#224e7e; }
+.turret-player-modal__grid { margin-top:16px; }
+.turret-player-modal__check { display:flex; align-items:center; gap:10px; color:#254f80; font-weight:700; }
+.turret-player-modal__actions { display:flex; flex-wrap:wrap; gap:9px; justify-content:flex-end; width:100%; }
+.turret-assigned-table--actions button.turret-assigned-edit { padding:5px; width:43px; min-width:43px; height:43px; display:grid; place-items:center; }
+.turret-assigned-edit img { width:28px; height:28px; object-fit:contain; }
+@media(max-width:680px) {
+  .turret-tower-limits__fields { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+  .turret-tower-limits__fields .admin-field { width:100%; }
+  .turret-tower-limits__fields input { box-sizing:border-box; max-width:100%; }
+  .turret-tower-limits__max { width:100%; max-width:150px; }
+  .turret-tower-limits__footer { align-items:stretch; }
+  .turret-tower-limits__actions { justify-content:flex-start; }
+  .turret-manual-add__grid,.turret-player-modal__grid { grid-template-columns:minmax(0,1fr); }
+  .turret-player-modal__actions > button { flex:1; }
+}
+
+.turret-player-modal__destination-fields { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); width:100%; gap:10px; }
+@media(max-width:680px) { .turret-player-modal__destination-fields { grid-template-columns:minmax(0,1fr); } }
+
+.turret-player-modal__error { margin:14px 0 0; border:1px solid #eab4c1; border-radius:9px; padding:10px; background:#fff2f5; color:#a7334d; }
+
+/* A single add-player panel with two exclusive modes. */
+.turret-manual-add__modes {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:5px;
+  padding:5px;
+  border:1px solid #cbdff5;
+  border-radius:12px;
+  background:#eff6ff;
+}
+.turret-manual-add__mode {
+  min-width:0;
+  min-height:40px;
+  border:1px solid transparent;
+  border-radius:9px;
+  padding:8px 12px;
+  color:#325b87;
+  background:transparent;
+  font:inherit;
+  font-size:13px;
+  font-weight:800;
+  cursor:pointer;
+}
+.turret-manual-add__mode.is-active {
+  color:#fff;
+  background:linear-gradient(105deg,#317dff 0%,#5759f2 100%);
+  box-shadow:0 3px 12px rgba(51,103,224,.18);
+}
+.turret-manual-add__mode:focus-visible {
+  outline:2px solid #1c67eb;
+  outline-offset:2px;
+}
+.turret-manual-add__reserve {
+  display:flex;
+  align-items:end;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.turret-manual-add__reserve-select {
+  flex:1 1 270px;
+  min-width:0;
+}
+.turret-manual-add__new {
+  display:grid;
+  gap:12px;
+  min-width:0;
+}
+.turret-manual-add__reserve > button,
+.turret-manual-add__new > button {
+  min-height:40px;
+}
+.turret-manual-add__new > button { justify-self:start; }
+.turret-manual-add__hint {
+  flex:1 0 100%;
+  color:#67819e;
+  font-size:13px;
+  line-height:1.4;
+}
+@media(max-width:680px) {
+  .turret-manual-add__reserve > button { width:100%; }
+  .turret-manual-add__new > button { width:100%; }
+  .turret-manual-add__mode { padding:8px 5px; }
+}

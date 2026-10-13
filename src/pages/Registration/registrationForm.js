@@ -1,5 +1,6 @@
 import { DEFAULT_REGISTRATION_SETTINGS } from "../../features/registration/registrationSettings.js";
 import { REGISTRATION_TROOP_TYPES } from "../../../shared/registrationConfig.js";
+import { normalizeTemplateExtraSquads } from "../../features/playerTemplates/playerTemplatesStorage.js";
 
 const STRING_FIELDS = [
   "nickname",
@@ -87,9 +88,13 @@ export function isRegistrationFieldRequired(
   );
 }
 
+function normalizeAllianceTag(value = "") {
+  return String(value).trim().toUpperCase();
+}
+
 function hasEnabledExtraSquad(data) {
-  return Object.values(data.extraSquads || {}).some(
-    (squad) => squad?.enabled === true,
+  return REGISTRATION_TROOP_TYPES.some(
+    (type) => type !== data.troopType && data.extraSquads?.[type]?.enabled === true,
   );
 }
 
@@ -153,19 +158,6 @@ export function getInvalidRegistrationFields({
   return [...new Set(invalidFields)];
 }
 
-function normalizeTemplateExtraSquads(template, troopType) {
-  return Object.fromEntries(
-    REGISTRATION_TROOP_TYPES.map((type) => [
-      type,
-      {
-        enabled:
-          troopType !== type &&
-          (template.extraSquads?.[type]?.enabled ?? false),
-        tier: template.extraSquads?.[type]?.tier || "T10",
-      },
-    ]),
-  );
-}
 
 export function applyPlayerTemplateToRegistration(
   current,
@@ -176,11 +168,11 @@ export function applyPlayerTemplateToRegistration(
   const shift =
     rules.availableShifts?.[template.shift] === true ? template.shift : "";
   const tier = availableTiers[template.tier] === true ? template.tier : "";
-  const alliance = alliances.some(
-    (item) => item.tag === template.alliance,
-  )
-    ? template.alliance
-    : "";
+  const normalizedTemplateAlliance = normalizeAllianceTag(template.alliance);
+  const matchedAlliance = alliances.find(
+    (item) => normalizeAllianceTag(item.tag) === normalizedTemplateAlliance,
+  );
+  const alliance = matchedAlliance?.tag || normalizedTemplateAlliance;
 
   return {
     ...current,
@@ -192,7 +184,7 @@ export function applyPlayerTemplateToRegistration(
     marchSize: template.marchSize || "",
     rallySize: template.rallySize || "",
     shift,
-    extraSquads: normalizeTemplateExtraSquads(template, troopType),
+    extraSquads: normalizeTemplateExtraSquads(template.extraSquads, troopType),
   };
 }
 
@@ -200,13 +192,13 @@ export function createTemplateUpdate(template, data) {
   return {
     ...template,
     nickname: data.nickname,
-    alliance: data.alliance,
+    alliance: normalizeAllianceTag(data.alliance),
     troopType: data.troopType,
     tier: data.tier,
     lairLevel: data.lairLevel,
     marchSize: data.marchSize,
     rallySize: data.rallySize,
     shift: data.shift,
-    extraSquads: data.extraSquads,
+    extraSquads: normalizeTemplateExtraSquads(data.extraSquads, data.troopType),
   };
 }

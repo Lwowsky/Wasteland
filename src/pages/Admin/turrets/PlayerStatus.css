@@ -1,0 +1,356 @@
+/* Player status is its own visual module; avoid inherited narrow table columns. */
+.turret-player-status {
+  min-width: 0;
+  width: 100%;
+}
+
+.turret-status-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.turret-status-card {
+  min-width: 0;
+  min-height: 126px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 15px 18px;
+  overflow: hidden;
+  border: 1px solid #bed6f3;
+  border-radius: 16px;
+  background: linear-gradient(125deg, #e4f1ff 0%, #f8fbff 72%);
+  box-shadow: 0 5px 15px rgba(39, 100, 161, .06);
+}
+
+.turret-status-card--reserve {
+  border-color: #d6d5f5;
+  background: linear-gradient(125deg, #eeeaff 0%, #f8faff 72%);
+}
+
+.turret-status-card--total {
+  border-color: #c4e7dd;
+  background: linear-gradient(125deg, #e3f7f2 0%, #f8fcfb 72%);
+}
+
+.turret-status-card__image {
+  width: 96px;
+  height: 92px;
+  flex: 0 0 96px;
+  display: grid;
+  place-items: center;
+}
+
+.turret-status-card__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 6px rgba(32, 75, 137, .14));
+}
+
+.turret-status-card__content {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+
+.turret-status-card__label {
+  color: #325d97;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.turret-status-card__number {
+  color: #112f5d;
+  font-size: clamp(32px, 2.6vw, 43px);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.07;
+}
+
+.turret-status-card__detail {
+  color: #617b9d;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.turret-status-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 13px;
+}
+
+.turret-filter-pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.turret-filter-pills button {
+  min-height: 42px;
+  padding: 8px 15px;
+  color: #46617f;
+  background: #fff;
+  border: 1px solid #cbdcf1;
+  border-radius: 11px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: border-color .16s ease, background-color .16s ease, box-shadow .16s ease;
+}
+
+.turret-filter-pills button.active {
+  color: #fff;
+  border-color: #346ce8;
+  background: linear-gradient(130deg, #357ff5, #5863ed);
+  box-shadow: 0 5px 12px rgba(59, 106, 225, .16);
+}
+
+.turret-filter-pills button:focus-visible {
+  outline: 3px solid #3177ec;
+  outline-offset: 2px;
+}
+
+.turret-status-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.turret-status-inputs input,
+.turret-status-inputs select {
+  min-width: 0;
+  min-height: 42px;
+  padding: 8px 12px;
+  color: #254b75;
+  background: #fff;
+  border: 1px solid #c5d9f1;
+  border-radius: 11px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.turret-status-inputs input {
+  width: 250px;
+  max-width: 100%;
+}
+
+.turret-status-scroll {
+  min-width: 0;
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #cddff2;
+  border-radius: 13px;
+  background: #fff;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.turret-status-table {
+  display: grid;
+  grid-template-columns: minmax(165px, 1.18fr) minmax(74px, .56fr) minmax(193px, 1.42fr) minmax(108px, .72fr) minmax(137px, .86fr) minmax(210px, 1.52fr) 128px;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  min-width: 1130px;
+  min-height: 61px;
+  padding: 8px 14px;
+  color: #405d80;
+  background: #fff;
+  border-bottom: 1px solid #e0eaf5;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.turret-status-table:not(.turret-status-table--head):nth-child(odd) {
+  background: #f8fbff;
+}
+
+.turret-status-table:last-child {
+  border-bottom: 0;
+}
+
+.turret-status-table--head {
+  min-height: 43px;
+  color: #58769a;
+  background: #edf4fd;
+  border-bottom: 1px solid #cddff2;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.turret-status-player {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: #173863;
+  font-size: 16px;
+  font-weight: 850;
+}
+
+.turret-status-alliance {
+  overflow-wrap: anywhere;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.turret-status-badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.turret-status-badges .player-troop-badge--compact {
+  min-width: 95px;
+}
+
+.turret-status-march {
+  color: #183c68;
+  font-size: 15px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.turret-state {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 7px 11px;
+  color: #89631a;
+  background: #fff0c8;
+  border: 1px solid #ffdf91;
+  border-radius: 999px;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.turret-state--in {
+  color: #13794d;
+  background: #e5f8ee;
+  border-color: #c4ebd5;
+}
+
+.turret-status-location {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.turret-status-action {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-width: 0;
+  text-align: right;
+}
+
+.turret-status-reserve-btn {
+  width: 100%;
+  max-width: 120px;
+  min-height: 40px;
+  padding: 7px 9px;
+  border-radius: 10px;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.turret-unassigned-action {
+  color: #7286a2;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.turret-status-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 13px 4px;
+  color: #456583;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.turret-status-pagination > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.turret-status-pagination button {
+  min-height: 38px;
+  padding: 7px 13px;
+  border-radius: 10px;
+  border: 1px solid #bfd4ed;
+  background: #eff6ff;
+  color: #2464af;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.turret-status-pagination button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.turret-status-empty {
+  padding: 22px;
+  color: #687f99;
+  text-align: center;
+  background: #f7faff;
+  border: 1px solid #d3e0ed;
+  border-radius: 10px;
+}
+
+@media (max-width: 1100px) {
+  .turret-status-card { padding: 13px 12px; gap: 9px; }
+  .turret-status-card__image { width: 70px; height: 75px; flex-basis: 70px; }
+  .turret-status-card__label { font-size: 15px; }
+  .turret-status-card__detail { font-size: 12px; }
+}
+
+@media (max-width: 700px) {
+  .turret-status-cards { gap: 8px; }
+  .turret-status-card { min-height: 107px; }
+  .turret-status-card__image { width: 58px; height: 62px; flex-basis: 58px; }
+  .turret-status-card__number { font-size: 31px; }
+  .turret-status-controls { align-items: stretch; }
+  .turret-status-inputs, .turret-status-inputs input { width: 100%; }
+  .turret-status-inputs select { flex: 1 1 140px; }
+}
+
+@media (max-width: 560px) {
+  .turret-status-cards { grid-template-columns: 1fr; }
+  .turret-status-card { min-height: 90px; padding: 10px 14px; }
+  .turret-status-card__image { width: 69px; height: 68px; flex-basis: 69px; }
+  .turret-status-card__content { gap: 0; }
+  .turret-status-card__number { font-size: 32px; }
+  .turret-filter-pills { width: 100%; }
+  .turret-filter-pills button { flex: 1 1 auto; padding: 7px 10px; }
+}

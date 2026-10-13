@@ -1,4 +1,4 @@
-import { Clock3, Languages, MapPin, RotateCcw } from "lucide-react";
+import { SETTINGS_ICONS } from "../settingsIconPaths.js";
 
 function GeneralSettingsTab({
   t,
@@ -25,7 +25,7 @@ function GeneralSettingsTab({
       <section className="settings-card">
         <div className="settings-card__info">
           <div className="settings-card__icon">
-            <Languages size={24} />
+            <img src={SETTINGS_ICONS.language} alt="" aria-hidden="true" />
           </div>
 
           <div>
@@ -57,8 +57,8 @@ function GeneralSettingsTab({
 
       <section className="settings-card">
         <div className="settings-card__info">
-          <div className="settings-card__icon settings-card__icon--time">
-            <Clock3 size={24} />
+          <div className="settings-card__icon">
+            <img src={SETTINGS_ICONS.timeMode} alt="" aria-hidden="true" />
           </div>
 
           <div>
@@ -99,8 +99,8 @@ function GeneralSettingsTab({
 
       <section className="settings-card">
         <div className="settings-card__info">
-          <div className="settings-card__icon settings-card__icon--zone">
-            <MapPin size={24} />
+          <div className="settings-card__icon">
+            <img src={SETTINGS_ICONS.timeZone} alt="" aria-hidden="true" />
           </div>
 
           <div>
@@ -137,7 +137,12 @@ function GeneralSettingsTab({
           className="settings-reset__button"
           onClick={onReset}
         >
-          <RotateCcw size={18} />
+          <img
+            className="settings-reset__image"
+            src={SETTINGS_ICONS.reset}
+            alt=""
+            aria-hidden="true"
+          />
 
           {t.settings.reset.button}
         </button>

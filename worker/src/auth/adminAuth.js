@@ -1,3 +1,9 @@
+import { hasPermission } from "../../../src/features/auth/permissions.js";
+
+export function adminHasPermission(admin, permission) {
+  return Boolean(admin?.ok && hasPermission(admin.role, permission, admin.permissions));
+}
+
 export function getBearerToken(request) {
   const authorization = request.headers.get("Authorization");
 
@@ -115,10 +121,19 @@ export async function verifyAdminRequest(request, env) {
     };
   }
 
+  const permissionFields = fields.permissions?.mapValue?.fields || {};
+  const permissions = Object.fromEntries(
+    Object.entries(permissionFields)
+      .filter(([, field]) => typeof field?.booleanValue === "boolean")
+      .map(([key, field]) => [key, field.booleanValue]),
+  );
+
   return {
     ok: true,
     uid,
+    permissions,
     role,
+    canEditDistribution: hasPermission(role, "edit_distribution", permissions),
 
     displayName: getFirestoreString(fields.displayName),
 

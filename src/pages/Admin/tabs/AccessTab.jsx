@@ -74,6 +74,8 @@ function AccessTab({
           t={t}
           language={language}
           currentUserRole={currentAdmin.role}
+          canManageAccess={hasPermission(currentAdmin.role, PERMISSIONS.MANAGE_ACCESS, currentAdmin.permissions)}
+          canGrantAdmin={hasPermission(currentAdmin.role, PERMISSIONS.GRANT_ADMIN, currentAdmin.permissions)}
           adminUsers={adminUsers}
           requests={requests}
           canViewRequests={canViewRequests}
@@ -91,6 +93,8 @@ function AccessTab({
           <AccessRequestsView
             t={t}
             currentUserRole={currentAdmin.role}
+            canGrantAdmin={hasPermission(currentAdmin.role, PERMISSIONS.GRANT_ADMIN, currentAdmin.permissions)}
+            canManageRequests={hasPermission(currentAdmin.role, PERMISSIONS.MANAGE_REQUESTS, currentAdmin.permissions)}
             requests={requests}
             loading={requestsLoading}
             error={requestsError}

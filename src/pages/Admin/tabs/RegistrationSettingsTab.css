@@ -129,6 +129,12 @@
 }
 
 .registration-cycle-summary__item {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  box-shadow:
+    0 7px 18px rgba(32, 72, 122, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
   display: flex;
   min-width: 0;
   align-items: center;
@@ -136,7 +142,7 @@
   padding: 9px 11px;
   border: 1px solid #dce8f4;
   border-radius: 12px;
-  background: linear-gradient(145deg, #ffffff 0%, #f8fbff 100%);
+  background: #ffffff;
 }
 
 .registration-cycle-summary__icon {
@@ -395,16 +401,6 @@
    PATCH 028.1 — cycle summary photo backgrounds
    Reuses the same existing background artwork as Cycle modal.
 ========================================================= */
-
-.registration-cycle-summary__item {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  background: #ffffff;
-  box-shadow:
-    0 7px 18px rgba(32, 72, 122, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.92);
-}
 
 .registration-cycle-summary__item::before {
   content: "";

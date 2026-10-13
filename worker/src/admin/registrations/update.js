@@ -1,4 +1,4 @@
-import { verifyAdminRequest } from "../../auth/adminAuth.js";
+import { verifyAdminRequest, adminHasPermission } from "../../auth/adminAuth.js";
 import { json } from "../../utils/response.js";
 import {
   normalizeNicknameForRegistration,
@@ -7,14 +7,13 @@ import {
   toRegistrationRecord,
 } from "./data.js";
 import { parseObjectJson } from "../../utils/normalize.js";
-import { finalizeRegistrationWrite } from "./afterWrite.js";
+import { clearPublicCaches } from "../../utils/cache.js";
 import {
   findDuplicateRegistration,
   findRegistrationById,
 } from "../../db/registrationQueries.js";
 import {
-  preparePublicPlayerUpdate,
-  prepareRegistrationUpdate,
+  prepareUpdateRegistrationStatements,
 } from "../../db/registrationWrites.js";
 
 export async function handleAdminUpdateRegistration(
@@ -26,6 +25,10 @@ export async function handleAdminUpdateRegistration(
 
   if (!admin.ok) {
     return json({ success: false, error: admin.error }, admin.status);
+  }
+
+  if (!adminHasPermission(admin, "edit_players")) {
+    return json({ success: false, error: "FORBIDDEN" }, 403);
   }
 
   const existing = await findRegistrationById(env, registrationId);
@@ -61,10 +64,14 @@ export async function handleAdminUpdateRegistration(
     customFields,
   );
 
-  await prepareRegistrationUpdate(env, registrationId, record).run();
-  await preparePublicPlayerUpdate(env, registrationId, record).run();
-
-  await finalizeRegistrationWrite(request, env, existing.period_id);
+  await env.DB.batch(prepareUpdateRegistrationStatements(
+    env, registrationId, existing.period_id, record,
+  ));
+  try {
+    await clearPublicCaches(request);
+  } catch {
+    // Database changes cannot be undone by a cache invalidation failure.
+  }
 
   return json({ success: true });
 }

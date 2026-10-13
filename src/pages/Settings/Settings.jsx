@@ -1,5 +1,3 @@
-import { Settings as SettingsIcon, Users } from "lucide-react";
-
 import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 
 import { useMemo, useState } from "react";
@@ -19,6 +17,7 @@ import {
   createPlayerTemplateDraft,
   getPlayerTemplates,
   savePlayerTemplates,
+  normalizeTemplateExtraSquads,
 } from "../../features/playerTemplates/playerTemplatesStorage.js";
 
 
@@ -26,6 +25,8 @@ import { getEnabledRegistrationShifts } from "../../features/registration/regist
 
 import GeneralSettingsTab from "./components/GeneralSettingsTab.jsx";
 import TemplatesTab from "./components/TemplatesTab.jsx";
+import { SETTINGS_ICONS } from "./settingsIconPaths.js";
+import { buildTimeZoneOptions } from "./timeZoneOptions.js";
 
 import "./Settings.css";
 
@@ -35,15 +36,6 @@ const TIME_ZONE_KEY = "wasteland-time-zone";
 
 const EMPTY_AVAILABLE_SHIFTS = Object.freeze({});
 const EMPTY_AVAILABLE_TIERS = Object.freeze({});
-
-const TIME_ZONES = [
-  { value: "local", labelKey: "local" },
-  { value: "UTC", labelKey: "utc" },
-  { value: "Asia/Tokyo", labelKey: "tokyo" },
-  { value: "Europe/Kyiv", labelKey: "kyiv" },
-  { value: "Europe/London", labelKey: "london" },
-  { value: "America/New_York", labelKey: "newYork" },
-];
 
 function Settings() {
   const { t, language, registrationConfig } = useOutletContext();
@@ -82,12 +74,8 @@ function Settings() {
   );
 
   const timeZones = useMemo(
-    () =>
-      TIME_ZONES.map((zone) => ({
-        value: zone.value,
-        label: t.settings.timeZone.options[zone.labelKey],
-      })),
-    [t.settings.timeZone.options],
+    () => buildTimeZoneOptions(t.settings.timeZone.options.local),
+    [t.settings.timeZone.options.local],
   );
 
   function changeTimeMode(nextTimeMode) {
@@ -171,6 +159,11 @@ function Settings() {
     setTemplateForm((current) => ({
       ...current,
       [name]: value,
+      ...(name === "troopType"
+        ? {
+            extraSquads: normalizeTemplateExtraSquads(current.extraSquads, value),
+          }
+        : {}),
     }));
   }
 
@@ -229,7 +222,7 @@ function Settings() {
           <PagePanel>
             <header className="settings-header">
               <div className="settings-header__icon">
-                <SettingsIcon size={30} aria-hidden="true" />
+                <img src={SETTINGS_ICONS.settings} alt="" aria-hidden="true" />
               </div>
 
               <div>
@@ -249,7 +242,7 @@ function Settings() {
                 }
                 onClick={() => setActiveTab("settings")}
               >
-                <SettingsIcon size={19} aria-hidden="true" />
+                <img className="settings-tab__icon" src={SETTINGS_ICONS.settings} alt="" aria-hidden="true" />
 
                 {t.settings.tabs.settings}
               </button>
@@ -263,7 +256,7 @@ function Settings() {
                 }
                 onClick={() => setActiveTab("templates")}
               >
-                <Users size={19} aria-hidden="true" />
+                <img className="settings-tab__icon" src={SETTINGS_ICONS.templates} alt="" aria-hidden="true" />
 
                 {t.settings.tabs.templates}
               </button>

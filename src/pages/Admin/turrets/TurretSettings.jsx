@@ -1,92 +1,197 @@
-import { Check, AlertTriangle, WandSparkles, Trash2 } from "lucide-react";
-import { TURRET_IDS } from "../data/mockTurretDistribution.js";
+import { formatMarch } from "../../../utils/formatMarch.js";
+import { useState } from "react";
+import { AlertTriangle, CheckCircle2 } from "lucide-react";
+import TroopBadge from "../../../components/PlayerBadges/TroopBadge.jsx";
+import { TURRET_ICON_URLS } from "../../../features/turrets/plannerConstants.js";
+import {
+  addHelper, changeCaptain, clearTurret, getTurretMetrics,
+} from "../../../features/turrets/turretAssignments.js";
+import TurretList from "./TurretList.jsx";
+import TurretCaptainEditor from "./TurretCaptainEditor.jsx";
+import TurretHelperEditor from "./TurretHelperEditor.jsx";
+import TurretManualAdd from "./TurretManualAdd.jsx";
+import TurretTowerLimits from "./TurretTowerLimits.jsx";
+import TurretPlayerEditModal from "./TurretPlayerEditModal.jsx";
+import { getTowerMaxHelpers, getTowerRule, updateTowerRule } from "../../../features/turrets/turretSlotRules.js";
+import { addManualTurretPlayer, moveTurretPlanPlayer, removeTurretPlanPlayer } from "../../../features/turrets/turretManualActions.js";
+import "./TurretTowerEditor.css";
+import "./TurretAssignmentsStage.css";
 
-function formatNumber(value) {
-  return new Intl.NumberFormat("en-US").format(Number(value || 0));
-}
 
-function TurretSettings({ a, shift, setShift, turrets, players }) {
-  const selectedId = "hub";
-  const selected = turrets[shift][selectedId];
-  const captain = players.find((p) => p.id === selected.captainId) || null;
-  const assigned = players.filter((p) => selected.playerIds.includes(p.id));
+function TurretSettings({ a, language, shift, setShift, draft, players, settings, activeShifts = ["shift1", "shift2"], loaded, editable, periodId, onAuto, autoBlocked, requestConfirm, availableTiers }) {
+  const [selectedId, setSelectedId] = useState("hub");
+  const [localMessage, setLocalMessage] = useState("");
+  const [localError, setLocalError] = useState(false);
+  const [editId, setEditId] = useState(null);
+  const p = a.distribution.manual;
+  const disabled = !loaded || !editable || !periodId;
+  const autoDisabled = disabled || autoBlocked || settings.mode === "manual";
+  const slot = draft.assignments.shifts[shift][selectedId];
+  const captain = players.find((player) => String(player.id) === slot.captainId);
+  const metrics = getTurretMetrics(slot, players, settings);
+  const rule = getTowerRule(draft.assignments, shift, selectedId);
 
+  function apply(action) {
+    const result = action(draft.assignments);
+    if (result.error) {
+      setLocalMessage(p.errors[result.error] || p.errors.unavailable);
+      setLocalError(true);
+      return false;
+    }
+    setLocalMessage("");
+    setLocalError(false);
+    return draft.apply(() => result);
+  }
+  function changeSelectedCaptain(id) {
+    return apply((assignments) => changeCaptain(assignments, shift, selectedId, id, players, settings));
+  }
+  function addSelectedHelper(id) {
+    return apply((assignments) => addHelper(assignments, shift, selectedId, id, players, settings));
+  }
+  function createPlayer(fields) {
+    const id = `m_${crypto.randomUUID().replaceAll("-", "")}`;
+    return apply((assignments) => addManualTurretPlayer(assignments, players, settings, {
+      id, shift, tower: selectedId, role: fields.role, fields,
+    }));
+  }
+  function savePlayer(values, destination) {
+    const success = apply((assignments) => moveTurretPlanPlayer(assignments, players, settings, editId, values, destination));
+    if (success) setEditId(null);
+    return success;
+  }
+  function deletePlanPlayer() {
+    const success = apply((assignments) => removeTurretPlanPlayer(assignments, editId));
+    if (success) setEditId(null);
+    return success;
+  }
+  function updateOption(key, value) {
+    return apply((assignments) => updateTowerRule(assignments, shift, selectedId,
+      { flags: { [key]: value } }));
+  }
+  function showSuccess(message) {
+    setLocalMessage(message);
+    setLocalError(false);
+  }
+  function clearSelected() {
+    requestConfirm?.({
+      title: a.distribution.confirm?.clearTitle || a.distribution.turret.clear,
+      message: p.confirmClear.replace("{{tower}}", a.distribution.towers[selectedId]),
+      onConfirm: () => apply((assignments) => clearTurret(assignments, shift, selectedId)),
+      tone: "danger",
+    });
+  }
   return (
     <div className="turret-layout-view">
-      <div className="turret-shift-switch">
-        <button type="button" className={shift === "shift1" ? "admin-primary-button" : "admin-secondary-button"} onClick={() => setShift("shift1")}>{a.shifts.shift1}</button>
-        <button type="button" className={shift === "shift2" ? "admin-primary-button" : "admin-secondary-button"} onClick={() => setShift("shift2")}>{a.shifts.shift2}</button>
+      <div className="turret-shift-switch" role="group" aria-label={a.distribution.turret.shifts}>
+        {activeShifts.map((id) => (
+          <button key={id} type="button" className={shift === id ? "admin-primary-button" : "admin-secondary-button"}
+            aria-pressed={shift === id} onClick={() => { setShift(id); setLocalMessage(""); }}>
+            {a.shifts[id]}
+          </button>
+        ))}
       </div>
-
+      {draft.stale && (
+        <div className="turret-draft-feedback turret-draft-feedback--warn">
+          <span>{p.staleNotice}</span>
+          <button type="button" className="admin-secondary-button" disabled={disabled}
+            onClick={() => requestConfirm?.({
+              title: a.distribution.confirm?.reconcileTitle || p.reconcile,
+              message: p.confirmReconcile,
+              onConfirm: () => draft.reconcile(),
+            })}>
+            {p.reconcile}
+          </button>
+        </div>
+      )}
+      {draft.conflicts.length > 0 && (
+        <div className="turret-draft-feedback turret-draft-feedback--error" role="alert">
+          {p.rulesConflict.replace("{{count}}", String(draft.conflicts.length))}
+        </div>
+      )}
+      {(p.messages[draft.message] || p.errors[draft.message]) &&
+        <div role="status" className="turret-draft-feedback">
+          {p.messages[draft.message] || p.errors[draft.message]}
+        </div>}
+      {localMessage && <div role="status" className={`turret-draft-feedback${localError ? " turret-draft-feedback--error" : ""}`}>{localMessage}</div>}
+      {!loaded && <div role="note" className="turret-draft-feedback turret-draft-feedback--warn">{p.waitForPlayers}</div>}
+      {!editable && <div role="note" className="turret-draft-feedback turret-draft-feedback--warn">{a.distribution.planner.readonly}</div>}
       <div className="turret-layout-grid">
-        <aside className="turret-list">
-          {TURRET_IDS.map((id) => {
-            const turret = turrets[shift][id];
-            const cap = players.find((p) => p.id === turret.captainId);
-            return (
-              <button key={id} type="button" className={id === selectedId ? "turret-list-card turret-list-card--active" : "turret-list-card"}>
-                <div className="turret-list-card__icon">♜</div>
-                <div><strong>{a.distribution.towers[id]}</strong><span>{cap ? cap.nickname : a.distribution.turret.noCaptain}</span><small>{a.distribution.players}: {turret.playerIds.length}</small></div>
-                {cap ? <Check className="turret-list-card__ok" size={20} /> : <AlertTriangle className="turret-list-card__warn" size={20} />}
-              </button>
-            );
-          })}
-        </aside>
-
+        <TurretList a={a} shift={shift} assignments={draft.assignments} players={players}
+          selected={selectedId} onSelect={(id) => { setSelectedId(id); setLocalMessage(""); }} />
         <section className="turret-detail-card">
           <div className="turret-detail-head">
-            <div><span className="turret-detail-icon">♜</span><h3>{a.distribution.towers[selectedId]}</h3></div>
-            <span className="admin-badge admin-badge--blue">{selected.troopType ? a.troops[selected.troopType] : a.distribution.turret.typeByCaptain}</span>
+            <div>
+              <span className="turret-list-card__icon turret-detail-head__icon">
+                <img src={TURRET_ICON_URLS[selectedId]} alt="" aria-hidden="true" />
+              </span>
+              <h3>{a.distribution.towers[selectedId]}</h3>
+            </div>
+            {captain?.troopType ? (
+              <TroopBadge type={captain.troopType} label={a.troops[captain.troopType] || captain.troopType} compact />
+            ) : (
+              <span className="admin-badge admin-badge--blue">{a.distribution.turret.typeByCaptain}</span>
+            )}
           </div>
-
-          <div className="turret-detail-options">
-            <label><input type="checkbox" checked readOnly />{a.distribution.refill.onlyCaptains}</label>
-            <label><input type="checkbox" checked readOnly />{a.distribution.refill.respectShift}</label>
-            <label><input type="checkbox" checked readOnly />{a.distribution.refill.sameTroopType}</label>
-            <label><input type="checkbox" readOnly />{a.distribution.refill.allowFlexible}</label>
-          </div>
-
-          <div className="turret-captain-row">
-            <label className="admin-field">
-              <span>{a.distribution.turret.captain}</span>
-              <select value={captain?.id || ""} readOnly>
-                <option value="">{a.distribution.turret.noCaptain}</option>
-                {players.map((p) => <option key={p.id} value={p.id}>{p.nickname} • {p.alliance} • {a.troops[p.troopType]} {p.tier}</option>)}
-              </select>
-            </label>
-            <button type="button" className="admin-secondary-button">{a.distribution.turret.setCaptain}</button>
-            <button type="button" className="admin-secondary-button"><WandSparkles size={16} />{a.distribution.turret.autofill}</button>
-            <button type="button" className="admin-secondary-button"><Trash2 size={16} />{a.distribution.turret.clear}</button>
-          </div>
-
-          <div className="turret-metrics">
-            <article><span>{a.distribution.turret.captainMarch}</span><strong>{formatNumber(captain?.marchSize)}</strong></article>
-            <article><span>{a.distribution.turret.rally}</span><strong>{formatNumber(captain?.rallySize)}</strong></article>
-            <article><span>{a.distribution.turret.total}</span><strong>{formatNumber((captain?.marchSize || 0) + (captain?.rallySize || 0))}</strong></article>
-            <article><span>{a.distribution.turret.free}</span><strong>{formatNumber(captain?.rallySize)}</strong></article>
-          </div>
-
-          <details className="turret-details-box">
-            <summary>{a.distribution.turret.settingsAndLimits}</summary>
-            <div className="turret-details-placeholder">{a.distribution.turret.logicLater}</div>
-          </details>
-
-          <details className="turret-details-box">
-            <summary>{a.distribution.turret.addManual}</summary>
-            <div className="turret-details-placeholder">{a.distribution.turret.logicLater}</div>
-          </details>
-
-          <div className="turret-assigned-card">
-            <div className="turret-assigned-card__head"><h4>{a.distribution.turret.playersInTurret}</h4><span>{a.distribution.turret.captainAndPlayers}</span></div>
-            <div className="turret-assigned-table turret-assigned-table--head"><span>{a.distribution.columns.player}</span><span>{a.distribution.columns.alliance}</span><span>{a.distribution.columns.role}</span><span>{a.distribution.columns.tier}</span><span>{a.distribution.columns.march}</span></div>
-            {assigned.map((p) => (
-              <div className="turret-assigned-table" key={p.id}><strong>{p.nickname}</strong><span>{p.alliance}</span><span>{p.captain ? a.distribution.turret.captain : a.distribution.turret.player}</span><span>{p.tier}</span><span>{formatNumber(p.marchSize)}</span></div>
+          <div className="turret-detail-options" aria-label={a.distribution.turret.settingsAndLimits}>
+            {(["onlyCaptains", "respectShift", "sameTroopType", "allowFlexible"]).map((key) => (
+              <label key={key}><input type="checkbox" disabled={disabled}
+                checked={typeof rule.flags?.[key] === "boolean" ? rule.flags[key] : Boolean(settings[key])}
+                onChange={(event) => updateOption(key, event.target.checked)} />
+                {a.distribution.refill[key]}</label>
             ))}
+          </div>
+          <div className="turret-captain-toolbar">
+            <TurretCaptainEditor key={`${shift}:${selectedId}:${slot.captainId || ""}`} a={a} shift={shift} tower={selectedId} assignments={draft.assignments}
+              players={players} settings={settings} disabled={disabled} onSetCaptain={changeSelectedCaptain} />
+            <button type="button" className="admin-secondary-button turret-toolbar-action" disabled={autoDisabled}
+              title={settings.mode === "manual" ? a.distribution.auto.manualDisabled : undefined}
+              onClick={() => onAuto?.({ operation: "tower", shift, tower: selectedId })}>
+              <img src="/images/admin/icons/actions/fill-turrets.webp" alt="" aria-hidden="true" />
+              {a.distribution.turret.autofill}
+            </button>
+            <button type="button" className="admin-secondary-button turret-toolbar-action turret-toolbar-action--danger"
+              disabled={disabled || (!slot.captainId && !slot.helperIds.length)} onClick={clearSelected}>
+              <img src="/images/admin/icons/actions/delete.webp" alt="" aria-hidden="true" />
+              {a.distribution.turret.clear}
+            </button>
+          </div>
+          <div className="turret-metrics">
+            {([
+              ["captainMarch", metrics.captainMarch], ["rally", metrics.rallySize],
+              ["total", metrics.capacity], ["free", metrics.free],
+            ]).map(([key, value]) => <article key={key}>
+              <span>{a.distribution.turret[key]}</span><strong>{formatMarch(value, language)}</strong>
+            </article>)}
+          </div>
+          <TurretTowerLimits key={`${shift}:${selectedId}`} a={a}
+            assignments={draft.assignments} shift={shift} tower={selectedId}
+            players={players} settings={settings} availableTiers={availableTiers}
+            disabled={disabled} onApply={apply} onFeedback={showSuccess} />
+          <div className="turret-action-strip">
+            <span><CheckCircle2 size={17} aria-hidden="true" />{a.distribution.towerEditor.helpersUsed
+              .replace("{{count}}", String(slot.helperIds.length))
+              .replace("{{max}}", String(getTowerMaxHelpers(draft.assignments, shift, selectedId, settings)))}</span>
+          </div>
+          <TurretManualAdd key={`manual:${shift}:${selectedId}`} a={a} language={language}
+            shift={shift} tower={selectedId} assignments={draft.assignments}
+            players={players} settings={settings} disabled={disabled}
+            availableTiers={availableTiers} onAdd={addSelectedHelper} onCreate={createPlayer} />
+          <TurretHelperEditor a={a} language={language} shift={shift} tower={selectedId}
+            assignments={draft.assignments} players={players} disabled={disabled}
+            onEdit={setEditId} />
+          <div className="turret-capacity-notice">
+            <AlertTriangle size={16} aria-hidden="true" />{p.capacityNote}
           </div>
         </section>
       </div>
+      {editId && players.some((player) => String(player.id) === editId) &&
+        <TurretPlayerEditModal key={editId} a={a}
+          player={players.find((player) => String(player.id) === editId)} shift={shift}
+          tower={selectedId} activeShifts={activeShifts}
+          role={slot.captainId === editId ? "captain" : "helper"}
+          availableTiers={availableTiers} onClose={() => setEditId(null)}
+          onSave={savePlayer} onRelease={deletePlanPlayer} />}
     </div>
   );
 }
-
 export default TurretSettings;

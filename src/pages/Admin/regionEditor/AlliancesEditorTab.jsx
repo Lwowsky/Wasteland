@@ -46,7 +46,7 @@ function CompactHeaderStat({ type, label, value }) {
   const icon =
     type === "captains"
       ? "/images/admin/region-editor/captain.webp"
-      : "/images/admin/region-editor/players.webp";
+      : "/images/admin/icons/actions/players.webp";
 
   return (
     <div

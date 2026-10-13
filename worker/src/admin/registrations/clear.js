@@ -1,7 +1,6 @@
-import { verifyAdminRequest } from "../../auth/adminAuth.js";
+import { verifyAdminRequest, adminHasPermission } from "../../auth/adminAuth.js";
 import { clearPublicCaches } from "../../utils/cache.js";
 import { json } from "../../utils/response.js";
-import { canManagePlayerData } from "./data.js";
 import { getAdminRegistrationPeriod } from "./period.js";
 import { getRegistrationCount } from "../../db/registrationQueries.js";
 import { prepareClearPeriodStatements } from "../../db/registrationWrites.js";
@@ -13,7 +12,7 @@ export async function handleAdminClearRegistrations(request, env) {
     return json({ success: false, error: admin.error }, admin.status);
   }
 
-  if (!canManagePlayerData(admin)) {
+  if (!adminHasPermission(admin, "clear_players")) {
     return json({ success: false, error: "FORBIDDEN" }, 403);
   }
 

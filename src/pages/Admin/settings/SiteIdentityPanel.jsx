@@ -1,4 +1,3 @@
-import { Globe2, MapPin, PencilLine, Type } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { clearSiteSettingsCache, getSiteSettings } from "../../../features/site/siteSettingsApi.js";
@@ -6,6 +5,12 @@ import { saveAdminSiteSettings } from "../services/systemSettingsApi.js";
 import SiteIdentityModal from "./SiteIdentityModal.jsx";
 
 import "./SiteIdentity.css";
+
+const SITE_APPEARANCE_ICON = "/images/admin/icons/settings/site-appearance.webp";
+const EDIT_ICON = "/images/admin/icons/actions/edit.webp";
+const SITE_NAME_ICON = "/images/admin/icons/settings/identity-site-name.webp";
+const REGION_ICON = "/images/admin/icons/settings/identity-region-pin.webp";
+const BRAND_ICON = "/images/admin/icons/settings/identity-brand-text.webp";
 
 function SiteIdentityPanel({ t, isOwner }) {
   const [settings, setSettings] = useState(null);
@@ -66,7 +71,11 @@ function SiteIdentityPanel({ t, isOwner }) {
       <article className="settings-site-card">
         <div className="settings-site-card__lead">
           <div className="settings-site-card__icon" aria-hidden="true">
-            <Globe2 size={28} />
+            <img
+              className="settings-section-icon"
+              src={SITE_APPEARANCE_ICON}
+              alt=""
+            />
           </div>
 
           <div>
@@ -78,13 +87,13 @@ function SiteIdentityPanel({ t, isOwner }) {
 
         <div className="settings-site-card__summary" aria-busy={loading}>
           <div>
-            <Type size={15} aria-hidden="true" />
+            <img className="settings-site-card__summary-icon" src={SITE_NAME_ICON} alt="" aria-hidden="true" />
             <span>{t.summary.siteName}</span>
             <strong>{settings?.siteName || "—"}</strong>
           </div>
 
           <div>
-            <MapPin size={15} aria-hidden="true" />
+            <img className="settings-site-card__summary-icon" src={REGION_ICON} alt="" aria-hidden="true" />
             <span>{t.summary.region}</span>
             <strong>
               {settings
@@ -94,7 +103,7 @@ function SiteIdentityPanel({ t, isOwner }) {
           </div>
 
           <div>
-            <Globe2 size={15} aria-hidden="true" />
+            <img className="settings-site-card__summary-icon" src={BRAND_ICON} alt="" aria-hidden="true" />
             <span>{t.summary.brand}</span>
             <strong>{settings?.brandText || "—"}</strong>
           </div>
@@ -116,7 +125,12 @@ function SiteIdentityPanel({ t, isOwner }) {
               }}
               disabled={loading || !settings}
             >
-              <PencilLine size={17} aria-hidden="true" />
+              <img
+                className="settings-inline-button-icon"
+                src={EDIT_ICON}
+                alt=""
+                aria-hidden="true"
+              />
               {t.edit}
             </button>
           )}

@@ -1,3 +1,17 @@
+.settings-access-inline-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  display: block;
+}
+
+.settings-access-status-icon {
+  width: 17px;
+  height: 17px;
+  object-fit: contain;
+  display: block;
+}
+
 .settings-access-card {
   text-align: left;
 }
@@ -21,9 +35,9 @@
 }
 
 .settings-access-card__icon {
-  width: 48px;
-  height: 48px;
-  flex: 0 0 48px;
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
   display: grid;
   place-items: center;
   color: #416eea;
@@ -36,7 +50,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
-  margin-top: 16px;
+  margin-top: 10px;
   padding: 5px;
   background: #f2f7fd;
   border: 1px solid #d7e4f1;
@@ -44,7 +58,7 @@
 }
 
 .settings-access-tabs button {
-  min-height: 40px;
+  min-height: 36px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -68,7 +82,7 @@
 
 .settings-access-loading,
 .settings-access-body {
-  margin-top: 14px;
+  margin-top: 10px;
 }
 
 .settings-access-loading {
@@ -84,7 +98,7 @@
 
 .settings-access-body {
   display: grid;
-  gap: 11px;
+  gap: 8px;
 }
 
 .settings-access-status {
@@ -136,7 +150,7 @@
 
 .settings-access-field select {
   width: 100%;
-  min-height: 40px;
+  min-height: 36px;
   padding: 0 10px;
   color: #173a66;
   background: #ffffff;
@@ -168,7 +182,6 @@
   display: grid;
   gap: 5px;
   padding: 11px;
-  background: #f7faff;
   border: 1px solid #d6e2f0;
   border-radius: 11px;
 }
@@ -183,6 +196,10 @@
 .settings-access-generated span {
   color: #6a8198;
   font-size: 11px;
+}
+
+.settings-access-token-status {
+  background: #f7faff;
 }
 
 .settings-access-generated {

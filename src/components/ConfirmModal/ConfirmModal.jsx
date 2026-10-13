@@ -18,7 +18,9 @@ function ConfirmModal({
   cancelLabel,
   closeLabel,
   tone = "warning",
+  className = "",
   countdownSeconds = 0,
+  iconSrc,
   busy = false,
   onConfirm,
   onCancel,
@@ -40,7 +42,7 @@ function ConfirmModal({
       onClose={busy ? undefined : onCancel}
       title={title}
       width="560px"
-      className={`confirm-modal confirm-modal--${tone}`}
+      className={`confirm-modal confirm-modal--${tone} ${className}`.trim()}
       closeOnBackdrop={!busy}
       closeOnEscape={!busy}
       closeLabel={closeLabel || cancelLabel}
@@ -68,7 +70,7 @@ function ConfirmModal({
     >
       <div className="confirm-modal__content">
         <div className="confirm-modal__icon" aria-hidden="true">
-          <Icon size={26} />
+          {iconSrc ? <img className="confirm-modal__image" src={iconSrc} alt="" /> : <Icon size={26} />}
         </div>
         <p>{message}</p>
       </div>

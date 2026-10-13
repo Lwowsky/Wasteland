@@ -195,8 +195,14 @@
 }
 
 /* =========================================================
-   FOOTER
+   FOOTER — part of scrollable content (not sticky)
 ========================================================= */
+
+.admin-user-site-modal .admin-user-modal__bottom-actions {
+  margin-top: 24px;
+  padding: 18px 0 4px;
+  background: transparent;
+}
 
 .admin-user-modal__footer-right {
   min-width: 0;
@@ -423,3 +429,7 @@
     padding: 0 12px 12px;
   }
 }
+
+/* Permission presets – compact actions in the access modal */
+.admin-user-modal__permission-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.admin-user-modal__permission-actions .admin-secondary-button { font-size: 12px; padding: 8px 10px; }

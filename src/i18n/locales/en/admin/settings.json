@@ -28,7 +28,9 @@
       "title": "Footer content",
       "description": "Configure separate footer text for each supported site language.",
       "languageLabel": "Footer language",
-      "languageHelp": "Footer content is stored by language code. If you add another language to the site configuration later, it can receive its own footer text without changing the database structure."
+      "languageHelp": "JSON translations are shown by default. Only changed fields are saved as overrides in D1. An empty field falls back to its default text after saving. Ukrainian and English are edited separately.",
+      "restoreDefaults": "Restore default text",
+      "restoreHelp": "Restore the selected language from the JSON translations. Save to apply the change."
     },
     "fields": {
       "siteName": "Site name",
@@ -49,7 +51,8 @@
     "modal": {
       "title": "Site settings",
       "subtitle": "Change the main name, region and footer content without editing code.",
-      "footerHint": "Changes are applied immediately after saving."
+      "footerHint": "Changes are applied immediately after saving.",
+      "unsaved": "Unsaved changes"
     },
     "actions": {
       "close": "Close",
@@ -60,6 +63,12 @@
     "errors": {
       "load": "Could not load site settings.",
       "save": "Could not save site settings."
+    },
+    "unsaved": {
+      "title": "Discard unsaved changes?",
+      "message": "You have changed site settings or footer text. Closing this window now will discard those changes.",
+      "discard": "Discard changes",
+      "keepEditing": "Keep editing"
     }
   },
   "import": {
@@ -68,9 +77,7 @@
     "chooseFile": "Choose player file",
     "reading": "Reading file…",
     "formats": "XLSX · XLS · CSV",
-    "clearFile": "Remove file",
     "cancel": "Cancel",
-    "importButton": "Import players",
     "importing": "Importing…",
     "success": "Successfully imported: {{count}} players.",
     "fixBeforeImport": "Fix file errors and duplicates before importing.",
@@ -82,7 +89,6 @@
       "duplicates": " duplicates",
       "problems": "What needs fixing",
       "row": "Row {{row}}",
-      "more": "Showing the first 8 problems. Fix the file and upload it again.",
       "rowShort": "Row",
       "showing": "Showing {{from}}–{{to}} of {{total}}",
       "perPage": "Per page",
@@ -94,7 +100,6 @@
     "errors": {
       "readFile": "Could not read the file. Check the XLSX/XLS/CSV format.",
       "emptyFile": "The file contains no player rows.",
-      "missingColumns": "Required columns were not found: {{columns}}.",
       "importFailed": "Import failed. Do not assume the data was imported; check the Worker and file.",
       "duplicateExisting": "this nickname already exists in the current cycle",
       "duplicateFile": "this nickname is duplicated in the file",
@@ -192,10 +197,8 @@
     "title": "Export players",
     "description": "Export only player-table data.",
     "excel": "Excel export",
-    "excelText": "Creates an XLSX file with the current player-list data.",
     "fileName": "File name",
     "download": "Download Excel",
-    "optionsTitle": "Export columns",
     "options": {
       "players": "Player basic information",
       "readiness": "Readiness and captain",

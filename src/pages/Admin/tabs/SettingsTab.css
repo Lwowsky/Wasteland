@@ -6,17 +6,20 @@
 .settings-tools-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  gap: 12px;
 }
 
 .settings-tool-card {
   min-width: 0;
   min-height: 0;
-  padding: 16px;
-  text-align: center;
-  background: linear-gradient(145deg, #ffffff, #f4f9ff);
-  border: 1px solid #c6daf0;
-  border-radius: 16px;
+  padding: 17px;
+  text-align: left;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(103, 164, 255, 0.09), transparent 45%),
+    linear-gradient(150deg, #ffffff 0%, #f5f9ff 100%);
+  border: 1px solid #c4daf3;
+  border-radius: 18px;
+  box-shadow: 0 7px 19px rgba(43, 92, 163, 0.06);
 }
 
 .settings-tool-card h3,
@@ -38,57 +41,39 @@
   align-self: stretch;
 }
 
-/* Compact overrides for statically loaded setting cards. Base styles live with each component. */
-.settings-import-dropzone {
-  min-height: 86px;
-  gap: 3px;
-  padding: 14px;
+.admin-export-icon {
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  overflow: hidden;
+  background: linear-gradient(145deg, #eef5ff, #e8f1ff);
+  border: 1px solid #c8dbf1;
+  border-radius: 14px;
+  box-shadow: 0 8px 18px rgba(45, 92, 168, 0.08);
+}
+
+.settings-section-icon {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+  display: block;
+}
+
+.settings-button-icon-image {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  display: block;
 }
 
 .settings-tool-card > p.settings-import-mapping-note,
-.settings-backup-note,
 .settings-access-note {
   margin-top: 7px;
 }
 
-.settings-backup-actions {
-  margin-top: 0;
-}
-
-.settings-backup-actions button {
-  min-height: 38px;
-}
-
-.backup-restore-content {
-  gap: 10px;
-}
-
-.settings-access-card__icon {
-  width: 42px;
-  height: 42px;
-  flex-basis: 42px;
-}
-
-.settings-access-tabs {
-  margin-top: 10px;
-}
-
-.settings-access-tabs button {
-  min-height: 36px;
-}
-
-.settings-access-loading,
-.settings-access-body {
-  margin-top: 10px;
-}
-
-.settings-access-body {
-  gap: 8px;
-}
-
-.settings-access-field select {
-  min-height: 36px;
-}
 
 /* Compact export card. Export modal styles live in ExportSettingsModal.css. */
 .settings-export-card--compact {
@@ -98,7 +83,7 @@
 .admin-export-compact {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 22px;
+  gap: 18px;
   align-items: start;
 }
 
@@ -110,9 +95,9 @@
 }
 
 .admin-export-compact__intro .admin-export-icon {
-  flex: 0 0 62px;
-  width: 50px;
-  height: 50px;
+  flex: 0 0 58px;
+  width: 58px;
+  height: 58px;
   margin: 0;
 }
 
@@ -171,6 +156,7 @@
   flex: 0 0 44px;
   display: grid;
   place-items: center;
+  overflow: hidden;
   color: #d93f4f;
   background: #ffe8eb;
   border-radius: 15px;
@@ -250,5 +236,59 @@
 
   .settings-danger-zone__button {
     width: 100%;
+  }
+}
+
+.admin-system-settings .settings-access-card__head {
+  align-items: center;
+  min-width: 0;
+  margin-bottom: 15px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid #e0ebf7;
+}
+
+.admin-system-settings .settings-access-card__head > div:last-child {
+  min-width: 0;
+  flex: 1;
+}
+
+.admin-system-settings .settings-access-card__icon {
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+}
+
+.admin-system-settings .settings-export-card--compact {
+  padding: 17px;
+}
+
+.admin-system-settings .admin-export-compact__intro {
+  margin-bottom: 0;
+}
+
+.admin-system-settings .admin-export-compact__buttons button {
+  min-width: 0;
+}
+
+.admin-system-settings .settings-tool-card button:focus-visible,
+.admin-system-settings .settings-danger-zone__button:focus-visible {
+  outline: 3px solid #78a9ff;
+  outline-offset: 2px;
+}
+
+.admin-system-settings .settings-danger-zone {
+  box-shadow: 0 7px 18px rgba(195, 55, 75, 0.06);
+}
+
+@media (max-width: 520px) {
+  .admin-system-settings .settings-access-card__head {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .admin-system-settings .settings-access-card__icon {
+    width: 48px;
+    height: 48px;
+    flex-basis: 48px;
   }
 }

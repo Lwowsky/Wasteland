@@ -1,9 +1,4 @@
-import {
-  DatabaseBackup,
-  Download,
-  RotateCcw,
-  Upload,
-} from "lucide-react";
+import { RotateCcw } from "lucide-react";
 import { useRef, useState } from "react";
 
 import Modal from "../../../components/Modal/Modal.jsx";
@@ -18,6 +13,8 @@ import "./SystemSettingsModal.css";
 import "./RegionBackupPanel.css";
 
 const COUNTDOWN_SECONDS = 10;
+const BACKUPS_CLOUD_ICON = "/images/admin/icons/settings/backups-cloud.webp";
+const PLAYERS_IMPORT_ICON = "/images/admin/icons/settings/players-import.webp";
 
 function formatCount(value) {
   return Number.isFinite(Number(value)) ? Number(value).toLocaleString() : "0";
@@ -142,8 +139,12 @@ function RegionBackupPanel({ t, onRestored }) {
   return (
     <>
       <article className="settings-tool-card settings-backup-card">
-        <div className="admin-export-icon settings-backup-icon">
-          <DatabaseBackup size={30} aria-hidden="true" />
+        <div className="admin-export-icon settings-backup-icon" aria-hidden="true">
+          <img
+            className="settings-section-icon"
+            src={BACKUPS_CLOUD_ICON}
+            alt=""
+          />
         </div>
         <h3>{t.title}</h3>
         <p>{t.description}</p>
@@ -158,7 +159,12 @@ function RegionBackupPanel({ t, onRestored }) {
             disabled={busy}
             onClick={handleCreateBackup}
           >
-            <Download size={17} aria-hidden="true" />
+            <img
+              className="settings-backup-button-icon"
+              src={BACKUPS_CLOUD_ICON}
+              alt=""
+              aria-hidden="true"
+            />
             {busy ? t.creating : t.create}
           </button>
 
@@ -168,7 +174,12 @@ function RegionBackupPanel({ t, onRestored }) {
             disabled={busy}
             onClick={() => fileInputRef.current?.click()}
           >
-            <Upload size={17} aria-hidden="true" />
+            <img
+              className="settings-backup-button-icon"
+              src={PLAYERS_IMPORT_ICON}
+              alt=""
+              aria-hidden="true"
+            />
             {t.restore}
           </button>
         </div>
@@ -223,7 +234,7 @@ function RegionBackupPanel({ t, onRestored }) {
         >
           <div className="backup-restore-content">
             <div className="factory-reset-warning">
-              <DatabaseBackup size={27} aria-hidden="true" />
+              <img className="settings-backup-callout-icon" src={BACKUPS_CLOUD_ICON} alt="" aria-hidden="true" />
               <div>
                 <strong>{t.restoreModal.warningTitle}</strong>
                 <p>{t.restoreModal.warningText}</p>

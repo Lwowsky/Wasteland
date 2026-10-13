@@ -1,5 +1,7 @@
+import { auditStaticTranslationAccesses } from "./audit-i18n-static-access.mjs";
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const ROOT = process.cwd();
 const LOCALES_ROOT = path.join(ROOT, "src", "i18n", "locales");
@@ -31,6 +33,55 @@ function flattenKeys(value, prefix = "") {
   return Object.entries(value).flatMap(([key, child]) =>
     flattenKeys(child, prefix ? `${prefix}.${key}` : key),
   );
+}
+
+function flattenValues(value, prefix = "") {
+  if (typeof value === "string") return [[prefix, value]];
+  if (!value || typeof value !== "object" || Array.isArray(value)) return [];
+  return Object.entries(value).flatMap(([key, child]) =>
+    flattenValues(child, prefix ? `${prefix}.${key}` : key),
+  );
+}
+
+export function translationPlaceholders(value) {
+  return [...String(value).matchAll(/\{\{\s*([a-zA-Z0-9_.-]+)\s*\}\}/g)]
+    .map((match) => match[1]).sort();
+}
+
+export function compareTranslationStrings(base, compare, localeFile) {
+  const errors = [];
+  const baseText = new Map(flattenValues(base));
+  const compareText = new Map(flattenValues(compare));
+  for (const [key, text] of baseText) {
+    if (!compareText.has(key)) continue;
+    const baseParams = translationPlaceholders(text);
+    const translatedParams = translationPlaceholders(compareText.get(key));
+    if (baseParams.join("|") !== translatedParams.join("|")) {
+      errors.push(`${localeFile}: placeholder mismatch in ${key}: ` +
+        `base [${baseParams.join(", ")}], translation [${translatedParams.join(", ")}]`);
+    }
+  }
+  return errors;
+}
+
+export function compareTranslationArrayShapes(base, compare, localeFile) {
+  const errors = [];
+  function inspect(left, right, prefix) {
+    if (Array.isArray(left) || Array.isArray(right)) {
+      if (!Array.isArray(left) || !Array.isArray(right) || left.length !== right.length) {
+        errors.push(`${localeFile}: mismatched translated array ${prefix}`);
+      }
+      return;
+    }
+    if (!left || typeof left !== "object" || !right || typeof right !== "object") return;
+    for (const [key, value] of Object.entries(left)) {
+      if (Object.hasOwn(right, key)) {
+        inspect(value, right[key], prefix ? `${prefix}.${key}` : key);
+      }
+    }
+  }
+  inspect(base, compare, "");
+  return errors;
 }
 
 function relativeLocaleFiles(language) {
@@ -66,6 +117,14 @@ function auditLocaleParity() {
     );
     const baseKeys = new Set(flattenKeys(base));
     const compareKeys = new Set(flattenKeys(compare));
+    errors.push(...compareTranslationStrings(base, compare, file));
+    errors.push(...compareTranslationArrayShapes(base, compare, file));
+    for (const [key, value] of flattenValues(base)) {
+      if (!value.trim()) errors.push(`${baseLanguage}: ${file} empty translation ${key}`);
+    }
+    for (const [key, value] of flattenValues(compare)) {
+      if (!value.trim()) errors.push(`${compareLanguage}: ${file} empty translation ${key}`);
+    }
 
     for (const key of baseKeys) {
       if (!compareKeys.has(key)) {
@@ -130,12 +189,49 @@ function auditDirectJsxText() {
   return errors;
 }
 
-const errors = [...auditLocaleParity(), ...auditDirectJsxText()];
-
-if (errors.length) {
-  console.error("Translation audit failed:\n");
-  errors.forEach((error) => console.error(`- ${error}`));
-  process.exit(1);
+function auditCatalogLeafTypes() {
+  const errors = [];
+  for (const language of LANGUAGES) {
+    for (const file of relativeLocaleFiles(language)) {
+      const catalog = JSON.parse(fs.readFileSync(path.join(LOCALES_ROOT, language, file), "utf8"));
+      function inspect(value, key = "") {
+        if (typeof value === "string") return;
+        if (Array.isArray(value)) {
+          if (!value.length || value.some((item) => typeof item !== "string" || !item.trim())) {
+            errors.push(`${language}/${file}: ${key} must be a nonempty array of translated strings`);
+          }
+          return;
+        }
+        if (!value || typeof value !== "object") {
+          errors.push(`${language}/${file}: ${key} must be a string, translated string array or nested object`);
+          return;
+        }
+        for (const [child, nested] of Object.entries(value)) {
+          inspect(nested, key ? `${key}.${child}` : child);
+        }
+      }
+      inspect(catalog);
+    }
+  }
+  return errors;
 }
 
-console.log("TRANSLATIONS_OK");
+export function runTranslationAudit() {
+  return [
+    ...auditLocaleParity(),
+    ...auditCatalogLeafTypes(),
+    ...auditDirectJsxText(),
+    ...auditStaticTranslationAccesses(),
+  ];
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const errors = runTranslationAudit();
+  if (errors.length) {
+    console.error("Translation audit failed:\n");
+    errors.forEach((error) => console.error(`- ${error}`));
+    process.exitCode = 1;
+  } else {
+    console.log("TRANSLATIONS_OK");
+  }
+}

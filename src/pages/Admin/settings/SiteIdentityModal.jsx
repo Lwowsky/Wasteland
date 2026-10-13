@@ -1,21 +1,25 @@
-import { Globe2, MapPin, Type } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import Modal from "../../../components/Modal/Modal.jsx";
+import ConfirmModal from "../../../components/ConfirmModal/ConfirmModal.jsx";
+import translations from "../../../i18n/index.js";
+import {
+  buildFooterOverrides,
+  createFooterDrafts,
+  resolveEffectiveFooter,
+} from "../../../features/site/footerSettings.js";
 import { LANGUAGES, SUPPORTED_LANGUAGES } from "../../../config/site.js";
 import {
-  SITE_FOOTER_FIELDS,
   SITE_FOOTER_LIMITS,
   SITE_SETTINGS_LIMITS,
 } from "../../../../shared/siteSettingsConfig.js";
 
-function createFooterDraft(settings, language) {
-  const current = settings?.footerByLanguage?.[language] || {};
-
-  return Object.fromEntries(
-    SITE_FOOTER_FIELDS.map((field) => [field, String(current[field] ?? "")]),
-  );
-}
+const SITE_APPEARANCE_ICON = "/images/admin/icons/settings/site-appearance.webp";
+const SITE_NAME_ICON = "/images/admin/icons/settings/identity-site-name.webp";
+const BRAND_ICON = "/images/admin/icons/settings/identity-brand-text.webp";
+const REGION_PIN_ICON = "/images/admin/icons/settings/identity-region-pin.webp";
+const REGION_NAME_ICON = "/images/admin/icons/settings/identity-region-name.webp";
+const RESTORE_DEFAULTS_ICON = "/images/registration-settings/reset-defaults-icon.webp";
 
 function SiteIdentityModal({
   open,
@@ -28,23 +32,58 @@ function SiteIdentityModal({
 }) {
   const initialLanguage = SUPPORTED_LANGUAGES[0] || "en";
   const [activeLanguage, setActiveLanguage] = useState(initialLanguage);
-  const [draft, setDraft] = useState(() => ({
-    siteName: settings?.siteName || "",
-    brandText: settings?.brandText || "",
-    regionNumber: String(settings?.regionNumber ?? ""),
-    regionName: settings?.regionName || "",
-    footerByLanguage: Object.fromEntries(
-      SUPPORTED_LANGUAGES.map((language) => [
-        language,
-        createFooterDraft(settings, language),
-      ]),
-    ),
-  }));
-
-  const footerDraft = useMemo(
-    () => draft.footerByLanguage?.[activeLanguage] || {},
-    [draft.footerByLanguage, activeLanguage],
+  const initialDraft = useMemo(
+    () => ({
+      siteName: settings?.siteName || "",
+      brandText: settings?.brandText || "",
+      regionNumber: String(settings?.regionNumber ?? ""),
+      regionName: settings?.regionName || "",
+      footerByLanguage: createFooterDrafts(
+        settings,
+        translations,
+        SUPPORTED_LANGUAGES,
+      ),
+    }),
+    [settings],
   );
+  const [draft, setDraft] = useState(initialDraft);
+  const [confirmClose, setConfirmClose] = useState(false);
+  const isDirty = JSON.stringify(draft) !== JSON.stringify(initialDraft);
+
+  const footerDraft = draft.footerByLanguage?.[activeLanguage] || {};
+
+  useEffect(() => {
+    if (!open || saving || !isDirty) return undefined;
+
+    function warnBeforeUnload(event) {
+      event.preventDefault();
+      event.returnValue = "";
+    }
+
+    window.addEventListener("beforeunload", warnBeforeUnload);
+    return () => window.removeEventListener("beforeunload", warnBeforeUnload);
+  }, [open, saving, isDirty]);
+
+  function requestClose() {
+    if (saving) return;
+    if (isDirty) {
+      setConfirmClose(true);
+      return;
+    }
+    onClose?.();
+  }
+
+  function restoreLanguageDefaults() {
+    setDraft((current) => ({
+      ...current,
+      footerByLanguage: {
+        ...current.footerByLanguage,
+        [activeLanguage]: resolveEffectiveFooter(
+          translations[activeLanguage]?.footer,
+        ),
+      },
+    }));
+  }
 
   function updateField(field, value) {
     setDraft((current) => ({ ...current, [field]: value }));
@@ -69,6 +108,12 @@ function SiteIdentityModal({
     await onSave?.({
       ...draft,
       regionNumber: Number(draft.regionNumber),
+      footerByLanguage: buildFooterOverrides(
+        draft.footerByLanguage,
+        settings,
+        translations,
+        SUPPORTED_LANGUAGES,
+      ),
     });
   }
 
@@ -83,7 +128,9 @@ function SiteIdentityModal({
   return (
     <Modal
       open={open}
-      onClose={saving ? undefined : onClose}
+      onClose={saving ? undefined : requestClose}
+      closeOnBackdrop={!confirmClose && !saving}
+      closeOnEscape={!confirmClose && !saving}
       title={copy.modal.title}
       subtitle={copy.modal.subtitle}
       closeLabel={copy.actions.close}
@@ -91,12 +138,14 @@ function SiteIdentityModal({
       className="site-identity-modal"
       footer={
         <div className="site-identity-modal__footer">
-          <span>{copy.modal.footerHint}</span>
+          <span className={isDirty ? "is-dirty" : ""}>
+            {isDirty ? copy.modal.unsaved : copy.modal.footerHint}
+          </span>
           <div>
             <button
               type="button"
               className="admin-secondary-button"
-              onClick={onClose}
+              onClick={requestClose}
               disabled={saving}
             >
               {copy.actions.cancel}
@@ -121,7 +170,7 @@ function SiteIdentityModal({
         <section className="site-identity-form__section">
           <div className="site-identity-form__section-head">
             <div className="site-identity-form__section-icon">
-              <Globe2 size={21} aria-hidden="true" />
+              <img src={SITE_APPEARANCE_ICON} alt="" aria-hidden="true" />
             </div>
             <div>
               <h3>{copy.identity.title}</h3>
@@ -132,18 +181,21 @@ function SiteIdentityModal({
           <div className="site-identity-form__grid">
             <label className="site-identity-field">
               <span>{copy.fields.siteName}</span>
-              <input
-                value={draft.siteName}
-                maxLength={SITE_SETTINGS_LIMITS.siteName}
-                onChange={(event) => updateField("siteName", event.target.value)}
-              />
+              <div className="site-identity-field__with-icon">
+                <img className="site-identity-field__icon-image" src={SITE_NAME_ICON} alt="" aria-hidden="true" />
+                <input
+                  value={draft.siteName}
+                  maxLength={SITE_SETTINGS_LIMITS.siteName}
+                  onChange={(event) => updateField("siteName", event.target.value)}
+                />
+              </div>
               <small>{copy.help.siteName}</small>
             </label>
 
             <label className="site-identity-field">
               <span>{copy.fields.brandText}</span>
               <div className="site-identity-field__with-icon">
-                <Type size={17} aria-hidden="true" />
+                <img className="site-identity-field__icon-image" src={BRAND_ICON} alt="" aria-hidden="true" />
                 <input
                   value={draft.brandText}
                   maxLength={SITE_SETTINGS_LIMITS.brandText}
@@ -158,7 +210,7 @@ function SiteIdentityModal({
             <label className="site-identity-field">
               <span>{copy.fields.regionNumber}</span>
               <div className="site-identity-field__with-icon">
-                <MapPin size={17} aria-hidden="true" />
+                <img className="site-identity-field__icon-image" src={REGION_PIN_ICON} alt="" aria-hidden="true" />
                 <input
                   type="number"
                   min={SITE_SETTINGS_LIMITS.regionNumberMin}
@@ -173,13 +225,16 @@ function SiteIdentityModal({
 
             <label className="site-identity-field">
               <span>{copy.fields.regionName}</span>
-              <input
-                value={draft.regionName}
-                maxLength={SITE_SETTINGS_LIMITS.regionName}
-                onChange={(event) =>
-                  updateField("regionName", event.target.value)
-                }
-              />
+              <div className="site-identity-field__with-icon">
+                <img className="site-identity-field__icon-image" src={REGION_NAME_ICON} alt="" aria-hidden="true" />
+                <input
+                  value={draft.regionName}
+                  maxLength={SITE_SETTINGS_LIMITS.regionName}
+                  onChange={(event) =>
+                    updateField("regionName", event.target.value)
+                  }
+                />
+              </div>
             </label>
           </div>
         </section>
@@ -191,23 +246,36 @@ function SiteIdentityModal({
               <p>{copy.footer.description}</p>
             </div>
 
-            <div
-              className="site-identity-language-tabs"
-              role="tablist"
-              aria-label={copy.footer.languageLabel}
-            >
-              {SUPPORTED_LANGUAGES.map((language) => (
-                <button
-                  key={language}
-                  type="button"
-                  role="tab"
-                  aria-selected={activeLanguage === language}
-                  className={activeLanguage === language ? "is-active" : ""}
-                  onClick={() => setActiveLanguage(language)}
-                >
-                  {LANGUAGES[language]?.label || language.toUpperCase()}
-                </button>
-              ))}
+            <div className="site-identity-form__footer-tools">
+              <div
+                className="site-identity-language-tabs"
+                role="tablist"
+                aria-label={copy.footer.languageLabel}
+              >
+                {SUPPORTED_LANGUAGES.map((language) => (
+                  <button
+                    key={language}
+                    type="button"
+                    role="tab"
+                    aria-selected={activeLanguage === language}
+                    className={activeLanguage === language ? "is-active" : ""}
+                    onClick={() => setActiveLanguage(language)}
+                  >
+                    {LANGUAGES[language]?.label || language.toUpperCase()}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                className="site-identity-restore-defaults"
+                onClick={restoreLanguageDefaults}
+                disabled={saving}
+                title={copy.footer.restoreHelp}
+              >
+                <img src={RESTORE_DEFAULTS_ICON} alt="" aria-hidden="true" />
+                {copy.footer.restoreDefaults}
+              </button>
             </div>
           </div>
 
@@ -286,6 +354,18 @@ function SiteIdentityModal({
 
         {error && <div className="site-identity-form__error">{error}</div>}
       </form>
+
+      <ConfirmModal
+        open={confirmClose}
+        title={copy.unsaved.title}
+        message={copy.unsaved.message}
+        confirmLabel={copy.unsaved.discard}
+        cancelLabel={copy.unsaved.keepEditing}
+        closeLabel={copy.unsaved.keepEditing}
+        tone="warning"
+        onCancel={() => setConfirmClose(false)}
+        onConfirm={() => onClose?.()}
+      />
     </Modal>
   );
 }

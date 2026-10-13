@@ -1,20 +1,9 @@
+import { formatMarch } from "../../../utils/formatMarch.js";
+import { comparePlayersByTier } from "../../../features/turrets/tierPriority.js";
 import { Users } from "lucide-react";
+import FinalPlanMetrics from "./FinalPlanMetrics.jsx";
 
-function formatNumber(value) {
-  if (value === null || value === undefined || value === "") {
-    return "—";
-  }
-
-  const number = Number(value);
-
-  if (Number.isNaN(number)) {
-    return value;
-  }
-
-  return new Intl.NumberFormat("en-US").format(number);
-}
-
-function PlayerRow({ player, captain = false }) {
+function PlayerRow({ player, captain = false, language }) {
   return (
     <div
       className={
@@ -37,66 +26,37 @@ function PlayerRow({ player, captain = false }) {
       <span className="final-plan-player-row__tier">{player.tier || "—"}</span>
 
       <span className="final-plan-player-row__march">
-        {formatNumber(player.marchSize)}
+        {formatMarch(player.marchSize, language)}
       </span>
     </div>
   );
 }
 
-function FinalPlanTower({ t, towerId, data }) {
-  const players = data?.players || [];
+function FinalPlanTower({ t, towerId, data, language }) {
+  // Works with new snapshots and previously published snapshots alike.
+  const players = [...(data?.players || [])].sort(comparePlayersByTier);
 
   const captain = data?.captain || null;
 
   const troopType = data?.troopType || null;
 
-  const totalPlayers = players.length + (captain ? 1 : 0);
-
-  const regularPlayers = players.length;
-
-  const captainCount = captain ? 1 : 0;
-
   const troopLabel = troopType
     ? t.finalPlan.troops?.[troopType] || troopType
     : t.finalPlan.typeByCaptain;
 
+  const fallbackTroops = { hub: "fighter", north: "shooter", west: "rider", east: "fighter", south: "rider" };
+  const visualTroop = ["fighter", "shooter", "rider"].includes(troopType)
+    ? troopType : fallbackTroops[towerId];
+
   return (
-    <article className="final-plan-tower">
+    <article className={`final-plan-tower final-plan-tower--${visualTroop}`}>
       <header className="final-plan-tower__header">
         <h3>{t.finalPlan.towers[towerId]}</h3>
 
         <div className="final-plan-tower__troop">{troopLabel}</div>
 
-        <div className="final-plan-tower__stats">
-          <span className="final-plan-tower__stat final-plan-tower__stat--blue">
-            <Users size={14} />
-
-            {totalPlayers}
-          </span>
-
-          <span className="final-plan-tower__stat final-plan-tower__stat--green">
-            <Users size={14} />
-
-            {regularPlayers}
-          </span>
-
-          <span className="final-plan-tower__stat final-plan-tower__stat--gold">
-            <Users size={14} />
-
-            {captainCount}
-          </span>
-        </div>
+        <FinalPlanMetrics t={t} language={language} data={data} />
       </header>
-
-      <div className="final-plan-tower__columns">
-        <span>{t.finalPlan.columns.nickname}</span>
-
-        <span>{t.finalPlan.columns.alliance}</span>
-
-        <span>{t.finalPlan.columns.tier}</span>
-
-        <span>{t.finalPlan.columns.march}</span>
-      </div>
 
       <div className="final-plan-tower__players">
         {!captain && players.length === 0 ? (
@@ -107,10 +67,10 @@ function FinalPlanTower({ t, towerId, data }) {
           </div>
         ) : (
           <>
-            {captain && <PlayerRow player={captain} captain />}
+            {captain && <PlayerRow language={language} player={captain} captain />}
 
             {players.map((player) => (
-              <PlayerRow key={player.id} player={player} />
+              <PlayerRow language={language} key={player.id} player={player} />
             ))}
           </>
         )}

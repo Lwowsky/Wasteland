@@ -44,35 +44,29 @@
   background: linear-gradient(145deg, #ffffff, #edf6ff);
 }
 
-.home-stat-card__icon {
-  width: 54px;
-  height: 54px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
+/* Game art uses the site's existing transparent WEBP assets. */
+.home-stat-card__image {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
   flex-shrink: 0;
-
-  color: #176fe5;
-  background: #e2efff;
-
-  border-radius: 13px;
+  filter: drop-shadow(0 4px 6px rgba(26, 67, 137, 0.12));
 }
 
-.home-stat-card__icon--purple {
-  color: #6547dd;
-  background: #eee9ff;
+.home-stat-card--players {
+  background: linear-gradient(120deg, #f9fcff, #e9f4ff);
 }
 
-.home-stat-card__icon--orange {
-  color: #e98218;
-  background: #fff0dc;
+.home-stat-card--alliances {
+  background: linear-gradient(120deg, #fafaff, #eff0ff);
 }
 
-.home-stat-card__icon--green {
-  color: #15965d;
-  background: #e2f8ed;
+.home-stat-card--captains {
+  background: linear-gradient(120deg, #fffefa, #fff1dc);
+}
+
+.home-stat-card--final {
+  background: linear-gradient(120deg, #fafffd, #e6f7f1);
 }
 
 .home-stat-card strong {
@@ -131,12 +125,19 @@
   gap: 12px;
 }
 
-.home-countdown-card__top svg {
-  color: #297bf1;
+.home-countdown-card__icon {
+  width: 53px;
+  height: 53px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
-.home-countdown-card--event .home-countdown-card__top svg {
-  color: #e98218;
+.home-countdown-card--active {
+  background: linear-gradient(135deg, #f1fff7, #e1f7ed);
+}
+
+.home-countdown-card--closed {
+  background: linear-gradient(135deg, #f9fbff, #edf2fb);
 }
 
 .home-countdown-card h2 {
@@ -165,6 +166,25 @@
 
   font-size: 12px;
   font-weight: 700;
+}
+
+.home-status--closed {
+  color: #995025;
+  background: #fff0e0;
+}
+
+.home-status--active {
+  color: #14794d;
+  background: #d6f5e5;
+}
+
+.home-countdown-unavailable {
+  margin: 8px 0 0;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #647893;
 }
 
 .home-countdown {
@@ -232,10 +252,11 @@
   margin-bottom: 18px;
 }
 
-.home-section-title svg {
+.home-section-title__image {
+  width: 39px;
+  height: 39px;
+  object-fit: contain;
   flex-shrink: 0;
-
-  color: #176fe5;
 }
 
 .home-section-title h2 {
@@ -335,6 +356,30 @@
   background: linear-gradient(90deg, #2f7fff, #69a8ff);
 
   border-radius: inherit;
+}
+
+.home-alliance-toggle {
+  display: block;
+  width: 100%;
+  margin-top: 14px;
+  padding: 11px 14px;
+  border: 1px solid #b9d7f9;
+  border-radius: 11px;
+  background: #eff6ff;
+  color: #1761be;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.home-alliance-toggle:hover {
+  background: #dfeeff;
+}
+
+.home-alliance-toggle:focus-visible {
+  outline: 3px solid #7aaff3;
+  outline-offset: 2px;
 }
 
 /* RECENT REGISTRATIONS */

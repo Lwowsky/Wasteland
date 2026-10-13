@@ -1,3 +1,8 @@
+import {
+  handleAdminTurretPlanGet, handleAdminTurretDraftPut,
+  handleAdminTurretPublish, handleAdminTurretRestore, handlePublicFinalPlan,
+} from "./turrets/routes.js";
+
 import { JSON_HEADERS } from "./config/headers.js";
 
 import { json } from "./utils/response.js";
@@ -173,9 +178,26 @@ export default {
         return await handlePlayers(env, url);
       }
 
+      if (request.method === "GET" && url.pathname === "/api/final-plan") {
+        return await handlePublicFinalPlan(request, env);
+      }
+
       /* ADMIN */
 
 
+
+      if (url.pathname === "/api/admin/turret-plan") {
+        if (request.method === "GET") return handleAdminTurretPlanGet(request, env);
+      }
+      if (request.method === "PUT" && url.pathname === "/api/admin/turret-plan/draft") {
+        return handleAdminTurretDraftPut(request, env);
+      }
+      if (request.method === "POST" && url.pathname === "/api/admin/turret-plan/publish") {
+        return handleAdminTurretPublish(request, env);
+      }
+      if (request.method === "POST" && url.pathname === "/api/admin/turret-plan/restore") {
+        return handleAdminTurretRestore(request, env);
+      }
 
       const adminContentAccessMatch = url.pathname.match(
         /^\/api\/admin\/content-access\/(players|final_plan)$/,

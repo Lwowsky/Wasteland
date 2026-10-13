@@ -29,8 +29,8 @@
 }
 
 .settings-header__icon {
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
 
   display: flex;
   align-items: center;
@@ -38,11 +38,13 @@
 
   flex-shrink: 0;
 
-  color: #ffffff;
-
-  background: linear-gradient(135deg, #7458ee, #5e47d8);
-
   border-radius: 14px;
+}
+
+.settings-header__icon img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
 }
 
 .settings-header h1 {
@@ -95,6 +97,13 @@
   font-weight: 700;
 }
 
+.settings-tab__icon {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  object-fit: contain;
+}
+
 .settings-tab--active {
   color: #176fe5;
 
@@ -134,8 +143,8 @@
 }
 
 .settings-card__icon {
-  width: 48px;
-  height: 48px;
+  width: 64px;
+  height: 64px;
 
   display: flex;
   align-items: center;
@@ -143,20 +152,13 @@
 
   flex-shrink: 0;
 
-  color: #176fe5;
-  background: #e2efff;
-
   border-radius: 12px;
 }
 
-.settings-card__icon--time {
-  color: #15965d;
-  background: #e2f8ed;
-}
-
-.settings-card__icon--zone {
-  color: #6552d9;
-  background: #eee9ff;
+.settings-card__icon img {
+  width: 62px;
+  height: 62px;
+  object-fit: contain;
 }
 
 .settings-card h2 {
@@ -258,3 +260,12 @@
   font-weight: 700;
 }
 
+.settings-reset__image {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  padding: 2px;
+  border-radius: 8px;
+  background: #fff9;
+  object-fit: contain;
+}

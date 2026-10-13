@@ -1,4 +1,4 @@
-import { verifyAdminRequest } from "../auth/adminAuth.js";
+import { verifyAdminRequest, adminHasPermission } from "../auth/adminAuth.js";
 import { clearPublicCaches } from "../utils/cache.js";
 import { json } from "../utils/response.js";
 import {
@@ -10,10 +10,6 @@ import {
   updateContentAccessSetting,
 } from "../services/contentAccess.js";
 
-function canManageContentAccess(admin) {
-  return ["owner", "admin"].includes(admin?.role);
-}
-
 async function authorize(request, env) {
   const admin = await verifyAdminRequest(request, env);
 
@@ -24,7 +20,7 @@ async function authorize(request, env) {
     };
   }
 
-  if (!canManageContentAccess(admin)) {
+  if (!adminHasPermission(admin, "manage_content_access")) {
     return {
       response: json({ success: false, error: "FORBIDDEN" }, 403),
       admin: null,

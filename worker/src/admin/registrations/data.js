@@ -97,6 +97,3 @@ export function toRegistrationRecord(
   };
 }
 
-export function canManagePlayerData(admin) {
-  return ["owner", "admin"].includes(admin?.role);
-}

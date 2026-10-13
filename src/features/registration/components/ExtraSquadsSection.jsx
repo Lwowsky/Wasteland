@@ -1,5 +1,3 @@
-import { Crosshair, Shield, Users } from "lucide-react";
-
 import { getEnabledRegistrationTiers } from "../registrationTiers.js";
 import { REGISTRATION_TROOP_TYPES } from "../../../../shared/registrationConfig.js";
 
@@ -99,15 +97,14 @@ function ExtraSquadsSection({
     }));
   }
 
-  function renderSquad({ type, icon }) {
+  function renderSquad(type) {
     const squad = extraSquads[type];
     const isMain = mainTroopType === type;
-    const Icon = icon;
 
     return (
       <div className={`extra-squad extra-squad--${type}`}>
         <div className="extra-squad__title">
-          <Icon size={22} />
+          <img src={`/images/admin/troops/${type}.webp`} alt="" aria-hidden="true" />
           <strong>{t.registration.troops[type]}</strong>
         </div>
 
@@ -153,7 +150,12 @@ function ExtraSquadsSection({
       data-registration-field="extraSquads"
     >
       <div className="registration-section__heading">
-        <Users size={22} />
+        <img
+          className="registration-section__heading-image"
+          src="/images/admin/icons/actions/players.webp"
+          alt=""
+          aria-hidden="true"
+        />
 
         <div>
           <h2>
@@ -176,9 +178,9 @@ function ExtraSquadsSection({
       </label>
 
       <div className={`extra-squads ${!hasAnyExtra ? "extra-squads--disabled" : ""}`}>
-        {renderSquad({ type: "fighter", icon: Shield })}
-        {renderSquad({ type: "rider", icon: Users })}
-        {renderSquad({ type: "shooter", icon: Crosshair })}
+        {renderSquad("fighter")}
+        {renderSquad("rider")}
+        {renderSquad("shooter")}
       </div>
     </section>
   );

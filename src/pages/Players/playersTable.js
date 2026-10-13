@@ -1,6 +1,9 @@
-function normalizeText(value) {
-  return String(value || "").trim().toLowerCase();
-}
+import {
+  matchesCaptainFilter,
+  matchesPlayerField,
+  matchesPlayerSearch,
+  normalizePlayerSearch,
+} from "../../features/players/playerTableFilters.js";
 
 export function getPlayerAlliances(players) {
   return [...new Set((players || []).map((player) => String(player.alliance || "")))]
@@ -9,39 +12,15 @@ export function getPlayerAlliances(players) {
 }
 
 export function filterPlayers(players, filters) {
-  const normalizedSearch = normalizeText(filters.search);
+  const search = normalizePlayerSearch(filters.search);
 
-  return (players || []).filter((player) => {
-    const nickname = normalizeText(player.nickname);
-    const alliance = normalizeText(player.alliance);
-
-    const searchMatch =
-      !normalizedSearch ||
-      nickname.includes(normalizedSearch) ||
-      alliance.includes(normalizedSearch);
-
-    const allianceMatch =
-      filters.alliance === "all" || player.alliance === filters.alliance;
-
-    const troopMatch =
-      filters.troop === "all" || player.troopType === filters.troop;
-
-    const shiftMatch =
-      filters.shift === "all" || player.shift === filters.shift;
-
-    const captainMatch =
-      filters.captain === "all" ||
-      (filters.captain === "yes" && player.readiness?.captain === true) ||
-      (filters.captain === "no" && player.readiness?.captain !== true);
-
-    return (
-      searchMatch &&
-      allianceMatch &&
-      troopMatch &&
-      shiftMatch &&
-      captainMatch
-    );
-  });
+  return (players || []).filter((player) =>
+    matchesPlayerSearch(player, search) &&
+    matchesPlayerField(player, "alliance", filters.alliance) &&
+    matchesPlayerField(player, "troopType", filters.troop) &&
+    matchesPlayerField(player, "shift", filters.shift) &&
+    matchesCaptainFilter(filters.captain, player.readiness?.captain),
+  );
 }
 
 export function getPlayerStats(players) {
@@ -77,24 +56,7 @@ export function getPlayerStats(players) {
   return stats;
 }
 
-export function getTotalPages(itemCount, pageSize) {
-  if (pageSize === "all") {
-    return 1;
-  }
-
-  return Math.max(1, Math.ceil(itemCount / Number(pageSize)));
-}
-
-export function getVisiblePlayers(players, page, pageSize) {
-  if (pageSize === "all") {
-    return players;
-  }
-
-  const size = Number(pageSize);
-  const start = (page - 1) * size;
-
-  return players.slice(start, start + size);
-}
+export { getTotalPages, getVisiblePlayers } from "../../features/players/playerPagination.js";
 
 function replaceCount(template, count) {
   return String(template).replace("{{count}}", String(count));

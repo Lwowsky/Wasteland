@@ -1,3 +1,4 @@
+import { prepareStatsRefresh } from "./stats.js";
 import { boolToInt } from "../utils/normalize.js";
 
 export function prepareRegistrationInsert(env, periodId, record) {
@@ -159,7 +160,8 @@ export function preparePublicPlayerInsertFromRegistration(
         extra_shooter_tier
       FROM registrations
       WHERE period_id = ?
-        AND nickname_normalized = ?
+        AND nickname_normalized IS ?
+      ORDER BY id DESC
       LIMIT 1
     `,
   ).bind(periodId, nicknameNormalized);
@@ -278,6 +280,8 @@ export function prepareDeleteRegistrationStatements(env, registrationId) {
 
 export function prepareClearPeriodStatements(env, periodId) {
   return [
+    env.DB.prepare(`DELETE FROM turret_plan_publications WHERE period_id = ?`).bind(periodId),
+    env.DB.prepare(`DELETE FROM turret_plan_drafts WHERE period_id = ?`).bind(periodId),
     env.DB.prepare(`DELETE FROM public_players WHERE period_id = ?`).bind(
       periodId,
     ),
@@ -285,5 +289,22 @@ export function prepareClearPeriodStatements(env, periodId) {
       periodId,
     ),
     env.DB.prepare(`DELETE FROM stats WHERE period_id = ?`).bind(periodId),
+  ];
+}
+
+// Keep the private record, public projection and counters in one D1 transaction.
+export function prepareCreateRegistrationStatements(env, periodId, record) {
+  return [
+    prepareRegistrationInsert(env, periodId, record),
+    preparePublicPlayerInsertFromRegistration(env, periodId, record.nicknameNormalized),
+    prepareStatsRefresh(env, periodId),
+  ];
+}
+
+export function prepareUpdateRegistrationStatements(env, registrationId, periodId, record) {
+  return [
+    prepareRegistrationUpdate(env, registrationId, record),
+    preparePublicPlayerUpdate(env, registrationId, record),
+    prepareStatsRefresh(env, periodId),
   ];
 }

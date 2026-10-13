@@ -35,7 +35,7 @@ function replaceName(template, name) {
 function Admin() {
   const { lang } = useParams();
   const navigate = useNavigate();
-  const { admin } = useOutletContext();
+  const { admin, user } = useOutletContext();
   const language = translations[lang] ? lang : "en";
   const t = translations[language].admin;
 
@@ -64,6 +64,11 @@ function Admin() {
   const canViewDistribution = hasPermission(
     admin.role,
     PERMISSIONS.VIEW_DISTRIBUTION,
+    admin.permissions,
+  );
+  const canEditDistribution = hasPermission(
+    admin.role,
+    PERMISSIONS.EDIT_DISTRIBUTION,
     admin.permissions,
   );
   const canViewRegistration = hasPermission(
@@ -133,12 +138,13 @@ function Admin() {
     : tabs[0]?.id || "";
 
   const needsPlayersData =
-    canViewPlayers &&
-    ["players", "registration", "settings"].includes(resolvedActiveTab);
+    (canViewPlayers || canViewDistribution) &&
+    ["players", "registration", "settings", "distribution"].includes(resolvedActiveTab);
   const needsRegistrationSettings = [
     "players",
     "registration",
     "settings",
+    "distribution",
   ].includes(resolvedActiveTab);
   const needsAccessData = resolvedActiveTab === "access";
 
@@ -154,6 +160,9 @@ function Admin() {
     canViewUsers: canViewAccess,
     canViewRequests,
     currentUserRole: admin.role,
+    canManageRequests: hasPermission(admin.role, PERMISSIONS.MANAGE_REQUESTS, admin.permissions),
+    canGrantAdmin: hasPermission(admin.role, PERMISSIONS.GRANT_ADMIN, admin.permissions),
+    canManageAccess: hasPermission(admin.role, PERMISSIONS.MANAGE_ACCESS, admin.permissions),
   });
 
   const playersError = playersData.errorKey
@@ -309,15 +318,31 @@ function Admin() {
                     onUpdate={playersData.updatePlayer}
                     onDelete={playersData.deletePlayer}
                     registrationSettings={effectiveRegistrationSettings}
-                    canTransferLocal={["owner", "admin"].includes(admin.role)}
+                    canTransferLocal={canEditPlayers}
                     onReloadPlayers={playersData.reload}
                     currentPeriod={playersData.period}
-                    canManageDatabase={["owner", "admin"].includes(admin.role)}
+                    canManageDatabase={hasPermission(admin.role, PERMISSIONS.CLEAR_PLAYERS, admin.permissions)}
                   />
                 )}
 
                 {resolvedActiveTab === "distribution" && canViewDistribution && (
-                  <TurretDistributionTab t={t} />
+                  <TurretDistributionTab
+                    language={language}
+                    t={t}
+                    publicT={translations[language]}
+                    players={playersData.players}
+                    period={playersData.period}
+                    loading={playersData.loading}
+                    error={playersError}
+                    onReload={playersData.reload}
+                    editable={canEditDistribution}
+                    registrationSettings={effectiveRegistrationSettings}
+                    registrationSettingsReady={registrationData.loaded}
+                    registrationSettingsError={registrationSettingsError}
+                    onReloadRegistrationSettings={registrationData.reload}
+                    canPublish={hasPermission(admin.role, PERMISSIONS.PUBLISH_FINAL_PLAN, admin.permissions)}
+                    userId={user.uid}
+                  />
                 )}
 
                 {resolvedActiveTab === "registration" && canViewRegistration && (

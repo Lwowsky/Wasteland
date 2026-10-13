@@ -158,7 +158,6 @@
       "comment": "Comment"
     }
   },
-  "savedSection": "Settings saved.",
   "errors": {
     "load": "Failed to load registration settings.",
     "save": "Failed to save registration settings.",

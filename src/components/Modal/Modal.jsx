@@ -41,6 +41,7 @@ function Modal({
   width = "1180px",
 
   className = "",
+  backdropClassName = "",
 
   closeOnBackdrop = true,
   closeOnEscape = true,
@@ -89,7 +90,7 @@ function Modal({
 
   return createPortal(
     <div
-      className="site-modal-backdrop"
+      className={`site-modal-backdrop ${backdropClassName}`.trim()}
       onMouseDown={handleBackdropMouseDown}
       role="presentation"
     >

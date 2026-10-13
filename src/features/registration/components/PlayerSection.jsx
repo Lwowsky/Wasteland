@@ -1,21 +1,24 @@
-import {
-  ChevronsUp,
-  Flag,
-  FlaskConical,
-  Swords,
-  User,
-  Users,
-} from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { getEnabledRegistrationTiers } from "../registrationTiers.js";
+import { normalizeTemplateExtraSquads } from "../../playerTemplates/playerTemplatesStorage.js";
+import { REGISTRATION_FIELD_ICONS } from "../../playerTemplates/templateAssets.js";
 
 import "./PlayerSection.css";
 
 const OTHER_ALLIANCE_VALUE = "__other__";
 
 function RequiredMark({ required }) {
-  return required ? <span className="form-field__required">*</span> : null;
+  return required ? <span className="form-field__required" aria-hidden="true">*</span> : null;
+}
+
+function FieldIcon({ name, src }) {
+  const iconSrc = src || REGISTRATION_FIELD_ICONS[name];
+  return <img className="form-field__icon" src={iconSrc} alt="" aria-hidden="true" />;
+}
+
+function normalizeAllianceValue(value = "") {
+  return String(value).trim().toUpperCase();
 }
 
 function PlayerSection({
@@ -31,22 +34,16 @@ function PlayerSection({
   const enabledTiers = getEnabledRegistrationTiers(availableTiers);
 
   const allianceTags = useMemo(
-    () => new Set(alliances.map((alliance) => alliance.tag)),
+    () => new Set(alliances.map((alliance) => normalizeAllianceValue(alliance.tag))),
     [alliances],
   );
 
-  const [allianceMode, setAllianceMode] = useState(() => {
-    if (!data.alliance) {
-      return "list";
-    }
-
-    return allianceTags.has(data.alliance) ? "list" : "other";
-  });
-
-  const allianceIsListed = allianceTags.has(data.alliance);
+  // The input value is the source of truth, including when a template fills it.
+  // Local state is only needed while the user explicitly selects "other" before typing.
+  const [manualAllianceRequested, setManualAllianceRequested] = useState(false);
+  const allianceIsListed = allianceTags.has(normalizeAllianceValue(data.alliance));
   const manualAllianceActive =
-    allianceMode === "other" && !allianceIsListed;
-
+    !allianceIsListed && (manualAllianceRequested || Boolean(data.alliance));
 
   const visible = (field) => visibleFields[field] !== false;
   const required = (field) => visible(field) && requiredFields[field] === true;
@@ -67,6 +64,11 @@ function PlayerSection({
     setData((current) => ({
       ...current,
       [name]: value,
+      ...(name === "troopType"
+        ? {
+            extraSquads: normalizeTemplateExtraSquads(current.extraSquads, value),
+          }
+        : {}),
     }));
   }
 
@@ -74,7 +76,7 @@ function PlayerSection({
     const value = event.target.value;
 
     if (value === OTHER_ALLIANCE_VALUE) {
-      setAllianceMode("other");
+      setManualAllianceRequested(true);
 
       setData((current) => ({
         ...current,
@@ -84,7 +86,7 @@ function PlayerSection({
       return;
     }
 
-    setAllianceMode("list");
+    setManualAllianceRequested(false);
 
     setData((current) => ({
       ...current,
@@ -111,8 +113,6 @@ function PlayerSection({
   return (
     <section className="registration-section">
       <div className="registration-section__title-row">
-        <span className="registration-section__number">1</span>
-
         <div>
           <h2 className="registration-section__title">
             {t.registration.player.title}
@@ -137,7 +137,7 @@ function PlayerSection({
                 data-registration-field="nickname"
               >
                 <span className="form-field__label">
-                  <User size={19} />
+                  <FieldIcon name="nickname" />
                   {t.registration.player.nickname}
                   <RequiredMark required={required("nickname")} />
                 </span>
@@ -163,15 +163,13 @@ function PlayerSection({
                 data-registration-field="alliance"
               >
                 <span className="form-field__label">
-                  <Users size={19} />
+                  <FieldIcon name="alliance" />
                   {t.registration.player.alliance}
                   <RequiredMark required={required("alliance")} />
                 </span>
 
                 <select
-                  value={
-                    manualAllianceActive ? OTHER_ALLIANCE_VALUE : data.alliance
-                  }
+                  value={manualAllianceActive ? OTHER_ALLIANCE_VALUE : data.alliance}
                   onChange={handleAllianceSelect}
                 >
                   <option value="">
@@ -218,7 +216,7 @@ function PlayerSection({
                 data-registration-field="troopType"
               >
                 <span className="form-field__label">
-                  <Swords size={19} />
+                  <FieldIcon name="troopType" />
                   {t.registration.player.troopType}
                   <RequiredMark required={required("troopType")} />
                 </span>
@@ -240,14 +238,12 @@ function PlayerSection({
             {visible("tier") && (
               <label
                 className={`form-field ${
-                  invalidFields.has("tier")
-                    ? "registration-field--invalid"
-                    : ""
+                  invalidFields.has("tier") ? "registration-field--invalid" : ""
                 }`}
                 data-registration-field="tier"
               >
                 <span className="form-field__label">
-                  <ChevronsUp size={19} />
+                  <FieldIcon name="tier" />
                   {t.registration.player.tier}
                   <RequiredMark required={required("tier")} />
                 </span>
@@ -278,7 +274,7 @@ function PlayerSection({
                 data-registration-field="lairLevel"
               >
                 <span className="form-field__label">
-                  <FlaskConical size={19} />
+                  <FieldIcon name="lairLevel" />
                   {t.registration.player.lairLevel}
                   <RequiredMark required={required("lairLevel")} />
                 </span>
@@ -286,9 +282,10 @@ function PlayerSection({
                 <input
                   type="number"
                   name="lairLevel"
+                  min="1"
+                  max="99"
                   value={data.lairLevel}
                   onChange={handleChange}
-                  min="1"
                   required={required("lairLevel")}
                 />
               </label>
@@ -308,7 +305,7 @@ function PlayerSection({
                 data-registration-field="marchSize"
               >
                 <span className="form-field__label">
-                  <Users size={19} />
+                  <FieldIcon name="marchSize" />
                   {t.registration.player.marchSize}
                   <RequiredMark required={required("marchSize")} />
                 </span>
@@ -316,9 +313,9 @@ function PlayerSection({
                 <input
                   type="number"
                   name="marchSize"
+                  min="1"
                   value={data.marchSize}
                   onChange={handleChange}
-                  min="0"
                   required={required("marchSize")}
                 />
               </label>
@@ -334,7 +331,7 @@ function PlayerSection({
                 data-registration-field="rallySize"
               >
                 <span className="form-field__label">
-                  <Flag size={19} />
+                  <FieldIcon name="rallySize" />
                   {t.registration.player.rallySize}
                   <RequiredMark required={required("rallySize")} />
                 </span>
@@ -342,9 +339,9 @@ function PlayerSection({
                 <input
                   type="number"
                   name="rallySize"
+                  min="1"
                   value={data.rallySize}
                   onChange={handleChange}
-                  min="0"
                   required={required("rallySize")}
                 />
               </label>

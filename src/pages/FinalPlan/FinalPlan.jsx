@@ -1,63 +1,87 @@
-import { useRef, useState } from "react";
+import { formatMediumDateTime } from "../../utils/date.js";
+import { useEffect, useRef, useState } from "react";
 import { useOutletContext } from "react-router-dom";
-
 import Page from "../../components/Page/Page.jsx";
 import PageMeta from "../../components/PageMeta/PageMeta.jsx";
 import PagePanel from "../../components/PagePanel/PagePanel.jsx";
-
 import { ROUTES } from "../../config/routes.js";
-
 import FinalPlanToolbar from "./components/FinalPlanToolbar.jsx";
 import FinalPlanBoard from "./components/FinalPlanBoard.jsx";
-
-import { MOCK_PLAN } from "./data/mockPlan.js";
-
+import usePlanLanguages from "./components/usePlanLanguages.js";
+import { getPlanBoardTranslations } from "./data/finalPlanLanguages.js";
+import { getPublicFinalPlan } from "./services/finalPlanApi.js";
+import { PLANNER_SHIFTS } from "../../features/turrets/plannerConstants.js";
 import "./FinalPlan.css";
 
 function FinalPlan() {
   const { t, language } = useOutletContext();
-
   const boardRef = useRef(null);
-
+  const [userLanguages, setUserLanguages, hasChosenLanguages] = usePlanLanguages(language);
   const [activeShift, setActiveShift] = useState("shift1");
+  const [plan, setPlan] = useState(null);
+  const [publishedAt, setPublishedAt] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [reloadKey, setReloadKey] = useState(0);
+  const [error, setError] = useState(false);
 
+  useEffect(() => {
+    let active = true;
+    getPublicFinalPlan().then((response) => {
+      if (!active) return;
+      setPlan(response.plan);
+      setPublishedAt(response.publishedAt || null);
+    }).catch((reason) => {
+      console.error("Load published final plan:", reason);
+      if (active) setError(true);
+    }).finally(() => {
+      if (active) setLoading(false);
+    });
+    return () => { active = false; };
+  }, [reloadKey]);
+
+  function refresh() {
+    setLoading(true);
+    setError(false);
+    setReloadKey((previous) => previous + 1);
+  }
+
+  // Published language choices are shared with every visitor. Visitors may
+  // additionally customize their own view without changing the publication.
+  const languages = hasChosenLanguages ? userLanguages : plan?.__languages || userLanguages;
+  const boardT = getPlanBoardTranslations(t, languages, language);
+  function chooseLanguages(codes) { setUserLanguages(codes); }
+
+  const shifts = PLANNER_SHIFTS.filter((shift) => Object.hasOwn(plan || {}, shift));
+  const currentShift = shifts.includes(activeShift) ? activeShift : shifts[0];
+  const shiftPlan = plan?.[currentShift];
   return (
     <>
-      <PageMeta
-        title={t.finalPlan.title}
-        description={t.finalPlan.title}
-        language={language}
-        path={ROUTES.finalPlan}
-      />
-
+      <PageMeta title={t.finalPlan.title} description={t.finalPlan.title}
+        language={language} path={ROUTES.finalPlan} />
       <Page containerClassName="final-plan-container">
         <div className="final-plan-page">
           <PagePanel className="final-plan-panel">
-            <div className="final-plan-header">
-              <h1>{t.finalPlan.title}</h1>
+            <div className="final-plan-header"><h1>{t.finalPlan.title}</h1>
+              <button type="button" className="final-plan-toolbar__button" onClick={refresh}
+                disabled={loading}>{t.finalPlan.refreshPlan}</button>
             </div>
-
-            <FinalPlanToolbar
-              t={t}
-              language={language}
-              activeShift={activeShift}
-              setActiveShift={setActiveShift}
-              boardRef={boardRef}
-              plan={MOCK_PLAN[activeShift]}
-            />
-
-            <FinalPlanBoard
-              ref={boardRef}
-              t={t}
-              language={language}
-              activeShift={activeShift}
-              plan={MOCK_PLAN[activeShift]}
-            />
+            {loading ? <p className="final-plan-state" role="status">{t.finalPlan.loadingPlan}</p>
+              : error ? <p className="final-plan-state final-plan-state--error" role="alert">{t.finalPlan.loadFailed}</p>
+              : !shiftPlan ? <p className="final-plan-state" role="status">{t.finalPlan.notPublished}</p>
+              : <>
+                {publishedAt && <p className="final-plan-published-date">
+                  {t.finalPlan.lastPublished.replace("{{date}}", formatMediumDateTime(publishedAt, language))}
+                </p>}
+                <FinalPlanToolbar t={t} activeShift={currentShift} shifts={shifts}
+                  setActiveShift={setActiveShift} boardRef={boardRef} planByShift={plan}
+                  language={language} languages={languages} setLanguages={chooseLanguages} />
+                <FinalPlanBoard ref={boardRef} t={boardT} language={language}
+                  activeShift={currentShift} plan={shiftPlan} languages={languages} />
+              </>}
           </PagePanel>
         </div>
       </Page>
     </>
   );
 }
-
 export default FinalPlan;

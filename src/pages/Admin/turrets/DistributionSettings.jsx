@@ -1,102 +1,65 @@
-import { RefreshCw, Send, RotateCcw, Trash2 } from "lucide-react";
+import DistributionSummary from "./DistributionSummary.jsx";
+import DistributionLimits from "./DistributionLimits.jsx";
 
-function Toggle({ checked, label }) {
+import "./DistributionSettings.css";
+
+function DistributionSettings({
+  a, stats, settings, setSettings, loaded, loading, error, ready,
+  onAuto, onClearHelpers, autoBlocked, redistributeBlocked, clearHelpersBlocked,
+  editable, assignments, players, registrations,
+  registrationSettings, onApplyFlexible, onRestoreFlexible, onActionFeedback, requestConfirm,
+}) {
+  const p = a.distribution.planner;
+  const autoT = a.distribution.auto;
+  const controlsDisabled = !editable || !ready || !loaded || Boolean(error);
+  const automationDisabled = controlsDisabled || Boolean(autoBlocked) || settings.mode === "manual";
+  const redistributionDisabled = controlsDisabled || Boolean(redistributeBlocked) || settings.mode === "manual";
+  const clearDisabled = controlsDisabled || Boolean(clearHelpersBlocked);
   return (
-    <label className="turret-toggle-card">
-      <input type="checkbox" checked={checked} readOnly />
-      <span>{label}</span>
-    </label>
-  );
-}
-
-function DistributionSettings({ a, settings, setSettings, stats }) {
-  function update(field, value) {
-    setSettings((current) => ({ ...current, [field]: value }));
-  }
-
-  return (
-    <div className="turret-settings-view">
-      <div className="turret-summary-grid">
-        <article className="turret-summary-card">
-          <strong>{stats.shift1}</strong>
-          <span>{a.distribution.summary.shift1}</span>
-          <small>{a.distribution.summary.inTurrets}: {stats.shift1}</small>
-        </article>
-        <article className="turret-summary-card">
-          <strong>{stats.shift2}</strong>
-          <span>{a.distribution.summary.shift2}</span>
-          <small>{a.distribution.summary.inTurrets}: {stats.shift2}</small>
-        </article>
-        <article className="turret-summary-card">
-          <strong>{stats.flexible}</strong>
-          <span>{a.distribution.summary.flexible}</span>
-          <small>{a.distribution.summary.separate}</small>
-        </article>
-        <article className="turret-summary-card">
-          <strong>{stats.total}</strong>
-          <span>{a.distribution.summary.total}</span>
-          <small>{a.distribution.summary.reserve}: {stats.reserve}</small>
-        </article>
-      </div>
-
-      <div className="turret-action-row">
-        <button type="button" className="admin-secondary-button"><RefreshCw size={16} />{a.distribution.actions.redistribute}</button>
-        <button type="button" className="admin-secondary-button">{a.distribution.actions.fill}</button>
-        <button type="button" className="admin-primary-button"><Send size={16} />{a.distribution.actions.publish}</button>
-        <button type="button" className="admin-secondary-button"><RotateCcw size={16} />{a.distribution.actions.restore}</button>
-        <button type="button" className="admin-secondary-button"><Trash2 size={16} />{a.distribution.actions.clear}</button>
-      </div>
-
-      <section className="turret-config-card">
-        <h3>{a.distribution.refill.title}</h3>
-        <div className="turret-config-row turret-config-row--five">
-          <label className="admin-field">
-            <span>{a.distribution.refill.mode}</span>
-            <select value={settings.mode} onChange={(e) => update("mode", e.target.value)}>
-              <option value="balanced">{a.distribution.refill.balanced}</option>
-              <option value="maxMarch">{a.distribution.refill.maxMarch}</option>
-              <option value="manual">{a.distribution.refill.manual}</option>
-            </select>
-          </label>
-          <Toggle checked={settings.onlyCaptains} label={a.distribution.refill.onlyCaptains} />
-          <Toggle checked={settings.respectShift} label={a.distribution.refill.respectShift} />
-          <Toggle checked={settings.sameTroopType} label={a.distribution.refill.sameTroopType} />
-          <Toggle checked={settings.allowFlexible} label={a.distribution.refill.allowFlexible} />
+    <div className="planner-settings-view">
+      {error && <p className="planner-source-error" role="alert">{p.loadFailed}</p>}
+      <DistributionSummary a={a} players={players} assignments={assignments}
+        registrationSettings={registrationSettings} loaded={loaded && !loading && !error} />
+      {loaded && stats.unknown > 0 && (
+        <p className="planner-unsaved">{p.otherShiftNotice
+          .replace("{{count}}", String(stats.unknown))}</p>
+      )}
+      {!editable && <p className="planner-source-error">{p.readonly}</p>}
+      <section className="planner-auto-panel" aria-label={autoT.title}>
+        <div>
+          <strong><img className="planner-auto-panel__icon" src="/images/admin/icons/turret-distribution.webp" alt="" aria-hidden="true" />{autoT.title}</strong>
+          <p>{autoT.shortDescription}</p>
+          {settings.mode === "manual" && <small>{autoT.manualDisabled}</small>}
+        </div>
+        <div className="planner-auto-panel__actions">
+          <button type="button" className="admin-secondary-button" disabled={redistributionDisabled}
+            onClick={() => {
+              requestConfirm?.({
+                title: a.distribution.confirm?.redistributeTitle || autoT.title,
+                message: autoT.confirmRedistribute,
+                onConfirm: () => onAuto?.({ operation: "redistribute" }),
+              });
+            }}><img className="planner-auto-panel__action-icon" src="/images/admin/icons/actions/redistribute-helpers.webp" alt="" aria-hidden="true" />{a.distribution.actions.redistribute}</button>
+          <button type="button" className="admin-primary-button" disabled={automationDisabled}
+            onClick={() => onAuto?.({ operation: "fill" })}>
+            <img className="planner-auto-panel__action-icon" src="/images/admin/icons/actions/fill-turrets.webp" alt="" aria-hidden="true" />{a.distribution.actions.fill}
+          </button>
+          <button type="button" className="admin-secondary-button planner-auto-panel__clear" disabled={clearDisabled}
+            onClick={() => requestConfirm?.({
+              title: a.distribution.confirm?.clearHelpersTitle,
+              message: autoT.confirmClearHelpers,
+              tone: "danger",
+              onConfirm: () => onClearHelpers?.(),
+            })}>
+            <img className="planner-auto-panel__delete-icon" src="/images/admin/icons/actions/delete.webp" alt="" aria-hidden="true" />{a.distribution.actions.clearHelpers}
+          </button>
         </div>
       </section>
-
-      <div className="turret-config-grid">
-        <section className="turret-config-card">
-          <div className="turret-config-card__title-row">
-            <h3>{a.distribution.limits.allianceTitle}</h3>
-            <span className="admin-badge admin-badge--gray">0 {a.distribution.players}</span>
-          </div>
-          <label className="turret-inline-check">
-            <input type="checkbox" checked={settings.allianceLimits} onChange={(e) => update("allianceLimits", e.target.checked)} />
-            {a.distribution.limits.manual}
-          </label>
-          <div className="turret-limit-grid">
-            <label><span>{a.shifts.shift1}</span><input value={settings.shift1Limit} readOnly /></label>
-            <label><span>{a.shifts.shift2}</span><input value={settings.shift2Limit} readOnly /></label>
-            <label><span>{a.distribution.limits.addShift1}</span><input value={settings.shift1Extra} readOnly /></label>
-            <label><span>{a.distribution.limits.addShift2}</span><input value={settings.shift2Extra} readOnly /></label>
-          </div>
-        </section>
-
-        <section className="turret-config-card">
-          <h3>{a.distribution.limits.tierTitle}</h3>
-          <label className="turret-inline-check">
-            <input type="checkbox" checked={settings.tierLimitsEnabled} onChange={(e) => update("tierLimitsEnabled", e.target.checked)} />
-            {a.distribution.limits.useSaved}
-          </label>
-          <p className="turret-muted">{a.distribution.limits.tierText}</p>
-          <div className="turret-tier-grid">
-            {Object.entries(settings.tierLimits).map(([tier, value]) => (
-              <label key={tier}><span>{tier}</span><input value={value} readOnly /></label>
-            ))}
-          </div>
-        </section>
-      </div>
+      <DistributionLimits a={a} settings={settings} setSettings={setSettings}
+        disabled={controlsDisabled} assignments={assignments} players={players}
+        registrations={registrations} registrationSettings={registrationSettings}
+        onApplyFlexible={onApplyFlexible} onRestoreFlexible={onRestoreFlexible}
+        onActionFeedback={onActionFeedback} />
     </div>
   );
 }

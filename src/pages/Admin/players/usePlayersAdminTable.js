@@ -1,6 +1,12 @@
 import { useCallback, useMemo, useState } from "react";
 
 import { getPlayerRuleIssues } from "./playerRuleIssues.js";
+import {
+  matchesCaptainFilter,
+  matchesPlayerField,
+  matchesPlayerSearch,
+  normalizePlayerSearch,
+} from "../../../features/players/playerTableFilters.js";
 
 export const DEFAULT_PLAYER_FILTERS = {
   search: "",
@@ -39,25 +45,15 @@ export default function usePlayersAdminTable(players, registrationSettings) {
   );
 
   const filteredPlayers = useMemo(() => {
-    const search = filters.search.trim().toLowerCase();
+    const search = normalizePlayerSearch(filters.search);
 
     return playersWithIssues
       .filter(({ player, issues }) => {
-        const nickname = String(player.nickname || "").toLowerCase();
-        const alliance = String(player.alliance || "").toLowerCase();
-
-        const matchesSearch =
-          !search || nickname.includes(search) || alliance.includes(search);
-        const matchesAlliance =
-          filters.alliance === "all" || player.alliance === filters.alliance;
-        const matchesTroop =
-          filters.troopType === "all" || player.troopType === filters.troopType;
-        const matchesShift =
-          filters.shift === "all" || player.shift === filters.shift;
-        const matchesCaptain =
-          filters.captain === "all" ||
-          (filters.captain === "yes" && player.captain === true) ||
-          (filters.captain === "no" && player.captain !== true);
+        const matchesSearch = matchesPlayerSearch(player, search);
+        const matchesAlliance = matchesPlayerField(player, "alliance", filters.alliance);
+        const matchesTroop = matchesPlayerField(player, "troopType", filters.troopType);
+        const matchesShift = matchesPlayerField(player, "shift", filters.shift);
+        const matchesCaptain = matchesCaptainFilter(filters.captain, player.captain);
         const matchesRuleStatus =
           filters.ruleStatus === "all" ||
           (filters.ruleStatus === "attention" && issues.length > 0) ||

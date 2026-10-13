@@ -6,13 +6,40 @@
   }
 
   .template-card__stats {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 650px) {
   .settings-header {
+    min-width: 0;
     padding: 16px;
+    gap: 10px;
+  }
+
+  .settings-header > div:last-child {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .settings-header h1 {
+    font-size: clamp(19px, 6vw, 27px);
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+
+  .settings-header p {
+    overflow-wrap: anywhere;
+  }
+
+  .settings-header__icon {
+    width: 46px;
+    height: 46px;
+  }
+
+  .settings-header__icon img {
+    width: 44px;
+    height: 44px;
   }
 
   .settings-tabs {
@@ -25,6 +52,9 @@
     justify-content: center;
 
     padding: 0 10px;
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .settings-card {
@@ -55,8 +85,22 @@
   }
 
   .templates-header {
+    min-width: 0;
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .templates-header__title {
+    min-width: 0;
+    font-size: clamp(20px, 6vw, 26px);
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+
+  .templates-header__title img {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
   }
 
   .templates-add {
@@ -72,6 +116,10 @@
     flex-direction: column;
   }
 
+  .template-card__avatar { width: 55px; height: 55px; flex-basis: 55px; }
+  .template-card h3 { font-size: 19px; }
+  .template-card__stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
   .template-card__actions {
     width: 100%;
   }
@@ -82,15 +130,12 @@
     justify-content: center;
   }
 
-  .template-card__stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .template-extra__grid {
     grid-template-columns: 1fr;
   }
 
-  .template-extra__card select {
-    width: 90px;
+  .template-form .template-extra__card select {
+    width: 85px;
+    min-width: 85px;
   }
 }

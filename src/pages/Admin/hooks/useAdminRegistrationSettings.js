@@ -15,11 +15,17 @@ export default function useAdminRegistrationSettings({ enabled }) {
   const [loaded, setLoaded] = useState(false);
 
   const reload = useCallback(async () => {
-    const result = await getAdminRegistrationSettings();
-    const nextSettings = normalizeRegistrationSettings(result.settings);
-    setSettings(nextSettings);
-    setLoaded(true);
-    return nextSettings;
+    setErrorKey("");
+    try {
+      const result = await getAdminRegistrationSettings();
+      const nextSettings = normalizeRegistrationSettings(result.settings);
+      setSettings(nextSettings);
+      setLoaded(true);
+      return nextSettings;
+    } catch (error) {
+      setErrorKey("load");
+      throw error;
+    }
   }, []);
 
   useEffect(() => {
@@ -63,6 +69,7 @@ export default function useAdminRegistrationSettings({ enabled }) {
   }, [enabled, loaded]);
 
   return {
+    loaded,
     settings,
     setSettings,
     loading: enabled && !loaded ? true : loading,

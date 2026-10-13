@@ -212,7 +212,7 @@
 
   .admin-players-table {
     width: max-content;
-    min-width: 980px;
+    min-width: 1330px;
   }
 
   .admin-players-table__head,
@@ -221,14 +221,14 @@
       145px
       100px
       110px
+      78px
       70px
-      70px
-      115px
-      115px
-      105px
-      90px
-      90px
-      90px;
+      125px
+      125px
+      125px
+      120px
+      120px
+      96px;
 
     column-gap: 8px;
   }
@@ -285,7 +285,7 @@
 @media (max-width: 400px) {
   .admin-players-table {
     width: max-content;
-    min-width: 940px;
+    min-width: 1330px;
   }
 
   .admin-players-table__head,
@@ -294,14 +294,14 @@
       135px
       94px
       104px
-      66px
-      66px
-      110px
-      110px
-      98px
-      84px
-      84px
-      86px;
+      78px
+      70px
+      125px
+      125px
+      125px
+      120px
+      120px
+      96px;
   }
 }
 

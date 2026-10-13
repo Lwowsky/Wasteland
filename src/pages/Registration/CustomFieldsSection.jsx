@@ -1,4 +1,3 @@
-import { ListPlus } from "lucide-react";
 import "./CustomFieldsSection.css";
 
 function CustomFieldsSection({
@@ -15,7 +14,12 @@ function CustomFieldsSection({
   return (
     <section className="registration-section">
       <div className="registration-section__heading">
-        <ListPlus size={22} aria-hidden="true" />
+        <img
+          className="registration-section__heading-image"
+          src="/images/registration-settings/registration-fields-icon.webp"
+          alt=""
+          aria-hidden="true"
+        />
         <div>
           <h2>{t.registration.customFields.title}</h2>
           <p>{t.registration.customFields.text}</p>

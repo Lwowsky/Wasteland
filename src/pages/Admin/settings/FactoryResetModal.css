@@ -1,3 +1,23 @@
+.factory-reset-icon-image {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  object-fit: contain;
+  display: block;
+}
+
+.factory-reset-icon-image--shield {
+  width: 24px;
+  height: 24px;
+  flex-basis: 24px;
+}
+
+.factory-reset-icon-image--button {
+  width: 18px;
+  height: 18px;
+  flex-basis: 18px;
+}
+
 .factory-reset-content {
   display: grid;
   gap: 14px;
@@ -46,10 +66,13 @@
   align-items: flex-start;
   gap: 10px;
   padding: 12px;
-  background: #ffffff;
   border: 1px solid #cfdeed;
   border-radius: 12px;
   cursor: pointer;
+}
+
+.factory-reset-option {
+  background: #ffffff;
 }
 
 .factory-reset-select-all {

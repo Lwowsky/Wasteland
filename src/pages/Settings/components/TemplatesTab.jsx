@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import { TEMPLATE_ASSETS } from "../../../features/playerTemplates/templateAssets.js";
 
 import PlayerTemplateForm from "./PlayerTemplateForm.jsx";
 import PlayerTemplateCard from "./PlayerTemplateCard.jsx";
@@ -27,13 +27,16 @@ function TemplatesTab({
     <div className="templates-panel">
       <div className="templates-header">
         <div>
-          <h2>{t.settings.templates.title}</h2>
+          <h2 className="templates-header__title">
+            <img src={TEMPLATE_ASSETS.templates} alt="" aria-hidden="true" />
+            {t.settings.templates.title}
+          </h2>
 
           <p>{t.settings.templates.text}</p>
         </div>
 
         <button type="button" className="templates-add" onClick={onAdd}>
-          <Plus size={18} aria-hidden="true" />
+          <img src={TEMPLATE_ASSETS.add} alt="" aria-hidden="true" />
 
           {t.settings.templates.add}
         </button>
@@ -54,7 +57,10 @@ function TemplatesTab({
 
       <div className="templates-list">
         {templates.length === 0 && (
-          <div className="templates-empty">{t.settings.templates.empty}</div>
+          <div className="templates-empty">
+            <img src={TEMPLATE_ASSETS.templates} alt="" aria-hidden="true" />
+            <span>{t.settings.templates.empty}</span>
+          </div>
         )}
 
         {templates.map((template) => (

@@ -88,7 +88,7 @@ function RegistrationCycleModal({
               onClick={handleSave}
             >
               <img
-                src="/images/admin/icons/registration/save.svg"
+                src="/images/admin/icons/actions/approve.webp"
                 alt=""
                 aria-hidden="true"
               />

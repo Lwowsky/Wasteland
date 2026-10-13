@@ -1,0 +1,73 @@
+.turret-workspace-status {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-left: auto;
+  color: #2e684e;
+  font-size: 12px;
+  font-weight: 750;
+}
+.turret-workspace-status__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 9px;
+  border-radius: 9px;
+  border: 1px solid #c0e7cd;
+  background: #f0faf4;
+}
+.turret-workspace-status--warn .turret-workspace-status__label {
+  color: #955b16;
+  background: #fff8e8;
+  border-color: #f0d9a7;
+}
+.turret-workspace-status__save,
+.turret-workspace-status__secondary {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 11px;
+  border: 1px solid #adcdf3;
+  border-radius: 9px;
+  font: inherit;
+  cursor: pointer;
+}
+.turret-workspace-status__secondary {
+  background: #fff;
+  color: #225fa9;
+}
+.turret-workspace-status__save {
+  border-color: transparent;
+  color: #fff;
+  background: linear-gradient(135deg, #347fff, #5a67ef);
+}
+.turret-workspace-status button:disabled {
+  opacity: .48;
+  cursor: not-allowed;
+}
+.turret-workspace-status__save svg {
+  flex-shrink: 0;
+}
+@media (max-width: 760px) {
+  .turret-workspace-status { margin-left: 0; width: 100%; gap: 8px; }
+  .turret-workspace-status__label { flex: 0 0 100%; width: 100%; box-sizing: border-box; }
+  .turret-workspace-status__save,
+  .turret-workspace-status__secondary { flex: 1 1 145px; white-space: normal; }
+}
+
+/* Reuse existing WEBP illustrations while keeping the compact button layout. */
+.turret-workspace-status__icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  object-fit: contain;
+}
+.turret-workspace-status__label .turret-workspace-status__icon {
+  width: 18px;
+  height: 18px;
+  flex-basis: 18px;
+}
