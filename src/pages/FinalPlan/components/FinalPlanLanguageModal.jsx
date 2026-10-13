@@ -1,3 +1,4 @@
+import { publicAsset } from "../../../utils/publicAsset.js";
 import uk from "../../../i18n/locales/uk/content/finalPlan.json" with { type: "json" };
 import en from "../../../i18n/locales/en/content/finalPlan.json" with { type: "json" };
 import Modal from "../../../components/Modal/Modal.jsx";
@@ -26,7 +27,7 @@ export default function FinalPlanLanguageModal({ open, onClose, languages, onCha
               <input type="checkbox" checked={selected} disabled={Boolean(fixed)}
                 onChange={(event) => toggle(code, event.target.checked)} />
               <span className="final-plan-language-option__flag" aria-hidden="true">
-                <img src={`/images/final-plan/lang/${code}.svg`} alt="" width="38" height="38" />
+                <img src={publicAsset(`/images/final-plan/lang/${code}.svg`)} alt="" width="38" height="38" />
               </span>
               <span>{copy.choices[code]}</span>
               {fixed && <span className="final-plan-language-option__fixed" title={copy.alwaysOn}>✓</span>}

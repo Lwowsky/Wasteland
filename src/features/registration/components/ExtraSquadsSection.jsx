@@ -106,7 +106,7 @@ function ExtraSquadsSection({
     return (
       <div className={`extra-squad extra-squad--${type}`}>
         <div className="extra-squad__title">
-          <img src={`/images/admin/troops/${type}.webp`} alt="" aria-hidden="true" />
+          <img src={publicAsset(`/images/admin/troops/${type}.webp`)} alt="" aria-hidden="true" />
           <strong>{t.registration.troops[type]}</strong>
         </div>
 

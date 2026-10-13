@@ -1,5 +1,12 @@
-/** Resolve public assets in local dev, GitHub project Pages and other base paths. */
+/**
+ * Resolve files from Vite's public/ directory across localhost, GitHub project
+ * Pages (/Wasteland/), and any other deployment base path.
+ *
+ * Keep BASE_URL as an explicit static reference: Vite replaces it at build time.
+ */
 export function publicAsset(path) {
-  const base = import.meta.env?.BASE_URL || "/";
-  return `${base.replace(/\/?$/, "/")}${String(path).replace(/^\/+/, "")}`;
+  // This guard permits using the helper in Node unit tests without Vite.
+  const base = import.meta.env ? import.meta.env.BASE_URL : "/";
+  const prefix = String(base || "/").replace(/\/?$/, "/");
+  return `${prefix}${String(path).replace(/^\/+/, "")}`;
 }
