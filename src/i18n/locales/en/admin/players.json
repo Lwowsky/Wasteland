@@ -1,0 +1,275 @@
+{
+  "title": "Full player table",
+  "description": "Full player data for region management.",
+  "actions": {
+    "add": "Add player",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "reset": "Reset"
+  },
+  "filters": {
+    "search": "Nickname or alliance",
+    "allAlliance": "Alliance: All",
+    "allTroops": "Troop type: All",
+    "allShifts": "Shift: All",
+    "captain": "Captain",
+    "captainAll": "Captain: All",
+    "captainYes": "Captain: Yes",
+    "captainNo": "Captain: No",
+    "ruleStatus": "Rules status",
+    "ruleStatusAll": "Status: All",
+    "ruleStatusAttention": "Needs attention",
+    "ruleStatusOk": "No issues",
+    "perPage": "Players per page",
+    "perPageAll": "All",
+    "perPageCount": "{{count}} per page"
+  },
+  "table": {
+    "nickname": "Nickname",
+    "alliance": "Alliance",
+    "troops": "Troops",
+    "tier": "Tier",
+    "lair": "Lair",
+    "march": "March",
+    "rally": "Rally",
+    "shift": "Shift",
+    "captain": "Captain",
+    "ready": "Ready",
+    "submitted": "Submitted",
+    "comment": "Comment",
+    "actions": "Actions"
+  },
+  "empty": "No players found.",
+  "loading": "Loading...",
+  "yes": "Yes",
+  "no": "No",
+  "troops": {
+    "fighter": "Fighter",
+    "rider": "Rider",
+    "shooter": "Shooter"
+  },
+  "shifts": {
+    "shift1": "Shift 1",
+    "shift2": "Shift 2",
+    "shift3": "Shift 3",
+    "shift4": "Shift 4",
+    "flexible": "Any shift"
+  },
+  "editor": {
+    "createTitle": "New player",
+    "editTitle": "Edit player",
+    "createSubtitle": "Add a new player to the current registration period.",
+    "editSubtitle": "Editing registration for {{name}}.",
+    "participation": {
+      "title": "Wasteland participation",
+      "description": "Main parameters used for player distribution.",
+      "shift": "Shift",
+      "ready": "Ready to attack",
+      "captain": "Captain",
+      "selectShift": "Select a shift"
+    },
+    "playerData": {
+      "title": "Player data",
+      "description": "Information from the player's registration.",
+      "nickname": "Nickname",
+      "alliance": "Alliance",
+      "tier": "Tier",
+      "troopType": "Troop type",
+      "lairLevel": "Lair level",
+      "marchSize": "March size",
+      "rallySize": "Rally size"
+    },
+    "extraSquads": {
+      "title": "Additional squads",
+      "description": "Optional. Up to two additional troop types can be selected.",
+      "main": "Main",
+      "comment": "Comment",
+      "commentPlaceholder": "Additional player information..."
+    },
+    "validation": {
+      "nickname": "Enter a nickname.",
+      "alliance": "Enter an alliance.",
+      "troopType": "Select a troop type.",
+      "tier": "Select a tier.",
+      "lair": "Lair level cannot be below 0.",
+      "march": "March size cannot be below 0.",
+      "rally": "Rally size cannot be below 0.",
+      "shift": "Select a shift."
+    },
+    "confirmDelete": "Delete player \"{{name}}\"?",
+    "ruleWarnings": {
+      "tier": "Tier {{tier}} is currently unavailable for new registrations. The player may keep this tier.",
+      "shift": "{{shift}} is currently unavailable for new registrations. The player may remain in this shift."
+    }
+  },
+  "regionEditor": {
+    "action": "Region editor",
+    "title": "Region editor",
+    "description": "View players, alliances, march size and rally size.",
+    "common": {
+      "close": "Close",
+      "save": "Save",
+      "saving": "Saving..."
+    },
+    "tabs": {
+      "players": "Players",
+      "alliances": "Alliances",
+      "combat": "March & Rally"
+    },
+    "sidebar": {
+      "title": "Players",
+      "description": "Select a player from the list.",
+      "search": "Search by nickname or alliance",
+      "empty": "No players found."
+    },
+    "players": {
+      "empty": "Select a player from the list.",
+      "player": "Player",
+      "tier": "Tier",
+      "captain": "Captain",
+      "troopType": "Troop type",
+      "march": "March size",
+      "rally": "Rally size",
+      "shift": "Shift",
+      "lair": "Lair level",
+      "ready": "Ready to attack",
+      "comment": "Comment"
+    },
+    "alliances": {
+      "empty": "No alliances found.",
+      "alliance": "Alliance",
+      "registered": "Registered",
+      "captains": "Captains",
+      "tiers": "Tiers"
+    },
+    "combat": {
+      "title": "March & Rally",
+      "description": "Sort and edit march and rally size.",
+      "sortLabel": "Sort march and rally",
+      "tableLabel": "March and rally table",
+      "player": "Player",
+      "allianceTier": "Alliance / Tier",
+      "march": "March",
+      "rally": "Rally",
+      "actions": "Actions",
+      "sort": {
+        "marchDesc": "March: highest to lowest",
+        "marchAsc": "March: lowest to highest",
+        "rallyDesc": "Rally: highest to lowest",
+        "rallyAsc": "Rally: lowest to highest"
+      }
+    },
+    "sort": {},
+    "march": {
+      "title": "March size",
+      "description": "Sort and edit player march size.",
+      "current": "Current march"
+    },
+    "rally": {
+      "title": "Rally size",
+      "description": "Sort and edit player rally size.",
+      "current": "Current rally"
+    }
+  },
+  "errors": {
+    "load": "Failed to load players.",
+    "save": "Failed to save player.",
+    "delete": "Failed to delete player."
+  },
+  "stats": {
+    "total": "Total",
+    "players": "Players",
+    "captains": "Captains",
+    "inTurrets": "In turrets",
+    "reserve": "Reserve"
+  },
+  "ruleStatus": {
+    "attentionSummary": "Needs attention: {{count}} players",
+    "tierUnavailable": "Tier {{tier}} is no longer available in the current cycle.",
+    "shiftUnavailable": "{{shift}} is no longer active in the current cycle."
+  },
+  "localImport": {
+    "tabsLabel": "Player table source",
+    "databaseTab": "Database ({{count}})",
+    "localTab": "Local table ({{count}})",
+    "title": "Local import table",
+    "fileSummary": "{{file}} · {{count}} players",
+    "ready": "Ready",
+    "problems": "Problems",
+    "imported": "Imported",
+    "status": "Status",
+    "selectReady": "Select all available",
+    "transferSelected": "Move selected ({{count}})",
+    "transferAll": "Move ({{count}})",
+    "transferring": "Moving...",
+    "transferSuccess": "Added {{count}} new players. Duplicates skipped: {{skipped}}.",
+    "transferError": "Could not move players: {{code}}",
+    "clearImported": "Clear imported",
+    "clearAll": "Delete local table",
+    "clearConfirm": "Delete the entire local import table?",
+    "ownerAdminOnly": "Only Owner or Admin can move local players to the database.",
+    "duplicateD1": "Nickname already exists in the database",
+    "duplicateLocal": "Duplicate in local table",
+    "issueLabels": {
+      "nickname": "Missing nickname",
+      "alliance": "Missing alliance",
+      "troopType": "Unknown troop type",
+      "tier": "Unknown tier",
+      "shift": "Unknown shift",
+      "captain": "Captain value is not mapped",
+      "readyAttack": "Ready status is not mapped"
+    },
+    "replaceSuccess": "The database table was replaced. {{count}} players were moved. Registration remains open.",
+    "transferModal": {
+      "title": "Move players to database",
+      "subtitle": "Choose how to move the local table into the database.",
+      "selected": "Selected",
+      "newPlayers": "New",
+      "duplicates": "Already in database",
+      "databaseNow": "Currently in database",
+      "addMissing": {
+        "title": "Add only missing players",
+        "description": "New players will be added. Existing nicknames will remain unchanged."
+      },
+      "replaceAll": {
+        "title": "Replace table and keep registration open",
+        "description": "The current player table will be replaced with the local table. New registrations through the site will still be accepted.",
+        "onlyAllRows": "This option is available only when moving the entire local table."
+      },
+      "replaceWarning": "The current cycle player table will be replaced in one safe transaction. The saved turret draft and published final plan for this cycle will be deleted and must be rebuilt. Registration remains open.",
+      "cancel": "Cancel",
+      "processing": "Moving...",
+      "addButton": "Add new ({{count}})",
+      "replaceButton": "Replace table",
+      "replaceAndClose": {
+        "title": "Replace table and close registration",
+        "description": "The current player table will be replaced with the local table, then new registrations through the site will stop."
+      },
+      "replaceAndCloseWarning": "The player table will be replaced and the current cycle turret draft and published final plan deleted. Registration will close early. Rebuild the plan after importing.",
+      "replaceAndCloseButton": "Replace and close registration"
+    },
+    "clearTitle": "Delete local table",
+    "guideTitle": "What should I do with the local table?",
+    "guideText": "This is an import draft. Players have not been moved to the database yet. Review the data, fix any issues, then press “Move” and choose how it should be written.",
+    "replaceAndCloseSuccess": "The database table was replaced. {{count}} players were moved. Registration was closed."
+  },
+  "pagination": {
+    "label": "Player table pages",
+    "previous": "Previous page",
+    "next": "Next page",
+    "pageOf": "{{page}} / {{pages}}"
+  },
+  "confirm": {
+    "deletePlayerTitle": "Delete player"
+  },
+  "databaseTable": {
+    "clear": "Clear database table",
+    "clearTitle": "Clear database table?",
+    "clearConfirm": "All players in the current cycle will be deleted from the database and from the public table. The cycle and its settings will remain.",
+    "clearSuccess": "Removed {{count}} players from the database table.",
+    "error": "Could not clear the database table: {{code}}"
+  }
+}

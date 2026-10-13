@@ -1,0 +1,303 @@
+.settings-access-inline-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  display: block;
+}
+
+.settings-access-status-icon {
+  width: 17px;
+  height: 17px;
+  object-fit: contain;
+  display: block;
+}
+
+.settings-access-card {
+  text-align: left;
+}
+
+.settings-access-card__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.settings-access-card__head h3,
+.settings-access-card__head p {
+  margin: 0;
+}
+
+.settings-access-card__head p {
+  margin-top: 4px;
+  color: #6a8099;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.settings-access-card__icon {
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+  display: grid;
+  place-items: center;
+  color: #416eea;
+  background: linear-gradient(145deg, #eef4ff, #e4ebff);
+  border: 1px solid #d2def8;
+  border-radius: 14px;
+}
+
+.settings-access-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+  padding: 5px;
+  background: #f2f7fd;
+  border: 1px solid #d7e4f1;
+  border-radius: 12px;
+}
+
+.settings-access-tabs button {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 10px;
+  color: #55728f;
+  background: transparent;
+  border: 0;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.settings-access-tabs button.is-active {
+  color: #ffffff;
+  background: linear-gradient(135deg, #2f78ef, #6559ec);
+  box-shadow: 0 7px 15px rgba(66, 91, 206, 0.2);
+}
+
+.settings-access-loading,
+.settings-access-body {
+  margin-top: 10px;
+}
+
+.settings-access-loading {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #69819a;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.settings-access-body {
+  display: grid;
+  gap: 8px;
+}
+
+.settings-access-status {
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.settings-access-status small {
+  margin-left: auto;
+  opacity: 0.78;
+  font-size: 11px;
+}
+
+.settings-access-status.is-public,
+.settings-access-status.is-active {
+  color: #23724f;
+  background: #edf9f3;
+  border: 1px solid #c3e8d3;
+}
+
+.settings-access-status.is-private {
+  color: #83404a;
+  background: #fff3f5;
+  border: 1px solid #efcbd1;
+}
+
+.settings-access-status.is-warning {
+  color: #8c650e;
+  background: #fff8e7;
+  border: 1px solid #eed592;
+}
+
+.settings-access-field {
+  display: grid;
+  gap: 6px;
+}
+
+.settings-access-field > span {
+  color: #315579;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.settings-access-field select {
+  width: 100%;
+  min-height: 36px;
+  padding: 0 10px;
+  color: #173a66;
+  background: #ffffff;
+  border: 1px solid #cfdeed;
+  border-radius: 10px;
+  outline: none;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.settings-access-field select:focus {
+  border-color: #6b86ee;
+  box-shadow: 0 0 0 3px rgba(81, 111, 226, 0.1);
+}
+
+.settings-access-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.settings-access-field--wide {
+  grid-column: 1 / -1;
+}
+
+.settings-access-token-status,
+.settings-access-generated {
+  display: grid;
+  gap: 5px;
+  padding: 11px;
+  border: 1px solid #d6e2f0;
+  border-radius: 11px;
+}
+
+.settings-access-token-status strong,
+.settings-access-generated strong {
+  color: #173a66;
+  font-size: 12px;
+}
+
+.settings-access-token-status span,
+.settings-access-generated span {
+  color: #6a8198;
+  font-size: 11px;
+}
+
+.settings-access-token-status {
+  background: #f7faff;
+}
+
+.settings-access-generated {
+  background: #f1f7ff;
+  border-color: #bfd5f0;
+}
+
+.settings-access-generated code {
+  max-width: 100%;
+  padding: 8px 9px;
+  overflow-wrap: anywhere;
+  color: #244f91;
+  background: #ffffff;
+  border: 1px solid #d0e0f3;
+  border-radius: 8px;
+  font-size: 11px;
+}
+
+.settings-access-generated button,
+.settings-access-revoke {
+  width: fit-content;
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 10px;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.settings-access-generated button {
+  color: #2c68bb;
+  background: #ffffff;
+  border: 1px solid #bcd3ed;
+}
+
+.settings-access-revoke {
+  color: #b43244;
+  background: #fff4f6;
+  border: 1px solid #efc2c9;
+}
+
+.settings-access-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.settings-access-actions .admin-primary-button,
+.settings-access-actions .admin-secondary-button {
+  min-height: 38px;
+  padding: 0 11px;
+  font-size: 11px;
+}
+
+.settings-access-message {
+  padding: 9px 10px;
+  border-radius: 9px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.settings-access-message.is-success {
+  color: #226f4d;
+  background: #eef9f3;
+  border: 1px solid #c6e8d5;
+}
+
+.settings-access-message.is-error {
+  color: #a52d3d;
+  background: #fff3f5;
+  border: 1px solid #efc4ca;
+}
+
+.settings-access-note {
+  margin: 0;
+  color: #72879d;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+@media (max-width: 620px) {
+  .settings-access-tabs,
+  .settings-access-options {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-access-field--wide {
+    grid-column: auto;
+  }
+
+  .settings-access-actions,
+  .settings-access-actions button,
+  .settings-access-generated button {
+    width: 100%;
+  }
+}

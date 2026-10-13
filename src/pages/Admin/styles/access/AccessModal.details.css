@@ -1,0 +1,435 @@
+/* =========================================================
+   PERMISSIONS GRID
+========================================================= */
+
+.admin-user-modal__permissions-grid {
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 13px;
+}
+
+.admin-permission-group {
+  min-width: 0;
+  min-height: 176px;
+
+  padding: 16px;
+
+  background: linear-gradient(145deg, #ffffff, #f8fbff);
+
+  border: 1px solid rgba(21, 48, 78, 0.11);
+  border-radius: 15px;
+}
+
+.admin-permission-group__head {
+  min-width: 0;
+
+  margin-bottom: 13px;
+}
+
+.admin-permission-group__head > div {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.admin-permission-group__head strong {
+  color: #173a63;
+
+  font-size: 15px;
+}
+
+.admin-permission-group__head span {
+  color: #6f849c;
+
+  font-size: 12px;
+  line-height: 1.4;
+
+  overflow-wrap: anywhere;
+}
+
+.admin-permission-group__items {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 9px;
+}
+
+.admin-permission-row {
+  min-width: 0;
+  min-height: 29px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  color: #173a63;
+
+  font-size: 13px;
+
+  cursor: pointer;
+}
+
+.admin-permission-row span {
+  min-width: 0;
+
+  overflow-wrap: anywhere;
+}
+
+.admin-permission-row input {
+  width: 17px;
+  height: 17px;
+
+  flex: 0 0 auto;
+
+  accent-color: #347fff;
+}
+
+.admin-permission-row--locked {
+  opacity: 0.38;
+
+  cursor: default;
+}
+
+/* =========================================================
+   TECHNICAL INFO
+========================================================= */
+
+.admin-user-modal__technical {
+  width: 100%;
+  min-width: 0;
+
+  margin-top: 15px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid rgba(21, 48, 78, 0.11);
+  border-radius: 14px;
+}
+
+.admin-user-modal__technical-toggle {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding: 0 15px;
+
+  color: #173a63;
+  background: transparent;
+
+  border: 0;
+
+  font: inherit;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition: background 0.18s ease;
+}
+
+.admin-user-modal__technical-toggle:hover {
+  background: #f8fbff;
+}
+
+.admin-user-modal__technical-toggle svg {
+  flex: 0 0 auto;
+}
+
+.admin-user-modal__technical-content {
+  min-width: 0;
+
+  padding: 0 15px 15px;
+}
+
+.admin-user-modal__technical-content > div {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+
+  padding: 12px;
+
+  background: #f7faff;
+
+  border: 1px solid #dbe7f3;
+  border-radius: 10px;
+}
+
+.admin-user-modal__technical-content span {
+  color: #6c829b;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  text-transform: uppercase;
+}
+
+.admin-user-modal__technical-content strong {
+  min-width: 0;
+
+  color: #173a63;
+
+  font-size: 12px;
+
+  overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   FOOTER — part of scrollable content (not sticky)
+========================================================= */
+
+.admin-user-site-modal .admin-user-modal__bottom-actions {
+  margin-top: 24px;
+  padding: 18px 0 4px;
+  background: transparent;
+}
+
+.admin-user-modal__footer-right {
+  min-width: 0;
+
+  display: flex;
+
+  gap: 10px;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.admin-user-site-modal .admin-danger-button,
+.admin-user-site-modal .admin-secondary-button,
+.admin-user-site-modal .admin-primary-button {
+  min-height: 42px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 0 15px;
+
+  border-radius: 10px;
+
+  font: inherit;
+  font-weight: 800;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+.admin-user-site-modal .admin-danger-button svg,
+.admin-user-site-modal .admin-secondary-button svg,
+.admin-user-site-modal .admin-primary-button svg {
+  flex: 0 0 auto;
+}
+
+.admin-user-site-modal .admin-danger-button:hover:not(:disabled),
+.admin-user-site-modal .admin-secondary-button:hover:not(:disabled),
+.admin-user-site-modal .admin-primary-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.admin-user-site-modal .admin-danger-button:disabled,
+.admin-user-site-modal .admin-secondary-button:disabled,
+.admin-user-site-modal .admin-primary-button:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+}
+
+.admin-user-site-modal .admin-danger-button {
+  color: #c83846;
+  background: #fff1f2;
+
+  border: 1px solid #f1b7bd;
+}
+
+.admin-user-site-modal .admin-danger-button:hover:not(:disabled) {
+  background: #ffe8eb;
+}
+
+.admin-user-site-modal .admin-secondary-button {
+  color: #3474bd;
+  background: #ffffff;
+
+  border: 1px solid #c9ddef;
+}
+
+.admin-user-site-modal .admin-secondary-button:hover:not(:disabled) {
+  background: #f5faff;
+}
+
+.admin-user-site-modal .admin-primary-button {
+  color: #ffffff;
+
+  background: linear-gradient(135deg, #347fff, #5e63f0);
+
+  border: 0;
+
+  box-shadow: 0 8px 20px rgba(58, 93, 220, 0.2);
+}
+
+.admin-user-site-modal .admin-primary-button:hover:not(:disabled) {
+  box-shadow: 0 11px 24px rgba(58, 93, 220, 0.26);
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1200px) {
+  .admin-user-modal__summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-user-modal__permissions-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+  .admin-user-modal__avatar {
+    width: 44px;
+    height: 44px;
+
+    font-size: 16px;
+  }
+
+  .admin-user-modal__profile-text h2 {
+    font-size: 20px;
+  }
+
+  .admin-user-modal__profile-text p {
+    font-size: 12px;
+  }
+
+  .admin-user-modal__summary {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+
+    margin-bottom: 16px;
+  }
+
+  .admin-user-summary-card {
+    min-height: 78px;
+
+    padding: 13px;
+  }
+
+  .admin-user-modal__permissions-grid {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+  .admin-permission-group {
+    min-height: 0;
+
+    padding: 14px;
+  }
+
+  .admin-user-modal__permissions-heading {
+    align-items: flex-start;
+  }
+
+  .admin-user-site-modal .site-modal__footer {
+    align-items: stretch;
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+  .admin-user-site-modal .site-modal__footer > div:first-child {
+    width: 100%;
+  }
+
+  .admin-user-modal__footer-right {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 8px;
+  }
+
+  .admin-user-site-modal .admin-danger-button,
+  .admin-user-site-modal .admin-secondary-button,
+  .admin-user-site-modal .admin-primary-button {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 430px) {
+  .admin-user-modal__profile {
+    gap: 10px;
+  }
+
+  .admin-user-modal__avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .admin-user-modal__profile-text h2 {
+    font-size: 18px;
+  }
+
+  .admin-user-modal__permissions-heading h3 {
+    font-size: 18px;
+  }
+
+  .admin-user-modal__footer-right {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-user-modal__technical-toggle {
+    min-height: 44px;
+
+    padding: 0 12px;
+  }
+
+  .admin-user-modal__technical-content {
+    padding: 0 12px 12px;
+  }
+}
+
+/* Permission presets – compact actions in the access modal */
+.admin-user-modal__permission-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.admin-user-modal__permission-actions .admin-secondary-button { font-size: 12px; padding: 8px 10px; }

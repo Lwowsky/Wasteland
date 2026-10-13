@@ -1,0 +1,86 @@
+.settings-modal-footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.settings-modal-footer > span {
+  color: #6a8099;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.export-settings-modal {
+  display: grid;
+  gap: 12px;
+}
+
+.export-settings-select-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 9px 12px;
+  color: #2c6fba;
+  background: #f1f7ff;
+  border: 1px solid #bfd7f1;
+  border-radius: 10px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.export-settings-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.export-settings-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 11px 12px;
+  background: #ffffff;
+  border: 1px solid #d4e2f0;
+  border-radius: 11px;
+  cursor: pointer;
+}
+
+.export-settings-row:hover {
+  background: #f8fbff;
+  border-color: #a9c9ea;
+}
+
+.export-settings-row input {
+  flex: 0 0 auto;
+}
+
+.export-settings-row > span {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.export-settings-row strong {
+  color: #173a66;
+  overflow-wrap: anywhere;
+}
+
+.export-settings-row small {
+  color: #758ba4;
+  font-size: 10px;
+}
+
+@media (max-width: 900px) {
+  .export-settings-list {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-modal-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

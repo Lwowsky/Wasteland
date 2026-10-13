@@ -1,0 +1,316 @@
+@media (max-width: 760px) {
+  .region-editor-modal {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .region-editor-modal .site-modal__body {
+    width: 100%;
+    min-width: 0;
+
+    overflow: hidden;
+  }
+
+  .region-editor-layout {
+    width: 100%;
+
+    height: calc(94dvh - 96px);
+    min-height: 0;
+
+    display: block;
+
+    overflow: hidden;
+  }
+
+  .region-editor-main {
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+  }
+
+  /* =====================================================
+     MOBILE PLAYER BUTTON
+  ===================================================== */
+
+  .region-editor-mobile-player-trigger {
+    width: calc(100% - 28px);
+    min-width: 0;
+    min-height: 62px;
+
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr) 22px;
+    align-items: center;
+
+    gap: 10px;
+
+    flex: 0 0 auto;
+
+    margin: 12px 14px 0;
+    padding: 8px 12px;
+
+    color: #173a63;
+    background: linear-gradient(145deg, #ffffff, #f2f8ff);
+
+    border: 1px solid #cbdff3;
+    border-radius: 14px;
+
+    box-shadow: 0 7px 18px rgba(41, 84, 131, 0.07);
+
+    text-align: left;
+
+    cursor: pointer;
+  }
+
+  .region-editor-mobile-player-trigger > img {
+    width: 40px;
+    height: 40px;
+
+    display: block;
+
+    object-fit: contain;
+  }
+
+  .region-editor-mobile-player-trigger__text {
+    min-width: 0;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+
+    column-gap: 8px;
+    row-gap: 2px;
+  }
+
+  .region-editor-mobile-player-trigger__text small {
+    grid-column: 1 / -1;
+
+    color: #748ca6;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    text-transform: uppercase;
+  }
+
+  .region-editor-mobile-player-trigger__text strong {
+    min-width: 0;
+
+    overflow: hidden;
+
+    color: #173a63;
+
+    font-size: 15px;
+    font-weight: 900;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .region-editor-mobile-player-trigger__text em {
+    color: #7a8fa7;
+
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 800;
+
+    white-space: nowrap;
+  }
+
+  /* =====================================================
+     MOBILE SIDEBAR
+  ===================================================== */
+
+  .region-editor-sidebar {
+    position: absolute;
+    z-index: 30;
+
+    inset: 0 auto 0 0;
+
+    width: min(88%, 360px);
+    height: 100%;
+
+    max-height: none;
+
+    border-right: 1px solid #bfd4ea;
+    border-bottom: 0;
+
+    box-shadow: 18px 0 38px rgba(13, 44, 77, 0.22);
+
+    transform: translateX(-102%);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+      transform 0.22s ease,
+      opacity 0.22s ease;
+  }
+
+  .region-editor-sidebar--mobile-open {
+    transform: translateX(0);
+
+    opacity: 1;
+
+    pointer-events: auto;
+  }
+
+  .region-editor-sidebar__mobile-close {
+    width: 34px;
+    height: 34px;
+
+    display: inline-grid;
+    place-items: center;
+
+    padding: 0;
+
+    color: #2674dc;
+    background: #ffffff;
+
+    border: 1px solid #c9def2;
+    border-radius: 10px;
+
+    cursor: pointer;
+  }
+
+  .region-editor-mobile-backdrop {
+    position: absolute;
+    z-index: 20;
+
+    inset: 0;
+
+    display: block;
+
+    background: rgba(10, 28, 48, 0.28);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: opacity 0.22s ease;
+  }
+
+  .region-editor-mobile-backdrop--open {
+    opacity: 1;
+
+    pointer-events: auto;
+  }
+
+  /* =====================================================
+     MOBILE TABS
+  ===================================================== */
+
+  .region-editor-tabs {
+    gap: 8px;
+
+    padding: 10px 14px 12px;
+  }
+
+  .region-editor-tab {
+    min-height: 44px;
+
+    padding: 0 12px;
+
+    font-size: 13px;
+  }
+
+  .region-editor-tab__image {
+    width: 26px;
+    height: 26px;
+  }
+
+  /* =====================================================
+     MOBILE CONTENT
+  ===================================================== */
+
+  .region-editor-content {
+    padding: 14px;
+
+    /*
+      НЕ міняй на overflow-x:auto.
+      Таблиця повинна скролитися сама.
+    */
+    overflow-x: hidden;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+  .region-editor-mobile-player-trigger {
+    width: calc(100% - 20px);
+    min-height: 58px;
+
+    margin: 10px 10px 0;
+  }
+
+  /*
+    Тут залишаємо три кнопки в один ряд.
+    Вони не створюють ширину за межами модалки.
+  */
+
+  .region-editor-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 6px;
+
+    padding: 8px 10px 10px;
+
+    overflow: hidden;
+  }
+
+  .region-editor-tab {
+    min-width: 0;
+    min-height: 42px;
+
+    gap: 5px;
+
+    padding: 0 6px;
+
+    font-size: 11px;
+  }
+
+  .region-editor-tab__image {
+    width: 23px;
+    height: 23px;
+  }
+
+  .region-editor-tab span {
+    min-width: 0;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .region-editor-content {
+    padding: 10px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 360px) {
+  .region-editor-tab {
+    gap: 4px;
+
+    padding: 0 4px;
+
+    font-size: 10px;
+  }
+
+  .region-editor-tab__image {
+    width: 21px;
+    height: 21px;
+  }
+
+  .region-editor-content {
+    padding: 8px;
+  }
+}

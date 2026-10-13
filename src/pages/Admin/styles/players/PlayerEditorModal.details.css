@@ -1,0 +1,353 @@
+/* =========================================================
+   MAIN BADGE
+========================================================= */
+
+.player-extra-squad__main-badge {
+  flex: 0 0 auto;
+
+  padding: 7px 10px;
+
+  color: #71839a;
+  background: #e7edf4;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   COMMENT
+========================================================= */
+
+.player-editor-field--comment {
+  margin-top: 16px;
+}
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.player-editor-error {
+  width: 100%;
+  min-width: 0;
+
+  padding: 11px 14px;
+
+  color: #cc4558;
+  background: #fff2f4;
+
+  border: 1px solid #ffd0d6;
+  border-radius: 12px;
+
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+
+  overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   FOOTER ACTIONS
+========================================================= */
+
+.player-editor-footer-actions {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.player-editor-button {
+  min-height: 42px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 0 17px;
+
+  border-radius: 11px;
+
+  font: inherit;
+  font-weight: 800;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.player-editor-button svg {
+  flex: 0 0 auto;
+}
+
+.player-editor-button:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.55;
+}
+
+.player-editor-button--primary {
+  color: #ffffff;
+
+  background: linear-gradient(135deg, #337df7, #6265ef);
+
+  border: 0;
+
+  box-shadow: 0 8px 20px rgba(63, 103, 225, 0.22);
+}
+
+.player-editor-button--primary:not(:disabled):hover {
+  transform: translateY(-1px);
+
+  box-shadow: 0 10px 24px rgba(63, 103, 225, 0.28);
+}
+
+.player-editor-button--secondary {
+  color: #3c6ea8;
+  background: #ffffff;
+
+  border: 1px solid #ccdef1;
+}
+
+.player-editor-button--secondary:not(:disabled):hover {
+  background: #f6faff;
+
+  border-color: #aac9ec;
+}
+
+.player-editor-button--danger {
+  color: #d33c54;
+
+  background: linear-gradient(135deg, #fff2f4, #ffe8ec);
+
+  border: 1px solid #f3aab5;
+}
+
+.player-editor-button--danger:not(:disabled):hover {
+  background: #ffe9ed;
+
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .player-editor-section {
+    padding: 17px;
+  }
+
+  .player-editor-fields-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+  }
+
+  .player-editor-participation-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 10px;
+  }
+
+  .player-extra-squads {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+  .player-editor-site-modal {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .player-editor-form {
+    gap: 12px;
+  }
+
+  .player-editor-section {
+    padding: 14px;
+
+    border-radius: 15px;
+  }
+
+  .player-editor-section__heading {
+    margin-bottom: 13px;
+  }
+
+  .player-editor-section__heading h3 {
+    font-size: 17px;
+  }
+
+  .player-editor-section__heading p {
+    font-size: 12px;
+  }
+
+  /* PARTICIPATION */
+
+  .player-editor-participation-grid {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+  /* MAIN FIELDS */
+
+  .player-editor-fields-grid {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+  .player-editor-field {
+    gap: 6px;
+  }
+
+  .player-editor-field input,
+  .player-editor-field select {
+    height: 44px;
+
+    padding: 0 11px;
+
+    font-size: 14px;
+  }
+
+  .player-editor-field textarea {
+    min-height: 84px;
+
+    padding: 11px;
+
+    font-size: 14px;
+  }
+
+  /* EXTRA SQUADS */
+
+  .player-extra-squads {
+    gap: 9px;
+  }
+
+  .player-extra-squad {
+    min-height: 60px;
+
+    gap: 8px;
+
+    padding: 10px 11px;
+  }
+
+  .player-extra-squad__toggle {
+    gap: 7px;
+
+    font-size: 12px;
+  }
+
+  .player-extra-squad select {
+    min-width: 78px;
+    max-width: 94px;
+    height: 38px;
+
+    padding: 0 7px;
+
+    font-size: 12px;
+  }
+
+  .player-extra-squad__main-badge {
+    padding: 6px 8px;
+
+    font-size: 10px;
+  }
+
+  .player-editor-field--comment {
+    margin-top: 12px;
+  }
+
+  /* FOOTER */
+
+  .player-editor-footer-actions {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 8px;
+  }
+
+  .player-editor-button {
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+
+    padding: 0 10px;
+
+    font-size: 12px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 390px) {
+  .player-editor-section {
+    padding: 12px;
+  }
+
+  .player-extra-squad {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .player-extra-squad__toggle {
+    width: 100%;
+  }
+
+  .player-extra-squad select,
+  .player-extra-squad__main-badge {
+    width: 100%;
+    max-width: none;
+
+    text-align: center;
+  }
+
+  .player-editor-footer-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   CURRENT CYCLE RULE WARNING
+========================================================= */
+
+.player-editor-rule-warning {
+  display: block;
+
+  margin-top: 1px;
+
+  color: #9a6300;
+
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.35;
+
+  overflow-wrap: anywhere;
+}

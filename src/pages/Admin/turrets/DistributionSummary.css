@@ -1,0 +1,6 @@
+.planner-summary-shell { min-width: 0; }
+.planner-summary-shell .players-shift-stats { margin: 0; }
+.planner-summary-loading {
+  padding: 22px; background: #f4f9ff; border: 1px solid #c9ddf4;
+  color: #355a86; border-radius: 15px; text-align: center;
+}

@@ -1,13 +1,22 @@
 {
-  "name": "wasteland-king-defenders",
-  "main": "worker.js",
-  "compatibility_date": "2026-01-01",
-  "assets": {
-    "directory": "./",
-    "binding": "ASSETS",
-    "not_found_handling": "single-page-application"
+  "name": "wasteland-king-api",
+  "main": "worker/src/index.js",
+  "compatibility_date": "2026-10-04",
+
+  "vars": {
+    "FIREBASE_PROJECT_ID": "wasteland-king-region"
   },
-  "observability": {
-    "enabled": true
-  }
+
+  "triggers": {
+    "crons": ["17 0 * * *"]
+  },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "wasteland-king",
+      "database_id": "28071aea-2c11-417b-99b4-50ad2518b96d",
+      "migrations_dir": "worker/migrations"
+    }
+  ]
 }

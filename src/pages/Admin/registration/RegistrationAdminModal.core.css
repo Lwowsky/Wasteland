@@ -1,0 +1,343 @@
+/* Shared styles for registration administration modals. */
+
+/* =========================================================
+   MODAL COMMON
+========================================================= */
+
+.registration-modal-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.registration-modal-stack--compact {
+  gap: 12px;
+}
+
+.registration-modal-section {
+  padding: 16px;
+  border: 1px solid #dbe7f3;
+  border-radius: 16px;
+  background: #fbfdff;
+}
+
+.registration-modal-section--compact {
+  padding: 14px;
+}
+
+.registration-modal-section h3 {
+  margin: 0 0 5px;
+  color: #173a63;
+  font-size: 18px;
+}
+
+.registration-modal-section > p {
+  margin: 0 0 13px;
+  color: #7188a2;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.registration-modal-footer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.registration-modal-footer--spread {
+  justify-content: space-between;
+}
+
+.registration-modal-footer__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.registration-secondary-button {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 15px;
+  border: 1px solid #b9d3f2;
+  border-radius: 10px;
+  color: #2867b5;
+  background: #eef6ff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.registration-secondary-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.registration-mode-switch,
+.registration-modal-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  padding: 5px;
+  border: 1px solid #d7e5f4;
+  border-radius: 13px;
+  background: #f4f8fd;
+}
+
+.registration-mode-switch button,
+.registration-modal-tabs button {
+  min-height: 42px;
+  border: 0;
+  border-radius: 9px;
+  color: #527191;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.registration-mode-switch button.is-active,
+.registration-modal-tabs button.is-active {
+  color: #ffffff;
+  background: linear-gradient(135deg, #2d84f5, #5465ef);
+  box-shadow: 0 8px 18px rgba(55, 102, 225, 0.22);
+}
+
+/* =========================================================
+   CYCLE
+========================================================= */
+
+.registration-choice-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.registration-choice-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.registration-choice-grid--spaced {
+  margin-top: 12px;
+}
+
+.registration-choice-option {
+  display: flex;
+  min-width: 0;
+  min-height: 44px;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 11px;
+  border: 1px solid #d9e6f3;
+  border-radius: 11px;
+  color: #315c88;
+  background: #f8fbff;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.registration-choice-option:has(input:checked) {
+  border-color: #95bff3;
+  background: #eaf4ff;
+}
+
+.registration-tier-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.registration-tier-option {
+  display: grid;
+  min-height: 50px;
+  place-items: center;
+  border: 1px solid #d9e6f3;
+  border-radius: 11px;
+  color: #315c88;
+  background: #f8fbff;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.registration-tier-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.registration-tier-option:has(input:checked) {
+  color: #ffffff;
+  border-color: #347ff0;
+  background: linear-gradient(135deg, #3288f5, #5366ef);
+  box-shadow: 0 7px 16px rgba(55, 102, 225, 0.18);
+}
+
+/* =========================================================
+   ALLIANCES
+========================================================= */
+
+.registration-alliance-add {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 10px;
+}
+
+.registration-alliance-add__button,
+.registration-custom-field-add__button {
+  min-height: 44px;
+}
+
+.registration-empty-state {
+  margin-top: 12px;
+  padding: 13px;
+  border: 1px dashed #c8dbef;
+  border-radius: 11px;
+  color: #7188a2;
+  background: #f8fbff;
+  font-size: 14px;
+  text-align: center;
+}
+
+.registration-alliance-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.registration-alliance-item {
+  display: grid;
+  grid-template-columns: 80px minmax(0, 1fr) 34px;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 11px;
+  border: 1px solid #dbe7f3;
+  border-radius: 11px;
+  background: #ffffff;
+}
+
+.registration-alliance-item strong {
+  color: #1f61b7;
+  font-size: 14px;
+}
+
+.registration-alliance-item span {
+  min-width: 0;
+  overflow: hidden;
+  color: #315c88;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.registration-alliance-item button,
+.registration-custom-field-row button {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 1px solid #e6ccd1;
+  border-radius: 8px;
+  color: #b23b4e;
+  background: #fff6f7;
+  cursor: pointer;
+}
+
+.registration-alliance-item button:disabled,
+.registration-custom-field-row button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   FORM FIELDS
+========================================================= */
+
+.registration-required-list,
+.registration-custom-field-list {
+  overflow: hidden;
+  border: 1px solid #dbe7f3;
+  border-radius: 13px;
+  background: #ffffff;
+}
+
+.registration-required-list__head,
+.registration-required-row,
+.registration-custom-field-list__head,
+.registration-custom-field-row {
+  display: grid;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 13px;
+}
+
+.registration-required-list__head,
+.registration-required-row {
+  grid-template-columns: minmax(0, 1fr) 120px 120px;
+}
+
+.registration-required-list__head,
+.registration-custom-field-list__head {
+  color: #6e86a0;
+  background: #f4f8fd;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.registration-required-list__head span:not(:first-child),
+.registration-custom-field-list__head span:not(:first-child),
+.registration-required-row > input,
+.registration-custom-field-row > input[type="checkbox"] {
+  justify-self: center;
+}
+
+.registration-required-row {
+  color: #244e79;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.registration-required-row + .registration-required-row,
+.registration-custom-field-row + .registration-custom-field-row {
+  border-top: 1px solid #e6eef6;
+}
+
+.registration-custom-field-add {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 10px;
+}
+
+.registration-custom-field-list {
+  margin-top: 12px;
+}
+
+.registration-custom-field-list__head,
+.registration-custom-field-row {
+  grid-template-columns: minmax(0, 1fr) 110px 110px 40px;
+}
+
+.registration-custom-field-row > input[type="text"] {
+  min-width: 0;
+  min-height: 36px;
+  padding: 0 10px;
+  border: 1px solid #c8dbef;
+  border-radius: 9px;
+  color: #173a63;
+  background: #ffffff;
+  font: inherit;
+  font-size: 14px;
+}
+
+

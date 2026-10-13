@@ -1,0 +1,97 @@
+{
+  "title": "Wasteland Registration",
+  "text": "Fill in your information to participate in the region event.",
+  "select": "Select a value",
+  "comment": "Comment",
+  "commentPlaceholder": "You can add availability, limits or a note",
+  "submit": "Submit request",
+  "reset": "Clear form",
+  "troops": {
+    "fighter": "Fighters",
+    "rider": "Riders",
+    "shooter": "Shooters"
+  },
+  "player": {
+    "title": "Player information",
+    "text": "Main information about your account",
+    "nickname": "Nickname",
+    "nicknamePlaceholder": "Enter nickname",
+    "alliance": "Alliance",
+    "alliancePlaceholder": "Select alliance",
+    "otherAlliance": "Other",
+    "troopType": "Main troop type",
+    "tier": "Tier",
+    "lairLevel": "Lair level",
+    "marchSize": "March size",
+    "rallySize": "Rally size",
+    "select": "Select a value",
+    "allianceManualLabel": "Enter alliance manually",
+    "allianceManualPlaceholder": "For example: ABC"
+  },
+  "readiness": {
+    "title": "Readiness",
+    "text": "Select your readiness to participate in the event.",
+    "attack": "Ready to attack another region",
+    "attackText": "I can participate in attacks on other regions.",
+    "captain": "Ready to be captain",
+    "captainText": "I can lead a march and coordinate actions."
+  },
+  "shifts": {
+    "title": "Shift availability",
+    "text": "Select the shift you are available for.",
+    "shift1": "Shift 1",
+    "shift2": "Shift 2",
+    "shift3": "Shift 3",
+    "shift4": "Shift 4",
+    "flexible": "Any shift",
+    "flexibleText": "Can be assigned to one or multiple shifts"
+  },
+  "extra": {
+    "title": "Additional squads",
+    "text": "Specify additional full squads of other troop types.",
+    "hasExtra": "I have additional full squads of other troop types",
+    "enable": "Enable",
+    "tier": "Additional tier"
+  },
+  "template": {
+    "title": "Player template",
+    "text": "Quickly fill the form using a saved player template.",
+    "select": "Select player",
+    "apply": "Fill form",
+    "empty": "There are no saved templates yet. You can create them in Settings.",
+    "lair": "Lair",
+    "saveCurrent": "Save current data as template",
+    "saved": "Template saved.",
+    "updated": "Existing template updated."
+  },
+  "success": {
+    "title": "Registration Accepted",
+    "text": "Your registration was submitted successfully."
+  },
+  "submitting": "Submitting...",
+  "errorTitle": "Error",
+  "unavailable": {
+    "title": "Registration unavailable",
+    "disabled": "Registration is currently unavailable.",
+    "full": "Registration is currently unavailable.",
+    "closed": "Registration is currently closed. Check the opening date and try again later.",
+    "notOpenYet": "Registration has not opened yet.",
+    "opensAt": "Opens on {{date}}."
+  },
+  "errors": {
+    "alreadyRegistered": "A player with this nickname is already registered for this cycle.",
+    "closed": "Registration is currently closed.",
+    "disabled": "Registration is currently unavailable.",
+    "full": "Registration is currently unavailable.",
+    "invalidData": "Please check the form data.",
+    "submit": "Failed to submit the registration. Please try again.",
+    "requiredFields": "Please complete all required fields. We have highlighted the first missing field for you.",
+    "requiredFieldsTitle": "Please fill in the required fields"
+  },
+  "customFields": {
+    "title": "Additional fields",
+    "text": "Fill in the additional information requested by the administrator."
+  },
+  "loading": "Loading registration...",
+  "loadError": "Failed to load registration."
+}

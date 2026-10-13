@@ -1,0 +1,311 @@
+/* =========================
+   USERS TABLE
+========================= */
+
+.admin-access-tab .admin-table-card {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid #cbddee;
+  border-radius: 18px;
+
+  box-shadow: 0 10px 28px rgba(31, 69, 112, 0.065);
+
+  -webkit-overflow-scrolling: touch;
+}
+
+.admin-access-table__head,
+.admin-access-table__row {
+  display: grid;
+
+  grid-template-columns:
+    minmax(190px, 1.35fr)
+    minmax(135px, 0.85fr)
+    minmax(170px, 1.8fr)
+    minmax(140px, 0.8fr)
+    70px;
+
+  gap: 16px;
+
+  align-items: center;
+
+  width: 100%;
+  min-width: 900px;
+
+  padding: 13px 18px;
+
+  box-sizing: border-box;
+}
+
+.admin-access-table__head {
+  color: #71849a;
+
+  background: linear-gradient(180deg, #f3f8fe, #eaf3fc);
+
+  font-size: 12px;
+  font-weight: 900;
+
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.admin-access-table__row {
+  min-height: 78px;
+
+  color: #506b88;
+
+  border-top: 1px solid #e1ebf5;
+
+  font-size: 14px;
+
+  transition:
+    background 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.admin-access-table__row--clickable {
+  cursor: pointer;
+}
+
+.admin-access-table__row--clickable:hover {
+  background: linear-gradient(90deg, #f6faff, #eef6ff);
+}
+
+.admin-access-table__row--clickable:focus-visible {
+  position: relative;
+  z-index: 1;
+
+  outline: 2px solid #4d89ff;
+  outline-offset: -2px;
+}
+
+.admin-access-table__permissions {
+  min-width: 0;
+
+  overflow: hidden;
+
+  color: #506b88;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================
+   USER
+========================= */
+
+.admin-user-cell {
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  min-width: 0;
+}
+
+.admin-user-avatar {
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 auto;
+
+  width: 46px;
+  height: 46px;
+
+  color: #ffffff;
+
+  background: linear-gradient(135deg, #3382ff, #5f59ee);
+
+  border-radius: 50%;
+
+  box-shadow: 0 7px 18px rgba(54, 100, 240, 0.22);
+
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.admin-user-cell__text {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+}
+
+.admin-user-cell__text strong {
+  min-width: 0;
+
+  overflow: hidden;
+
+  color: #17365f;
+
+  font-size: 16px;
+  font-weight: 800;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-user-cell__text span {
+  min-width: 0;
+
+  overflow: hidden;
+
+  margin-top: 4px;
+
+  color: #7187a0;
+
+  font-size: 12px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================
+   ROLE BADGES
+========================= */
+
+.admin-access-tab .admin-badge {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  width: fit-content;
+  min-width: 124px;
+  min-height: 42px;
+
+  padding: 7px 16px 7px 10px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  box-sizing: border-box;
+  isolation: isolate;
+
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.admin-access-tab .admin-badge::after {
+  content: "";
+
+  position: absolute;
+  z-index: -1;
+
+  top: 2px;
+  left: 8%;
+  right: 8%;
+
+  height: 42%;
+
+  border-radius: 999px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.75),
+    rgba(255, 255, 255, 0.08)
+  );
+
+  pointer-events: none;
+}
+
+.admin-access-tab .admin-badge__icon {
+  display: block;
+
+  flex: 0 0 auto;
+
+  width: 24px;
+  height: 24px;
+
+  object-fit: contain;
+
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.admin-access-tab .admin-badge__label {
+  white-space: nowrap;
+}
+
+/* =========================
+   OWNER
+========================= */
+
+.admin-access-tab .admin-badge--role-owner {
+  color: #5f3800;
+
+  background: linear-gradient(
+    180deg,
+    #fff0a5 0%,
+    #ffc843 30%,
+    #e69708 68%,
+    #b86600 100%
+  );
+
+  border: 1px solid #d9930a;
+
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.72),
+    inset 0 -3px 5px rgba(109, 56, 0, 0.24),
+    0 6px 14px rgba(202, 128, 0, 0.26);
+}
+
+/* =========================
+   ADMIN
+========================= */
+
+.admin-access-tab .admin-badge--role-admin {
+  color: #ffffff;
+
+  background: linear-gradient(
+    180deg,
+    #65b4ff 0%,
+    #2789fa 30%,
+    #0c64db 68%,
+    #0644a4 100%
+  );
+
+  border: 1px solid #1769d4;
+
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.62),
+    inset 0 -3px 5px rgba(0, 45, 120, 0.3),
+    0 6px 14px rgba(17, 99, 219, 0.28);
+}
+
+/* =========================
+   CONSUL
+========================= */
+
+.admin-access-tab .admin-badge--role-consul {
+  color: #ffffff;
+
+  background: linear-gradient(
+    180deg,
+    #ba72ff 0%,
+    #8c3eed 30%,
+    #6620c8 68%,
+    #481390 100%
+  );
+
+  border: 1px solid #7d32df;
+
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -3px 5px rgba(57, 7, 120, 0.3),
+    0 6px 14px rgba(105, 38, 205, 0.28);
+}
+

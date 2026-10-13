@@ -1,0 +1,60 @@
+{
+  "title": "Final plan",
+  "shift1": "Shift 1",
+  "shift2": "Shift 2",
+  "share": "Share",
+  "typeByCaptain": "Type selected by captain",
+  "noPlayers": "No assigned players",
+  "towers": {
+    "hub": "Tech Hub",
+    "north": "North Turret",
+    "west": "West Turret",
+    "east": "East Turret",
+    "south": "South Turret"
+  },
+  "troops": {
+    "fighter": "Fighters",
+    "rider": "Riders",
+    "shooter": "Shooters"
+  },
+  "signatureAlt": "Developed by Lwowsky",
+  "textExport": {
+    "signature": "Developed by Lwowsky"
+  },
+  "loadingPlan": "Loading the published plan…",
+  "loadFailed": "Could not load the plan. Please refresh the page.",
+  "notPublished": "No final plan has been published for this cycle yet.",
+  "lastPublished": "Published: {{date}}",
+  "shift3": "Shift 3",
+  "shift4": "Shift 4",
+  "metrics": {
+    "legend": "March totals",
+    "capacity": "Captain march + rally",
+    "used": "March in turret",
+    "remaining": "Free rally space",
+    "unavailable": "Republish to include rally capacity"
+  },
+  "labels": {
+    "captain": "Captain",
+    "players": "Players"
+  },
+  "languageModal": {
+    "title": "Final-plan languages",
+    "subtitle": "Choose plan languages. English is always enabled.",
+    "close": "Close",
+    "done": "Done",
+    "alwaysOn": "Always enabled",
+    "help": "English is always enabled. Ukrainian is optional.",
+    "choices": {
+      "uk": "Українська",
+      "en": "English"
+    }
+  },
+  "toolbar": {
+    "language": "Plan languages",
+    "png": "Download PNG",
+    "txt": "Download TXT (all shifts)",
+    "exportFailed": "Could not save the image. Please try again."
+  },
+  "refreshPlan": "Refresh plan"
+}

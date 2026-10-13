@@ -1,0 +1,23 @@
+{
+  "home": "Home",
+  "registration": "Registration",
+  "players": "Player table",
+  "finalPlan": "Final plan",
+  "settings": "Settings",
+  "language": "Language",
+  "region": "Region",
+  "wastelandDate": "Wasteland date",
+  "registrationOpens": "Registration opens",
+  "registrationDeadline": "Registration deadline",
+  "organizerAlliance": "Organizer alliance",
+  "governor": "Governor",
+  "localTime": "Local time",
+  "loading": "Loading...",
+  "loadError": "Failed to load data.",
+  "brand": "Wasteland King",
+  "utc": "UTC",
+  "admin": "Admin",
+  "openNavigation": "Open navigation",
+  "closeNavigation": "Close navigation",
+  "toggleTimeZone": "Toggle time zone"
+}

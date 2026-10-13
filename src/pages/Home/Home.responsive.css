@@ -1,0 +1,102 @@
+/* RESPONSIVE */
+
+@media (max-width: 1050px) {
+  .home-middle-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1000px) {
+  .home-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .home-countdowns,
+  .home-navigation {
+    grid-template-columns: 1fr;
+  }
+
+  .home-alliance-row {
+    grid-template-columns:
+      34px
+      1fr
+      80px;
+  }
+
+  .home-alliance-progress {
+    grid-column: 2 / 4;
+  }
+
+  .home-alliance-row b {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .home-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .home-countdown {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-countdown-card__top {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .home-recent-head {
+    display: none;
+  }
+
+  .home-recent-row {
+    grid-template-columns:
+      minmax(0, 1fr)
+      48px
+      72px;
+
+    gap: 8px;
+  }
+
+  .home-recent-row > span:nth-of-type(2) {
+    display: none;
+  }
+
+  .home-recent-time {
+    text-align: right;
+  }
+
+  .home-nav-card {
+    min-height: 120px;
+
+    padding: 16px;
+  }
+
+  .home-nav-card__icon {
+    width: 58px;
+    height: 58px;
+  }
+
+  .home-nav-card__icon img {
+    width: 56px;
+    height: 56px;
+  }
+
+  .home-stat-card__image {
+    width: 64px;
+    height: 64px;
+  }
+
+  .home-nav-card h2 {
+    font-size: 18px;
+  }
+
+  .home-nav-card p {
+    padding-right: 28px;
+
+    font-size: 12px;
+  }
+}

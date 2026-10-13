@@ -1,0 +1,79 @@
+/* Shared status styles for the player import panel and mapping modal. */
+
+.settings-import-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 11px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.settings-import-message--error {
+  color: #9e2939;
+  background: #fff2f4;
+  border: 1px solid #efbdc4;
+}
+
+.settings-import-message--success {
+  color: #256b48;
+  background: #eefaf3;
+  border: 1px solid #bce2cb;
+}
+
+
+.settings-import-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.settings-import-stats span {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 8px 9px;
+  color: #647c96;
+  background: #ffffff;
+  border: 1px solid #d4e2ef;
+  border-radius: 10px;
+  font-size: 11px;
+}
+
+.settings-import-stats strong {
+  color: #173a66;
+  font-size: 15px;
+}
+
+.settings-import-stats .is-valid {
+  border-color: #b9dfc8;
+}
+
+.settings-import-stats .is-valid strong {
+  color: #278154;
+}
+
+.settings-import-stats .is-error {
+  border-color: #efbec5;
+}
+
+.settings-import-stats .is-error strong {
+  color: #bd3547;
+}
+
+.settings-import-stats .is-warning {
+  border-color: #ead5a5;
+}
+
+.settings-import-stats .is-warning strong {
+  color: #a57413;
+}
+
+
+@media (max-width: 760px) {
+  .settings-import-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
