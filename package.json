@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "wasteland-king",
   "private": true,
   "version": "0.0.0",
@@ -36,5 +37,15 @@
     "eslint-plugin-react-refresh": "^0.5.6",
     "globals": "^17.12.0",
     "vite": "^8.3.0"
+=======
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "secret:token": "wrangler secret put TELEGRAM_BOT_TOKEN",
+    "secret:chat": "wrangler secret put TELEGRAM_CHAT_ID"
+  },
+  "devDependencies": {
+    "wrangler": "latest"
+>>>>>>> 21c91da486a5a295edc0c58f1eee44172b41d90a
   }
 }

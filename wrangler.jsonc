@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "wasteland-king-api",
   "main": "worker/src/index.js",
   "compatibility_date": "2026-10-04",
@@ -20,3 +21,17 @@
     }
   ]
 }
+=======
+  "name": "wasteland-king-defenders",
+  "main": "worker.js",
+  "compatibility_date": "2026-01-01",
+  "assets": {
+    "directory": "./",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  },
+  "observability": {
+    "enabled": true
+  }
+}
+>>>>>>> 21c91da486a5a295edc0c58f1eee44172b41d90a

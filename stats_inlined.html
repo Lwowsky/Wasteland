@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="uk" translate="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="google" content="notranslate" />
+  <title>Статистика гравців — Wasteland King Defenders</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/auth-page.css" />
+  <link rel="stylesheet" href="css/profile-page.css" />
+  <link rel="stylesheet" href="css/admin-page.css" />
+  <link rel="stylesheet" href="css/stats-page.css" />
+  <link rel="stylesheet" href="css/modal-import.css" />
+  <link rel="stylesheet" href="css/modal-regions.css" />
+  <link rel="stylesheet" href="css/modal-tiers.css" />
+  <link rel="stylesheet" href="css/confirm-modal.css" />
+  <link rel="stylesheet" href="css/player-edit-modal.css" />
+  <link rel="stylesheet" href="css/player-manager-modal.css" />
+  <link rel="stylesheet" href="css/tower-planner.css" />
+  <link rel="stylesheet" href="css/tower-planner-tablet.css" />
+  <link rel="stylesheet" href="css/tower-planner-mobile.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <script defer src="js/i18n.js"></script>
+  <script defer src="js/i18n-uk.js"></script>
+  <script defer src="js/i18n-en.js"></script>
+  <script defer src="js/i18n-ru.js"></script>
+  <script defer src="js/i18n-pl.js"></script>
+  <script defer src="js/i18n-de.js"></script>
+  <script defer src="js/i18n-ja.js"></script>
+  <script defer src="js/i18n-zh.js"></script>
+  <script defer src="js/i18n-ko.js"></script>
+  <script defer src="js/i18n-vi.js"></script>
+  <script defer src="js/i18n-ar.js"></script>
+  <script defer src="js/i18n-autokeys.js"></script>
+  <script defer src="js/core/dom.js"></script>
+  <script defer src="js/core/partials.js"></script>
+  <script defer src="js/header.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script defer src="js/core/state.js"></script>
+  <script defer src="js/import-modal.js"></script>
+  <script defer src="js/import-regions.js"></script>
+  <script defer src="js/import-file.js"></script>
+  <script defer src="js/import-mapping.js"></script>
+  <script defer src="js/import-shift-recognition.js"></script>
+  <script defer src="js/visible-tiers.js"></script>
+  <script defer src="js/players-table.js"></script>
+  <script defer src="js/confirm-modal.js"></script>
+  <script defer src="js/player-edit-modal.js"></script>
+  <script defer src="js/player-manager-modal.js"></script>
+  <script defer src="js/tower-planner/tower-planner-state.js"></script>
+  <script defer src="js/tower-planner/tower-planner-data.js"></script>
+  <script defer src="js/tower-planner/tower-planner-render.js"></script>
+  <script defer src="js/tower-planner/tower-planner-actions.js"></script>
+  <script defer src="js/tower-planner/tower-planner-bind.js"></script>
+  <script defer src="js/app-login-shell.js"></script>
+  <script type="module" src="js/player-manager-region-bridge.js"></script>
+  <script type="module" src="js/auth-google.js"></script>
+  <script type="module" src="js/pages/stats-page.js"></script>
+</head>
+<body class="notranslate">
+  <header class="app-header">
+  <div class="container header-inner">
+    <a class="brand" href="index.html" aria-label="Wasteland King Defenders — на головну">
+      <img class="brand-logo" src="img/logo.webp" width="170" height="170" alt="Wasteland King Defenders" />
+      <div class="brand-text">
+        <h1>Wasteland <span>King</span> Defenders</h1>
+        <p>Puzzle &amp; Survival — Планувальник турелей</p>
+      </div>
+    </a>
+
+    <div class="header-tools">
+      <div class="account-nav" id="accountNav">
+        <button class="account-btn" id="accountBtn" type="button" aria-haspopup="menu" aria-expanded="false">
+          <span class="account-name" id="authUserText">Акаунт</span>
+          <span class="account-caret" aria-hidden="true">▾</span>
+        </button>
+        <div class="account-menu" id="accountMenu" role="menu" aria-label="Акаунт">
+          <button class="account-item account-login" id="googleLoginBtn" type="button" role="menuitem">Увійти через Google</button>
+          <button class="account-item" id="profileBtn" type="button" role="menuitem" hidden>Профіль</button>
+          <button class="account-item" id="regionFormBtn" type="button" role="menuitem" hidden>Реєстрація пустоші</button>
+          <button class="account-item" id="regionTableBtn" type="button" role="menuitem" hidden>Таблиця регіону</button>
+          <button class="account-item" id="regionSettingsBtn" type="button" role="menuitem" hidden>Форма регіону</button>
+          <button class="account-item" id="adminBtn" type="button" role="menuitem" hidden>Адмінка</button>
+          <button class="account-item account-logout" id="googleLogoutBtn" type="button" role="menuitem" hidden>Вийти</button>
+        </div>
+      </div>
+
+      <div class="lang">
+        <button class="lang-btn" id="langBtn" type="button" aria-haspopup="listbox" aria-expanded="false">
+          <span class="lang-ico" aria-hidden="true">🌐</span>
+          <span class="lang-label" id="currentLangLabel">Українська</span>
+          <span class="lang-caret" aria-hidden="true">▾</span>
+        </button>
+        <div class="lang-menu" id="langMenu" role="listbox" aria-label="Мова"></div>
+      </div>
+
+      <button class="burger-btn" id="burgerBtn" type="button" aria-label="Відкрити меню" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="drawer-panel" role="dialog" aria-modal="true" aria-label="Меню">
+    <div class="drawer-top">
+      <div class="drawer-title">Меню</div>
+      <button class="drawer-close" id="drawerClose" type="button" aria-label="Закрити меню">✕</button>
+    </div>
+    <div class="drawer-body">
+      <div class="drawer-auth">
+        <button class="drawer-account-toggle" id="drawerAccountBtn" type="button" aria-expanded="false" aria-controls="drawerAccountMenu">
+          <span>Акаунт</span>
+          <b id="drawerAccountLabel">Гість</b>
+          <span aria-hidden="true">▾</span>
+        </button>
+        <div class="drawer-account-menu" id="drawerAccountMenu">
+          <button class="btn btn-primary" id="drawerGoogleLoginBtn" type="button">Увійти через Google</button>
+          <button class="btn" id="drawerProfileBtn" type="button" hidden>Профіль гравця</button>
+          <button class="btn" id="drawerRegionFormBtn" type="button" hidden>Реєстрація пустоші</button>
+          <button class="btn" id="drawerRegionTableBtn" type="button" hidden>Таблиця регіону</button>
+          <button class="btn" id="drawerRegionSettingsBtn" type="button" hidden>Форма регіону</button>
+          <button class="btn" id="drawerAdminBtn" type="button" hidden>Адмінка</button>
+          <button class="btn" id="drawerGoogleLogoutBtn" type="button" hidden>Вийти</button>
+        </div>
+      </div>
+
+      <div class="drawer-lang">
+        <button class="drawer-lang-toggle" id="drawerLangBtn" type="button" aria-expanded="false" aria-controls="drawerLangMenu">
+          <span>🌐 Мова</span>
+          <b id="drawerCurrentLangLabel">Українська</b>
+          <span aria-hidden="true">▾</span>
+        </button>
+        <div class="drawer-lang-menu" id="drawerLangMenu" role="listbox" aria-label="Мова"></div>
+      </div>
+
+      <button class="btn btn-primary" id="drawerImportBtn" type="button">Налаштування / Імпорт</button>
+      <button class="btn" data-disabled-note="Фінальний план" type="button">Фінальний план</button>
+      <button class="btn" data-disabled-note="Розподіл по турелях" type="button">Розподіл по турелях</button>
+      <button class="btn" data-open-player-manager type="button">Редактор гравців</button>
+      <button class="btn" id="drawerStatsNavBtn" type="button" data-i18n="header.stats" hidden>Статистика гравців</button>
+    </div>
+  </aside>
+</div>
+
+
+  <main class="profile-page container">
+    <section class="profile-card stats-card">
+      <div class="profile-head">
+        <div>
+          <h2>Статистика гравців</h2>
+        </div>
+      </div>
+
+      <div class="stats-status-line">
+        <div class="auth-status" id="statsStatus">Перевіряю доступ...</div>
+        <div class="admin-summary" id="statsSummary">Завантажую...</div>
+      </div>
+
+      <div class="admin-stats" id="publicStats">
+        <div class="admin-stat-card"><span>Гравців</span><b>0</b></div>
+        <div class="admin-stat-card"><span>Регіонів</span><b>0</b></div>
+        <div class="admin-stat-card"><span>Альянсів</span><b>0</b></div>
+        <div class="admin-stat-card"><span>Керівних ролей</span><b>0</b></div>
+      </div>
+
+      <div class="admin-toolbar admin-toolbar--grid stats-toolbar">
+        <label>
+          <span>Нік</span>
+          <input id="statsNickSearch" type="search" placeholder="Lwowsky" />
+        </label>
+        <label>
+          <span>Альянс</span>
+          <input id="statsAllianceSearch" type="search" placeholder="YYY" maxlength="8" />
+        </label>
+        <label>
+          <span>Регіон</span>
+          <input id="statsRegionSearch" type="search" inputmode="numeric" placeholder="987" />
+        </label>
+        <label>
+          <span>Роль</span>
+          <select id="statsRoleFilter">
+            <option value="all">Усі</option>
+            <option value="admin">Адмін</option>
+            <option value="moderator">Модератор</option>
+            <option value="consul">Консул</option>
+            <option value="officer">Офіцер</option>
+            <option value="player">Гравець</option>
+          </select>
+        </label>
+        <label>
+          <span>Рядків</span>
+          <select id="statsRowsFilter">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="all">Усі</option>
+          </select>
+        </label>
+        <button class="btn btn-primary" id="refreshStatsBtn" type="button">Оновити</button>
+      </div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table stats-table" id="publicPlayersTable">
+          <thead>
+            <tr>
+              <th><button type="button" data-sort="nickname">Нік ↓</button></th>
+              <th><button type="button" data-sort="region">Регіон ↓</button></th>
+              <th><button type="button" data-sort="farmCount">Ферм ↓</button></th>
+              <th><button type="button" data-sort="alliance">Альянс ↓</button></th>
+              <th><button type="button" data-sort="rank">Ранг ↓</button></th>
+              <th><button type="button" data-sort="shk">ШК ↓</button></th>
+              <th><button type="button" data-sort="role">Роль ↓</button></th>
+              <th><button type="button" data-sort="createdAt">Дата реєстрації ↓</button></th>
+            </tr>
+          </thead>
+          <tbody id="publicPlayersBody">
+            <tr><td colspan="8">Завантажую гравців...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div class="stats-modal" id="playerStatsModal" hidden aria-hidden="true">
+    <div class="stats-modal__backdrop" data-close-stats-modal></div>
+    <section class="stats-modal__card" role="dialog" aria-modal="true" aria-labelledby="playerStatsModalTitle">
+      <button class="stats-modal__close" type="button" data-close-stats-modal aria-label="Закрити">×</button>
+      <div class="stats-modal__head">
+        <div>
+          <p class="auth-eyebrow" data-i18n="stats.modalEyebrow">Player profile</p>
+          <h2 id="playerStatsModalTitle">Профіль гравця</h2>
+          <p id="playerStatsModalLead">Повна публічна інформація профілю.</p>
+        </div>
+        <span class="role-badge" id="playerStatsModalRole">Гравець</span>
+      </div>
+      <div class="stats-modal-tabs" role="tablist" aria-label="Дані гравця">
+        <button class="stats-modal-tab is-active" type="button" data-stats-tab="profile">Профіль</button>
+        <button class="stats-modal-tab" type="button" data-stats-tab="extra">Додаткова інформація</button>
+        <button class="stats-modal-tab" type="button" data-stats-tab="farms">Ферми</button>
+      </div>
+      <div class="stats-modal-panels" id="playerStatsModalBody"></div>
+    </section>
+  </div>
+
+  <section class="modal" id="settings-modal" aria-hidden="true" aria-label="Налаштування та імпорт">
+    <button class="modal-backdrop" type="button" aria-label="Закрити" data-close-modal></button>
+    <div class="modal-card has-settings-side-menu" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+      <div class="modal-head">
+        <div>
+          <h2 id="settingsModalTitle">Налаштування / Імпорт</h2>
+          <p class="muted">Завантаж список гравців, звір колонки й підготуй сайт до розподілу по турелях.</p>
+        </div>
+        <button class="btn btn-icon" type="button" aria-label="Закрити" data-close-modal>✕</button>
+      </div>
+
+      <aside class="settings-side-menu" aria-label="Розділи імпорту">
+        <div class="settings-side-list">
+          <button class="settings-side-btn active" data-settings-tab="source" type="button">Звідки взяти список гравців</button>
+          <button class="settings-side-btn" data-settings-tab="required" type="button">Обов’язкові колонки</button>
+          <button class="settings-side-btn" data-settings-tab="optional" type="button">Додаткові колонки</button>
+          <button class="settings-side-btn" data-settings-tab="shifts" type="button">Розпізнавання змін</button>
+          <button class="settings-side-btn" data-settings-tab="visible" type="button">Які дані показувати в таблиці</button>
+          <button class="settings-side-btn" data-settings-tab="reset" type="button">Скидання даних</button>
+        </div>
+      </aside>
+
+      <div class="modal-grid">
+        <section class="panel subpanel" data-settings-panel="source">
+          <div class="mapping-section-head"><div><h3>1. Звідки взяти список гравців</h3></div></div>
+          <div class="import-source-grid">
+            <label class="file-drop import-source-card import-upload-card" id="fileDrop">
+              <span class="import-card-kicker">Файл</span>
+              <span class="drop-title">Завантажити CSV / Excel</span>
+              <span class="muted">Підтримуються CSV, XLSX, XLS і TXT. Це найзручніший спосіб швидко додати таблицю.</span>
+              <input id="importFileInput" type="file" accept=".csv,.xlsx,.xls,.txt" />
+            </label>
+
+            <div class="import-source-card import-regions-card">
+              <span class="import-card-kicker">Регіони</span>
+              <span class="drop-title">Захоплення регіонів</span>
+              <span class="muted">Вибери регіон і увімкни потрібний тумблер для 1, 2, 3 або 4 змін.</span>
+              <div class="import-region-tabs" role="tablist" aria-label="Регіони">
+                <button class="import-region-tab is-active" data-import-region-tab="home" aria-selected="true" type="button">Дім</button>
+                <button class="import-region-tab" data-import-region-tab="region2" aria-selected="false" type="button">Регіон 2</button>
+                <button class="import-region-tab" data-import-region-tab="region3" aria-selected="false" type="button">Регіон 3</button>
+              </div>
+              <div class="import-region-panels" id="importRegionPanels"></div>
+            </div>
+          </div>
+
+          <div class="import-tools-row"><button class="btn btn-sm" id="detectColumnsBtn" type="button">Знайти колонки</button></div>
+          <div class="import-status-grid">
+            <div class="import-status-card"><div class="import-status-title">Поточне джерело</div><div class="muted small" id="importLoadedInfo">Файл ще не завантажено.</div></div>
+            <div class="import-status-card"><div class="import-status-title">Статус імпорту</div><div class="muted small" id="importStatusInfo">Завантаж файл, перевір колонки й натисни «Застосувати імпорт».</div></div>
+          </div>
+          <div class="import-source-actions">
+            <button class="btn btn-primary" id="applyImportBtn" type="button" disabled>Застосувати імпорт</button>
+            <button class="btn" id="clearPendingImportBtn" type="button">Очистити вибір</button>
+          </div>
+        </section>
+
+        <section class="panel subpanel" data-settings-panel="required" hidden>
+          <div class="mapping-section-head"><div><h3>2. Обов’язкові колонки</h3></div><button class="btn btn-sm" id="saveMappingBtn" type="button">Зберегти шаблон</button></div>
+          <div class="mapping-grid-2" id="requiredMappingContainer"></div>
+        </section>
+
+        <section class="panel subpanel" data-settings-panel="optional" hidden>
+          <div class="mapping-section-head"><div><h3>3. Додаткові колонки</h3></div><button class="btn btn-sm" id="saveOptionalMappingBtn" type="button">Зберегти шаблон</button></div>
+          <div class="mapping-grid-2" id="optionalMappingContainer"></div>
+        </section>
+
+        <section class="panel subpanel" data-settings-panel="shifts" hidden>
+          <div class="mapping-section-head"><div><h3>4. Розпізнавання змін</h3></div></div>
+          <div class="shift-recognition-toolbar">
+            <label class="shift-recognition-mode"><span>Об’єднання змін</span><select id="shiftMergeMode"><option value="custom">Власне об’єднання</option><option value="pair12_34">1+2 | 3+4</option><option value="allTo1">Усі в 1 зміну</option></select></label>
+            <div class="shift-recognition-actions"><button class="btn btn-sm" id="autoDetectShiftRulesBtn" type="button">Авто-розпізнати</button><button class="btn btn-sm" id="resetShiftRulesBtn" type="button">Скинути правила</button></div>
+          </div>
+          <div id="shiftRecognitionBody"></div>
+          <div class="shift-recognition-footer"><span class="muted small" id="shiftRecognitionStatus"></span><button class="btn btn-primary" id="saveShiftRulesBtn" type="button">Зберегти правила</button></div>
+        </section>
+
+        <section class="panel subpanel" data-settings-panel="visible" hidden>
+          <div class="mapping-section-head"><div><h3>5. Які дані показувати в таблиці</h3></div></div>
+          <div class="visibility-panel">
+            <label class="checkbox-row"><input type="checkbox" checked><span>Захоплення регіону</span></label>
+            <label class="checkbox-row"><input type="checkbox" checked><span>Резервний тип військ: боєць</span></label>
+            <label class="checkbox-row"><input type="checkbox" checked><span>Резервний тип військ: наїзник</span></label>
+            <label class="checkbox-row"><input type="checkbox" checked><span>Резервний тип військ: стрілець</span></label>
+          </div>
+          <div class="tier-visibility-panel">
+            <div class="tier-visibility-head">
+              <div><h4>Додаткові тіри</h4></div>
+              <div class="tier-visibility-add"><select id="addTierSelect"></select><button class="btn btn-sm" id="addTierBtn" type="button">Додати тір</button></div>
+            </div>
+            <div class="tier-visibility-list" id="visibleTierList"></div>
+          </div>
+          <button class="btn" id="saveVisibleColumnsBtn" type="button">Зберегти видимі колонки</button>
+        </section>
+
+        <section class="panel subpanel" data-settings-panel="reset" hidden>
+          <div class="mapping-section-head"><div><h3>6. Скидання даних</h3></div></div>
+          <div class="reset-actions-grid">
+            <button class="btn btn-danger-soft" id="resetAllStorageBtn" type="button">Повністю очистити локальні дані</button>
+            <button class="btn" id="resetColumnDataBtn" type="button">Скинути дані колонок</button>
+            <button class="btn" id="resetTableDataBtn" type="button">Скинути дані таблиць</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section class="confirm-modal" id="confirmModal" aria-hidden="true" aria-label="Підтвердження дії">
+  <button class="confirm-backdrop" type="button" data-confirm-cancel aria-label="Скасувати"></button>
+  <div class="confirm-card" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="confirm-top">
+      <span class="confirm-icon" id="confirmIcon" aria-hidden="true">⚠</span>
+      <div>
+        <h3 id="confirmTitle">Підтвердити дію?</h3>
+        <p id="confirmMessage">Цю дію не можна скасувати.</p>
+      </div>
+    </div>
+    <div class="confirm-note" id="confirmNote">Перевір дані перед підтвердженням.</div>
+    <div class="confirm-actions">
+      <button class="btn" type="button" data-confirm-cancel>Скасувати</button>
+      <button class="btn btn-danger-solid" type="button" id="confirmAcceptBtn">Підтвердити</button>
+    </div>
+  </div>
+</section>
+
+  <section class="modal player-edit-modal" id="playerEditModal" aria-hidden="true" aria-label="Редагування гравця">
+  <button class="modal-backdrop" type="button" aria-label="Закрити" data-player-edit-close></button>
+  <div class="modal-card player-edit-modal-card" role="dialog" aria-modal="true" aria-labelledby="playerEditModalTitle">
+    <div class="modal-head player-edit-modal-head">
+      <div>
+        <h2 id="playerEditModalTitle">Редагування гравця</h2>
+        <p class="muted" id="playerEditModalSubtitle">Обери зміну, онови дані гравця або залиш його в резерві.</p>
+      </div>
+      <button class="btn btn-icon" type="button" aria-label="Закрити" data-player-edit-close>✕</button>
+    </div>
+
+    <div class="modal-grid player-edit-modal-grid">
+      <section class="panel subpanel player-edit-panel">
+        <div class="player-placement-editor">
+          <div class="player-placement-editor__head">
+            <strong>Куди поставити гравця</strong>
+            
+          </div>
+          <div class="player-placement-editor-grid">
+            <label class="player-edit-field">
+              <span>Зміна</span>
+              <select id="playerEditShift">
+                <option value="shift1">Зміна 1</option>
+                <option value="shift2">Зміна 2</option>
+                <option value="shift3">Зміна 3</option>
+                <option value="shift4">Зміна 4</option>
+                <option value="both">Обидві</option>
+              </select>
+            </label>
+            <label class="player-edit-field">
+              <span>Турель</span>
+              <select id="playerEditPlacement">
+                <option value="reserve">Резерв</option>
+                <option value="hub">Техно-Центр · Tech Hub</option>
+                <option value="north">Північна турель · North Turret</option>
+                <option value="west">Західна турель · West Turret</option>
+                <option value="east">Східна турель · East Turret</option>
+                <option value="south">Південна турель · South Turret</option>
+              </select>
+            </label>
+            <label class="player-edit-field">
+              <span>Роль у турелі</span>
+              <select id="playerEditPlacementRole">
+                <option value="helper">Помічник</option>
+                <option value="captain">Капітан</option>
+              </select>
+            </label>
+          </div>
+          
+        </div>
+
+        <div class="player-edit-fields-grid">
+          <label class="player-edit-field">
+            <span>Нік</span>
+            <input id="playerEditName" autocomplete="off" placeholder="Нік гравця" />
+          </label>
+          <label class="player-edit-field">
+            <span>Альянс</span>
+            <input id="playerEditAlliance" autocomplete="off" placeholder="Альянс" />
+          </label>
+          <label class="player-edit-field">
+            <span>Тір</span>
+            <input id="playerEditTier" autocomplete="off" placeholder="T10" />
+          </label>
+          <label class="player-edit-field">
+            <span>Тип військ</span>
+            <select id="playerEditRole">
+              <option value="Shooter">Стрілець</option>
+              <option value="Fighter">Боєць</option>
+              <option value="Rider">Наїзник</option>
+            </select>
+          </label>
+          <label class="player-edit-field">
+            <span>Марш</span>
+            <input id="playerEditMarch" inputmode="numeric" min="0" placeholder="0" type="number" />
+          </label>
+          <label class="player-edit-field">
+            <span>Розмір ралі</span>
+            <input id="playerEditRally" inputmode="numeric" min="0" placeholder="0" type="number" />
+          </label>
+          <label class="player-edit-field">
+            <span>Захоплення</span>
+            <input id="playerEditLair" autocomplete="off" placeholder="—" />
+          </label>
+          <label class="player-edit-check">
+            <input id="playerEditCaptain" type="checkbox" />
+            <span>Готовий бути капітаном</span>
+          </label>
+        </div>
+
+        <div class="player-edit-status" id="playerEditStatus" hidden></div>
+        <div class="player-edit-actions">
+          <button class="btn btn-primary" id="playerEditSaveBtn" type="button">Зберегти</button>
+          <button class="btn" id="playerEditReserveBtn" type="button">Прибрати з турелі</button>
+          <button class="btn player-edit-danger" id="playerEditDeleteBtn" type="button">Видалити гравця</button>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
+
+  <section class="modal tower-planner-modal" id="towerPlannerModal" aria-hidden="true" aria-label="Розподіл по турелях">
+  <button class="modal-backdrop" type="button" aria-label="Закрити" data-tower-close></button>
+  <div class="modal-card tower-planner-card" role="dialog" aria-modal="true" aria-labelledby="towerPlannerTitle">
+    <div class="modal-head tower-planner-head">
+      <div>
+        <h2 id="towerPlannerTitle" class="tower-planner-title">Розподіл по турелях <span id="towerPlannerScopeBadge" class="tower-scope-badge" hidden></span></h2>
+        <p class="muted" id="towerPlannerSubtitle" hidden></p>
+      </div>
+      <button class="btn btn-icon" type="button" aria-label="Закрити" data-tower-close>✕</button>
+    </div>
+
+    <div class="tower-planner-body">
+      <section class="tower-tabs-card">
+        <div class="tower-main-tabs" role="tablist" aria-label="Розподіл по турелях">
+          <button class="btn btn-sm is-active" type="button" data-tower-main-tab="setup">Налаштування</button>
+          <button class="btn btn-sm" type="button" data-tower-main-tab="towers">Налаштування турелей</button>
+          <button class="btn btn-sm" type="button" data-tower-main-tab="status">Статус гравців</button>
+          <button class="btn btn-sm" type="button" data-tower-main-tab="final">Фінальний план</button>
+        </div>
+        <div class="tower-region-note" id="towerPlannerAccessNote" hidden></div>
+      </section>
+
+      <section class="tower-panel is-active" data-tower-panel="setup">
+        <div class="tower-summary-grid" id="towerSetupSummary"></div>
+        <div class="tower-actions-row">
+          <button class="btn" type="button" id="towerAutoDistributeBtn">Застосувати перерозподіл</button>
+          <button class="btn" type="button" id="towerAutoFillBtn">Дозаповнити турелі</button>
+          <button class="btn" type="button" id="towerClearPlanBtn">Очистити ▾</button>
+          <button class="btn btn-primary" type="button" id="towerSavePlanBtn">Зберегти план</button>
+        </div>
+        <section class="tower-box tower-fill-inline">
+          <h3>Заповнення турелі</h3>
+          <div class="tower-fill-row">
+            <label class="tower-field tower-fill-mode-field"><span>Режим</span><select id="towerFillMode"><option value="mid">Баланс — рівномірно</option><option value="min">Мінімум — вищі тірі першими</option><option value="max">Максимум — заповнити ралі</option></select></label>
+            <div class="tower-fill-checks">
+              <label class="tower-check"><input id="towerOnlyCaptains" type="checkbox" checked><span>Тільки капітани на капітанське місце</span></label>
+              <label class="tower-check"><input id="towerMatchShift" type="checkbox" checked><span>Враховувати зміну гравця</span></label>
+              <label class="tower-check"><input id="towerSameRole" type="checkbox" checked><span>Лише той самий тип військ</span></label>
+              <label class="tower-check"><input id="towerUseBoth" type="checkbox"><span>Використовувати «Обидві зміни»</span></label>
+            </div>
+          </div>
+        </section>
+        <div class="tower-settings-grid tower-settings-grid--both-limits">
+          <div id="towerManualShiftControls"></div>
+          <section class="tower-box tower-tier-limits-box">
+            <h3>Ліміт маршу за тіром</h3>
+            <label class="tower-check tower-tier-limit-toggle"><input id="towerUseTierLimits" type="checkbox"><span>Використовувати прописані ліміти</span></label>
+            <p class="tower-help-text">Після нового Excel або оновлення таблиці регіону ця галочка вимкнена. Увімкни її вручну, якщо хочеш жорстко обмежити марш по тірах.</p>
+            <div class="tower-tier-grid" id="towerTierLimits"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="tower-panel" data-tower-panel="towers">
+        <div class="tower-shift-tabs" id="towerShiftTabs"></div>
+        <div class="tower-cards-grid" id="towerCardsGrid"></div>
+      </section>
+
+      <section class="tower-panel" data-tower-panel="status">
+        <div class="tower-status-head" id="towerStatusHead"></div>
+        <div class="tower-status-filters" id="towerStatusFilters"></div>
+        <div class="tower-status-table-wrap">
+          <table class="tower-status-table">
+            <thead><tr><th>Гравець</th><th>Альянс</th><th>Роль / Тір</th><th>Марш</th><th>Статус</th><th>Турель</th><th>Дії</th></tr></thead>
+            <tbody id="towerStatusBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="tower-panel" data-tower-panel="final">
+        <div class="tower-final-toolbar" data-final-toolbar></div>
+        <div class="tower-final-board-wrap"><div id="towerFinalBoard"></div></div>
+      </section>
+    </div>
+  </div>
+</section>
+
+  <section class="modal final-plan-modal" id="finalPlanOnlyModal" aria-hidden="true" aria-label="Фінальний план">
+  <button class="modal-backdrop" type="button" aria-label="Закрити" data-final-close></button>
+  <div class="modal-card final-plan-card" role="dialog" aria-modal="true" aria-labelledby="finalPlanOnlyTitle">
+    <div class="modal-head final-plan-head">
+      <div>
+        <h2 id="finalPlanOnlyTitle">Фінальний план</h2>
+        <p class="muted">Такий самий фінальний план, як у розподілі по турелях, але без додаткових вкладок.</p>
+      </div>
+      <button class="btn btn-icon" type="button" aria-label="Закрити" data-final-close>✕</button>
+    </div>
+    <div class="final-plan-body">
+      <div class="tower-final-toolbar" data-final-toolbar></div>
+      <div class="tower-final-board-wrap"><div id="finalPlanOnlyBoard"></div></div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
