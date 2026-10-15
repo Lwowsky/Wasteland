@@ -224,15 +224,12 @@
     grid-template-columns: 1fr;
   }
 
-  .admin-export-compact__buttons {
+  .admin-export-compact__buttons,
+.settings-danger-zone__content {
     align-items: stretch;
     flex-direction: column;
   }
 
-  .settings-danger-zone__content {
-    align-items: stretch;
-    flex-direction: column;
-  }
 
   .settings-danger-zone__button {
     width: 100%;

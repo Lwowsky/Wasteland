@@ -2,384 +2,423 @@
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-
-  color: #0b1f3a;
+  color: #203a63;
 }
 
-/* COMMON PANELS */
+.home-stats,
+.home-countdowns,
+.home-middle-grid,
+.home-navigation {
+  position: relative;
+  z-index: 1;
+}
 
 .home-stat-card,
 .home-countdown-card,
 .home-alliance-panel,
 .home-recent-panel,
 .home-nav-card {
-  border: 1px solid #c4daf1;
-  border-radius: 16px;
-
-  box-shadow: 0 8px 24px rgba(45, 87, 140, 0.08);
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+  isolation: isolate;
+  border: 1px solid #c5daf2;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(240,247,255,0.97));
+  box-shadow: 0 12px 30px rgba(45, 92, 156, 0.10);
 }
 
-/* STATS */
+.home-stat-card::before,
+.home-countdown-card::before,
+.home-alliance-panel::before,
+.home-recent-panel::before,
+.home-nav-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-position: center right;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.28;
+  z-index: -3;
+}
+
+.home-stat-card::after,
+.home-countdown-card::after,
+.home-alliance-panel::after,
+.home-recent-panel::after,
+.home-nav-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(circle at top right, rgba(120, 175, 255, 0.12), transparent 34%),
+    linear-gradient(90deg, rgba(250, 252, 255, 0.98) 0%, rgba(248, 251, 255, 0.95) 42%, rgba(246, 250, 255, 0.82) 62%, rgba(246, 250, 255, 0.30) 100%);
+}
+
+.home-stat-card > *,
+.home-countdown-card > *,
+.home-alliance-panel > *,
+.home-recent-panel > *,
+.home-nav-card > * {
+  position: relative;
+  z-index: 1;
+}
 
 .home-stats {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-
   gap: 14px;
 }
 
 .home-stat-card {
-  min-width: 0;
-  min-height: 110px;
-
+  min-height: 116px;
   display: flex;
   align-items: center;
-
   gap: 14px;
-
-  position: relative;
-
-  padding: 18px;
-
-  background: linear-gradient(145deg, #ffffff, #edf6ff);
+  padding: 18px 20px;
 }
 
-/* Game art uses the site's existing transparent WEBP assets. */
 .home-stat-card__image {
   width: 72px;
   height: 72px;
   object-fit: contain;
   flex-shrink: 0;
-  filter: drop-shadow(0 4px 6px rgba(26, 67, 137, 0.12));
+  filter: drop-shadow(0 8px 14px rgba(65, 110, 167, 0.18));
 }
 
-.home-stat-card--players {
-  background: linear-gradient(120deg, #f9fcff, #e9f4ff);
+.home-stat-card__content {
+  min-width: 0;
 }
 
-.home-stat-card--alliances {
-  background: linear-gradient(120deg, #fafaff, #eff0ff);
+.home-stat-card--players::before {
+  background-image: url("/images/home/stat-players.webp");
 }
 
-.home-stat-card--captains {
-  background: linear-gradient(120deg, #fffefa, #fff1dc);
+.home-stat-card--alliances::before {
+  background-image: url("/images/home/stat-alliances.webp");
 }
 
-.home-stat-card--final {
-  background: linear-gradient(120deg, #fafffd, #e6f7f1);
+.home-stat-card--captains::before {
+  background-image: url("/images/home/stat-captains.webp");
+}
+
+.home-stat-card--captains::after,
+.home-countdown-card--event::after,
+.home-nav-card--plan::after {
+  background:
+    radial-gradient(circle at top right, rgba(255, 196, 97, 0.16), transparent 34%),
+    linear-gradient(90deg, rgba(255,255,255,0.98) 0%, rgba(255,251,245,0.95) 42%, rgba(255,247,232,0.80) 62%, rgba(255,247,232,0.26) 100%);
+}
+
+.home-stat-card--final::before {
+  background-image: url("/images/home/stat-final.webp");
 }
 
 .home-stat-card strong {
   display: block;
-
-  color: #102b55;
-
-  font-size: 28px;
+  color: #1f3d6d;
+  font-size: 54px;
+  line-height: 0.94;
+  letter-spacing: -0.04em;
 }
 
 .home-stat-card span {
-  color: #536b88;
-
-  font-size: 13px;
+  color: #35527d;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
 }
-
-
-
-/* COUNTDOWNS */
 
 .home-countdowns {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-
   gap: 14px;
-
   margin-top: 16px;
 }
 
 .home-countdown-card {
-  padding: 20px;
+  padding: 20px 22px;
 }
 
-.home-countdown-card--registration {
-  background: linear-gradient(135deg, #f8fcff, #e9f4ff);
+.home-countdown-card--registration::before {
+  background-image: url("/images/home/countdown-registration.webp");
 }
 
-.home-countdown-card--event {
-  background: linear-gradient(135deg, #fffdf8, #fff0dc);
+.home-countdown-card--registration::after {
+  background:
+    radial-gradient(circle at top right, rgba(255, 102, 124, 0.12), transparent 34%),
+    linear-gradient(90deg, rgba(250,252,255,0.98) 0%, rgba(250,252,255,0.95) 38%, rgba(248,250,255,0.76) 60%, rgba(248,250,255,0.28) 100%);
+}
+
+.home-countdown-card--event::before {
+  background-image: url("/images/home/countdown-event.webp");
+}
+
+.home-countdown-card--active::after {
+  background:
+    radial-gradient(circle at top right, rgba(89, 198, 127, 0.12), transparent 34%),
+    linear-gradient(90deg, rgba(250,252,255,0.98) 0%, rgba(245,251,247,0.95) 38%, rgba(243,250,245,0.78) 60%, rgba(243,250,245,0.30) 100%);
 }
 
 .home-countdown-card__top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  gap: 20px;
-
+  gap: 18px;
   margin-bottom: 16px;
 }
 
 .home-countdown-card__top > div {
   display: flex;
   align-items: center;
-
   gap: 12px;
 }
 
 .home-countdown-card__icon {
-  width: 53px;
-  height: 53px;
+  width: 52px;
+  height: 52px;
   object-fit: contain;
   flex-shrink: 0;
-}
-
-.home-countdown-card--active {
-  background: linear-gradient(135deg, #f1fff7, #e1f7ed);
-}
-
-.home-countdown-card--closed {
-  background: linear-gradient(135deg, #f9fbff, #edf2fb);
+  filter: drop-shadow(0 7px 12px rgba(69, 106, 160, 0.16));
 }
 
 .home-countdown-card h2 {
   margin: 0;
-
-  color: #102b55;
-
-  font-size: 20px;
+  color: #1e3d6e;
+  font-size: 22px;
 }
 
 .home-countdown-card p {
   margin: 3px 0 0;
-
-  color: #536b88;
-
-  font-size: 13px;
+  color: #4d678d;
+  font-size: 14px;
+  line-height: 1.38;
 }
 
 .home-status {
-  padding: 7px 12px;
-
-  color: #14894f;
-  background: #ddf8e8;
-
+  padding: 8px 14px;
+  border: 1px solid #e3cfbf;
   border-radius: 999px;
-
+  background: rgba(255, 247, 240, 0.95);
+  color: #94654d;
   font-size: 12px;
   font-weight: 700;
 }
 
 .home-status--closed {
-  color: #995025;
-  background: #fff0e0;
+  color: #a94f4a;
+  background: rgba(255, 235, 233, 0.96);
+  border-color: #f0c6c2;
 }
 
 .home-status--active {
-  color: #14794d;
-  background: #d6f5e5;
+  color: #267752;
+  background: rgba(231, 249, 238, 0.96);
+  border-color: #bfe8ce;
 }
 
 .home-countdown-unavailable {
-  margin: 8px 0 0;
-  min-height: 56px;
+  min-height: 54px;
   display: flex;
   align-items: center;
+  margin: 10px 0 0;
+  color: #405978;
   font-size: 14px;
-  color: #647893;
 }
 
 .home-countdown {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-
-  gap: 10px;
+  gap: 12px;
 }
 
 .home-countdown__item {
-  padding: 14px 8px;
-
+  padding: 16px 10px;
   text-align: center;
-
-  background: rgba(255, 255, 255, 0.72);
-
-  border: 1px solid rgba(145, 176, 210, 0.35);
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.90);
+  border: 1px solid #d8e7f7;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(58, 102, 166, 0.08);
 }
 
 .home-countdown__item strong {
   display: block;
-
-  color: #102b55;
-
-  font-size: 26px;
+  color: #20417a;
+  font-size: 34px;
+  line-height: 1;
 }
 
 .home-countdown__item span {
-  color: #536b88;
-
-  font-size: 12px;
+  color: #5c7598;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: lowercase;
 }
-
-/* MIDDLE GRID */
 
 .home-middle-grid {
   display: grid;
-  grid-template-columns:
-    minmax(0, 1.2fr)
-    minmax(0, 1fr);
-
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+  align-items: start;
   gap: 16px;
-
   margin-top: 16px;
 }
 
 .home-alliance-panel,
 .home-recent-panel {
-  min-width: 0;
-
   padding: 20px;
-
-  background: linear-gradient(180deg, #ffffff, #edf6ff);
 }
 
-/* SECTION TITLE */
+.home-alliance-panel {
+  align-self: start;
+}
+
+.home-recent-panel {
+  align-self: start;
+}
+
+.home-alliance-panel::before {
+  background-image: url("/images/home/alliances-panel.webp");
+}
+
+.home-recent-panel::before {
+  background-image: url("/images/home/recent-panel.webp");
+}
 
 .home-section-title {
   display: flex;
   align-items: center;
-
-  gap: 10px;
-
-  margin-bottom: 18px;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
 .home-section-title__image {
-  width: 39px;
-  height: 39px;
+  width: 42px;
+  height: 42px;
   object-fit: contain;
   flex-shrink: 0;
+  filter: drop-shadow(0 7px 12px rgba(69, 106, 160, 0.15));
 }
 
 .home-section-title h2 {
   margin: 0;
-
-  color: #102b55;
-
-  font-size: 20px;
+  color: #1e3d6e;
+  font-size: 22px;
 }
 
 .home-section-title p {
-  margin: 2px 0 0;
-
-  color: #536b88;
-
+  margin: 3px 0 0;
+  color: #4e678c;
   font-size: 13px;
+  line-height: 1.4;
 }
-
-/* ALLIANCE STATISTICS */
 
 .home-alliance-list {
   display: flex;
   flex-direction: column;
-
   gap: 10px;
+}
+
+.home-alliance-list.is-expanded {
+  max-height: 560px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.home-alliance-list.is-expanded::-webkit-scrollbar {
+  width: 8px;
+}
+
+.home-alliance-list.is-expanded::-webkit-scrollbar-thumb {
+  background: #c5daf2;
+  border-radius: 999px;
 }
 
 .home-alliance-row {
   display: grid;
-  grid-template-columns:
-    34px
-    70px
-    90px
-    minmax(80px, 1fr)
-    44px;
-
+  grid-template-columns: 36px 72px 92px minmax(80px, 1fr) 44px;
   align-items: center;
-
   gap: 10px;
+  padding: 11px 12px;
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(197, 218, 242, 0.92);
+  border-radius: 15px;
 }
 
 .home-alliance-position {
-  width: 28px;
-  height: 28px;
-
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  color: #176fe5;
-  background: #e3efff;
-
+  color: #2d5c9c;
+  background: linear-gradient(180deg, #eef5ff, #d9e9ff);
+  border: 1px solid #c8dcf5;
   border-radius: 50%;
-
   font-size: 12px;
   font-weight: 700;
 }
 
 .home-alliance-row strong {
   overflow: hidden;
-
-  color: #18355f;
-
+  color: #23436d;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .home-alliance-row > span {
-  color: #536b88;
-
+  color: #567093;
   font-size: 13px;
 }
 
 .home-alliance-row b {
-  color: #18355f;
-
+  color: #295592;
   text-align: right;
-
   font-size: 13px;
 }
 
 .home-alliance-progress {
   height: 8px;
-
   overflow: hidden;
-
-  background: #d9e7f6;
-
+  background: #deebf9;
   border-radius: 999px;
 }
 
 .home-alliance-progress span {
   display: block;
-
   height: 100%;
-
-  background: linear-gradient(90deg, #2f7fff, #69a8ff);
-
+  background: linear-gradient(90deg, #4d9cff, #69c1ff);
   border-radius: inherit;
 }
 
 .home-alliance-toggle {
-  display: block;
   width: 100%;
   margin-top: 14px;
-  padding: 11px 14px;
-  border: 1px solid #b9d7f9;
-  border-radius: 11px;
-  background: #eff6ff;
-  color: #1761be;
+  padding: 12px 14px;
+  border: 1px solid #c6dbf3;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.86);
+  color: #285599;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .home-alliance-toggle:hover {
-  background: #dfeeff;
+  transform: translateY(-1px);
+  background: #ffffff;
+  box-shadow: 0 10px 18px rgba(50, 101, 166, 0.08);
 }
 
 .home-alliance-toggle:focus-visible {
-  outline: 3px solid #7aaff3;
+  outline: 3px solid rgba(137, 185, 245, 0.75);
   outline-offset: 2px;
 }
 
-/* RECENT REGISTRATIONS */
+.home-loading {
+  margin-top: 14px;
+  color: #6d84a1;
+  text-align: center;
+}

@@ -1,7 +1,4 @@
-import { publicAsset } from "../../../utils/publicAsset.js";
-
 import {
-  AlertTriangle,
   ArrowDown,
   ArrowUp,
   ArrowUpDown,
@@ -10,52 +7,11 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo } from "react";
 
-import StatusBadge from "../../../components/PlayerBadges/StatusBadge.jsx";
-import TierBadge from "../../../components/PlayerBadges/TierBadge.jsx";
-import TroopBadge from "../../../components/PlayerBadges/TroopBadge.jsx";
-import { getPlayerRuleIssues } from "./playerRuleIssues.js";
 import { getTotalPages, getVisiblePlayers } from "../../../features/players/playerPagination.js";
+import PlayersTableRow from "./PlayersTableRow.jsx";
+import { sortPlayers } from "./playerSorting.js";
 
 import "../styles/players/PlayersTable.css";
-
-function normalizeText(value) {
-  return String(value ?? "").toLocaleLowerCase();
-}
-
-function getSortValue(player, field) {
-  switch (field) {
-    case "nickname":
-      return normalizeText(player.nickname);
-    case "alliance":
-      return normalizeText(player.alliance);
-    case "troopType":
-      return normalizeText(player.troopType);
-    case "tier":
-      return Number(String(player.tier ?? "").replace(/\D/g, "") || 0);
-    case "lairLevel":
-      return Number(player.lairLevel ?? 0);
-    case "marchSize":
-      return Number(player.marchSize ?? 0);
-    case "rallySize":
-      return Number(player.rallySize ?? 0);
-    case "shift":
-      return normalizeText(player.shift);
-    case "captain":
-      return player.captain ? 1 : 0;
-    case "readyAttack":
-      return player.readyAttack ? 1 : 0;
-    default:
-      return "";
-  }
-}
-
-function formatNumber(value, language) {
-  if (value === null || value === undefined || value === "") {
-    return "—";
-  }
-
-  return Number(value).toLocaleString(language === "uk" ? "uk-UA" : "en-GB");
-}
 
 function SortableHeader({ label, field, sort, onSort }) {
   const active = sort.field === field;
@@ -74,17 +30,6 @@ function SortableHeader({ label, field, sort, onSort }) {
       <span>{label}</span>
       <Icon size={15} aria-hidden="true" />
     </button>
-  );
-}
-
-function getIssueText(issue, t) {
-  if (issue.type === "tier") {
-    return t.ruleStatus.tierUnavailable.replace("{{tier}}", issue.value);
-  }
-
-  return t.ruleStatus.shiftUnavailable.replace(
-    "{{shift}}",
-    t.shifts[issue.value] || issue.value,
   );
 }
 
@@ -111,25 +56,10 @@ function PlayersTable({
   pageSize = 10,
   onPageChange,
 }) {
-  const sortedPlayers = useMemo(() => {
-    if (!sort.field) {
-      return players;
-    }
-
-    return [...players].sort((a, b) => {
-      const first = getSortValue(a, sort.field);
-      const second = getSortValue(b, sort.field);
-      const result =
-        typeof first === "number" && typeof second === "number"
-          ? first - second
-          : String(first).localeCompare(
-              String(second),
-              language === "uk" ? "uk" : "en",
-            );
-
-      return sort.direction === "asc" ? result : -result;
-    });
-  }, [players, sort, language]);
+  const sortedPlayers = useMemo(
+    () => sortPlayers(players, sort, language),
+    [players, sort, language],
+  );
 
   const totalPages = useMemo(
     () => getTotalPages(sortedPlayers.length, pageSize),
@@ -268,139 +198,24 @@ function PlayersTable({
           </div>
 
           <div className="admin-players-table__body">
-            {visiblePlayers.map((player) => {
-              const issues = getPlayerRuleIssues(player, registrationSettings);
-              const issueTitle = issues
-                .map((issue) => getIssueText(issue, t))
-                .join("\n");
-              const sourceStatus = getRowStatus?.(player) || null;
-              const sourceStatusTitle = sourceStatus?.label || "";
-
-              return (
-                <div
-                  key={player.id}
-                  className={`admin-players-table__row ${issues.length ? "admin-players-table__row--attention" : ""}`}
-                >
-                  {selectable && (
-                    <span className="admin-players-select-cell">
-                      <input
-                        type="checkbox"
-                        checked={selectedIds.has(player.id)}
-                        disabled={!isRowSelectable(player)}
-                        onChange={() => onToggleSelected?.(player)}
-                        aria-label={player.nickname || ""}
-                      />
-                    </span>
-                  )}
-
-                  <span className="admin-player-nickname-wrap">
-                    <strong
-                      className={`admin-player-nickname ${
-                        issues.length ? "admin-player-nickname--attention" : ""
-                      } ${
-                        sourceStatus?.variant
-                          ? `admin-player-nickname--source-${sourceStatus.variant}`
-                          : ""
-                      }`}
-                      title={
-                        [player.nickname || "", sourceStatusTitle, issueTitle]
-                          .filter(Boolean)
-                          .join("\n")
-                      }
-                    >
-                      {player.nickname || "—"}
-                    </strong>
-
-                    {issues.length > 0 && (
-                      <span
-                        className="admin-player-rule-warning"
-                        title={issueTitle}
-                        aria-label={issueTitle}
-                      >
-                        <AlertTriangle size={15} aria-hidden="true" />
-                        <span>{issues.length}</span>
-                      </span>
-                    )}
-                  </span>
-
-                  <span className="admin-player-table-cell">
-                    <span
-                      className="admin-player-pill admin-player-pill--alliance"
-                      title={player.alliance || ""}
-                    >
-                      {player.alliance || "—"}
-                    </span>
-                  </span>
-
-                  <span className="admin-player-table-cell">
-                    <TroopBadge
-                      type={player.troopType}
-                      label={player.troopType ? t.troops[player.troopType] : "—"}
-                    />
-                  </span>
-
-                  <span className="admin-player-table-cell">
-                    <TierBadge tier={player.tier} />
-                  </span>
-
-                  <span className="admin-player-table-text">
-                    {player.lairLevel ?? "—"}
-                  </span>
-                  <span className="admin-player-table-text admin-player-number">
-                    {formatNumber(player.marchSize, language)}
-                  </span>
-                  <span className="admin-player-table-text admin-player-number">
-                    {formatNumber(player.rallySize, language)}
-                  </span>
-
-                  <span className="admin-player-table-cell">
-                    <StatusBadge type="shift" value={player.shift} t={t} />
-                  </span>
-                  <span className="admin-player-table-cell">
-                    <StatusBadge type="captain" value={player.captain} t={t} />
-                  </span>
-                  <span className="admin-player-table-cell">
-                    <StatusBadge type="ready" value={player.readyAttack} t={t} />
-                  </span>
-
-                  <span className="admin-player-actions">
-                    {canEdit && (
-                      <button
-                        type="button"
-                        className="admin-player-action admin-player-action--edit"
-                        onClick={() => onEdit(player)}
-                        aria-label={t.actions.edit}
-                        title={t.actions.edit}
-                      >
-                        <img
-                          src={publicAsset("/images/admin/icons/actions/edit.webp")}
-                          alt=""
-                          aria-hidden="true"
-                          className="admin-player-action__image"
-                        />
-                      </button>
-                    )}
-
-                    {canDelete && (
-                      <button
-                        type="button"
-                        className="admin-player-action admin-player-action--delete"
-                        onClick={() => onDelete(player)}
-                        aria-label={t.actions.delete}
-                        title={t.actions.delete}
-                      >
-                        <img
-                          src={publicAsset("/images/admin/icons/actions/delete.webp")}
-                          alt=""
-                          aria-hidden="true"
-                          className="admin-player-action__image"
-                        />
-                      </button>
-                    )}
-                  </span>
-                </div>
-              );
-            })}
+            {visiblePlayers.map((player) => (
+              <PlayersTableRow
+                key={player.id}
+                player={player}
+                t={t}
+                language={language}
+                registrationSettings={registrationSettings}
+                selectable={selectable}
+                selectedIds={selectedIds}
+                onToggleSelected={onToggleSelected}
+                isRowSelectable={isRowSelectable}
+                getRowStatus={getRowStatus}
+                canEdit={canEdit}
+                canDelete={canDelete}
+                onEdit={onEdit}
+                onDelete={onDelete}
+              />
+            ))}
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ import { releaseAllTurretHelpers } from "../src/features/turrets/turretRedistrib
 import { runAutomaticDistribution } from "../src/features/turrets/autoDistribution.js";
 import { normalizePlannerSettings } from "../src/features/turrets/plannerSettings.js";
 import { PLANNER_SHIFTS, TURRET_IDS } from "../src/features/turrets/plannerConstants.js";
-import { startVisiblePolling } from "../src/features/players/visiblePolling.js";
+import { readFileSync } from "node:fs";
 
 const player = (id, shift = "shift1", captain = false, troopType = "fighter") => ({
   id: String(id), nickname: `P${id}`, alliance: `A${id % 7}`, tier: `T${14 - id % 5}`,
@@ -78,61 +78,15 @@ test("031: stale registration must never silently erase a manually assigned capt
     issue.reason === "captainMissing" && issue.playerId === "missing-manual-captain"));
 });
 
-function testClock() {
-  const handlers = new Map();
-  const timers = new Map();
-  let id = 0;
-  const documentRef = {
-    hidden: false,
-    addEventListener: (name, fn) => handlers.set(name, fn),
-    removeEventListener: (name) => handlers.delete(name),
-  };
-  const windowRef = {
-    setTimeout: (fn) => { const handle = ++id; timers.set(handle, fn); return handle; },
-    clearTimeout: (handle) => timers.delete(handle),
-  };
-  const next = () => { const [handle, callback] = timers.entries().next().value || []; if (handle) { timers.delete(handle); callback(); } };
-  const visible = (yes) => { documentRef.hidden = !yes; handlers.get("visibilitychange")?.(); };
-  return { documentRef, windowRef, timers, handlers, next, visible };
-}
-const tick = async () => { await Promise.resolve(); await Promise.resolve(); await Promise.resolve(); };
-
-test("031: visible polling suspends in background, resumes on return and cleans up", async () => {
-  const clock = testClock();
-  let calls = 0;
-  const stop = startVisiblePolling({ ...clock, load: async () => { calls++; }, intervalMs: 100 });
-  await tick();
-  assert.equal(calls, 1);
-  assert.equal(clock.timers.size, 1);
-  clock.visible(false);
-  assert.equal(clock.timers.size, 0);
-  clock.visible(true);
-  await tick();
-  assert.equal(calls, 2);
-  clock.next();
-  await tick();
-  assert.equal(calls, 3);
-  stop();
-  assert.equal(clock.timers.size, 0);
-  assert.equal(clock.handlers.size, 0);
+test("Stage 7: public table uses one load rather than background polling", () => {
+  const source = readFileSync(new URL("../src/pages/Players/usePublicPlayers.js", import.meta.url), "utf8");
+  assert.match(source, /getPublicPlayers\(/);
+  assert.doesNotMatch(source, /startVisiblePolling|setInterval|setTimeout/);
 });
 
-test("031: visible polling never overlaps requests and coalesces foreground refresh", async () => {
-  const clock = testClock();
-  const completions = [];
-  let calls = 0;
-  const stop = startVisiblePolling({ ...clock, load: () => { calls++; return new Promise((resolve) => completions.push(resolve)); } });
-  assert.equal(calls, 1);
-  clock.visible(false);
-  clock.visible(true);
-  clock.visible(false);
-  clock.visible(true);
-  assert.equal(calls, 1);
-  completions.shift()();
-  await tick();
-  assert.equal(calls, 2);
-  completions.shift()();
-  await tick();
-  assert.equal(clock.timers.size, 1);
-  stop();
+test("Stage 7: public dashboard uses one load rather than background polling", () => {
+  const source = readFileSync(new URL("../src/pages/Home/Home.jsx", import.meta.url), "utf8");
+  assert.match(source, /getPublicStats\(/);
+  assert.match(source, /getRecentPlayers\(/);
+  assert.doesNotMatch(source, /startVisiblePolling|setInterval|setTimeout/);
 });

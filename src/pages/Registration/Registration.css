@@ -115,7 +115,8 @@
 }
 
 
-.registration-section__title {
+.registration-section__title,
+.registration-section__heading h2 {
   margin: 0;
 
   color: #123264;
@@ -123,7 +124,8 @@
   font-size: 22px;
 }
 
-.registration-section__description {
+.registration-section__description,
+.registration-section__heading p {
   margin: 2px 0 0;
 
   color: #334f73;
@@ -143,22 +145,7 @@
   color: #176bd9;
 }
 
-.registration-section__heading h2 {
-  margin: 0;
 
-  color: #123264;
-
-  font-size: 22px;
-}
-
-.registration-section__heading p {
-  margin: 2px 0 0;
-
-  color: #334f73;
-
-  font-size: 15px;
-  font-weight: 500;
-}
 
 /* PLAYER */
 .form-field {

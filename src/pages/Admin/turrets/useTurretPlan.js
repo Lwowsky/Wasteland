@@ -3,7 +3,6 @@ import { runAutomaticDistribution } from "../../../features/turrets/autoDistribu
 import { releaseAllTurretHelpers } from "../../../features/turrets/turretRedistribution.js";
 import { createEmptyAssignments, completeAssignmentShifts, findAssignmentConflicts, normalizeAssignments } from "../../../features/turrets/turretAssignments.js";
 import { normalizePlannerSettings } from "../../../features/turrets/plannerSettings.js";
-import { defaultPlanLanguagesForLocale } from "../../../features/turrets/planLanguages.js";
 import { getPlannerShift } from "../../../features/turrets/plannerPlayers.js";
 import { composePlanPlayers } from "../../../features/turrets/turretPlanPlayers.js";
 import { saveChangedTurretPlan } from "../../../features/turrets/planSync.js";
@@ -19,19 +18,15 @@ import {
 } from "../services/turretPlanApi.js";
 import useTurretLocalPersistence from "./useTurretLocalPersistence.js";
 import { canReviewTurretRoster } from "../../../features/turrets/turretRosterReview.js";
+import { initialTurretPlanSettings, emptyTurretPlanSnapshot, serverTurretPlanSnapshot } from "./turretPlanSnapshot.js";
 
-const initialSettings = (locale) => normalizePlannerSettings({
-  planLanguages: defaultPlanLanguagesForLocale(locale,
-    typeof navigator !== "undefined" ? navigator.language : ""),
-});
 const initialAssignments = () => createEmptyAssignments();
-const emptySnapshot = (locale) => ({ settings: initialSettings(locale), assignments: initialAssignments() });
 
 /** One working plan for all four tabs; editing is local until explicit sync or publication. */
 export default function useTurretPlan(periodId, registrations, editable = false, userId = "", registrationsReady = false, activeShifts = ["shift1", "shift2"], locale = "uk") {
-  const [settings, setSettings] = useState(() => initialSettings(locale));
+  const [settings, setSettings] = useState(() => initialTurretPlanSettings(locale));
   const [raw, setRaw] = useState(initialAssignments);
-  const [committed, setCommitted] = useState(() => emptySnapshot(locale));
+  const [committed, setCommitted] = useState(() => emptyTurretPlanSnapshot(locale));
   const [revision, setRevision] = useState(0);
   const [published, setPublished] = useState(null);
   const [loading, setLoading] = useState(Boolean(periodId));
@@ -62,13 +57,8 @@ export default function useTurretPlan(periodId, registrations, editable = false,
 
   function loadResponse(response, { allowLocal = false } = {}) {
     if (Number(response.periodId) !== Number(periodId)) throw new Error("TURRET_PERIOD_CHANGED");
-    const serverDraft = response.draft;
-    const snapshot = serverDraft ? {
-      settings: normalizePlannerSettings(serverDraft.settings?.planLanguages ? serverDraft.settings : {
-        ...serverDraft.settings, planLanguages: defaultPlanLanguagesForLocale(locale),
-      }), assignments: completeAssignmentShifts(serverDraft.assignments),
-    } : emptySnapshot(locale);
-    const nextRevision = serverDraft?.revision || 0;
+    const snapshot = serverTurretPlanSnapshot(response.draft, locale);
+    const nextRevision = response.draft?.revision || 0;
     const stored = allowLocal && editable ? readTurretWorkspace(periodId, userId) : null;
     const chosen = resolveTurretWorkspace(snapshot, nextRevision, stored);
     setSettings(normalizePlannerSettings(chosen.snapshot.settings));

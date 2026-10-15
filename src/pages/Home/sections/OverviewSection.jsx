@@ -28,7 +28,7 @@ function OverviewSection({ t, dashboardStats, recentPlayers }) {
           </div>
         </div>
 
-        <div className="home-alliance-list">
+        <div className={`home-alliance-list${showAllAlliances ? " is-expanded" : ""}`}>
           {visibleAlliances.map((alliance, index) => {
             const percent =
               dashboardStats.registered > 0

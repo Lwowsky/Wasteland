@@ -31,10 +31,6 @@
   transition: opacity 0.2s ease;
 }
 
-.extra-squads--disabled {
-  opacity: 0.5;
-}
-
 .extra-squad {
   position: relative;
 
@@ -164,26 +160,6 @@
 }
 
 @media (max-width: 600px) {
-  /* A player's primary troop remains visible, but cannot be selected twice. */
-.extra-squad--main {
-  border-style: dashed;
-  border-color: #a3b9d0;
-}
-
-.extra-squad--main::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: rgba(237, 245, 253, 0.46);
-  z-index: 0;
-}
-
-.extra-squad--main .extra-squad__title,
-.extra-squad--main .extra-squad__enable {
-  opacity: 0.77;
-}
-
 .extra-squad::before {
     background: linear-gradient(
       90deg,

@@ -258,17 +258,7 @@
   padding: 0 14px;
 }
 
-.region-player-overview__cell .player-troop-badge {
-  min-width: 112px;
-  min-height: 38px;
-
-  max-width: 100%;
-
-  padding: 0 15px;
-
-  font-size: 14px;
-}
-
+.region-player-overview__cell .player-troop-badge,
 .region-player-overview__cell .player-status-badge {
   min-width: 112px;
   min-height: 38px;
@@ -279,4 +269,5 @@
 
   font-size: 14px;
 }
+
 

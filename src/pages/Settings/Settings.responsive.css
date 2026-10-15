@@ -43,7 +43,8 @@
     flex: 1;
   }
 
-  .settings-reset {
+  .settings-reset,
+.template-card__main {
     align-items: flex-start;
     flex-direction: column;
   }
@@ -67,10 +68,6 @@
     grid-template-columns: 1fr;
   }
 
-  .template-card__main {
-    align-items: flex-start;
-    flex-direction: column;
-  }
 
   .template-card__avatar { width: 55px; height: 55px; flex-basis: 55px; }
   .template-card h3 { font-size: 19px; }

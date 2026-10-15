@@ -1,66 +1,30 @@
 import {
-  HEADER_ALIASES,
   IMPORT_VALUE_OPTIONS,
-  NO_VALUES,
   PLAYER_IMPORT_FIELDS,
-  SHIFT_ALIASES,
-  TROOP_ALIASES,
-  YES_VALUES,
 } from "./importPlayersConfig.js";
+import {
+  clean,
+  makeImportValueKey,
+  makeImportNicknameKey,
+  matchHeader,
+  normalizedCompact,
+  normalizeImportBoolean,
+  normalizeImportShift,
+  normalizeImportTier,
+  normalizeImportTroop,
+  toNumber,
+} from "./importPlayersNormalization.js";
 
 export { IMPORT_VALUE_OPTIONS, PLAYER_IMPORT_FIELDS };
-
-function clean(value) {
-  return String(value ?? "").trim();
-}
-
-function normalizedKey(value) {
-  return clean(value).toLocaleLowerCase().replace(/\s+/g, " ");
-}
-
-function normalizedCompact(value) {
-  return normalizedKey(value).replace(/[\s_-]+/g, "");
-}
-
-export function makeImportValueKey(value) {
-  return normalizedKey(value);
-}
-
-function matchHeader(header) {
-  const key = normalizedKey(header);
-  const compact = normalizedCompact(header);
-
-  for (const [field, aliases] of Object.entries(HEADER_ALIASES)) {
-    if (
-      aliases.some(
-        (alias) =>
-          normalizedKey(alias) === key || normalizedCompact(alias) === compact,
-      )
-    ) {
-      return field;
-    }
-  }
-
-  return null;
-}
-
-function toNumber(value) {
-  if (typeof value === "number" && Number.isFinite(value)) {
-    return Math.max(0, Math.trunc(value));
-  }
-
-  const parsed = Number(clean(value).replace(/[\s,]+/g, ""));
-  return Number.isFinite(parsed) ? Math.max(0, Math.trunc(parsed)) : 0;
-}
-
-function normalizeImportBoolean(value) {
-  if (typeof value === "boolean") return value ? "true" : "false";
-
-  const normalized = normalizedKey(value);
-  if (YES_VALUES.has(normalized)) return "true";
-  if (NO_VALUES.has(normalized)) return "false";
-  return "";
-}
+export {
+  makeImportValueKey,
+  normalizeImportShift,
+  normalizeImportTier,
+  normalizeImportTroop,
+  toNumber,
+} from "./importPlayersNormalization.js";
+export { readPlayersImportFile } from "./readPlayersImportFile.js";
+export { getImportValueGroups } from "./importPlayersValueGroups.js";
 
 function resolveMappedBoolean(rawValue, valueMappings, field) {
   if (rawValue === undefined) return false;
@@ -71,44 +35,6 @@ function resolveMappedBoolean(rawValue, valueMappings, field) {
   if (resolved === "true") return true;
   if (resolved === "false") return false;
   return null;
-}
-
-function normalizeAliasedValue(value, aliases) {
-  const key = normalizedKey(value);
-  const direct = aliases.get(key);
-  if (direct) return direct;
-
-  const parts = key
-    .split(/[/|;,]+/)
-    .map((part) => part.trim())
-    .filter(Boolean);
-
-  for (const part of parts) {
-    const matched = aliases.get(part);
-    if (matched) return matched;
-  }
-
-  return key;
-}
-
-export function normalizeImportTroop(value) {
-  return normalizeAliasedValue(value, TROOP_ALIASES);
-}
-
-export function normalizeImportShift(value) {
-  return normalizeAliasedValue(value, SHIFT_ALIASES);
-}
-
-export function normalizeImportTier(value) {
-  let raw = clean(value).toUpperCase().replace(/[\s_-]+/g, "");
-  if (!raw) return "";
-
-  raw = raw
-    .replace(/^(?:ТІР|ТИР|TIER)/u, "T")
-    .replace(/^Т/u, "T");
-
-  const match = raw.match(/^T?(\d{1,2})$/);
-  return match ? `T${Number(match[1])}` : raw;
 }
 
 function parseExtraSquadTier(value) {
@@ -158,90 +84,6 @@ export function buildSuggestedMapping(headers, customFields = []) {
   }
 
   return mapping;
-}
-
-export async function readPlayersImportFile(file) {
-  const XLSX = await import("xlsx");
-  const buffer = await file.arrayBuffer();
-  const workbook = XLSX.read(buffer, { type: "array" });
-  const firstSheetName = workbook.SheetNames[0];
-
-  if (!firstSheetName) throw new Error("EMPTY_FILE");
-
-  const worksheet = workbook.Sheets[firstSheetName];
-  const matrix = XLSX.utils.sheet_to_json(worksheet, {
-    header: 1,
-    defval: "",
-    raw: false,
-  });
-
-  if (!matrix.length) throw new Error("EMPTY_FILE");
-
-  const rawHeaders = (matrix[0] || []).map((value) => clean(value));
-  const headers = rawHeaders.map(
-    (header, index) => header || `Column ${index + 1}`,
-  );
-  const rows = matrix
-    .slice(1)
-    .filter((values) => values.some((value) => clean(value) !== ""))
-    .map((values, rowIndex) => {
-      const row = {};
-      headers.forEach((header, columnIndex) => {
-        row[header] = values[columnIndex] ?? "";
-      });
-      return { rowNumber: rowIndex + 2, values: row };
-    });
-
-  if (!rows.length) throw new Error("EMPTY_FILE");
-
-  return {
-    fileName: file.name,
-    sheetName: firstSheetName,
-    headers,
-    rows,
-    total: rows.length,
-  };
-}
-
-export function getImportValueGroups({ fileData, mapping, valueMappings = {} }) {
-  const fields = ["troopType", "tier", "shift", "captain", "readyAttack"];
-  const normalizers = {
-    troopType: normalizeImportTroop,
-    tier: normalizeImportTier,
-    shift: normalizeImportShift,
-    captain: normalizeImportBoolean,
-    readyAttack: normalizeImportBoolean,
-  };
-
-  return Object.fromEntries(
-    fields.map((field) => {
-      const header = mapping?.[field];
-      if (!header) return [field, []];
-
-      const seen = new Set();
-      const values = [];
-
-      for (const row of fileData.rows || []) {
-        const raw = clean(row.values?.[header]);
-        if (!raw) continue;
-        const key = makeImportValueKey(raw);
-        if (seen.has(key)) continue;
-        seen.add(key);
-
-        const automatic = normalizers[field](raw);
-        const override = valueMappings?.[field]?.[key] || "";
-
-        values.push({
-          raw,
-          key,
-          automatic,
-          resolved: override || automatic,
-        });
-      }
-
-      return [field, values];
-    }),
-  );
 }
 
 function rowToPlayer(row, mapping, customTargets = [], valueMappings = {}) {
@@ -328,7 +170,7 @@ export function getPlayerImportIssues(player) {
 
 function validatePlayer(player, rowNumber, existingNicknames, seenNicknames) {
   const issues = getPlayerImportIssues(player);
-  const nicknameKey = String(player.nickname || "").trim().toLocaleLowerCase();
+  const nicknameKey = makeImportNicknameKey(player.nickname);
 
   let duplicate = "";
 

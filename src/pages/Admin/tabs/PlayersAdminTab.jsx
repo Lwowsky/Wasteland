@@ -1,9 +1,8 @@
-import { publicAsset } from "../../../utils/publicAsset.js";
-
-import { AlertTriangle, Trash2 } from "lucide-react";
+import { AlertTriangle } from "lucide-react";
 import { lazy, Suspense, useState } from "react";
 
 import ConfirmModal from "../../../components/ConfirmModal/ConfirmModal.jsx";
+import PlayersAdminHeader from "./PlayersAdminHeader.jsx";
 import LocalPlayerImportPanel from "../players/LocalPlayerImportPanel.jsx";
 import PlayersFilters from "../players/PlayersFilters.jsx";
 import PlayersStatsCards from "../players/PlayersStatsCards.jsx";
@@ -146,74 +145,12 @@ function PlayersAdminTab({
 
   return (
     <section className="admin-players">
-      <header className="admin-players-header">
-        <div className="admin-players-header__title">
-          <div className="admin-players-header__icon">
-            <img
-              src={publicAsset("/images/admin/icons/actions/players.webp")}
-              alt=""
-              aria-hidden="true"
-              className="admin-players-header__icon-image"
-            />
-          </div>
-
-          <div>
-            <h2>
-              {pt.title}
-              <span>({activePlayers.length})</span>
-            </h2>
-            <p>{pt.description}</p>
-          </div>
-        </div>
-
-        {localImport.viewMode === "d1" && (
-          <div className="admin-players-header__actions">
-            <button
-              type="button"
-              className="admin-players-region-editor"
-              onClick={() => setRegionEditorOpen(true)}
-            >
-              <span className="admin-players-region-editor__icon">
-                <img
-                  src={publicAsset("/images/admin/icons/actions/region-editor.webp")}
-                  alt=""
-                  aria-hidden="true"
-                  className="admin-players-button-icon"
-                />
-              </span>
-              <span>{pt.regionEditor.action}</span>
-            </button>
-
-            {canEdit && (
-              <button
-                type="button"
-                className="admin-players-add"
-                onClick={openCreate}
-              >
-                <img
-                  src={publicAsset("/images/admin/icons/actions/add-player.webp")}
-                  alt=""
-                  aria-hidden="true"
-                  className="admin-players-button-icon"
-                />
-                {pt.actions.add}
-              </button>
-            )}
-
-            {canManageDatabase && (
-              <button
-                type="button"
-                className="admin-players-clear-database"
-                onClick={clearDatabaseTable}
-                disabled={databaseBusy || players.length === 0}
-              >
-                <Trash2 size={17} aria-hidden="true" />
-                {pt.databaseTable.clear}
-              </button>
-            )}
-          </div>
-        )}
-      </header>
+      <PlayersAdminHeader pt={pt} activePlayersCount={activePlayers.length}
+        viewMode={localImport.viewMode} canEdit={canEdit}
+        canManageDatabase={canManageDatabase} databaseBusy={databaseBusy}
+        databasePlayerCount={players.length}
+        onOpenRegionEditor={() => setRegionEditorOpen(true)}
+        onCreatePlayer={openCreate} onClearDatabase={clearDatabaseTable} />
 
       {databaseMessage && (
         <div className="admin-local-import__message is-success">

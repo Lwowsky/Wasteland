@@ -56,8 +56,7 @@
 }
 
 .settings-header p,
-.settings-card p,
-.templates-header p {
+.settings-card p {
   margin: 4px 0 0;
 
   color: #536b88;

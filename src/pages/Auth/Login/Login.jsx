@@ -1,16 +1,6 @@
+import { signInSharedConsul } from "../../../features/auth/sharedConsulClient.js";
 import { useEffect, useState } from "react";
-
-import {
-  CheckCircle2,
-  ClipboardList,
-  LockKeyhole,
-  LogIn,
-  Mail,
-  User,
-} from "lucide-react";
-
 import { useLocation, useNavigate, useOutletContext, useParams } from "react-router-dom";
-
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
@@ -19,17 +9,19 @@ import {
   signInWithPopup,
   updateProfile,
 } from "firebase/auth";
-
 import { auth } from "../../../config/firebaseAuth.js";
-
 import {
   getAccessRequest,
   submitAccessRequest,
 } from "../../../features/auth/accessRequestsService.js";
 
-import "./Login.css";
+import LoginIcon from "./LoginIcon.jsx";
+import LoginEmailForm from "./LoginEmailForm.jsx";
+import LoginSharedForm from "./LoginSharedForm.jsx";
+import LoginRequestForm from "./LoginRequestForm.jsx";
+import LoginSharedSuccessModal from "./LoginSharedSuccessModal.jsx";
 
-const REQUEST_ROLES = ["consul", "admin"];
+import "./Login.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -45,6 +37,7 @@ function Login() {
 
   const [password, setPassword] = useState("");
 
+  const [sharedPassword, setSharedPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
 
   const [requestedRole, setRequestedRole] = useState("consul");
@@ -58,6 +51,8 @@ function Login() {
   const [error, setError] = useState("");
 
   const [success, setSuccess] = useState("");
+  const [sharedResult, setSharedResult] = useState(null);
+  const [showSharedPassword, setShowSharedPassword] = useState(false);
 
   const redirectPath = location.state?.from || `/${lang}/admin`;
 
@@ -77,6 +72,19 @@ function Login() {
   function changeTab(tab) {
     clearMessages();
     setActiveTab(tab);
+    setSharedResult(null);
+  }
+
+  async function handleSharedLogin(event) {
+    event.preventDefault();
+    setLoading(true);
+    clearMessages();
+    try {
+      const result = await signInSharedConsul(sharedPassword.trim());
+      setSharedPassword("");
+      setSharedResult(result);
+    } catch { setError(copy.sharedConsul.error); }
+    finally { setLoading(false); }
   }
 
   async function handleEmailLogin(event) {
@@ -215,11 +223,7 @@ function Login() {
     <main className="login-page">
       <div className="login-card">
         <div className="login-card__icon">
-          {activeTab === "login" ? (
-            <LockKeyhole size={30} />
-          ) : (
-            <ClipboardList size={30} />
-          )}
+          <LoginIcon name={activeTab === "login" ? "login" : activeTab === "request" ? "request" : "shared"} size="hero" />
         </div>
 
         <div className="login-tabs">
@@ -246,197 +250,71 @@ function Login() {
           >
             {copy.login.tabs.request}
           </button>
+          <button type="button" className={activeTab === "shared" ? "login-tab login-tab--active" : "login-tab"} onClick={() => changeTab("shared")}>
+            {copy.sharedConsul.tab}
+          </button>
         </div>
 
         {activeTab === "login" && (
-          <>
-            <h1>{copy.login.title}</h1>
+          <LoginEmailForm
+            copy={copy}
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            error={error}
+            loading={loading}
+            onEmailLogin={handleEmailLogin}
+            onGoogleLogin={handleGoogleLogin}
+            onRequestTab={() => changeTab("request")}
+          />
+        )}
 
-            <p className="login-card__text">{copy.login.text}</p>
-
-            <form className="login-form" onSubmit={handleEmailLogin}>
-              <label className="login-field">
-                <span>{copy.login.email}</span>
-
-                <div className="login-field__control">
-                  <Mail size={18} />
-
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                    placeholder={copy.login.emailPlaceholder}
-                    required
-                  />
-                </div>
-              </label>
-
-              <label className="login-field">
-                <span>{copy.login.password}</span>
-
-                <div className="login-field__control">
-                  <LockKeyhole size={18} />
-
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                    placeholder={copy.login.passwordPlaceholder}
-                    required
-                  />
-                </div>
-              </label>
-
-              {error && <p className="login-error">{error}</p>}
-
-              <button type="submit" className="login-submit" disabled={loading}>
-                <LogIn size={18} />
-
-                {loading ? copy.login.signingIn : copy.login.signIn}
-              </button>
-            </form>
-
-            <div className="login-divider">
-              <span>{copy.login.or}</span>
-            </div>
-
-            <button
-              type="button"
-              className="login-google"
-              onClick={handleGoogleLogin}
-              disabled={loading}
-            >
-              <span className="login-google__mark">G</span>
-              {copy.login.googleSignIn}
-            </button>
-
-            <button
-              type="button"
-              className="login-request-link"
-              onClick={() => changeTab("request")}
-            >
-              {copy.login.requestLink}
-            </button>
-          </>
+        {activeTab === "shared" && (
+          <LoginSharedForm
+            copy={copy}
+            sharedPassword={sharedPassword}
+            setSharedPassword={setSharedPassword}
+            showSharedPassword={showSharedPassword}
+            setShowSharedPassword={setShowSharedPassword}
+            error={error}
+            loading={loading}
+            onSharedLogin={handleSharedLogin}
+          />
         )}
 
         {activeTab === "request" && (
-          <>
-            <h1>{copy.request.title}</h1>
-
-            <p className="login-card__text">{copy.request.text}</p>
-
-            <form className="login-form" onSubmit={handleEmailRequest}>
-              <label className="login-field">
-                <span>{copy.request.name}</span>
-
-                <div className="login-field__control">
-                  <User size={18} />
-
-                  <input
-                    type="text"
-                    value={displayName}
-                    onChange={(event) => setDisplayName(event.target.value)}
-                    placeholder={copy.request.namePlaceholder}
-                    required
-                  />
-                </div>
-              </label>
-
-              <label className="login-field">
-                <span>{copy.login.email}</span>
-
-                <div className="login-field__control">
-                  <Mail size={18} />
-
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                    placeholder={copy.login.emailPlaceholder}
-                    required
-                  />
-                </div>
-              </label>
-
-              <label className="login-field">
-                <span>{copy.login.password}</span>
-
-                <div className="login-field__control">
-                  <LockKeyhole size={18} />
-
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                    placeholder={copy.request.passwordPlaceholder}
-                    minLength={6}
-                    required
-                  />
-                </div>
-              </label>
-
-              <label className="login-field">
-                <span>{copy.request.role}</span>
-
-                <select
-                  className="login-select"
-                  value={requestedRole}
-                  onChange={(event) => setRequestedRole(event.target.value)}
-                >
-                  {REQUEST_ROLES.map((role) => (
-                    <option key={role} value={role}>
-                      {copy.request.roles[role]}
-                    </option>
-                  ))}
-                </select>
-              </label>
-
-              <label className="login-field">
-                <span>{copy.request.comment}</span>
-
-                <textarea
-                  className="login-textarea"
-                  value={comment}
-                  onChange={(event) => setComment(event.target.value)}
-                  placeholder={copy.request.commentPlaceholder}
-                  rows={3}
-                />
-              </label>
-
-              {error && <p className="login-error">{error}</p>}
-
-              {success && (
-                <div className="login-success">
-                  <CheckCircle2 size={18} />
-
-                  <span>{success}</span>
-                </div>
-              )}
-
-              <button type="submit" className="login-submit" disabled={loading}>
-                <ClipboardList size={18} />
-
-                {loading ? copy.request.sending : copy.request.submit}
-              </button>
-            </form>
-
-            <div className="login-divider">
-              <span>{copy.login.or}</span>
-            </div>
-
-            <button
-              type="button"
-              className="login-google"
-              onClick={handleGoogleRequest}
-              disabled={loading}
-            >
-              <span className="login-google__mark">G</span>
-              {copy.request.googleSubmit}
-            </button>
-          </>
+          <LoginRequestForm
+            copy={copy}
+            displayName={displayName}
+            setDisplayName={setDisplayName}
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            requestedRole={requestedRole}
+            setRequestedRole={setRequestedRole}
+            comment={comment}
+            setComment={setComment}
+            error={error}
+            success={success}
+            loading={loading}
+            onEmailRequest={handleEmailRequest}
+            onGoogleRequest={handleGoogleRequest}
+          />
         )}
       </div>
+      {sharedResult && (
+        <LoginSharedSuccessModal
+          copy={copy}
+          sharedResult={sharedResult}
+          language={lang}
+          onContinue={() => {
+            setSharedResult(null);
+            navigate(redirectPath, { replace: true });
+          }}
+        />
+      )}
     </main>
   );
 }

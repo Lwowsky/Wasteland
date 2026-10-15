@@ -1,3 +1,4 @@
+import { sharedConsulAuth } from "./sharedConsul.js";
 import { hasPermission } from "../../../src/features/auth/permissions.js";
 
 export function adminHasPermission(admin, permission) {
@@ -54,6 +55,9 @@ function getFirestoreBoolean(field) {
 }
 
 export async function verifyAdminRequest(request, env) {
+  const shared = await sharedConsulAuth(request, env);
+  if (shared) return shared;
+
   const token = getBearerToken(request);
 
   if (!token) {

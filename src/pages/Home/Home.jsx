@@ -54,11 +54,8 @@ function Home() {
 
     loadHomeData();
 
-    const timer = setInterval(loadHomeData, 5 * 60 * 1000);
-
     return () => {
       cancelled = true;
-      clearInterval(timer);
     };
   }, []);
 

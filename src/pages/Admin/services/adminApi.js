@@ -1,3 +1,4 @@
+import { getSharedSession } from "../../../features/auth/sharedConsulClient.js";
 import { auth } from "../../../config/firebaseAuth.js";
 import { requestJson } from "../../../utils/apiClient.js";
 
@@ -5,6 +6,8 @@ async function getAdminToken() {
   const user = auth.currentUser;
 
   if (!user) {
+    const shared=getSharedSession();
+    if(shared) return shared.token;
     throw new Error("AUTH_REQUIRED");
   }
 

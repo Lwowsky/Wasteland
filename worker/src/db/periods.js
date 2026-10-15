@@ -1,14 +1,21 @@
 import {
-  REGISTRATION_RETENTION_DAYS,
   getRegistrationCycleKey,
   getRegistrationCycleSchedule,
   isScheduleOpen,
 } from "../services/registrationCycle.js";
-import {
-  applyRegistrationRulesSnapshot,
-  buildRegistrationRulesSnapshot,
-  parseRegistrationRulesSnapshot,
-} from "../services/registrationRules.js";
+import { buildRegistrationRulesSnapshot } from "../services/registrationRules.js";
+import { cleanupOldRegistrationPeriods } from "./periods/periodMaintenance.js";
+
+// Keep existing public imports stable while grouping related D1 operations.
+export {
+  cleanupOldRegistrationPeriods,
+  remapPeriodShifts,
+} from "./periods/periodMaintenance.js";
+export {
+  getEffectiveRegistrationSettings,
+  getPeriodRules,
+  updatePeriodRulesSnapshot,
+} from "./periods/periodRules.js";
 
 export async function getLatestPeriod(env) {
   return env.DB.prepare(
@@ -80,182 +87,6 @@ export function isPeriodOpen(period, now = new Date()) {
   }
 
   return now >= opensAt && now <= closesAt;
-}
-
-export function getPeriodRules(period, fallbackSettings = {}) {
-  return parseRegistrationRulesSnapshot(
-    period?.rules_snapshot_json,
-    fallbackSettings,
-  );
-}
-
-export function getEffectiveRegistrationSettings(settings, period) {
-  if (!period) {
-    return settings;
-  }
-
-  return applyRegistrationRulesSnapshot(settings, getPeriodRules(period, settings));
-}
-
-export async function updatePeriodRulesSnapshot(
-  env,
-  periodId,
-  settings,
-  section = "all",
-) {
-  if (!periodId) {
-    return null;
-  }
-
-  const period = await env.DB.prepare(
-    `SELECT * FROM registration_periods WHERE id = ? LIMIT 1`,
-  )
-    .bind(periodId)
-    .first();
-
-  if (!period) {
-    return null;
-  }
-
-  const currentRules = getPeriodRules(period, settings);
-  const nextRules = buildRegistrationRulesSnapshot(currentRules);
-  const candidateRules = buildRegistrationRulesSnapshot(settings);
-
-  if (section === "shifts") {
-    nextRules.availableShifts = candidateRules.availableShifts;
-  } else if (section === "tiers") {
-    nextRules.availableTiers = candidateRules.availableTiers;
-  } else if (section === "formFields") {
-    nextRules.visibleFields = candidateRules.visibleFields;
-    nextRules.requiredFields = candidateRules.requiredFields;
-    nextRules.customFields = candidateRules.customFields;
-  } else {
-    Object.assign(nextRules, candidateRules);
-  }
-
-  await env.DB.prepare(
-    `
-      UPDATE registration_periods
-      SET rules_snapshot_json = ?, updated_at = CURRENT_TIMESTAMP
-      WHERE id = ?
-    `,
-  )
-    .bind(JSON.stringify(nextRules), periodId)
-    .run();
-
-  return nextRules;
-}
-
-export async function remapPeriodShifts(
-  env,
-  periodId,
-  shiftMapping = {},
-  availableShifts = {},
-) {
-  if (!periodId) {
-    return;
-  }
-
-  const rows = await env.DB.prepare(
-    `
-      SELECT shift, COUNT(*) AS count
-      FROM registrations
-      WHERE period_id = ?
-        AND shift IS NOT NULL
-      GROUP BY shift
-    `,
-  )
-    .bind(periodId)
-    .all();
-
-  const statements = [];
-
-  for (const row of rows.results || []) {
-    const source = String(row.shift || "");
-
-    if (!source || availableShifts?.[source] === true) {
-      continue;
-    }
-
-    const target = String(shiftMapping?.[source] || "");
-
-    if (!target || availableShifts?.[target] !== true) {
-      throw new Error(`SHIFT_MAPPING_REQUIRED:${source}`);
-    }
-
-    statements.push(
-      env.DB.prepare(
-        `UPDATE registrations SET shift = ?, updated_at = CURRENT_TIMESTAMP WHERE period_id = ? AND shift = ?`,
-      ).bind(target, periodId, source),
-    );
-    statements.push(
-      env.DB.prepare(
-        `UPDATE public_players SET shift = ?, updated_at = CURRENT_TIMESTAMP WHERE period_id = ? AND shift = ?`,
-      ).bind(target, periodId, source),
-    );
-  }
-
-  if (statements.length) {
-    await env.DB.batch(statements);
-  }
-}
-
-export async function cleanupOldRegistrationPeriods(
-  env,
-  nowMs = Date.now(),
-  retentionDays = REGISTRATION_RETENTION_DAYS,
-) {
-  const cutoffIso = new Date(
-    nowMs -
-      Math.max(1, Number(retentionDays) || REGISTRATION_RETENTION_DAYS) *
-        86_400_000,
-  ).toISOString();
-
-  const oldPeriods = await env.DB.prepare(
-    `
-      SELECT id
-      FROM registration_periods
-      WHERE closes_at IS NOT NULL
-        AND closes_at < ?
-    `,
-  )
-    .bind(cutoffIso)
-    .all();
-
-  if (!oldPeriods.results.length) {
-    return 0;
-  }
-
-  const ids = oldPeriods.results.map((row) => Number(row.id)).filter(Boolean);
-
-  if (!ids.length) {
-    return 0;
-  }
-
-  const placeholders = ids.map(() => "?").join(", ");
-
-  await env.DB.batch([
-    env.DB.prepare(
-      `DELETE FROM content_access_sessions WHERE period_id IN (${placeholders})`,
-    ).bind(...ids),
-    env.DB.prepare(
-      `DELETE FROM content_access_tokens WHERE period_id IN (${placeholders})`,
-    ).bind(...ids),
-    env.DB.prepare(
-      `DELETE FROM public_players WHERE period_id IN (${placeholders})`,
-    ).bind(...ids),
-    env.DB.prepare(
-      `DELETE FROM registrations WHERE period_id IN (${placeholders})`,
-    ).bind(...ids),
-    env.DB.prepare(`DELETE FROM stats WHERE period_id IN (${placeholders})`).bind(
-      ...ids,
-    ),
-    env.DB.prepare(
-      `DELETE FROM registration_periods WHERE id IN (${placeholders})`,
-    ).bind(...ids),
-  ]);
-
-  return ids.length;
 }
 
 async function getNextCycleNumber(env) {

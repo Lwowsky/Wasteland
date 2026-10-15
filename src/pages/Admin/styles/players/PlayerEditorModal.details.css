@@ -206,7 +206,8 @@
 
   /* PARTICIPATION */
 
-  .player-editor-participation-grid {
+  .player-editor-participation-grid,
+.player-editor-fields-grid {
     grid-template-columns: 1fr;
 
     gap: 10px;
@@ -214,11 +215,6 @@
 
   /* MAIN FIELDS */
 
-  .player-editor-fields-grid {
-    grid-template-columns: 1fr;
-
-    gap: 10px;
-  }
 
   .player-editor-field {
     gap: 6px;

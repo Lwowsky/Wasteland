@@ -1,3 +1,4 @@
+import { getPublicSnapshot, isPublicSnapshotEnabled } from "./publicSnapshot.js";
 import { getContentAccessHeaders } from "../contentAccess/contentAccessApi.js";
 import { requestJson } from "../../utils/apiClient.js";
 import { readSessionCache, writeSessionCache } from "../../utils/sessionCache.js";
@@ -30,7 +31,9 @@ function normalizePlayer(player) {
 }
 
 export async function getPublicPlayers() {
-  const data = await requestJson("/api/players?page=1&limit=500", {
+  const data = isPublicSnapshotEnabled()
+    ? await getPublicSnapshot("players.json")
+    : await requestJson("/api/players?page=1&limit=500", {
     headers: getContentAccessHeaders("players"),
   });
 
@@ -41,7 +44,7 @@ export async function getPublicPlayers() {
 }
 
 export async function getPublicStats({ force = false } = {}) {
-  if (!force) {
+  if (!force && !isPublicSnapshotEnabled()) {
     const cached = readSessionCache(STATS_CACHE_KEY, DASHBOARD_CACHE_TTL_MS);
 
     if (cached) {
@@ -49,15 +52,18 @@ export async function getPublicStats({ force = false } = {}) {
     }
   }
 
-  const data = await requestJson("/api/stats");
-  writeSessionCache(STATS_CACHE_KEY, data);
-  return data;
+  const data = isPublicSnapshotEnabled()
+    ? await getPublicSnapshot("summary.json")
+    : await requestJson("/api/stats");
+  const stats = isPublicSnapshotEnabled() ? data.stats : data;
+  writeSessionCache(STATS_CACHE_KEY, stats);
+  return stats;
 }
 
 export async function getRecentPlayers(limit = 5, { force = false } = {}) {
   const cacheKey = `${RECENT_CACHE_PREFIX}${limit}`;
 
-  if (!force) {
+  if (!force && !isPublicSnapshotEnabled()) {
     const cached = readSessionCache(cacheKey, DASHBOARD_CACHE_TTL_MS);
 
     if (cached) {
@@ -66,9 +72,11 @@ export async function getRecentPlayers(limit = 5, { force = false } = {}) {
   }
 
   try {
-    const players = await requestJson(`/api/recent?limit=${limit}`, {
-      headers: getContentAccessHeaders("players"),
-    });
+    const players = isPublicSnapshotEnabled()
+      ? (await getPublicSnapshot("summary.json")).recentPlayers.slice(0, limit)
+      : await requestJson(`/api/recent?limit=${limit}`, {
+          headers: getContentAccessHeaders("players"),
+        });
     writeSessionCache(cacheKey, players);
 
     return players.map(normalizePlayer);

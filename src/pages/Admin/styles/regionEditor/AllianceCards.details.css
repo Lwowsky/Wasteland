@@ -39,7 +39,8 @@
   white-space: nowrap;
 }
 
-.region-alliance-stat strong {
+.region-alliance-stat strong,
+.region-alliance-troop strong {
   color: #173c68;
 
   font-size: 22px;
@@ -149,15 +150,6 @@
   filter: drop-shadow(0 5px 7px rgba(63, 47, 23, 0.2));
 }
 
-.region-alliance-troop strong {
-  color: #173c68;
-
-  font-size: 22px;
-  font-weight: 900;
-  line-height: 1;
-
-  font-variant-numeric: tabular-nums;
-}
 
 /* FIGHTER */
 

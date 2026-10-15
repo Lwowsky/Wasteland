@@ -27,7 +27,9 @@
 .settings-import-file-summary,
 .settings-import-mapping-section,
 .settings-import-unknown-section,
-.settings-import-preview-section {
+.settings-import-preview-section,
+.settings-import-destination-section,
+.settings-import-value-section {
   padding: 14px;
   background: linear-gradient(145deg, #ffffff, #f6faff);
   border: 1px solid #cfdfef;
@@ -41,7 +43,8 @@
   gap: 12px;
 }
 
-.settings-import-file-summary > div {
+.settings-import-file-summary > div,
+.settings-import-destination-grid span {
   min-width: 0;
   display: grid;
   gap: 3px;
@@ -255,13 +258,6 @@
   }
 }
 
-.settings-import-destination-section,
-.settings-import-value-section {
-  padding: 14px;
-  background: linear-gradient(145deg, #ffffff, #f6faff);
-  border: 1px solid #cfdfef;
-  border-radius: 14px;
-}
 
 .settings-import-destination-grid {
   display: grid;
@@ -296,11 +292,6 @@
   box-shadow: 0 0 0 2px rgba(62, 139, 230, 0.08);
 }
 
-.settings-import-destination-grid span {
-  min-width: 0;
-  display: grid;
-  gap: 3px;
-}
 
 .settings-import-destination-grid strong {
   color: #173a66;

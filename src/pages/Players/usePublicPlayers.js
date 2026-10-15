@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { getPublicPlayers } from "../../features/players/publicPlayersApi.js";
-import { startVisiblePolling } from "../../features/players/visiblePolling.js";
 
-const REFRESH_INTERVAL_MS = 60 * 1000;
 
 function usePublicPlayers() {
   const [players, setPlayers] = useState([]);
@@ -35,14 +33,10 @@ function usePublicPlayers() {
       }
     }
 
-    const stop = startVisiblePolling({
-      load: loadPlayers, documentRef: document, windowRef: window,
-      intervalMs: REFRESH_INTERVAL_MS,
-    });
+    void loadPlayers();
 
     return () => {
       cancelled = true;
-      stop();
     };
   }, []);
 

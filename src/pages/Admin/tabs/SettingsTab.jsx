@@ -189,7 +189,7 @@ function SettingsTab({
           />
         )}
 
-        {canContentAccess && <ContentAccessPanel t={s.access} language={language} />}
+        {canContentAccess && <ContentAccessPanel t={s.access} sharedConsulT={isOwner ? s.sharedConsul : null} cancelLabel={s.sharedConsul.cancel} language={language} />}
       </div>
 
       {isOwner && (

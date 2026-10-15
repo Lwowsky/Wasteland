@@ -3,7 +3,8 @@
   "description": "Керування користувачами, ролями та індивідуальними правами.",
   "tabs": {
     "users": "Користувачі",
-    "requests": "Заявки"
+    "requests": "Заявки",
+    "limits": "Ліміти"
   },
   "cards": {
     "owner": {
@@ -127,5 +128,36 @@
   },
   "confirm": {
     "removeAccess": "Видалити доступ для {{name}}?"
+  },
+  "cloudflareLimits": {
+    "title": "Cloudflare — ліміти та використання",
+    "description": "Поточне використання Workers і D1 для всього акаунта.",
+    "metricWorkers": "Workers — запити",
+    "metricD1Reads": "D1 — прочитані рядки",
+    "metricD1Writes": "D1 — записані рядки",
+    "note": "Ліміти залежать від тарифу Cloudflare.",
+    "open": "Cloudflare Dashboard",
+    "docs": "Офіційні ліміти",
+    "loadingMetrics": "Завантаження…",
+    "refreshMetrics": "Оновити",
+    "analyticsError": "Не вдалося отримати аналітику",
+    "updated": "Оновлено",
+    "compactTitle": "Cloudflare — використання лімітів",
+    "left": "Залишок",
+    "noData": "Немає даних",
+    "dailyLimit": "ліміт / добу",
+    "showDetails": "Показати деталі",
+    "hideDetails": "Сховати деталі",
+    "perDatabase": "На одну базу",
+    "perRequest": "На 1 запит",
+    "detailWorkersCount": "Максимум Workers",
+    "detailCron": "Cron triggers",
+    "detailCpu": "CPU на запит",
+    "detailMemory": "Пам’ять Worker",
+    "detailD1Databases": "D1 бази",
+    "detailD1Storage": "Сховище D1",
+    "detailD1DatabaseSize": "Макс. розмір бази",
+    "detailD1Queries": "D1 запитів за виклик",
+    "utcLabel": "UTC"
   }
 }

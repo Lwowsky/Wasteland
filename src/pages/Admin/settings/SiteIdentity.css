@@ -128,7 +128,8 @@
   padding: 0 13px;
 }
 
-.settings-inline-button-icon {
+.settings-inline-button-icon,
+.site-identity-field__icon-image {
   width: 18px;
   height: 18px;
   object-fit: contain;
@@ -314,12 +315,6 @@
   pointer-events: none;
 }
 
-.site-identity-field__icon-image {
-  width: 18px;
-  height: 18px;
-  object-fit: contain;
-  display: block;
-}
 
 .site-identity-field__with-icon input {
   padding-left: 38px;
@@ -455,4 +450,14 @@
   .site-identity-modal__footer button {
     flex: 1;
   }
+}
+
+.site-identity-restore-notice {
+  margin: 10px 0;
+  padding: 12px 14px;
+  border: 1px solid #a7dcbf;
+  border-radius: 12px;
+  background: #edf9f1;
+  color: #236b42;
+  font-weight: 700;
 }

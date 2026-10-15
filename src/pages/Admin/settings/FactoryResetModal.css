@@ -86,7 +86,8 @@
 }
 
 .factory-reset-select-all span,
-.factory-reset-option span {
+.factory-reset-option span,
+.factory-reset-backup-option span {
   display: grid;
   gap: 3px;
 }
@@ -160,10 +161,6 @@
   margin-top: 3px;
 }
 
-.factory-reset-backup-option span {
-  display: grid;
-  gap: 3px;
-}
 
 .factory-reset-backup-option small {
   color: #68809a;

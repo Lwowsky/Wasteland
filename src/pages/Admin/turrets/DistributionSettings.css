@@ -34,8 +34,7 @@
 }
 
 .planner-unsaved,
-.planner-source-error,
-.planner-action-success {
+.planner-source-error {
   margin: 0;
   padding: 10px 12px;
   font-size: 13px;
@@ -54,12 +53,6 @@
   color: #a62e47;
   background: #fff1f4;
   border: 1px solid #edbac5;
-}
-
-.planner-action-success {
-  color: #216f4b;
-  background: #edf9f2;
-  border: 1px solid #b6e3ca;
 }
 
 .planner-auto-panel > div:first-child {

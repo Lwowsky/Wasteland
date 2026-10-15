@@ -21,7 +21,7 @@ const consumers = [
   "src/pages/Admin/regionEditor/RegionEditorTabs.jsx",
   "src/pages/Admin/regionEditor/AlliancesEditorTab.jsx",
   "src/pages/Admin/settings/ContentAccessPanel.jsx",
-  "src/pages/Admin/tabs/PlayersAdminTab.jsx",
+  "src/pages/Admin/tabs/PlayersAdminHeader.jsx",
 ];
 
 test("032: all group-of-players visuals use one bright WEBP asset", () => {
@@ -49,4 +49,12 @@ test("032: status reserve and total cards show the same canonical icon", () => {
   const source = readFileSync(join(root, "src/pages/Admin/turrets/PlayerStatus.jsx"), "utf8");
   assert.match(source, /\["reserve",\s*"reserve",\s*"notAssigned",\s*"\/images\/admin\/icons\/actions\/players\.webp"\]/);
   assert.match(source, /\["total",\s*"total",\s*"allPlayers",\s*"\/images\/admin\/icons\/actions\/players\.webp"\]/);
+});
+
+// The players header is a separate component after Stage 6. Verify the
+// same canonical asset stays reachable from the parent admin tab.
+test("stage 6: the players tab renders its extracted header", () => {
+  const tab = readFileSync(join(root, "src/pages/Admin/tabs/PlayersAdminTab.jsx"), "utf8");
+  assert.match(tab, /import PlayersAdminHeader from ["']\.\/PlayersAdminHeader\.jsx["']/);
+  assert.match(tab, /<PlayersAdminHeader\b/);
 });

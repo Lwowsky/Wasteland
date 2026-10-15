@@ -152,7 +152,8 @@
 .template-card__avatar { width: 70px; height: 70px; flex: 0 0 70px; object-fit: contain; }
 .template-card__identity-content { min-width: 0; }
 .template-card h3 { margin: 0 0 8px; color: #123568; font-size: 22px; overflow-wrap: anywhere; }
-.template-card__meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.template-card__meta,
+.template-card__actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
 .template-card__alliance {
   padding: 6px 9px;
   color: #176fe5;
@@ -161,7 +162,6 @@
   font-size: 13px;
   font-weight: 800;
 }
-.template-card__actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
 .template-card__actions button {
   min-height: 42px;
   display: inline-flex;
@@ -176,7 +176,8 @@
   font-size: 14px;
   font-weight: 750;
 }
-.template-card__actions img { width: 27px; height: 27px; object-fit: contain; }
+.template-card__actions img,
+.template-card__extra-badge img { width: 27px; height: 27px; object-fit: contain; }
 .template-card__actions .template-card__delete { color: #b7354d; background: #fff3f4; border-color: #f0c3ca; }
 .template-card__stats {
   display: grid;
@@ -201,4 +202,3 @@
   border-radius: 20px;
   font-weight: 750;
 }
-.template-card__extra-badge img { width: 27px; height: 27px; object-fit: contain; }

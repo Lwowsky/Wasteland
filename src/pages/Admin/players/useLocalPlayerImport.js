@@ -4,57 +4,17 @@ import {
   importAdminRegistrations,
 } from "../services/adminPlayersApi.js";
 import {
-  buildPlayersImportPreview,
-  getPlayerImportIssues,
-} from "../utils/importPlayers.js";
+  annotateLocalImportRows,
+  buildDraftRows,
+  getImportedLocalIds,
+  toggleVisibleLocalSelection,
+} from "./localPlayerImportRows.js";
 import {
   PLAYER_IMPORT_DRAFT_EVENT,
   clearPlayerImportDraft,
   loadPlayerImportDraft,
   savePlayerImportDraft,
 } from "../utils/localPlayerImportDraft.js";
-
-function nicknameKey(value) {
-  return String(value || "").trim().toLocaleLowerCase();
-}
-
-function buildDraftRows(draft, registrationSettings, existingPlayers) {
-  if (!draft) {
-    return [];
-  }
-
-  if (Array.isArray(draft.stagedRows)) {
-    return draft.stagedRows;
-  }
-
-  if (!draft.fileData?.rows) {
-    return [];
-  }
-
-  const customTargets = [
-    ...(registrationSettings?.customFields || []).map((field) => ({
-      ...field,
-      configured: true,
-      custom: true,
-    })),
-    ...(draft.manualFields || []),
-  ];
-
-  const preview = buildPlayersImportPreview({
-    fileData: draft.fileData,
-    mapping: draft.mapping || {},
-    customTargets,
-    existingPlayers,
-    valueMappings: draft.valueMappings || {},
-  });
-
-  return preview.rows.map((row) => ({
-    localId: `legacy-${row.rowNumber}`,
-    rowNumber: row.rowNumber,
-    player: row.player,
-    imported: false,
-  }));
-}
 
 export default function useLocalPlayerImport({
   players,
@@ -116,48 +76,10 @@ export default function useLocalPlayerImport({
     [localDraft, registrationSettings, players],
   );
 
-  const rows = useMemo(() => {
-    const existingNames = new Set(
-      players.map((player) => nicknameKey(player.nickname)).filter(Boolean),
-    );
-    const localSeen = new Set();
-
-    return baseRows.map((row) => {
-      const player = row.player || {};
-      const key = nicknameKey(player.nickname);
-      const issues = getPlayerImportIssues(player);
-      let duplicate = "";
-
-      if (key && localSeen.has(key)) {
-        duplicate = "local";
-      } else if (key && existingNames.has(key)) {
-        duplicate = "existing";
-      }
-
-      if (key) {
-        localSeen.add(key);
-      }
-
-      const ready =
-        row.imported !== true && issues.length === 0 && duplicate !== "local";
-
-      return {
-        ...row,
-        issues,
-        duplicate,
-        ready,
-        player: {
-          ...player,
-          id: row.localId,
-          __localId: row.localId,
-          __localImported: row.imported === true,
-          __localReady: ready,
-          __localDuplicate: duplicate,
-          __localIssues: issues,
-        },
-      };
-    });
-  }, [baseRows, players]);
+  const rows = useMemo(
+    () => annotateLocalImportRows(baseRows, players),
+    [baseRows, players],
+  );
 
   const localPlayers = useMemo(() => rows.map((row) => row.player), [rows]);
   const readyRows = useMemo(() => rows.filter((row) => row.ready), [rows]);
@@ -242,25 +164,9 @@ export default function useLocalPlayerImport({
   }
 
   function toggleAllVisible(visiblePlayers) {
-    const selectableIds = visiblePlayers
-      .filter((player) => player.__localReady)
-      .map((player) => player.__localId);
-
-    setSelectedLocalIds((current) => {
-      const allSelected =
-        selectableIds.length > 0 && selectableIds.every((id) => current.has(id));
-      const next = new Set(current);
-
-      selectableIds.forEach((id) => {
-        if (allSelected) {
-          next.delete(id);
-        } else {
-          next.add(id);
-        }
-      });
-
-      return next;
-    });
+    setSelectedLocalIds((current) =>
+      toggleVisibleLocalSelection(current, visiblePlayers),
+    );
   }
 
   function openTransferDialog(targetRows, scope) {
@@ -290,13 +196,7 @@ export default function useLocalPlayerImport({
         mode,
       );
 
-      const importedIds = new Set(
-        mode === "replacePeriod" || mode === "replacePeriodAndClose"
-          ? readyRows.map((row) => row.localId)
-          : targetRows
-              .filter((row) => row.duplicate !== "existing")
-              .map((row) => row.localId),
-      );
+      const importedIds = getImportedLocalIds(mode, targetRows, readyRows);
 
       persistRows(
         baseRows.map((row) =>

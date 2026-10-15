@@ -38,7 +38,7 @@
 
   color: #ffffff;
 
-  background: linear-gradient(135deg, #347fff, #655cf4);
+  background: transparent;
 
   border-radius: 16px;
 }
@@ -230,7 +230,7 @@
 
 .login-tabs {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 6px;
 
   margin-bottom: 24px;
@@ -349,3 +349,22 @@
     font-size: 12px;
   }
 }
+
+/* Login imagery uses existing WEBP icon assets instead of inline SVG icons. */
+.login-art-icon{display:block;object-fit:contain;flex-shrink:0}
+.login-art-icon--hero{width:58px;height:58px}
+.login-art-icon--field{width:23px;height:23px}
+.login-field__control .login-art-icon{margin-right:2px}
+.login-shared-input{position:relative;display:flex;align-items:center}
+.login-shared-input .login-select{padding-right:100px;min-width:0}
+.login-password-toggle{position:absolute;right:8px;padding:7px 10px;border:0;border-radius:8px;background:#eaf2ff;color:#315c96;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+.login-modal-backdrop{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(16,35,68,.63);backdrop-filter:blur(6px)}
+.login-success-modal{width:min(100%,460px);max-height:calc(100dvh - 36px);overflow-y:auto;box-sizing:border-box;display:grid;gap:14px;padding:28px;background:linear-gradient(150deg,#fff,#eaf5ff);border:1px solid #bad5f4;border-radius:22px;box-shadow:0 22px 75px #071a3c55;color:#17365f}
+.login-success-modal h2{margin:0;font-size:25px;color:#164076}
+.login-success-modal p{margin:0;color:#526e91;line-height:1.6}
+.login-success-modal__details{display:grid;gap:1px;overflow:hidden;border:1px solid #cbdff4;border-radius:13px;background:#d9e8f8}
+.login-success-modal__details>div{display:grid;gap:5px;padding:13px;background:#f7fbff}
+.login-success-modal__details strong{font-size:12px;color:#526e91}
+.login-success-modal__details span{font-size:15px;font-weight:800;color:#1d467b;overflow-wrap:anywhere}
+.login-success-modal .login-success-modal__hint{font-size:12px}
+.login-success-modal .login-submit{width:100%;font:inherit;font-weight:800}

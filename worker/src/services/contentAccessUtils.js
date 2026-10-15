@@ -68,6 +68,11 @@ export function generateSessionToken() {
   return base64Url(randomBytes(32));
 }
 
+/** Token TTL: 0 means no expiry; a positive value is measured in minutes. */
+export function getTokenExpiryIso(minutes, nowMs = Date.now()) {
+  return minutes ? new Date(nowMs + minutes * 60_000).toISOString() : null;
+}
+
 export function normalizeCodeCandidate(value) {
   return String(value || "")
     .trim()

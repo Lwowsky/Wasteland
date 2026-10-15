@@ -1,3 +1,5 @@
+import { handleCloudflareMetrics } from "./admin/cloudflareMetrics.js";
+import { handleSharedLogin, handleSharedStatus, handleSharedManage } from "./auth/sharedConsul.js";
 import {
   handleAdminTurretPlanGet, handleAdminTurretDraftPut,
   handleAdminTurretPublish, handleAdminTurretRestore, handlePublicFinalPlan,
@@ -18,6 +20,7 @@ import { handleRecent } from "./public/recent.js";
 import { handleStats } from "./public/stats.js";
 
 import { handlePlayers } from "./public/players.js";
+import { handlePublicSnapshot } from "./public/publicSnapshot.js";
 import {
   handleContentAccessActivation,
   handleContentAccessStatus,
@@ -95,6 +98,11 @@ export default {
           () => handlePublicSiteSettings(env),
           300,
         );
+      }
+
+      // Authenticated export for the GitHub Pages static-data workflow.
+      if (request.method === "GET" && url.pathname === "/api/internal/public-snapshot") {
+        return handlePublicSnapshot(request, env);
       }
 
       /* PUBLIC API */
@@ -182,7 +190,15 @@ export default {
         return await handlePublicFinalPlan(request, env);
       }
 
+      if (url.pathname === "/api/shared-consul/login" && request.method === "POST") return handleSharedLogin(request,env);
+      if (url.pathname === "/api/shared-consul/status" && request.method === "GET") return handleSharedStatus(request,env);
+      if (url.pathname === "/api/admin/shared-consul" && ["GET","POST","DELETE"].includes(request.method)) return handleSharedManage(request,env);
+
       /* ADMIN */
+      if (request.method === "GET" && url.pathname === "/api/admin/cloudflare-metrics") {
+        return await handleCloudflareMetrics(request, env);
+      }
+
 
 
 

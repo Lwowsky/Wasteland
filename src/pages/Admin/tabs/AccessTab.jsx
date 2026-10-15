@@ -13,6 +13,8 @@ import "../styles/access/AccessOverview.css";
 import "../styles/access/AccessUsers.css";
 import "../styles/access/AccessRequests.css";
 
+const CloudflareLimitsView = lazy(() => import("../access/CloudflareLimitsView.jsx"));
+
 const AccessRequestsView = lazy(() =>
   import("../access/AccessRequestsView.jsx"),
 );
@@ -46,6 +48,8 @@ function AccessTab({
     currentAdmin.permissions,
   );
 
+  const canViewLimits = currentAdmin.role === "owner";
+
   const pendingCount = requests.filter(
     (request) => !request.status || request.status === "pending",
   ).length;
@@ -55,6 +59,7 @@ function AccessTab({
       return;
     }
 
+    if (nextTab === "limits" && !canViewLimits) return;
     setActiveTab(nextTab);
   }
 
@@ -67,6 +72,7 @@ function AccessTab({
         usersCount={adminUsers.length}
         pendingCount={pendingCount}
         canViewRequests={canViewRequests}
+        canViewLimits={canViewLimits}
       />
 
       {activeTab === "users" && (
@@ -89,6 +95,7 @@ function AccessTab({
       )}
 
       <Suspense fallback={<div className="admin-loading">{t.common.loading}</div>}>
+        {activeTab === "limits" && canViewLimits && <CloudflareLimitsView t={t} />}
         {activeTab === "requests" && canViewRequests && (
           <AccessRequestsView
             t={t}

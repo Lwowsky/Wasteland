@@ -7,6 +7,7 @@ import {
   generateLinkToken,
   generateSessionToken,
   getContentAccessSessionHeader,
+  getTokenExpiryIso,
   mapContentAccessSetting,
   mapContentAccessToken,
   normalizeCodeCandidate,
@@ -178,9 +179,7 @@ export async function updateContentAccessSetting(env, resource, payload = {}) {
   if (current.mode !== next.mode) {
     await revokeContentAccess(env, normalizedResource);
   } else if (period && ["code", "link"].includes(next.mode)) {
-    const expiresAt = next.tokenTtlMinutes
-      ? new Date(Date.now() + next.tokenTtlMinutes * 60_000).toISOString()
-      : null;
+    const expiresAt = getTokenExpiryIso(next.tokenTtlMinutes);
 
     await env.DB.prepare(
       `
@@ -219,9 +218,7 @@ export async function generateContentAccessToken(env, resource) {
     setting.mode === "code"
       ? token.slice(-4)
       : `${token.slice(0, 4)}…${token.slice(-4)}`;
-  const expiresAt = setting.tokenTtlMinutes
-    ? new Date(Date.now() + setting.tokenTtlMinutes * 60_000).toISOString()
-    : null;
+  const expiresAt = getTokenExpiryIso(setting.tokenTtlMinutes);
 
   const result = await env.DB.prepare(
     `

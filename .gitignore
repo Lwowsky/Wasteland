@@ -37,3 +37,10 @@ dist-ssr
 
 # Test coverage
 coverage/
+
+# Local Cloudflare development secrets (root or worker directories)
+.dev.vars
+.dev.vars.*
+
+# Local database exports; store backups outside public source releases
+backup-before-*.sql

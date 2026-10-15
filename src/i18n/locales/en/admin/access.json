@@ -3,7 +3,8 @@
   "description": "Manage users, roles and individual permissions.",
   "tabs": {
     "users": "Users",
-    "requests": "Requests"
+    "requests": "Requests",
+    "limits": "Limits"
   },
   "cards": {
     "owner": {
@@ -127,5 +128,36 @@
   },
   "confirm": {
     "removeAccess": "Delete access for {{name}}?"
+  },
+  "cloudflareLimits": {
+    "title": "Cloudflare — limits and usage",
+    "description": "Current Workers and D1 usage for the entire account.",
+    "metricWorkers": "Workers — requests",
+    "metricD1Reads": "D1 — rows read",
+    "metricD1Writes": "D1 — rows written",
+    "note": "Quotas depend on your Cloudflare plan.",
+    "open": "Cloudflare Dashboard",
+    "docs": "Official limits",
+    "loadingMetrics": "Loading…",
+    "refreshMetrics": "Refresh",
+    "analyticsError": "Could not load analytics",
+    "updated": "Updated",
+    "compactTitle": "Cloudflare usage",
+    "left": "Remaining",
+    "noData": "No data",
+    "dailyLimit": "daily limit",
+    "showDetails": "Show details",
+    "hideDetails": "Hide details",
+    "perDatabase": "Per database",
+    "perRequest": "Per request",
+    "detailWorkersCount": "Max Workers",
+    "detailCron": "Cron triggers",
+    "detailCpu": "CPU per request",
+    "detailMemory": "Worker memory",
+    "detailD1Databases": "D1 databases",
+    "detailD1Storage": "D1 storage",
+    "detailD1DatabaseSize": "Max database size",
+    "detailD1Queries": "D1 queries per invocation",
+    "utcLabel": "UTC"
   }
 }

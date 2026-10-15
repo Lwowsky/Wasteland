@@ -7,6 +7,7 @@ function AccessNav({
   usersCount = 0,
   pendingCount = 0,
   canViewRequests,
+  canViewLimits = false,
 }) {
   return (
     <nav className="admin-access-nav" aria-label={t.access.title}>
@@ -61,6 +62,19 @@ function AccessNav({
           >
             {pendingCount}
           </span>
+        </button>
+      )}
+      {canViewLimits && (
+        <button
+          type="button"
+          className={`admin-access-nav__button ${activeTab === "limits" ? "admin-access-nav__button--active" : ""}`}
+          onClick={() => onChange("limits")}
+          aria-pressed={activeTab === "limits"}
+        >
+          <span className="admin-access-nav__icon">
+            <img src={publicAsset("/images/admin/icons/settings.webp")} alt="" aria-hidden="true" />
+          </span>
+          <span className="admin-access-nav__label">{t.access.tabs.limits}</span>
         </button>
       )}
     </nav>

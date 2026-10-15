@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"
 
 permissions:
   contents: read
@@ -15,7 +17,57 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.check.outputs.changed }}
+      ready: ${{ steps.check.outputs.ready }}
+    steps:
+      - name: Fetch and compare public snapshots
+        id: check
+        env:
+          EXPORT_URL: ${{ vars.VITE_API_URL }}
+          EXPORT_TOKEN: ${{ secrets.PUBLIC_SNAPSHOT_EXPORT_TOKEN }}
+          PAGES_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/data
+        run: |
+          set -euo pipefail
+          echo "ready=false" >> "$GITHUB_OUTPUT"
+          if [[ -z "$EXPORT_TOKEN" || ! "$EXPORT_URL" =~ ^https:// ]]; then
+            if [[ "${{ github.event_name }}" == "schedule" ]]; then
+              echo "changed=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "No snapshot export configured; default deploy will continue."
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "ready=true" >> "$GITHUB_OUTPUT"
+          curl --fail --silent --show-error --retry 2 \
+            -H "Authorization: Bearer $EXPORT_TOKEN" \
+            "${EXPORT_URL%/}/api/internal/public-snapshot" -o all.json
+          node -e 'const fs=require("fs");const j=JSON.parse(fs.readFileSync("all.json"));fs.writeFileSync("summary.json",JSON.stringify({stats:j.summary, recentPlayers:j.summary.recentPlayers}));fs.writeFileSync("players.json",JSON.stringify(j.players))'
+          # Compare both payloads to the latest published content (no secrets).
+          NEED=false
+          for file in summary players; do
+            curl -fLsS --max-time 15 "$PAGES_URL/$file.json" -o "$file.old.json" || { NEED=true; continue; }
+            node -e 'const fs=require("fs");const [a,b]=process.argv.slice(1).map(p=>JSON.parse(fs.readFileSync(p))); if(JSON.stringify(a)!==JSON.stringify(b))process.exit(1)' "$file.json" "$file.old.json" || NEED=true
+          done
+          echo "changed=$NEED" >> "$GITHUB_OUTPUT"
+      - name: Preserve fresh snapshot payload for deployment
+        if: steps.check.outputs.changed == 'true' && steps.check.outputs.ready == 'true'
+        env:
+          EXPORT_TOKEN: ${{ secrets.PUBLIC_SNAPSHOT_EXPORT_TOKEN }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-snapshot
+          path: |
+            summary.json
+            players.json
+          retention-days: 1
+
   deploy:
+    needs: snapshot
+    if: github.event_name != 'schedule' || needs.snapshot.outputs.changed == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -37,23 +89,53 @@ jobs:
       - name: Check public Worker endpoint
         env:
           VITE_API_URL: ${{ vars.VITE_API_URL }}
+          VITE_PUBLIC_SNAPSHOT_ENABLED: ${{ vars.VITE_PUBLIC_SNAPSHOT_ENABLED }}
+          VITE_PUBLIC_SNAPSHOT_BASE_URL: ${{ vars.VITE_PUBLIC_SNAPSHOT_BASE_URL }}
         run: |
           if [[ ! "$VITE_API_URL" =~ ^https:// ]]; then
             echo "Configure VITE_API_URL (https://...workers.dev) in Actions variables first."
             exit 1
           fi
 
-      - name: Build Vite project
-        run: npm run build
+      - name: Verify and build Vite project
+        run: npm run verify
         env:
           GITHUB_PAGES: "true"
           VITE_API_URL: ${{ vars.VITE_API_URL }}
+          VITE_PUBLIC_SNAPSHOT_ENABLED: ${{ vars.VITE_PUBLIC_SNAPSHOT_ENABLED }}
+          VITE_PUBLIC_SNAPSHOT_BASE_URL: ${{ vars.VITE_PUBLIC_SNAPSHOT_BASE_URL }}
           VITE_FIREBASE_API_KEY: ${{ vars.VITE_FIREBASE_API_KEY }}
           VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.VITE_FIREBASE_AUTH_DOMAIN }}
           VITE_FIREBASE_PROJECT_ID: ${{ vars.VITE_FIREBASE_PROJECT_ID }}
           VITE_FIREBASE_STORAGE_BUCKET: ${{ vars.VITE_FIREBASE_STORAGE_BUCKET }}
           VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ vars.VITE_FIREBASE_MESSAGING_SENDER_ID }}
           VITE_FIREBASE_APP_ID: ${{ vars.VITE_FIREBASE_APP_ID }}
+
+      - name: Download fresh public snapshot
+        if: needs.snapshot.outputs.changed == 'true' && needs.snapshot.outputs.ready == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: public-snapshot
+          path: /tmp/public-snapshot
+
+      - name: Add data snapshots to Pages build
+        if: needs.snapshot.outputs.changed == 'true' && needs.snapshot.outputs.ready == 'true'
+        run: |
+          mkdir -p dist/data
+          cp /tmp/public-snapshot/summary.json dist/data/summary.json
+          cp /tmp/public-snapshot/players.json dist/data/players.json
+
+      # On ordinary git pushes without changed player data, keep the last
+      # published snapshot files rather than accidentally deleting them.
+      - name: Preserve existing snapshots on unchanged deployments
+        if: needs.snapshot.outputs.changed != 'true' || needs.snapshot.outputs.ready != 'true'
+        env:
+          PAGES_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/data
+        run: |
+          mkdir -p dist/data
+          for file in summary players; do
+            curl -fLsS --max-time 20 "$PAGES_URL/$file.json" -o "dist/data/$file.json" || \n              echo "No previously published $file.json yet"
+          done
 
       # GitHub Pages is static: use SPA fallback for /uk, /en, /admin, etc.
       - name: Prepare SPA fallback

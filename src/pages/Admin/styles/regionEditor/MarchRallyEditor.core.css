@@ -173,7 +173,8 @@
    INNER TABLE
 ========================================================= */
 
-.region-combat-editor__table-inner {
+.region-combat-editor__table-inner,
+.region-combat-editor__rows {
   width: 100%;
   min-width: 0;
 }
@@ -227,10 +228,6 @@
    ROWS
 ========================================================= */
 
-.region-combat-editor__rows {
-  width: 100%;
-  min-width: 0;
-}
 
 .region-combat-editor__row {
   min-height: 82px;

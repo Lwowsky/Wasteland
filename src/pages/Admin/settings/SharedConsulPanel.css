@@ -1,0 +1,43 @@
+/* Owner-only shared consul password manager. Component-scoped styles. */
+.shared-consul-panel{display:grid;gap:14px;padding:16px 0 4px;color:#18365b;min-width:0}
+.shared-consul-panel__heading{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.shared-consul-panel__heading strong{font-size:19px}
+.shared-consul-panel__heading p,.shared-consul-panel__create-page>p,.shared-consul-panel__history>p{font-size:13px;line-height:1.6;color:#597393;margin:5px 0 0}
+.shared-consul-panel__counter{font-weight:800;color:#255db4;background:#e5f0ff;border:1px solid #c2dafa;border-radius:12px;padding:10px 15px;white-space:nowrap}
+.shared-consul-panel__tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:5px;gap:5px;background:#e9f1fc;border:1px solid #d0e1f9;border-radius:14px}
+.shared-consul-panel__tabs button{border:0;border-radius:10px;min-height:44px;background:transparent;color:#28517d;font-weight:700;font-size:14px;line-height:1.3;font-family:inherit;cursor:pointer;padding:8px}
+.shared-consul-panel__tabs button.is-selected{background:linear-gradient(115deg,#3588ff,#6053e8);color:white;box-shadow:0 5px 12px #496fc044}
+.shared-consul-panel__tabs button:focus-visible{outline:3px solid #f6b449;outline-offset:2px}
+.shared-consul-panel__create-page,.shared-consul-panel__history{display:grid;gap:12px}
+.shared-consul-panel__create{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:end;gap:12px;padding:14px;background:#edf5ff;border:1px solid #c9def9;border-radius:14px}
+.shared-consul-panel__create>button{grid-column:1/-1;justify-self:end;min-width:220px;min-height:46px}
+.shared-consul-panel__field{display:grid;gap:7px;min-width:0;font-size:14px;font-weight:700}
+.shared-consul-panel__field input,.shared-consul-panel__field select{box-sizing:border-box;width:100%;min-height:46px;padding:9px 12px;background:#fff;border:1px solid #bfd5f3;color:#18365b;border-radius:12px;font:inherit}
+.shared-consul-panel__list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:12px}
+.shared-consul-panel__empty{padding:20px;border:1px dashed #bed3ed;border-radius:14px;background:#f7fbff;color:#617b98;margin:0}
+.shared-consul-panel__item{min-width:0;display:grid;gap:10px;padding:15px;background:#f7fbff;border:1px solid #c9def9;border-radius:14px;color:#18365b;box-shadow:0 3px 10px #254f8412}
+.shared-consul-panel__item-header{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap}
+.shared-consul-panel__item-header strong{overflow-wrap:anywhere}
+.shared-consul-panel__live{color:#13794d;font-weight:700;background:#e0f7eb;border-radius:8px;padding:5px 9px}
+.shared-consul-panel__disabled{color:#9f3550;font-weight:700;background:#ffeaf0;border-radius:8px;padding:5px 9px}
+.shared-consul-panel__legacy{background:#fff8eb;border-color:#ecc69d;color:#6d4820}
+.shared-consul-panel__actions{display:flex;gap:10px;flex-wrap:wrap}
+.shared-consul-panel__actions select{min-height:42px;border:1px solid #bfd5f3;color:#245387;background:white;border-radius:10px;padding:8px;max-width:100%}
+.shared-consul-panel__danger{color:#ad304d;border-color:#efc5ce}
+.shared-consul-panel__error{color:#b52846;font-weight:700}
+.shared-consul-panel__result{display:grid;gap:10px;padding:16px;border:1px solid #a8caff;background:#eaf3ff;border-radius:14px;color:#19375d}
+.shared-consul-panel__password-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;min-width:0}
+.shared-consul-panel__password{flex:1 1 260px;min-width:0;padding:12px;background:#fff;color:#142e52;font:600 14px/1.6 ui-monospace,Consolas,monospace;border:1px solid #b7d0ee;border-radius:10px;overflow-wrap:anywhere;user-select:all}
+.shared-consul-copy-modal__expiry{font-weight:700;color:#28507d}
+.shared-consul-copy-modal__footer{display:flex;justify-content:flex-end;padding:8px 0}
+.shared-consul-copy-modal__footer button{min-height:42px;padding:10px 22px}
+@media(max-width:600px){
+.shared-consul-panel__tabs button{font-size:12px}
+.shared-consul-panel__create{grid-template-columns:1fr}
+.shared-consul-panel__create>button{grid-column:auto;width:100%}
+.shared-consul-panel__heading strong{font-size:16px}
+.shared-consul-panel__actions>*{flex:1 1 100%}
+}
+@media(max-width:480px){
+.shared-consul-panel__password-row button,.shared-consul-copy-modal__footer button{width:100%}
+}

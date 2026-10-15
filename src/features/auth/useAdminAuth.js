@@ -1,3 +1,4 @@
+import { checkSharedConsul, getSharedSession } from "./sharedConsulClient.js";
 import { useEffect, useState } from "react";
 
 import { onAuthStateChanged } from "firebase/auth";
@@ -19,9 +20,10 @@ function useAdminAuth() {
       const currentVersion = ++authVersion;
 
       if (!firebaseUser) {
-        if (active) {
-          setUser(null);
-          setAdmin(null);
+        const shared = getSharedSession() ? await checkSharedConsul() : null;
+        if (active && currentVersion === authVersion) {
+          setUser(shared ? { uid: "shared-consul" } : null);
+          setAdmin(shared);
           setLoading(false);
         }
 

@@ -1,3 +1,4 @@
+import { forgetSharedSession } from "../../features/auth/sharedConsulClient.js";
 import { LogOut } from "lucide-react";
 import { lazy, Suspense, useMemo, useState } from "react";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
@@ -219,7 +220,8 @@ function Admin() {
   }
 
   async function handleLogout() {
-    await logout();
+    if (admin.shared) forgetSharedSession();
+    else await logout();
     navigate(`/${language}/login`, { replace: true });
   }
 
@@ -265,8 +267,12 @@ function Admin() {
                   className="admin-logout"
                   onClick={handleLogout}
                 >
-                  <LogOut size={18} aria-hidden="true" />
-                  {t.common.actions.logout}
+                  <span className="admin-logout__icon" aria-hidden="true">
+                    <LogOut size={18} strokeWidth={2.3} />
+                  </span>
+                  <span className="admin-logout__label">
+                    {t.common.actions.logout}
+                  </span>
                 </button>
               </div>
             </header>

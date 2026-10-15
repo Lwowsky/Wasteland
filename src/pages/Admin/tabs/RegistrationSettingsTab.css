@@ -213,18 +213,6 @@
   text-align: center;
 }
 
-.registration-summary-badge__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  color: #2869b9;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.58);
-  filter: drop-shadow(0 4px 8px rgba(46, 83, 175, 0.16));
-}
-
 .registration-summary-badge > img {
   display: block;
   width: 48px;
