@@ -30,10 +30,11 @@ function normalizePlayer(player) {
   };
 }
 
-export async function getPublicPlayers() {
+export async function getPublicPlayers(verifiedStatus = null) {
   // Never use public JSON as a fallback for a protected player table.
   // The Worker validates code/link sessions and current access mode.
-  const status = await getContentAccessStatus("players");
+  const status = verifiedStatus?.resource === "players" && verifiedStatus.allowed
+    ? verifiedStatus : await getContentAccessStatus("players");
   if (!status.allowed) throw new Error(status.reason || "CONTENT_ACCESS_REQUIRED");
   const data = isPublicSnapshotEnabled() && status.mode === "public"
     ? await getPublicSnapshot("players.json", { reuseRecentlyVerified: true, requireNetwork: true })

@@ -8,8 +8,12 @@ test('stage16: every access mode change queues snapshot publication', () => {
 });
 test('stage16: protected player identities and recent names excluded from public JSON', () => {
   const source = read('worker/src/public/publicSnapshot.js');
-  assert.match(source, /recentPlayers: accessSetting\.mode === "public" \? recent\.map\(publicPlayer\) : \[\]/);
-  assert.match(source, /players: accessSetting\.mode === "public" \? \(players\.players \|\| \[\]\)\.map\(publicPlayer\) : \[\]/);
+  // Initial and latest modes must both be public before snapshot export.
+  assert.match(source, /const exposePlayers = accessSetting\.mode === "public" && latestPlayersAccess\.mode === "public"/);
+  assert.match(source, /const exposePlan = finalAccess\.mode === "public" && latestPlanAccess\.mode === "public"/);
+  assert.match(source, /recentPlayers: exposePlayers \? recent\.map\(publicPlayer\) : \[\]/);
+  assert.match(source, /players: exposePlayers \? \(players\.players \|\| \[\]\)\.map\(publicPlayer\) : \[\]/);
+  assert.match(source, /plan: exposePlan \? \(published\?\.plan \?\? null\) : null/);
 });
 test('stage16: live server check is authoritative before rendering protected resources', () => {
   for (const path of ['src/features/players/publicPlayersApi.js', 'src/pages/FinalPlan/services/finalPlanApi.js']) {

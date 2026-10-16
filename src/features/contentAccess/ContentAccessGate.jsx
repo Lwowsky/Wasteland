@@ -11,6 +11,8 @@ import {
   getContentAccessStatus,
 } from "./contentAccessApi.js";
 
+import { ContentAccessContext } from "./ContentAccessContext.js";
+
 import "./ContentAccessGate.css";
 
 function getErrorCode(error) {
@@ -147,7 +149,7 @@ function ContentAccessGate({ resource, children }) {
   // On the first check, show only the neutral route spinner so the private
   // access card never flashes for a public/authorized page during refresh.
   if (currentStatus?.allowed) {
-    return children;
+    return <ContentAccessContext.Provider value={currentStatus}>{children}</ContentAccessContext.Provider>;
   }
 
   if (loading) {

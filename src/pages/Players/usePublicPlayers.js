@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 
+import { useVerifiedContentAccess } from "../../features/contentAccess/ContentAccessContext.js";
 import { getPublicPlayers } from "../../features/players/publicPlayersApi.js";
 
 
 function usePublicPlayers() {
+  const verifiedStatus = useVerifiedContentAccess("players");
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
@@ -15,7 +17,7 @@ function usePublicPlayers() {
       try {
         setLoadError(false);
 
-        const data = await getPublicPlayers();
+        const data = await getPublicPlayers(verifiedStatus);
 
         if (!cancelled) {
           setPlayers(data.players || []);
@@ -38,7 +40,7 @@ function usePublicPlayers() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [verifiedStatus]);
 
   return {
     players,

@@ -58,14 +58,23 @@ export async function handlePublicSnapshot(request, env) {
   const period = await getPublicDisplayPeriod(env, registration);
   const published = finalAccess.mode === "public" && period
     ? await readPublishedPlan(env, period.id) : null;
+  // Re-check immediately before exporting: an admin may have closed access
+  // while the database reads above were in progress.
+  const [latestPlayersAccess, latestPlanAccess] = await Promise.all([
+    getContentAccessSetting(env, "players"),
+    getContentAccessSetting(env, "final_plan"),
+  ]);
+  const exposePlayers = accessSetting.mode === "public" && latestPlayersAccess.mode === "public";
+  const exposePlan = finalAccess.mode === "public" && latestPlanAccess.mode === "public";
   return json({
     revision,
     finalPlan: {
-      success: true, accessMode: finalAccess.mode, periodId: period?.id ?? null,
-      plan: published?.plan ?? null, publishedAt: published?.publishedAt ?? null,
-      revision: published?.revision ?? null,
+      success: true, accessMode: latestPlanAccess.mode, periodId: period?.id ?? null,
+      plan: exposePlan ? (published?.plan ?? null) : null,
+      publishedAt: exposePlan ? (published?.publishedAt ?? null) : null,
+      revision: exposePlan ? (published?.revision ?? null) : null,
     },
-    summary: { ...stats, recentPlayers: accessSetting.mode === "public" ? recent.map(publicPlayer) : [] },
+    summary: { ...stats, recentPlayers: exposePlayers ? recent.map(publicPlayer) : [] },
     // Identical to the pre-existing PUBLIC API response shapes. Never copy
     // admin-only settings, secrets, codes, or authorization sessions.
     siteSettings,
@@ -74,10 +83,10 @@ export async function handlePublicSnapshot(request, env) {
     // The Pages JSON itself remains publicly readable in every access mode.
     players: {
       ...players,
-      accessMode: accessSetting.mode,
-      players: accessSetting.mode === "public" ? (players.players || []).map(publicPlayer) : [],
-      total: accessSetting.mode === "public" ? players.total : 0,
-      pages: accessSetting.mode === "public" ? players.pages : 0,
+      accessMode: latestPlayersAccess.mode,
+      players: exposePlayers ? (players.players || []).map(publicPlayer) : [],
+      total: exposePlayers ? players.total : 0,
+      pages: exposePlayers ? players.pages : 0,
     },
   }, 200, { "cache-control": "no-store" });
 }

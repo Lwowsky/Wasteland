@@ -2,8 +2,9 @@ import { getPublicSnapshot, isPublicSnapshotEnabled } from "../../../features/pl
 import { getContentAccessHeaders, getContentAccessStatus } from "../../../features/contentAccess/contentAccessApi.js";
 import { requestJson } from "../../../utils/apiClient.js";
 
-export async function getPublicFinalPlan() {
-  const status = await getContentAccessStatus("final_plan");
+export async function getPublicFinalPlan(verifiedStatus = null) {
+  const status = verifiedStatus?.resource === "final_plan" && verifiedStatus.allowed
+    ? verifiedStatus : await getContentAccessStatus("final_plan");
   if (!status.allowed) throw new Error(status.reason || "CONTENT_ACCESS_REQUIRED");
   // Only PUBLIC plans can be loaded from GitHub Pages. Protected plans always
   // use server-validated sessions and must never be exported to public JSON.

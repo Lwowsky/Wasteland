@@ -9,12 +9,14 @@ import FinalPlanToolbar from "./components/FinalPlanToolbar.jsx";
 import FinalPlanBoard from "./components/FinalPlanBoard.jsx";
 import usePlanLanguages from "./components/usePlanLanguages.js";
 import { getPlanBoardTranslations } from "./data/finalPlanLanguages.js";
+import { useVerifiedContentAccess } from "../../features/contentAccess/ContentAccessContext.js";
 import { getPublicFinalPlan } from "./services/finalPlanApi.js";
 import { PLANNER_SHIFTS } from "../../features/turrets/plannerConstants.js";
 import "./FinalPlan.css";
 
 function FinalPlan() {
   const { t, language } = useOutletContext();
+  const verifiedStatus = useVerifiedContentAccess("final_plan");
   const boardRef = useRef(null);
   const [userLanguages, setUserLanguages, hasChosenLanguages] = usePlanLanguages(language);
   const [activeShift, setActiveShift] = useState("shift1");
@@ -26,7 +28,7 @@ function FinalPlan() {
 
   useEffect(() => {
     let active = true;
-    getPublicFinalPlan().then((response) => {
+    getPublicFinalPlan(verifiedStatus).then((response) => {
       if (!active) return;
       setPlan(response.plan);
       setPublishedAt(response.publishedAt || null);
@@ -37,7 +39,7 @@ function FinalPlan() {
       if (active) setLoading(false);
     });
     return () => { active = false; };
-  }, [reloadKey]);
+  }, [reloadKey, verifiedStatus]);
 
   function refresh() {
     setLoading(true);
