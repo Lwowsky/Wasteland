@@ -26,7 +26,7 @@ export async function handleAdminSiteSettingsPut(request, env) {
   const body = await request.json().catch(() => ({}));
   const settings = await saveSiteSettings(env, body);
 
-  await clearPublicCaches(request);
+  await clearPublicCaches(request, env);
 
   return json({
     success: true,

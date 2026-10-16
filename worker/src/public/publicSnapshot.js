@@ -2,6 +2,8 @@ import { json } from "../utils/response.js";
 import { handlePlayers } from "./players.js";
 import { handleStats } from "./stats.js";
 import { handleRecent } from "./recent.js";
+import { handlePublicSiteSettings } from "./siteSettings.js";
+import { handlePublicRegistrationSettings } from "./registrationSettings.js";
 import { getContentAccessSetting } from "../services/contentAccess.js";
 import {
   getPublicSnapshotRevision,
@@ -32,21 +34,28 @@ export async function handlePublicSnapshot(request, env) {
   // Capture revision BEFORE fetching the snapshot. Changes committed during
   // these reads must lead to another publication after this one is acked.
   const revision = await getPublicSnapshotRevision(env);
-  const [playersResponse, statsResponse, recentResponse, accessSetting] = await Promise.all([
+  const [playersResponse, statsResponse, recentResponse, siteSettingsResponse, registrationSettingsResponse, accessSetting] = await Promise.all([
     handlePlayers(env, new URL("https://internal.invalid/api/players?page=1&limit=500")),
     handleStats(env),
     handleRecent(env, new URL("https://internal.invalid/api/recent?limit=5")),
+    handlePublicSiteSettings(env),
+    handlePublicRegistrationSettings(env),
     getContentAccessSetting(env, "players"),
   ]);
-  if (![playersResponse, statsResponse, recentResponse].every((response) => response.ok)) {
+  if (![playersResponse, statsResponse, recentResponse, siteSettingsResponse, registrationSettingsResponse].every((response) => response.ok)) {
     return json({ error: "EXPORT_FAILED" }, 500);
   }
-  const [players, stats, recent] = await Promise.all([
+  const [players, stats, recent, siteSettings, registrationSettings] = await Promise.all([
     playersResponse.json(), statsResponse.json(), recentResponse.json(),
+    siteSettingsResponse.json(), registrationSettingsResponse.json(),
   ]);
   return json({
     revision,
     summary: { ...stats, recentPlayers: recent.map(publicPlayer) },
+    // Identical to the pre-existing PUBLIC API response shapes. Never copy
+    // admin-only settings, secrets, codes, or authorization sessions.
+    siteSettings,
+    registrationSettings,
     // PUBLIC metadata only: never export code/link tokens or sessions.
     // The Pages JSON itself remains publicly readable in every access mode.
     players: {
