@@ -18,8 +18,12 @@ test('stage16: protected player identities and recent names excluded from public
 test('stage16: live server check is authoritative before rendering protected resources', () => {
   for (const path of ['src/features/players/publicPlayersApi.js', 'src/pages/FinalPlan/services/finalPlanApi.js']) {
     const source = read(path);
+    // When static snapshots are disabled, the live Worker remains the fallback.
     assert.match(source, /await getContentAccessStatus\(/);
-    assert.match(source, /if \(!status\.allowed\) throw/);
+    // Public static reads are allowed only after checking access status.
+    // Optional chaining is intentional: absent status must fail closed.
+    assert.match(source, /if \(!status\?\.allowed\) throw new Error\(status\?\.reason \|\| "CONTENT_ACCESS_REQUIRED"\)/);
+    assert.match(source, /await getPublicContentAccessHint\(/);
   }
   assert.match(read('src/features/contentAccess/contentAccessApi.js'), /cache: "no-store"/);
 });

@@ -1,5 +1,5 @@
 import { getPublicSnapshot, isPublicSnapshotEnabled } from "./publicSnapshot.js";
-import { getContentAccessHeaders, getContentAccessStatus } from "../contentAccess/contentAccessApi.js";
+import { getContentAccessHeaders, getContentAccessStatus, getPublicContentAccessHint } from "../contentAccess/contentAccessApi.js";
 import { requestJson } from "../../utils/apiClient.js";
 import { readSessionCache, writeSessionCache } from "../../utils/sessionCache.js";
 
@@ -34,8 +34,11 @@ export async function getPublicPlayers(verifiedStatus = null) {
   // Never use public JSON as a fallback for a protected player table.
   // The Worker validates code/link sessions and current access mode.
   const status = verifiedStatus?.resource === "players" && verifiedStatus.allowed
-    ? verifiedStatus : await getContentAccessStatus("players");
-  if (!status.allowed) throw new Error(status.reason || "CONTENT_ACCESS_REQUIRED");
+    ? verifiedStatus
+    : isPublicSnapshotEnabled()
+      ? await getPublicContentAccessHint("players")
+      : await getContentAccessStatus("players");
+  if (!status?.allowed) throw new Error(status?.reason || "CONTENT_ACCESS_REQUIRED");
   const data = isPublicSnapshotEnabled() && status.mode === "public"
     ? await getPublicSnapshot("players.json", { reuseRecentlyVerified: true, requireNetwork: true })
     : await requestJson("/api/players?page=1&limit=500", {

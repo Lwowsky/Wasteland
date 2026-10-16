@@ -11,8 +11,7 @@ function safeParse(value) {
   try {
     return JSON.parse(value);
   } catch {
-    // Fail closed: never switch to Worker when static hosting is unavailable.
-    return { resource, mode: "private", allowed: false, reason: "SNAPSHOT_UNAVAILABLE" };
+    return null;
   }
 }
 
