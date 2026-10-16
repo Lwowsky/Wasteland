@@ -57,6 +57,7 @@ function ContentAccessGate({ resource, children }) {
   const [attemptsVersion, setAttemptsVersion] = useState(0);
   const [errorCode, setErrorCode] = useState("");
   const skipNextSessionLoadRef = useRef("");
+  const activationInFlightRef = useRef(false);
 
   const sharedToken = new URLSearchParams(location.search).get("access") || "";
 
@@ -150,10 +151,11 @@ function ContentAccessGate({ resource, children }) {
   async function submitCode(event) {
     event.preventDefault();
 
-    if (!code.trim() || activating || getCodeAttemptState(resource).blocked) {
+    if (!code.trim() || activating || activationInFlightRef.current || getCodeAttemptState(resource).blocked) {
       return;
     }
 
+    activationInFlightRef.current = true;
     setActivating(true);
     setErrorCode("");
 
@@ -171,6 +173,7 @@ function ContentAccessGate({ resource, children }) {
       }
       setErrorCode(getErrorCode(nextError));
     } finally {
+      activationInFlightRef.current = false;
       setActivating(false);
     }
   }
@@ -193,7 +196,7 @@ function ContentAccessGate({ resource, children }) {
 
   const mode = currentStatus?.mode || "private";
   const resourceLabel = copy.resources[resource] || resource;
-  const errorText = errorCode
+  const errorText = !codeAttemptState.blocked && errorCode
     ? copy.errors[errorCode] || copy.errors.default
     : "";
 

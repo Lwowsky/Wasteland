@@ -9,6 +9,7 @@ import { getPublicDisplayPeriod } from "../db/periods.js";
 import { getRegistrationSettings } from "../db/registrationSettings.js";
 import { readPublishedPlan } from "../turrets/storage.js";
 import { countPublishedPlanPlayers } from "./publishedPlanCount.js";
+import { isSnapshotPublic, redactSnapshotPlayers } from "./snapshotVisibility.js";
 import {
   getPublicSnapshotRevision,
   hasPublicSnapshotAccess,
@@ -65,8 +66,8 @@ export async function handlePublicSnapshot(request, env) {
     getContentAccessSetting(env, "players"),
     getContentAccessSetting(env, "final_plan"),
   ]);
-  const exposePlayers = accessSetting.mode === "public" && latestPlayersAccess.mode === "public";
-  const exposePlan = finalAccess.mode === "public" && latestPlanAccess.mode === "public";
+  const exposePlayers = isSnapshotPublic(accessSetting, latestPlayersAccess);
+  const exposePlan = isSnapshotPublic(finalAccess, latestPlanAccess);
   return json({
     revision,
     finalPlan: {
@@ -83,11 +84,9 @@ export async function handlePublicSnapshot(request, env) {
     // PUBLIC metadata only: never export code/link tokens or sessions.
     // The Pages JSON itself remains publicly readable in every access mode.
     players: {
-      ...players,
+      ...redactSnapshotPlayers(players, exposePlayers),
       accessMode: latestPlayersAccess.mode,
       players: exposePlayers ? (players.players || []).map(publicPlayer) : [],
-      total: exposePlayers ? players.total : 0,
-      pages: exposePlayers ? players.pages : 0,
     },
   }, 200, { "cache-control": "no-store" });
 }
