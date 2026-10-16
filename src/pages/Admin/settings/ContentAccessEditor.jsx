@@ -42,7 +42,9 @@ export default function ContentAccessEditor({
         >
           <option value="public">{t.modes.public}</option>
           <option value="private">{t.modes.private}</option>
-          <option value="code">{t.modes.code}</option>
+          {draft.mode === "code" && (
+            <option value="code" disabled>{t.modes.code}</option>
+          )}
           <option value="link">{t.modes.link}</option>
         </select>
       </label>
@@ -155,7 +157,7 @@ export default function ContentAccessEditor({
           {t.actions.save}
         </button>
 
-        {["code", "link"].includes(draft.mode) && (
+        {draft.mode === "link" && (
           <button
             type="button"
             className="admin-primary-button"

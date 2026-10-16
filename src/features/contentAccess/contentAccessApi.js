@@ -11,7 +11,8 @@ function safeParse(value) {
   try {
     return JSON.parse(value);
   } catch {
-    return null;
+    // Fail closed: never switch to Worker when static hosting is unavailable.
+    return { resource, mode: "private", allowed: false, reason: "SNAPSHOT_UNAVAILABLE" };
   }
 }
 
@@ -96,9 +97,7 @@ export async function getPublicContentAccessHint(resource) {
     if (!["public", "private", "code", "link"].includes(mode)) return null;
     return { resource, mode, allowed: mode === "public", reason: mode === "private" ? "CONTENT_PRIVATE" : "CONTENT_ACCESS_REQUIRED" };
   } catch {
-    // Do not fall back to the Worker merely because the static host is
-    // unavailable. The caller can display a neutral unavailable state.
-    // This prevents an outage or abusive refreshes from draining Worker quota.
+    // Fail closed: never switch to Worker when static hosting is unavailable.
     return { resource, mode: "private", allowed: false, reason: "SNAPSHOT_UNAVAILABLE" };
   }
 }

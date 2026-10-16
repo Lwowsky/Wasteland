@@ -12,7 +12,12 @@ export async function getPublicFinalPlan(verifiedStatus = null) {
     try {
       const snapshot = await getPublicSnapshot("final-plan.json", { requireNetwork: true, reuseRecentlyVerified: true });
       if (snapshot?.success === true && snapshot.accessMode === "public") return snapshot;
-    } catch { /* Static host unavailable: use the authenticated API. */ }
+    } catch {
+      // Public snapshots are the only read path when enabled. Never fall
+      // back to Worker/D1 on a CDN outage or repeated refreshes.
+      throw new Error("SNAPSHOT_UNAVAILABLE");
+    }
+    throw new Error("SNAPSHOT_UNAVAILABLE");
   }
   return requestJson("/api/final-plan", {
     headers: getContentAccessHeaders("final_plan"),
