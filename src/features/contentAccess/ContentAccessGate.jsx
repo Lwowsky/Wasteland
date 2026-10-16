@@ -60,11 +60,12 @@ function ContentAccessGate({ resource, children }) {
       setErrorCode("");
 
       let shouldRemoveSharedToken = false;
+      let activatedSession = null;
 
       try {
         if (sharedToken) {
           try {
-            await activateContentAccess(resource, sharedToken);
+            activatedSession = await activateContentAccess(resource, sharedToken);
             shouldRemoveSharedToken = true;
           } catch (activationError) {
             clearContentAccessSession(resource);
@@ -75,7 +76,17 @@ function ContentAccessGate({ resource, children }) {
           }
         }
 
-        const nextStatus = await getContentAccessStatus(resource);
+        // Successful activation already validates the code and creates a
+        // server-side session. Avoid a redundant second Worker request.
+        // Ordinary page loads still validate permissions with the server.
+        const nextStatus = activatedSession
+          ? {
+              resource,
+              mode: "link",
+              allowed: true,
+              period: activatedSession.period,
+            }
+          : await getContentAccessStatus(resource);
 
         if (cancelled) {
           return;
@@ -117,9 +128,10 @@ function ContentAccessGate({ resource, children }) {
     setErrorCode("");
 
     try {
-      await activateContentAccess(resource, code);
-      const nextStatus = await getContentAccessStatus(resource);
-      setStatus(nextStatus);
+      const activated = await activateContentAccess(resource, code);
+      // The activation response is proof of the newly issued server session.
+      // Protected API endpoints independently enforce that session.
+      setStatus({ resource, mode: "code", allowed: true, period: activated.period });
       setCode("");
     } catch (nextError) {
       clearContentAccessSession(resource);

@@ -1,4 +1,3 @@
-import useAdminAuth from "../../features/auth/useAdminAuth.js";
 import Container from "../Container/Container.jsx";
 import BurgerMenu from "../BurgerMenu/BurgerMenu.jsx";
 
@@ -17,7 +16,6 @@ function Header({
   loading,
   error,
 }) {
-  const { isAdmin } = useAdminAuth();
   const localTimeZone = getUserTimeZone();
   const activeTimeZone = useLocalTime ? localTimeZone : "UTC";
   const showOrganizerAlliance = Boolean(event?.organizerAlliance);
@@ -40,7 +38,6 @@ function Header({
             language={language}
             event={event}
             brandText={siteSettings?.brandText}
-            canAccessAdmin={isAdmin}
           />
         </div>
 

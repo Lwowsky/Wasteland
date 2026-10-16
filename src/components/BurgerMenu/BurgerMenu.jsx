@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import {
@@ -9,6 +9,8 @@ import {
 
 import { LANGUAGES, SUPPORTED_LANGUAGES } from "../../config/site.js";
 import { ROUTES, getRoute } from "../../config/routes.js";
+
+const AdminMenuLink = lazy(() => import("./AdminMenuLink.jsx"));
 import { publicAsset } from "../../utils/publicAsset.js";
 import { getLanguagePath, savePreferredLanguage } from "../../utils/language.js";
 
@@ -19,7 +21,6 @@ function BurgerMenu({
   language,
   event,
   brandText,
-  canAccessAdmin = false,
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -151,29 +152,13 @@ function BurgerMenu({
                 </NavLink>
               ))}
 
-              {canAccessAdmin && (
-                <>
-                  <div className="burger-menu__divider" />
-
-                  <NavLink
-                    to={getRoute(language, ROUTES.admin)}
-                    onClick={closeMenu}
-                    className="burger-menu__link burger-menu__admin"
-                  >
-                    <span className="burger-menu__icon">
-                      <img
-                        src={publicAsset("/images/admin/icons/admin.webp")}
-                        alt=""
-                        aria-hidden="true"
-                      />
-                    </span>
-
-                    <span className="burger-menu__label">{t.header.admin}</span>
-
-                    <ChevronRight className="burger-menu__arrow" size={20} />
-                  </NavLink>
-                </>
-              )}
+              <Suspense fallback={null}>
+                <AdminMenuLink
+                  t={t}
+                  language={language}
+                  onClose={closeMenu}
+                />
+              </Suspense>
             </nav>
 
             <div className="burger-menu__languages">

@@ -1,38 +1,20 @@
 import { requestJson } from "../../utils/apiClient.js";
-import {
-  readSessionCache,
-  removeSessionCache,
-  writeSessionCache,
-} from "../../utils/sessionCache.js";
+import { clearPublicSettingsCache, loadPublicSettings } from "../../utils/publicSettingsCache.js";
 
 const SETTINGS_CACHE_KEY = "wasteland-public-registration-settings";
 const SETTINGS_CACHE_TTL_MS = 60_000;
 
-export async function getRegistrationSettings({ force = false } = {}) {
-  if (!force) {
-    const cached = readSessionCache(
-      SETTINGS_CACHE_KEY,
-      SETTINGS_CACHE_TTL_MS,
-    );
-
-    if (cached) {
-      return cached;
-    }
-  }
-
-  const result = await requestJson(
-    "/api/registration-settings",
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
-    },
-    "REGISTRATION_FAILED",
-  );
-
-  writeSessionCache(SETTINGS_CACHE_KEY, result);
-  return result;
+export function getRegistrationSettings({ force = false } = {}) {
+  return loadPublicSettings({
+    key: SETTINGS_CACHE_KEY,
+    ttlMs: SETTINGS_CACHE_TTL_MS,
+    force,
+    load: () => requestJson(
+      "/api/registration-settings",
+      { method: "GET", headers: { Accept: "application/json" } },
+      "REGISTRATION_FAILED",
+    ),
+  });
 }
 
 export async function submitRegistration(data) {
@@ -48,7 +30,7 @@ export async function submitRegistration(data) {
     "REGISTRATION_FAILED",
   );
 
-  removeSessionCache(SETTINGS_CACHE_KEY);
+  clearPublicSettingsCache(SETTINGS_CACHE_KEY);
 
   return result;
 }
