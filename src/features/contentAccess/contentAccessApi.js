@@ -1,3 +1,4 @@
+import { getPublicSnapshot, isPublicSnapshotEnabled } from "../players/publicSnapshot.js";
 import { requestJson } from "../../utils/apiClient.js";
 
 const SESSION_PREFIX = "wasteland-content-access-";
@@ -81,4 +82,20 @@ export async function activateContentAccess(resource, token) {
 
   storeContentAccessSession(resource, data.session, data.expiresAt);
   return data;
+}
+
+// Public UI access hints are not an authorization mechanism.
+// The protected API independently checks active sessions in D1.
+export async function getPublicContentAccessHint(resource) {
+  if (!isPublicSnapshotEnabled()) return null;
+  const file = resource === "players" ? "players.json" : resource === "final_plan" ? "final-plan.json" : null;
+  if (!file) return null;
+  try {
+    const data = await getPublicSnapshot(file, { requireNetwork: true });
+    const mode = data?.accessMode;
+    if (!["public", "private", "code", "link"].includes(mode)) return null;
+    return { resource, mode, allowed: mode === "public", reason: mode === "private" ? "CONTENT_PRIVATE" : "CONTENT_ACCESS_REQUIRED" };
+  } catch {
+    return null;
+  }
 }

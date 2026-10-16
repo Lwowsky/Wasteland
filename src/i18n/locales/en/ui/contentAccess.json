@@ -35,6 +35,7 @@
     "CONTENT_TOKEN_REQUIRED": "Enter an access code.",
     "NO_CURRENT_PERIOD": "There is no active cycle to issue private access for.",
     "CONTENT_PRIVATE": "Public access is closed.",
-    "default": "Access could not be checked. Refresh the page and try again."
+    "default": "Access could not be checked. Refresh the page and try again.",
+    "CONTENT_CODE_RATE_LIMITED": "Too many invalid codes. Try again in one hour."
   }
 }

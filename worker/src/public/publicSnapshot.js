@@ -8,6 +8,7 @@ import { getContentAccessSetting } from "../services/contentAccess.js";
 import { getPublicDisplayPeriod } from "../db/periods.js";
 import { getRegistrationSettings } from "../db/registrationSettings.js";
 import { readPublishedPlan } from "../turrets/storage.js";
+import { countPublishedPlanPlayers } from "./publishedPlanCount.js";
 import {
   getPublicSnapshotRevision,
   hasPublicSnapshotAccess,
@@ -56,8 +57,8 @@ export async function handlePublicSnapshot(request, env) {
   // Never export protected plan contents. Public mode is only a display hint.
   const registration = await getRegistrationSettings(env);
   const period = await getPublicDisplayPeriod(env, registration);
-  const published = finalAccess.mode === "public" && period
-    ? await readPublishedPlan(env, period.id) : null;
+  const publishedForStats = period ? await readPublishedPlan(env, period.id) : null;
+  const published = finalAccess.mode === "public" ? publishedForStats : null;
   // Re-check immediately before exporting: an admin may have closed access
   // while the database reads above were in progress.
   const [latestPlayersAccess, latestPlanAccess] = await Promise.all([
@@ -74,7 +75,7 @@ export async function handlePublicSnapshot(request, env) {
       publishedAt: exposePlan ? (published?.publishedAt ?? null) : null,
       revision: exposePlan ? (published?.revision ?? null) : null,
     },
-    summary: { ...stats, recentPlayers: exposePlayers ? recent.map(publicPlayer) : [] },
+    summary: { ...stats, finalPlayers: countPublishedPlanPlayers(publishedForStats?.plan), recentPlayers: exposePlayers ? recent.map(publicPlayer) : [] },
     // Identical to the pre-existing PUBLIC API response shapes. Never copy
     // admin-only settings, secrets, codes, or authorization sessions.
     siteSettings,

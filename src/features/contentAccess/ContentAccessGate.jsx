@@ -9,11 +9,36 @@ import {
   activateContentAccess,
   clearContentAccessSession,
   getContentAccessStatus,
+  getPublicContentAccessHint,
+  getContentAccessSession,
 } from "./contentAccessApi.js";
 
 import { ContentAccessContext } from "./ContentAccessContext.js";
 
 import "./ContentAccessGate.css";
+
+
+const CODE_ATTEMPT_WINDOW_MS = 60 * 60 * 1000;
+function getCodeAttemptState(resource) {
+  try {
+    const key = `wasteland-invalid-code-v1:${resource}`;
+    const saved = JSON.parse(localStorage.getItem(key) || "null");
+    const now = Date.now();
+    const times = (Array.isArray(saved) ? saved : []).filter((t) => Number.isFinite(t) && t <= now && now - t < CODE_ATTEMPT_WINDOW_MS);
+    if (times.length !== (Array.isArray(saved) ? saved.length : 0)) localStorage.setItem(key, JSON.stringify(times));
+    return { blocked: times.length >= 3, count: times.length };
+  } catch { return { blocked: false, count: 0 }; }
+}
+function recordInvalidCodeAttempt(resource) {
+  try {
+    const key = `wasteland-invalid-code-v1:${resource}`;
+    const saved = JSON.parse(localStorage.getItem(key) || "[]");
+    const now = Date.now();
+    const times = (Array.isArray(saved) ? saved : []).filter((t) => Number.isFinite(t) && now - t < CODE_ATTEMPT_WINDOW_MS);
+    times.push(now);
+    localStorage.setItem(key, JSON.stringify(times));
+  } catch { /* Client-side throttle is best-effort. */ }
+}
 
 function getErrorCode(error) {
   return String(error?.message || "");
@@ -29,6 +54,7 @@ function ContentAccessGate({ resource, children }) {
   const [loading, setLoading] = useState(true);
   const [activating, setActivating] = useState(false);
   const [code, setCode] = useState("");
+  const [attemptsVersion, setAttemptsVersion] = useState(0);
   const [errorCode, setErrorCode] = useState("");
   const skipNextSessionLoadRef = useRef("");
 
@@ -88,7 +114,9 @@ function ContentAccessGate({ resource, children }) {
               allowed: true,
               period: activatedSession.period,
             }
-          : await getContentAccessStatus(resource);
+          : (!getContentAccessSession(resource)
+              ? (await getPublicContentAccessHint(resource)) || await getContentAccessStatus(resource)
+              : await getContentAccessStatus(resource));
 
         if (cancelled) {
           return;
@@ -122,7 +150,7 @@ function ContentAccessGate({ resource, children }) {
   async function submitCode(event) {
     event.preventDefault();
 
-    if (!code.trim() || activating) {
+    if (!code.trim() || activating || getCodeAttemptState(resource).blocked) {
       return;
     }
 
@@ -137,6 +165,10 @@ function ContentAccessGate({ resource, children }) {
       setCode("");
     } catch (nextError) {
       clearContentAccessSession(resource);
+      if (getErrorCode(nextError) === "CONTENT_TOKEN_INVALID") {
+        recordInvalidCodeAttempt(resource);
+        setAttemptsVersion((value) => value + 1);
+      }
       setErrorCode(getErrorCode(nextError));
     } finally {
       setActivating(false);
@@ -144,6 +176,9 @@ function ContentAccessGate({ resource, children }) {
   }
 
   const currentStatus = status?.resource === resource ? status : null;
+  // Recomputed after an invalid attempt; the browser also persists attempts across F5.
+  void attemptsVersion;
+  const codeAttemptState = getCodeAttemptState(resource);
 
   // Keep already-authorized content mounted during any background re-check.
   // On the first check, show only the neutral route spinner so the private
@@ -195,13 +230,18 @@ function ContentAccessGate({ resource, children }) {
                 />
               </label>
 
-              <button type="submit" disabled={!code.trim() || activating}>
+              <button type="submit" disabled={!code.trim() || activating || codeAttemptState.blocked}>
                 <KeyRound size={18} aria-hidden="true" />
                 {activating ? copy.code.activating : copy.code.submit}
               </button>
             </form>
           )}
 
+          {mode === "code" && codeAttemptState.blocked && (
+            <div className="content-access-error" role="alert">
+              {copy.errors.CONTENT_CODE_RATE_LIMITED}
+            </div>
+          )}
           {errorText && (
             <div className="content-access-error">{errorText}</div>
           )}
