@@ -2,6 +2,7 @@ import { json } from "../utils/response.js";
 import { handlePlayers } from "./players.js";
 import { handleStats } from "./stats.js";
 import { handleRecent } from "./recent.js";
+import { getContentAccessSetting } from "../services/contentAccess.js";
 import {
   getPublicSnapshotRevision,
   hasPublicSnapshotAccess,
@@ -31,10 +32,11 @@ export async function handlePublicSnapshot(request, env) {
   // Capture revision BEFORE fetching the snapshot. Changes committed during
   // these reads must lead to another publication after this one is acked.
   const revision = await getPublicSnapshotRevision(env);
-  const [playersResponse, statsResponse, recentResponse] = await Promise.all([
+  const [playersResponse, statsResponse, recentResponse, accessSetting] = await Promise.all([
     handlePlayers(env, new URL("https://internal.invalid/api/players?page=1&limit=500")),
     handleStats(env),
     handleRecent(env, new URL("https://internal.invalid/api/recent?limit=5")),
+    getContentAccessSetting(env, "players"),
   ]);
   if (![playersResponse, statsResponse, recentResponse].every((response) => response.ok)) {
     return json({ error: "EXPORT_FAILED" }, 500);
@@ -45,7 +47,13 @@ export async function handlePublicSnapshot(request, env) {
   return json({
     revision,
     summary: { ...stats, recentPlayers: recent.map(publicPlayer) },
-    players: { ...players, players: (players.players || []).map(publicPlayer) },
+    // PUBLIC metadata only: never export code/link tokens or sessions.
+    // The Pages JSON itself remains publicly readable in every access mode.
+    players: {
+      ...players,
+      accessMode: accessSetting.mode,
+      players: (players.players || []).map(publicPlayer),
+    },
   }, 200, { "cache-control": "no-store" });
 }
 

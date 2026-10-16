@@ -1,5 +1,6 @@
 import { getPublicDisplayPeriod } from "../db/periods.js";
 import { getRegistrationSettings } from "../db/registrationSettings.js";
+import { markPublicSnapshotDirty } from "./publicSnapshotSync.js";
 
 import {
   clampInteger,
@@ -178,6 +179,11 @@ export async function updateContentAccessSetting(env, resource, payload = {}) {
 
   if (current.mode !== next.mode) {
     await revokeContentAccess(env, normalizedResource);
+    // Publish the new PUBLIC UI hint after an admin switches mode.
+    // Protected API routes continue to enforce the live D1 setting.
+    if (normalizedResource === "players") {
+      await markPublicSnapshotDirty(env);
+    }
   } else if (period && ["code", "link"].includes(next.mode)) {
     const expiresAt = getTokenExpiryIso(next.tokenTtlMinutes);
 

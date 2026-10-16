@@ -1,4 +1,6 @@
 import { requestJson } from "../../utils/apiClient.js";
+import { getPublicSnapshot, isPublicSnapshotEnabled } from "../players/publicSnapshot.js";
+import { publicStatusFromSnapshot } from "./publicStatusFromSnapshot.js";
 
 const SESSION_PREFIX = "wasteland-content-access-";
 
@@ -58,7 +60,26 @@ export function getContentAccessHeaders(resource) {
   return session ? { "X-Content-Access": session } : {};
 }
 
-export function getContentAccessStatus(resource) {
+export async function getContentAccessStatus(resource) {
+  // The players list is already public on GitHub Pages. When the latest
+  // network-confirmed public snapshot explicitly says "public", a second
+  // Worker request solely for UI access is unnecessary.
+  //
+  // Do not trust an offline/localStorage fallback for an access decision.
+  // Unknown/older metadata, restricted modes and network failures use the
+  // original server check. The final_plan route ALWAYS uses the server.
+  if (resource === "players" && isPublicSnapshotEnabled()) {
+    try {
+      const snapshot = await getPublicSnapshot("players.json", {
+        requireNetwork: true,
+      });
+      const publicStatus = publicStatusFromSnapshot(resource, snapshot);
+      if (publicStatus) return publicStatus;
+    } catch {
+      // Safe fallback: ask the Worker instead of granting offline access.
+    }
+  }
+
   return requestJson(
     `/api/content-access/${resource}`,
     { headers: getContentAccessHeaders(resource) },

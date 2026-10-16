@@ -32,7 +32,7 @@ function normalizePlayer(player) {
 
 export async function getPublicPlayers() {
   const data = isPublicSnapshotEnabled()
-    ? await getPublicSnapshot("players.json")
+    ? await getPublicSnapshot("players.json", { reuseRecentlyVerified: true })
     : await requestJson("/api/players?page=1&limit=500", {
     headers: getContentAccessHeaders("players"),
   });

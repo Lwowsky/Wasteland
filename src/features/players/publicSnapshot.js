@@ -5,6 +5,10 @@ const CACHE_PREFIX = "wasteland-public-snapshot-v3:";
 const OFFLINE_FALLBACK_TTL_MS = 30 * 60 * 1000;
 const memory = new Map();
 const inflight = new Map();
+// A freshly network-verified response can be reused immediately by the table
+// after ContentAccessGate reads its public access hint (no second HTTP hit).
+const networkVerified = new Map();
+const ACCESS_TO_TABLE_REUSE_MS = 10_000;
 
 function snapshotUrl(file) {
   // For Cloudflare-hosted frontend, set VITE_PUBLIC_SNAPSHOT_BASE_URL to the
@@ -38,28 +42,46 @@ function cacheData(file, data) {
   catch { /* Ignore browser storage quota/private-mode errors. */ }
 }
 
-export async function getPublicSnapshot(file) {
-  if (inflight.has(file)) return inflight.get(file);
-  const pending = fetchPublicSnapshot(file).finally(() => inflight.delete(file));
-  inflight.set(file, pending);
-  return pending;
-}
+export async function getPublicSnapshot(
+  file,
+  { requireNetwork = false, reuseRecentlyVerified = false } = {},
+) {
+  if (reuseRecentlyVerified) {
+    const entry = networkVerified.get(file);
+    const age = Date.now() - Number(entry?.checkedAt);
+    if (entry && age >= 0 && age < ACCESS_TO_TABLE_REUSE_MS) {
+      return entry.data;
+    }
+  }
 
-async function fetchPublicSnapshot(file) {
-  const cached = readCached(file);
+  if (!inflight.has(file)) {
+    const pending = fetchPublicSnapshotFromNetwork(file).finally(() => {
+      if (inflight.get(file) === pending) inflight.delete(file);
+    });
+    inflight.set(file, pending);
+  }
+
   try {
-    // HTTP cache is handled by the CDN; don't add a changing querystring.
-    // 'no-cache' revalidates instead of accepting stale local browser cache.
-    const response = await fetch(snapshotUrl(file), { cache: "no-cache" });
-    if (!response.ok) throw new Error(`SNAPSHOT_HTTP_${response.status}`);
-    const result = await response.json();
-    if (!result || typeof result !== "object") throw new Error("INVALID_SNAPSHOT");
-    cacheData(file, result);
-    return result;
+    return await inflight.get(file);
   } catch (error) {
-    if (cached) return cached;
+    if (!requireNetwork) {
+      const cached = readCached(file);
+      if (cached) return cached;
+    }
     throw error;
   }
+}
+
+async function fetchPublicSnapshotFromNetwork(file) {
+  // Even when the CDN replies from its own cache, this request must succeed
+  // over the network before its access-mode hint can skip the Worker.
+  const response = await fetch(snapshotUrl(file), { cache: "no-cache" });
+  if (!response.ok) throw new Error(`SNAPSHOT_HTTP_${response.status}`);
+  const result = await response.json();
+  if (!result || typeof result !== "object") throw new Error("INVALID_SNAPSHOT");
+  cacheData(file, result);
+  networkVerified.set(file, { data: result, checkedAt: Date.now() });
+  return result;
 }
 
 export function isPublicSnapshotEnabled() {
