@@ -20,16 +20,21 @@ function memoryStorage() {
   };
 }
 
-test("stage10: public route does not eagerly import Firebase admin auth", () => {
+test("stage10+13: public route and menu do not eagerly import Firebase admin auth", () => {
   const header = read("src/components/Header/Header.jsx");
   const burger = read("src/components/BurgerMenu/BurgerMenu.jsx");
   const adminLink = read("src/components/BurgerMenu/AdminMenuLink.jsx");
   const adminRoute = read("src/features/auth/AdminRoute.jsx");
+  const menuHint = read("src/features/auth/adminMenuHint.js");
 
   assert.doesNotMatch(header, /useAdminAuth/);
   assert.doesNotMatch(burger, /useAdminAuth/);
   assert.match(burger, /lazy\(\(\) => import\("\.\/AdminMenuLink\.jsx"\)\)/);
-  assert.match(adminLink, /const \{ isAdmin \} = useAdminAuth\(\)/);
+  // Stage 13: the menu uses a UI-only hint, NOT a Firebase admin check.
+  assert.match(adminLink, /hasAdminMenuHint\(\)/);
+  assert.doesNotMatch(adminLink, /useAdminAuth|firebase\/|getDoc\(/);
+  assert.doesNotMatch(menuHint, /firebase\/|getDoc\(/);
+  // The actual admin route still verifies credentials and permissions.
   assert.match(adminRoute, /const \{ user, admin, loading \} = useAdminAuth\(\)/);
 });
 

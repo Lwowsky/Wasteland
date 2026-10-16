@@ -1,16 +1,15 @@
 import { NavLink } from "react-router-dom";
-
-import useAdminAuth from "../../features/auth/useAdminAuth.js";
-import { ROUTES, getRoute } from "../../config/routes.js";
-import { publicAsset } from "../../utils/publicAsset.js";
 import { ChevronRight } from "lucide-react";
 
-// The Firebase/Firestore admin check is loaded only after opening the menu.
-// AdminRoute remains the authoritative guard for the actual admin page.
-function AdminMenuLink({ t, language, onClose }) {
-  const { isAdmin } = useAdminAuth();
+import { ROUTES, getRoute } from "../../config/routes.js";
+import { hasAdminMenuHint } from "../../features/auth/adminMenuHint.js";
+import { publicAsset } from "../../utils/publicAsset.js";
 
-  if (!isAdmin) return null;
+// Opening the public menu never initializes Firebase or reads Firestore.
+// This hint controls only whether the link is shown; AdminRoute independently
+// performs the authoritative permissions check when a user enters /admin.
+function AdminMenuLink({ t, language, onClose }) {
+  if (!hasAdminMenuHint()) return null;
 
   return (
     <>

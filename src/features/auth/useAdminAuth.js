@@ -1,4 +1,5 @@
 import { checkSharedConsul, getSharedSession } from "./sharedConsulClient.js";
+import { setAdminMenuHint } from "./adminMenuHint.js";
 import { useEffect, useState } from "react";
 
 import { onAuthStateChanged } from "firebase/auth";
@@ -22,6 +23,7 @@ function useAdminAuth() {
       if (!firebaseUser) {
         const shared = getSharedSession() ? await checkSharedConsul() : null;
         if (active && currentVersion === authVersion) {
+          setAdminMenuHint(Boolean(shared));
           setUser(shared ? { uid: "shared-consul" } : null);
           setAdmin(shared);
           setLoading(false);
@@ -45,6 +47,7 @@ function useAdminAuth() {
         }
 
         if (!adminSnap.exists()) {
+          setAdminMenuHint(false);
           setAdmin(null);
           return;
         }
@@ -52,10 +55,12 @@ function useAdminAuth() {
         const adminData = adminSnap.data();
 
         if (adminData.active !== true) {
+          setAdminMenuHint(false);
           setAdmin(null);
           return;
         }
 
+        setAdminMenuHint(true);
         setAdmin({
           id: adminSnap.id,
           ...adminData,
@@ -64,6 +69,7 @@ function useAdminAuth() {
         console.error("Admin access check failed:", error);
 
         if (active && currentVersion === authVersion) {
+          setAdminMenuHint(false);
           setAdmin(null);
         }
       } finally {
