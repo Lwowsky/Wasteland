@@ -25,7 +25,7 @@ export async function handleAdminClearRegistrations(request, env) {
   const cleared = await getRegistrationCount(env, period.id);
 
   await env.DB.batch(prepareClearPeriodStatements(env, period.id));
-  await clearPublicCaches(request);
+  await clearPublicCaches(request, env);
 
   return json({
     success: true,

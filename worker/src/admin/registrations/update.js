@@ -68,7 +68,7 @@ export async function handleAdminUpdateRegistration(
     env, registrationId, existing.period_id, record,
   ));
   try {
-    await clearPublicCaches(request);
+    await clearPublicCaches(request, env);
   } catch {
     // Database changes cannot be undone by a cache invalidation failure.
   }

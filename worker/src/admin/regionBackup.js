@@ -207,7 +207,7 @@ export async function handleRegionBackupRestore(request, env) {
     "accessRequests",
     body.backup.firestore?.accessRequests || [],
   );
-  await clearPublicCaches(request);
+  await clearPublicCaches(request, env);
 
   return json({
     success: true,

@@ -264,7 +264,7 @@ export async function handleRegistration(request, env) {
   );
   const registrationId = registrationResult.meta.last_row_id;
   try {
-    await clearPublicCaches(request);
+    await clearPublicCaches(request, env);
   } catch {
     // Committed registration remains successful if cache deletion fails.
   }

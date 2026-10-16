@@ -20,7 +20,8 @@ import { handleRecent } from "./public/recent.js";
 import { handleStats } from "./public/stats.js";
 
 import { handlePlayers } from "./public/players.js";
-import { handlePublicSnapshot } from "./public/publicSnapshot.js";
+import { handlePublicSnapshot, handlePublicSnapshotAck } from "./public/publicSnapshot.js";
+import { dispatchPendingPublicSnapshot } from "./services/publicSnapshotSync.js";
 import {
   handleContentAccessActivation,
   handleContentAccessStatus,
@@ -103,6 +104,10 @@ export default {
       // Authenticated export for the GitHub Pages static-data workflow.
       if (request.method === "GET" && url.pathname === "/api/internal/public-snapshot") {
         return handlePublicSnapshot(request, env);
+      }
+
+      if (request.method === "POST" && url.pathname === "/api/internal/public-snapshot/ack") {
+        return handlePublicSnapshotAck(request, env);
       }
 
       /* PUBLIC API */
@@ -374,7 +379,15 @@ export default {
     }
   },
 
-  async scheduled(_event, env, ctx) {
-    ctx.waitUntil(cleanupOldRegistrationPeriods(env));
+  async scheduled(event, env, ctx) {
+    if (event.cron === "17 0 * * *") {
+      ctx.waitUntil(cleanupOldRegistrationPeriods(env));
+    }
+    if (event.cron === "* * * * *") {
+      ctx.waitUntil(dispatchPendingPublicSnapshot(env).catch((error) => {
+        // An unacknowledged revision stays dirty for the next cron attempt.
+        console.error("Public snapshot dispatch:", error);
+      }));
+    }
   },
 };

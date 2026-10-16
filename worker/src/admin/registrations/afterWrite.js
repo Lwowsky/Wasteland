@@ -3,5 +3,5 @@ import { clearPublicCaches } from "../../utils/cache.js";
 
 export async function finalizeRegistrationWrite(request, env, periodId) {
   await rebuildStats(env, periodId);
-  await clearPublicCaches(request);
+  await clearPublicCaches(request, env);
 }

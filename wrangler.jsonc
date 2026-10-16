@@ -4,11 +4,12 @@
   "compatibility_date": "2026-10-04",
 
   "vars": {
-    "FIREBASE_PROJECT_ID": "wasteland-king-region"
+    "FIREBASE_PROJECT_ID": "wasteland-king-region",
+    "GITHUB_SNAPSHOT_REPOSITORY": "Lwowsky/Wasteland-Public-Data"
   },
 
   "triggers": {
-    "crons": ["17 0 * * *"]
+    "crons": ["17 0 * * *", "* * * * *"]
   },
 
   "d1_databases": [

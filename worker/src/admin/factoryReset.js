@@ -243,7 +243,7 @@ export async function handleFactoryReset(request, env) {
   }
 
   await resetD1(env, selection);
-  await clearPublicCaches(request);
+  await clearPublicCaches(request, env);
 
   return json({
     success: true,

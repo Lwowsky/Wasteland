@@ -53,7 +53,7 @@ export async function handleAdminCreateRegistration(request, env) {
   );
   const registrationId = insertResult.meta.last_row_id;
   try {
-    await clearPublicCaches(request);
+    await clearPublicCaches(request, env);
   } catch {
     // DB transaction is already committed; stale caches expire automatically.
   }

@@ -60,7 +60,7 @@ export async function handleAdminImportRegistrations(request, env) {
   // The unique nickname index handles concurrent imports safely.
   const result = await executeImportTransaction(env, period.id, players, mode);
   try {
-    await clearPublicCaches(request);
+    await clearPublicCaches(request, env);
   } catch {
     // The transaction has committed. Cache invalidation is best effort and
     // never turns a successful write into a misleading failed-import response.

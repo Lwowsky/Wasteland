@@ -1,3 +1,5 @@
+import { markPublicSnapshotDirty } from "../services/publicSnapshotSync.js";
+
 export function getCache() {
   return caches.default;
 }
@@ -24,7 +26,17 @@ export async function writeCache(request, response, ttlSeconds) {
   return cachedResponse;
 }
 
-export async function clearPublicCaches(request) {
+export async function clearPublicCaches(request, env) {
+  if (env?.DB) {
+    // Keep the user-facing write successful if snapshot scheduling fails.
+    // The error is logged; the existing public APIs remain the fallback.
+    try {
+      await markPublicSnapshotDirty(env);
+    } catch (error) {
+      console.error("Public snapshot dirty revision:", error);
+    }
+  }
+
   const origin = new URL(request.url).origin;
 
   const urls = [

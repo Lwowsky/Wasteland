@@ -1,6 +1,6 @@
 import { publicAsset } from "../../utils/publicAsset.js";
 
-const CACHE_PREFIX = "wasteland-public-snapshot-v1:";
+const CACHE_PREFIX = "wasteland-public-snapshot-v2:";
 const memory = new Map();
 const inflight = new Map();
 
