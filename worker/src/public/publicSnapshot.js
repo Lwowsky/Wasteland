@@ -5,6 +5,9 @@ import { handleRecent } from "./recent.js";
 import { handlePublicSiteSettings } from "./siteSettings.js";
 import { handlePublicRegistrationSettings } from "./registrationSettings.js";
 import { getContentAccessSetting } from "../services/contentAccess.js";
+import { getPublicDisplayPeriod } from "../db/periods.js";
+import { getRegistrationSettings } from "../db/registrationSettings.js";
+import { readPublishedPlan } from "../turrets/storage.js";
 import {
   getPublicSnapshotRevision,
   hasPublicSnapshotAccess,
@@ -49,8 +52,19 @@ export async function handlePublicSnapshot(request, env) {
     playersResponse.json(), statsResponse.json(), recentResponse.json(),
     siteSettingsResponse.json(), registrationSettingsResponse.json(),
   ]);
+  const finalAccess = await getContentAccessSetting(env, "final_plan");
+  // Never export protected plan contents. Public mode is only a display hint.
+  const registration = await getRegistrationSettings(env);
+  const period = await getPublicDisplayPeriod(env, registration);
+  const published = finalAccess.mode === "public" && period
+    ? await readPublishedPlan(env, period.id) : null;
   return json({
     revision,
+    finalPlan: {
+      success: true, accessMode: finalAccess.mode, periodId: period?.id ?? null,
+      plan: published?.plan ?? null, publishedAt: published?.publishedAt ?? null,
+      revision: published?.revision ?? null,
+    },
     summary: { ...stats, recentPlayers: recent.map(publicPlayer) },
     // Identical to the pre-existing PUBLIC API response shapes. Never copy
     // admin-only settings, secrets, codes, or authorization sessions.

@@ -68,9 +68,9 @@ export async function getContentAccessStatus(resource) {
   // Do not trust an offline/localStorage fallback for an access decision.
   // Unknown/older metadata, restricted modes and network failures use the
   // original server check. The final_plan route ALWAYS uses the server.
-  if (resource === "players" && isPublicSnapshotEnabled()) {
+  if ((resource === "players" || resource === "final_plan") && isPublicSnapshotEnabled()) {
     try {
-      const snapshot = await getPublicSnapshot("players.json", {
+      const snapshot = await getPublicSnapshot(resource === "players" ? "players.json" : "final-plan.json", {
         requireNetwork: true,
       });
       const publicStatus = publicStatusFromSnapshot(resource, snapshot);

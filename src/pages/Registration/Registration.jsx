@@ -22,9 +22,8 @@ function Registration() {
 
   useEffect(() => {
     let active = true;
-    // Header/home use the static snapshot. The registration FORM must check
-    // the current D1-backed Worker state to handle manual opening/closure.
-    getRegistrationSettings({ serverOnly: true })
+    // Public snapshot is a display hint; POST always validates live D1 rules.
+    getRegistrationSettings()
       .then((result) => {
         if (active) setVerified({
           loading: false,

@@ -6,7 +6,7 @@ const SETTINGS_CACHE_KEY = "wasteland-public-registration-settings";
 const SETTINGS_CACHE_TTL_MS = 60_000;
 
 export function getRegistrationSettings({ force = false, serverOnly = false } = {}) {
-  // /registration always checks the live Worker before showing the form.
+  // Read static public settings for display. POST revalidates the live D1 state.
   // Registration POST independently revalidates all rules on the server.
   if (serverOnly) return fetchRegistrationSettings();
 
@@ -15,7 +15,7 @@ export function getRegistrationSettings({ force = false, serverOnly = false } = 
     ttlMs: SETTINGS_CACHE_TTL_MS,
     force,
     load: async () => {
-      const staticSettings = !force && await getStaticPublicSettings(
+      const staticSettings = await getStaticPublicSettings(
         "registration-settings.json",
         isPublicRegistrationSettings,
       );

@@ -1,4 +1,5 @@
 import { verifyAdminRequest, adminHasPermission } from "../auth/adminAuth.js";
+import { markPublicSnapshotDirty } from "../services/publicSnapshotSync.js";
 import { getAdminWorkingPeriod, getPublicDisplayPeriod } from "../db/periods.js";
 import { getRegistrationSettings } from "../db/registrationSettings.js";
 import { getRegistrationRows } from "../db/registrationQueries.js";
@@ -93,6 +94,9 @@ export async function handleAdminTurretPublish(request, env) {
       ...validated, publicPlan: createPublicPlan(validated.assignments, players,
         getActivePlannerShifts(registrationSettings.availableShifts), validated.settings.planLanguages),
     }, admin.uid);
+    try { await markPublicSnapshotDirty(env); } catch (syncError) {
+      console.error("Final plan snapshot revision:", syncError);
+    }
     return json({ success: true, published: {
       revision: published.revision, sourceRevision: published.sourceRevision,
       publishedAt: published.publishedAt,
