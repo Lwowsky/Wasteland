@@ -1,5 +1,6 @@
 import { requestJson } from "../../utils/apiClient.js";
 import { getPublicSnapshot, isPublicSnapshotEnabled } from "../players/publicSnapshot.js";
+import { publicGateStatusFromSnapshot } from "./publicGateStatusFromSnapshot.js";
 import { publicStatusFromSnapshot } from "./publicStatusFromSnapshot.js";
 
 const SESSION_PREFIX = "wasteland-content-access-";
@@ -73,7 +74,8 @@ export async function getContentAccessStatus(resource) {
       const snapshot = await getPublicSnapshot(resource === "players" ? "players.json" : "final-plan.json", {
         requireNetwork: true,
       });
-      const publicStatus = publicStatusFromSnapshot(resource, snapshot);
+      const publicStatus = publicStatusFromSnapshot(resource, snapshot)
+        || publicGateStatusFromSnapshot(resource, snapshot, Boolean(getContentAccessSession(resource)));
       if (publicStatus) return publicStatus;
     } catch {
       // Safe fallback: ask the Worker instead of granting offline access.
