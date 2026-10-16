@@ -96,6 +96,9 @@ export async function getPublicContentAccessHint(resource) {
     if (!["public", "private", "code", "link"].includes(mode)) return null;
     return { resource, mode, allowed: mode === "public", reason: mode === "private" ? "CONTENT_PRIVATE" : "CONTENT_ACCESS_REQUIRED" };
   } catch {
-    return null;
+    // Do not fall back to the Worker merely because the static host is
+    // unavailable. The caller can display a neutral unavailable state.
+    // This prevents an outage or abusive refreshes from draining Worker quota.
+    return { resource, mode: "private", allowed: false, reason: "SNAPSHOT_UNAVAILABLE" };
   }
 }
