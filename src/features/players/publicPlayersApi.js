@@ -54,7 +54,7 @@ export async function getPublicStats({ force = false } = {}) {
   }
 
   const data = isPublicSnapshotEnabled()
-    ? await getPublicSnapshot("summary.json")
+    ? await getPublicSnapshot("summary.json", { reuseRecentlyVerified: true })
     : await requestJson("/api/stats");
   const stats = isPublicSnapshotEnabled() ? data.stats : data;
   writeSessionCache(STATS_CACHE_KEY, stats);
@@ -74,7 +74,7 @@ export async function getRecentPlayers(limit = 5, { force = false } = {}) {
 
   try {
     const players = isPublicSnapshotEnabled()
-      ? (await getPublicSnapshot("summary.json")).recentPlayers.slice(0, limit)
+      ? (await getPublicSnapshot("summary.json", { reuseRecentlyVerified: true })).recentPlayers.slice(0, limit)
       : await requestJson(`/api/recent?limit=${limit}`, {
           headers: getContentAccessHeaders("players"),
         });

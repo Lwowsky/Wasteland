@@ -39,6 +39,9 @@ button {
 
   flex: 1;
 
+  /* Reserve a stable content area while route chunks and data load. */
+  min-height: 70svh;
+
   padding: 40px 0 70px;
 
   background:

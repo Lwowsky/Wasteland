@@ -66,7 +66,13 @@ export async function getPublicSnapshot(
   } catch (error) {
     if (!requireNetwork) {
       const cached = readCached(file);
-      if (cached) return cached;
+      if (cached) {
+        // Offline fallback is for non-sensitive dashboard numbers only.
+        // Never replay a previously public recent-player list after access
+        // has been switched to code, link, or closed while the CDN is down.
+        if (file === "summary.json") return { ...cached, recentPlayers: [] };
+        return cached;
+      }
     }
     throw error;
   }
