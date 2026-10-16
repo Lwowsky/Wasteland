@@ -85,14 +85,17 @@ test("stage12: Worker exports only PUBLIC settings and updates D1 revision after
   assert.match(registrationAdmin, /await clearPublicCaches\(request, env\)/);
 });
 
-test("stage12: registration form checks live Worker; all other public routes use snapshots", () => {
+test("stage14: registration page reads public snapshot; submission remains Worker-validated", () => {
   const page = source("src/pages/Registration/Registration.jsx");
   const api = source("src/features/registration/registrationApi.js");
   const siteApi = source("src/features/site/siteSettingsApi.js");
   const snapshot = source("src/utils/publicSettingsSnapshot.js");
   const worker = source("worker/src/index.js");
 
-  assert.match(page, /getRegistrationSettings\(\{ serverOnly: true \}\)/);
+  assert.match(page, /getRegistrationSettings\(\)/);
+  assert.doesNotMatch(page, /getRegistrationSettings\(\{ serverOnly: true \}\)/);
+  assert.match(api, /export async function submitRegistration/);
+  assert.match(api, /"\/api\/registration"/);
   assert.match(page, /verified\.loading/);
   assert.match(api, /if \(serverOnly\) return fetchRegistrationSettings\(\)/);
   assert.match(api, /getStaticPublicSettings\(/);

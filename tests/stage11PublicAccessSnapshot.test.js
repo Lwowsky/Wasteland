@@ -26,7 +26,13 @@ test("stage11: only an explicit public mode can skip the Worker UI check", () =>
     assert.equal(publicStatusFromSnapshot("players", { accessMode: mode }), null);
   }
   assert.equal(publicStatusFromSnapshot("players", {}), null);
-  assert.equal(publicStatusFromSnapshot("final_plan", { accessMode: "public" }), null);
+  assert.deepEqual(
+    publicStatusFromSnapshot("final_plan", { accessMode: "public" }),
+    { resource: "final_plan", mode: "public", allowed: true, reason: null },
+  );
+  for (const mode of ["code", "link", "private", null, undefined, "unexpected"]) {
+    assert.equal(publicStatusFromSnapshot("final_plan", { accessMode: mode }), null);
+  }
 });
 
 test("stage11: a failed HTTP request cannot use a cached public hint", async () => {
