@@ -52,8 +52,39 @@ export async function getAdminWorkingPeriod(env, settings, nowMs = Date.now()) {
   return latestPeriod;
 }
 
+// Public tables stay visible during registration, during the Wasteland event,
+// and for 24 hours AFTER the event ends. Closing registration only blocks new
+// submissions; it must never hide already-registered players.
+export const PUBLIC_POST_WASTELAND_HOURS = 24;
+const PUBLIC_POST_WASTELAND_MS = PUBLIC_POST_WASTELAND_HOURS * 60 * 60 * 1000;
+
+export function isPublicDisplayPeriodVisible(period, nowMs = Date.now()) {
+  if (!period) return false;
+  const eventEndMs = Date.parse(period.wasteland_end_at || "");
+  const opensMs = Date.parse(period.opens_at || "");
+  return Number.isFinite(eventEndMs) &&
+    (!Number.isFinite(opensMs) || nowMs >= opensMs) &&
+    nowMs < eventEndMs + PUBLIC_POST_WASTELAND_MS;
+}
+
 export async function getPublicDisplayPeriod(env, settings, nowMs = Date.now()) {
-  return getAdminWorkingPeriod(env, settings, nowMs);
+  // Creating the next cycle must not prematurely hide the previous cycle.
+  const { period } = await ensureCurrentRegistrationPeriod(env, settings, nowMs);
+  if (isPublicDisplayPeriodVisible(period, nowMs)) return period;
+
+  // In particular, after the Wasteland starts, the automatic schedule points
+  // at the NEXT event. Look up the previous event until its +24h cutoff.
+  const cutoff = new Date(nowMs - PUBLIC_POST_WASTELAND_MS).toISOString();
+  const nowIso = new Date(nowMs).toISOString();
+  const previous = await env.DB.prepare(`
+    SELECT * FROM registration_periods
+    WHERE wasteland_end_at > ?
+      AND (opens_at IS NULL OR opens_at <= ?)
+    ORDER BY wasteland_end_at DESC, id DESC
+    LIMIT 1
+  `).bind(cutoff, nowIso).first();
+
+  return isPublicDisplayPeriodVisible(previous, nowMs) ? previous : null;
 }
 
 export async function getPeriodByCycleKey(env, cycleKey) {

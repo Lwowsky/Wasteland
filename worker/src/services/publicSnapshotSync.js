@@ -1,3 +1,6 @@
+import { getPublicDisplayPeriod } from "../db/periods.js";
+import { getRegistrationSettings } from "../db/registrationSettings.js";
+
 // Stage 8: a durable, coalesced D1 outbox for a SECOND GitHub Pages repository.
 // Requests for public JSON never use this service; only writes and scheduled jobs do.
 const DISPATCH_COOLDOWN_MS = 2 * 60_000;
@@ -14,6 +17,27 @@ export function hasPublicSnapshotAccess(request, env) {
     diff |= expected.charCodeAt(i) ^ supplied.charCodeAt(i);
   }
   return diff === 0;
+}
+
+// A public snapshot also changes when a cycle becomes visible or expires.
+// Registration closure is NOT an expiry; the visible cycle remains unchanged.
+export function getPublicVisibilityKey(period) {
+  return period ? `${period.id}:${period.wasteland_end_at || ""}` : "none";
+}
+
+export async function syncPublicVisibilityRevision(env, nowMs = Date.now()) {
+  const settings = await getRegistrationSettings(env);
+  const period = await getPublicDisplayPeriod(env, settings, nowMs);
+  const key = getPublicVisibilityKey(period);
+  // Persist the last observed visible cycle to avoid publishing every minute.
+  // UPDATE is conditional so successive cron executions are idempotent.
+  const updated = await env.DB.prepare(`
+    UPDATE public_snapshot_sync
+    SET visible_period_key = ?, revision = revision + 1,
+        updated_at = CURRENT_TIMESTAMP
+    WHERE id = 1 AND visible_period_key <> ?
+  `).bind(key, key).run();
+  return Number(updated.meta?.changes || 0) === 1;
 }
 
 export async function markPublicSnapshotDirty(env) {

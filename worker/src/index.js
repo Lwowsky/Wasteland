@@ -21,7 +21,7 @@ import { handleStats } from "./public/stats.js";
 
 import { handlePlayers } from "./public/players.js";
 import { handlePublicSnapshot, handlePublicSnapshotAck } from "./public/publicSnapshot.js";
-import { dispatchPendingPublicSnapshot } from "./services/publicSnapshotSync.js";
+import { dispatchPendingPublicSnapshot, syncPublicVisibilityRevision } from "./services/publicSnapshotSync.js";
 import {
   handleContentAccessActivation,
   handleContentAccessStatus,
@@ -384,7 +384,12 @@ export default {
       ctx.waitUntil(cleanupOldRegistrationPeriods(env));
     }
     if (event.cron === "* * * * *") {
-      ctx.waitUntil(dispatchPendingPublicSnapshot(env).catch((error) => {
+      ctx.waitUntil((async () => {
+        // The snapshot must also update when +24h after Wasteland elapses,
+        // even when nobody has edited or registered a player.
+        await syncPublicVisibilityRevision(env);
+        await dispatchPendingPublicSnapshot(env);
+      })().catch((error) => {
         // An unacknowledged revision stays dirty for the next cron attempt.
         console.error("Public snapshot dispatch:", error);
       }));
