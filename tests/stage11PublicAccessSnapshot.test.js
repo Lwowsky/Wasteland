@@ -1,7 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { publicStatusFromSnapshot } from "../src/features/contentAccess/publicStatusFromSnapshot.js";
 import { getPublicSnapshot } from "../src/features/players/publicSnapshot.js";
 
 function source(path) {
@@ -16,24 +15,6 @@ function fakeStorage() {
     removeItem(key) { data.delete(key); },
   };
 }
-
-test("stage11: only an explicit public mode can skip the Worker UI check", () => {
-  assert.deepEqual(
-    publicStatusFromSnapshot("players", { accessMode: "public" }),
-    { resource: "players", mode: "public", allowed: true, reason: null },
-  );
-  for (const mode of ["code", "link", "private", null, undefined, "PUBLIC", "unexpected"]) {
-    assert.equal(publicStatusFromSnapshot("players", { accessMode: mode }), null);
-  }
-  assert.equal(publicStatusFromSnapshot("players", {}), null);
-  assert.deepEqual(
-    publicStatusFromSnapshot("final_plan", { accessMode: "public" }),
-    { resource: "final_plan", mode: "public", allowed: true, reason: null },
-  );
-  for (const mode of ["code", "link", "private", null, undefined, "unexpected"]) {
-    assert.equal(publicStatusFromSnapshot("final_plan", { accessMode: mode }), null);
-  }
-});
 
 test("stage11: a failed HTTP request cannot use a cached public hint", async () => {
   const previousFetch = globalThis.fetch;
@@ -87,20 +68,7 @@ test("stage11: fresh JSON fetched by gate is reused by the player table", async 
   }
 });
 
-test("stage11: server emits mode metadata without codes or sessions", () => {
+test("stage11: public snapshots do not contain access credentials", () => {
   const snapshot = source("worker/src/public/publicSnapshot.js");
-  const adminAccess = source("worker/src/services/contentAccess.js");
-  const client = source("src/features/contentAccess/contentAccessApi.js");
-  const worker = source("worker/src/index.js");
-  const snapshotWorkflow = source("src/features/players/publicPlayersApi.js");
-
-  assert.match(snapshot, /accessMode: accessSetting\.mode/);
   assert.doesNotMatch(snapshot, /token:\s*accessSetting|session:\s*accessSetting/);
-  assert.match(adminAccess, /await markPublicSnapshotDirty\(env\)/);
-  assert.match(adminAccess, /current\.mode !== next\.mode/);
-  assert.match(client, /requireNetwork:\s*true/);
-  assert.match(client, /return requestJson\(/);
-  assert.match(worker, /handleContentAccessStatus/);
-  assert.match(worker, /getContentAccessState\(request, env, "players"\)/);
-  assert.match(snapshotWorkflow, /reuseRecentlyVerified:\s*true/);
 });

@@ -65,7 +65,7 @@ export async function handlePublicSnapshot(request, env) {
       plan: published?.plan ?? null, publishedAt: published?.publishedAt ?? null,
       revision: published?.revision ?? null,
     },
-    summary: { ...stats, recentPlayers: recent.map(publicPlayer) },
+    summary: { ...stats, recentPlayers: accessSetting.mode === "public" ? recent.map(publicPlayer) : [] },
     // Identical to the pre-existing PUBLIC API response shapes. Never copy
     // admin-only settings, secrets, codes, or authorization sessions.
     siteSettings,
@@ -75,7 +75,9 @@ export async function handlePublicSnapshot(request, env) {
     players: {
       ...players,
       accessMode: accessSetting.mode,
-      players: (players.players || []).map(publicPlayer),
+      players: accessSetting.mode === "public" ? (players.players || []).map(publicPlayer) : [],
+      total: accessSetting.mode === "public" ? players.total : 0,
+      pages: accessSetting.mode === "public" ? players.pages : 0,
     },
   }, 200, { "cache-control": "no-store" });
 }

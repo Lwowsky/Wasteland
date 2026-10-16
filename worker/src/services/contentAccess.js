@@ -181,9 +181,7 @@ export async function updateContentAccessSetting(env, resource, payload = {}) {
     await revokeContentAccess(env, normalizedResource);
     // Publish the new PUBLIC UI hint after an admin switches mode.
     // Protected API routes continue to enforce the live D1 setting.
-    if (normalizedResource === "players") {
-      await markPublicSnapshotDirty(env);
-    }
+    await markPublicSnapshotDirty(env);
   } else if (period && ["code", "link"].includes(next.mode)) {
     const expiresAt = getTokenExpiryIso(next.tokenTtlMinutes);
 

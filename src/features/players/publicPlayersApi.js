@@ -1,5 +1,5 @@
 import { getPublicSnapshot, isPublicSnapshotEnabled } from "./publicSnapshot.js";
-import { getContentAccessHeaders } from "../contentAccess/contentAccessApi.js";
+import { getContentAccessHeaders, getContentAccessStatus } from "../contentAccess/contentAccessApi.js";
 import { requestJson } from "../../utils/apiClient.js";
 import { readSessionCache, writeSessionCache } from "../../utils/sessionCache.js";
 
@@ -31,16 +31,16 @@ function normalizePlayer(player) {
 }
 
 export async function getPublicPlayers() {
-  const data = isPublicSnapshotEnabled()
-    ? await getPublicSnapshot("players.json", { reuseRecentlyVerified: true })
+  // Never use public JSON as a fallback for a protected player table.
+  // The Worker validates code/link sessions and current access mode.
+  const status = await getContentAccessStatus("players");
+  if (!status.allowed) throw new Error(status.reason || "CONTENT_ACCESS_REQUIRED");
+  const data = isPublicSnapshotEnabled() && status.mode === "public"
+    ? await getPublicSnapshot("players.json", { reuseRecentlyVerified: true, requireNetwork: true })
     : await requestJson("/api/players?page=1&limit=500", {
-    headers: getContentAccessHeaders("players"),
-  });
-
-  return {
-    ...data,
-    players: (data.players || []).map(normalizePlayer),
-  };
+        headers: getContentAccessHeaders("players"), cache: "no-store",
+      });
+  return { ...data, players: (data.players || []).map(normalizePlayer) };
 }
 
 export async function getPublicStats({ force = false } = {}) {

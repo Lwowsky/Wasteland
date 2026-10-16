@@ -1,22 +1,19 @@
-import test from 'node:test';
-import assert from 'node:assert/strict';
-import { publicGateStatusFromSnapshot as derive } from '../src/features/contentAccess/publicGateStatusFromSnapshot.js';
+import test from "node:test";
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 
-for (const resource of ['players', 'final_plan']) {
-  test(`stage15: ${resource} public metadata grants only explicitly public content`, () => {
-    assert.deepEqual(derive(resource, { success: true, accessMode: 'public' }),
-      { resource, mode: 'public', allowed: true, reason: null });
-    assert.equal(derive(resource, { accessMode: 'public' }), null);
-    assert.equal(derive(resource, { success: false, accessMode: 'public' }), null);
-    assert.equal(derive(resource, { success: true, accessMode: 'unexpected' }), null);
-  });
-  test(`stage15: ${resource} anonymous protected modes show gate without granting access`, () => {
-    for (const mode of ['code', 'link', 'private']) {
-      const result = derive(resource, { success: true, accessMode: mode }, false);
-      assert.equal(result.allowed, false);
-      assert.equal(result.mode, mode);
-      assert.equal(derive(resource, { success: true, accessMode: mode }, true), null,
-        'existing sessions must be validated server-side');
-    }
-  });
+function source(path) {
+  return readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 }
+
+// Stage 16 removed snapshot-derived authorization helpers. Keep this test
+// focused on preventing accidental reintroduction of those imports.
+test("stage15: public players API does not use removed snapshot gate helpers", () => {
+  const players = source("src/features/players/publicPlayersApi.js");
+  assert.doesNotMatch(players, /publicStatusFromSnapshot|publicGateStatusFromSnapshot/);
+});
+
+test("stage15: content access API does not use removed snapshot gate helpers", () => {
+  const access = source("src/features/contentAccess/contentAccessApi.js");
+  assert.doesNotMatch(access, /publicStatusFromSnapshot|publicGateStatusFromSnapshot/);
+});

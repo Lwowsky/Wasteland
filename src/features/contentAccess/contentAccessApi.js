@@ -1,7 +1,4 @@
 import { requestJson } from "../../utils/apiClient.js";
-import { getPublicSnapshot, isPublicSnapshotEnabled } from "../players/publicSnapshot.js";
-import { publicGateStatusFromSnapshot } from "./publicGateStatusFromSnapshot.js";
-import { publicStatusFromSnapshot } from "./publicStatusFromSnapshot.js";
 
 const SESSION_PREFIX = "wasteland-content-access-";
 
@@ -62,29 +59,11 @@ export function getContentAccessHeaders(resource) {
 }
 
 export async function getContentAccessStatus(resource) {
-  // The players list is already public on GitHub Pages. When the latest
-  // network-confirmed public snapshot explicitly says "public", a second
-  // Worker request solely for UI access is unnecessary.
-  //
-  // Do not trust an offline/localStorage fallback for an access decision.
-  // Unknown/older metadata, restricted modes and network failures use the
-  // original server check. The final_plan route ALWAYS uses the server.
-  if ((resource === "players" || resource === "final_plan") && isPublicSnapshotEnabled()) {
-    try {
-      const snapshot = await getPublicSnapshot(resource === "players" ? "players.json" : "final-plan.json", {
-        requireNetwork: true,
-      });
-      const publicStatus = publicStatusFromSnapshot(resource, snapshot)
-        || publicGateStatusFromSnapshot(resource, snapshot, Boolean(getContentAccessSession(resource)));
-      if (publicStatus) return publicStatus;
-    } catch {
-      // Safe fallback: ask the Worker instead of granting offline access.
-    }
-  }
-
+  // Live D1 state is authoritative. A GitHub Pages snapshot can be stale for
+  // up to ten minutes, so it must not grant access after an admin closes it.
   return requestJson(
     `/api/content-access/${resource}`,
-    { headers: getContentAccessHeaders(resource) },
+    { headers: getContentAccessHeaders(resource), cache: "no-store" },
     "CONTENT_ACCESS_REQUEST_FAILED",
   );
 }
