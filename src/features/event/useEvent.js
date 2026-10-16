@@ -9,8 +9,6 @@ const STATIC_REGION = {
   regionName: "We are One",
 };
 
-const SETTINGS_REFRESH_MS = 5 * 60 * 1000;
-
 function resolveOrganizerAlliance(settings) {
   const tag = String(settings?.hostAlliance || "").trim().toUpperCase();
   const alliances = Array.isArray(settings?.alliances) ? settings.alliances : [];
@@ -88,10 +86,6 @@ function useEvent() {
 
     loadEvent({ showLoading: true });
 
-    const timer = setInterval(() => {
-      loadEvent({ force: true });
-    }, SETTINGS_REFRESH_MS);
-
     function handleSettingsUpdated() {
       loadEvent({ force: true });
     }
@@ -109,18 +103,15 @@ function useEvent() {
 
     // Browser tabs may have cached an old public registration state.
     window.addEventListener("storage", handleStorage);
-    window.addEventListener("focus", handleSettingsUpdated);
 
     return () => {
       cancelled = true;
       requestVersion += 1;
-      clearInterval(timer);
       window.removeEventListener(
         "registration-settings-updated",
         handleSettingsUpdated,
       );
       window.removeEventListener("storage", handleStorage);
-      window.removeEventListener("focus", handleSettingsUpdated);
     };
   }, []);
 

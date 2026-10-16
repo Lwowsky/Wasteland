@@ -1,6 +1,8 @@
 import { publicAsset } from "../../utils/publicAsset.js";
 
-const CACHE_PREFIX = "wasteland-public-snapshot-v2:";
+const CACHE_PREFIX = "wasteland-public-snapshot-v3:";
+// Cached snapshots are an outage fallback, not a permanent replacement for live data.
+const OFFLINE_FALLBACK_TTL_MS = 30 * 60 * 1000;
 const memory = new Map();
 const inflight = new Map();
 
@@ -13,17 +15,26 @@ function snapshotUrl(file) {
 }
 
 function readCached(file) {
-  if (memory.has(file)) return memory.get(file);
+  const inMemory = memory.get(file);
+  if (inMemory && Date.now() - inMemory.savedAt <= OFFLINE_FALLBACK_TTL_MS) {
+    return inMemory.data;
+  }
   try {
     const parsed = JSON.parse(localStorage.getItem(CACHE_PREFIX + file));
-    if (parsed && typeof parsed === "object") return parsed;
+    if (parsed && typeof parsed === "object" &&
+        Number.isFinite(parsed.savedAt) &&
+        Date.now() - parsed.savedAt >= 0 &&
+        Date.now() - parsed.savedAt <= OFFLINE_FALLBACK_TTL_MS) {
+      return parsed.data;
+    }
   } catch { /* storage may be unavailable */ }
   return null;
 }
 
 function cacheData(file, data) {
-  memory.set(file, data);
-  try { localStorage.setItem(CACHE_PREFIX + file, JSON.stringify(data)); }
+  const entry = { savedAt: Date.now(), data };
+  memory.set(file, entry);
+  try { localStorage.setItem(CACHE_PREFIX + file, JSON.stringify(entry)); }
   catch { /* Ignore browser storage quota/private-mode errors. */ }
 }
 
