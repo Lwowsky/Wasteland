@@ -1,7 +1,7 @@
 import { verifyAdminRequest, adminHasPermission } from "../../auth/adminAuth.js";
 import { json } from "../../utils/response.js";
 import { finalizeRegistrationWrite } from "./afterWrite.js";
-import { findRegistrationPeriod } from "../../db/registrationQueries.js";
+import { findRegistrationById } from "../../db/registrationQueries.js";
 import { prepareDeleteRegistrationStatements } from "../../db/registrationWrites.js";
 
 export async function handleAdminDeleteRegistration(
@@ -19,16 +19,16 @@ export async function handleAdminDeleteRegistration(
     return json({ success: false, error: "FORBIDDEN" }, 403);
   }
 
-  const registration = await findRegistrationPeriod(env, registrationId);
+  const registration = await findRegistrationById(env, registrationId);
 
   if (!registration) {
     return json({ success: false, error: "PLAYER_NOT_FOUND" }, 404);
   }
 
   await env.DB.batch(
-    prepareDeleteRegistrationStatements(env, registrationId),
+    prepareDeleteRegistrationStatements(env, registrationId, registration),
   );
-  await finalizeRegistrationWrite(request, env, registration.periodId);
+  await finalizeRegistrationWrite(request, env, registration.period_id);
 
   return json({ success: true });
 }

@@ -152,6 +152,10 @@ function Admin() {
   const playersData = useAdminPlayersData({
     enabled: needsPlayersData,
     canDelete: canDeletePlayers,
+    autoSync: resolvedActiveTab === "players",
+    cacheIdentity: canViewPlayers
+      ? `${user?.uid || ""}:${admin?.id || ""}:${admin?.role || ""}`
+      : "",
   });
   const registrationData = useAdminRegistrationSettings({
     enabled: needsRegistrationSettings,

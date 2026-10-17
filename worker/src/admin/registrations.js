@@ -1,4 +1,4 @@
-export { handleAdminRegistrations } from "./registrations/list.js";
+export { handleAdminRegistrations, handleAdminRegistrationChanges } from "./registrations/list.js";
 export { handleAdminCreateRegistration } from "./registrations/create.js";
 export { handleAdminUpdateRegistration } from "./registrations/update.js";
 export { handleAdminDeleteRegistration } from "./registrations/delete.js";

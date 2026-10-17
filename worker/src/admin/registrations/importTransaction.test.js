@@ -1,8 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
+import { readFileSync } from "node:fs";
 import { executeImportTransaction } from "./importTransaction.js";
-import { prepareCreateRegistrationStatements, prepareUpdateRegistrationStatements } from "../../db/registrationWrites.js";
+import { prepareCreateRegistrationStatements, prepareUpdateRegistrationStatements, prepareDeleteRegistrationStatements } from "../../db/registrationWrites.js";
+import { getRegistrationChanges, getRegistrationCursor } from "../../db/registrationQueries.js";
 
 // Real SQLite integration tests for the exact SQL sent to Cloudflare D1.
 // The D1-compatible batch below reproduces D1's rollback-on-error guarantee.
@@ -36,6 +38,8 @@ function setup() {
       extra_shooter_tier TEXT,
       comment TEXT,
       custom_fields_json TEXT,
+      status TEXT NOT NULL DEFAULT 'submitted',
+      created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
       updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (period_id) REFERENCES registration_periods(id),
       UNIQUE(period_id, nickname_normalized)
@@ -83,6 +87,7 @@ function setup() {
     INSERT INTO turret_plan_publications (period_id) VALUES (1);
     INSERT INTO turret_plan_drafts (period_id) VALUES (1);
   `);
+  db.exec(readFileSync(new URL("../../../migrations/0019_registration_delta_sync.sql", import.meta.url), "utf8"));
 
   const env = {
     DB: {
@@ -273,7 +278,7 @@ test("028B: failed normal edit rolls back the private edit and statistics", asyn
       WHEN NEW.nickname = 'Edited'
       BEGIN SELECT RAISE(ABORT, 'edit mirror broken'); END;`);
     await assert.rejects(
-      env.DB.batch(prepareUpdateRegistrationStatements(env, id, 1, record("Edited", "rider"))),
+      env.DB.batch(prepareUpdateRegistrationStatements(env, id, 1, record("Edited", "rider"), db.prepare("SELECT * FROM registrations WHERE id=?").get(id))),
       /edit mirror broken/,
     );
     assert.deepEqual(snapshot(), before);
@@ -284,11 +289,106 @@ test("028B: successful edit updates private, public and stats together", async (
   const { db, env, snapshot } = setup();
   try {
     const id = db.prepare("SELECT id FROM registrations WHERE nickname='Old'").get().id;
-    await env.DB.batch(prepareUpdateRegistrationStatements(env, id, 1, record("Edited", "shooter")));
+    await env.DB.batch(prepareUpdateRegistrationStatements(env, id, 1, record("Edited", "shooter"), db.prepare("SELECT * FROM registrations WHERE id=?").get(id)));
     const state = snapshot();
     assert.deepEqual(state.players, ["Edited"]);
     assert.deepEqual(state.public, ["Edited"]);
     assert.equal(state.stats.fighters, 0);
     assert.equal(state.stats.registered, 1);
+  } finally { db.close(); }
+});
+
+
+test("incremental sync: cursor advances by one on one new registration", async () => {
+  const { db, env } = setup();
+  try {
+    assert.equal(await getRegistrationCursor(env, 1), 0);
+    const [inserted] = await env.DB.batch(prepareCreateRegistrationStatements(env, 1, record("New")));
+    const id = Number(inserted.meta.last_row_id || db.prepare("SELECT max(id) AS id FROM registrations").get().id);
+    const delta = await getRegistrationChanges(env, 1, 0);
+    assert.equal(delta.cursor, 1);
+    assert.equal(delta.upserts.length, 1);
+    assert.equal(Number(delta.upserts[0].id), id);
+    assert.deepEqual(delta.deletes, []);
+    assert.equal(delta.hasMore, false);
+    assert.equal(await getRegistrationCursor(env, 1), 1);
+    assert.deepEqual((await getRegistrationChanges(env, 1, 1)).upserts, []);
+  } finally { db.close(); }
+});
+
+test("incremental sync: edit only returns edited row and changes counters", async () => {
+  const { db, env } = setup();
+  try {
+    const old = db.prepare("SELECT * FROM registrations WHERE nickname='Old'").get();
+    await env.DB.batch(prepareUpdateRegistrationStatements(env, old.id, 1, record("Edited", "shooter"), old));
+    const delta = await getRegistrationChanges(env, 1, 0);
+    assert.equal(delta.upserts.length, 1);
+    assert.equal(delta.upserts[0].troopType, "shooter");
+    const stats = db.prepare("SELECT * FROM stats WHERE period_id=1").get();
+    assert.equal(stats.registered, 1);
+    assert.equal(stats.fighters, 0);
+    assert.equal(stats.shooters, 1);
+  } finally { db.close(); }
+});
+
+test("incremental sync: delete emits tombstone and decrements counters", async () => {
+  const { db, env } = setup();
+  try {
+    const old = db.prepare("SELECT * FROM registrations WHERE nickname='Old'").get();
+    await env.DB.batch(prepareDeleteRegistrationStatements(env, old.id, old));
+    const delta = await getRegistrationChanges(env, 1, 0);
+    assert.deepEqual(delta.upserts, []);
+    assert.deepEqual(delta.deletes, [old.id]);
+    assert.equal(db.prepare("SELECT registered AS n FROM stats WHERE period_id=1").get().n, 0);
+  } finally { db.close(); }
+});
+
+test("incremental sync: 500 registered rows only fetch new rows, not a 500-row scan", async () => {
+  const { db, env } = setup();
+  try {
+    const bulk = Array.from({ length: 500 }, (_, index) => player(`P${index}`));
+    await executeImportTransaction(env, 1, bulk, "replacePeriod");
+    const cursor = await getRegistrationCursor(env, 1);
+    assert.equal(cursor, 501); // 1 deletion + 500 inserts
+    await env.DB.batch(prepareCreateRegistrationStatements(env, 1, record("Last")));
+    const changes = await getRegistrationChanges(env, 1, cursor);
+    assert.equal(changes.upserts.length, 1);
+    assert.equal(changes.upserts[0].nickname, "Last");
+    assert.equal(changes.cursor, cursor + 1);
+    const stats = db.prepare("SELECT registered FROM stats WHERE period_id=1").get();
+    assert.equal(stats.registered, 501);
+  } finally { db.close(); }
+});
+
+test("incremental sync: pagination of more than 100 changes never misses an inserted row", async () => {
+  const { db, env } = setup();
+  try {
+    await executeImportTransaction(env, 1, Array.from({ length: 225 }, (_, i) => player(`Batch${i}`)), "skipExisting");
+    let after = 0;
+    let total = 0;
+    for (let page = 0; page < 3; page += 1) {
+      const delta = await getRegistrationChanges(env, 1, after, 100);
+      total += delta.upserts.length;
+      assert.ok(delta.cursor > after);
+      if (page < 2) assert.equal(delta.hasMore, true);
+      if (page === 2) assert.equal(delta.hasMore, false);
+      after = delta.cursor;
+    }
+    assert.equal(total, 225);
+    assert.equal(after, 225);
+  } finally { db.close(); }
+});
+
+test("incremental sync: edited then deleted in the same batch yields only a deletion", async () => {
+  const { db, env } = setup();
+  try {
+    const old = db.prepare("SELECT * FROM registrations WHERE nickname='Old'").get();
+    await env.DB.batch(prepareUpdateRegistrationStatements(env, old.id, 1, record("Edited", "rider"), old));
+    const revised = db.prepare("SELECT * FROM registrations WHERE id=?").get(old.id);
+    await env.DB.batch(prepareDeleteRegistrationStatements(env, old.id, revised));
+    const delta = await getRegistrationChanges(env, 1, 0);
+    assert.deepEqual(delta.deletes, [old.id]);
+    assert.deepEqual(delta.upserts, []);
+    assert.equal(db.prepare("SELECT registered FROM stats WHERE period_id=1").get().registered, 0);
   } finally { db.close(); }
 });

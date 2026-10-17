@@ -1,5 +1,6 @@
 import { requestJson } from "../../utils/apiClient.js";
 import { setAdminMenuHint } from "./adminMenuHint.js";
+import { clearAdminPlayersCache } from "../../pages/Admin/services/adminPlayersCache.js";
 
 const STORAGE = "wasteland_shared_consul_session";
 
@@ -16,6 +17,7 @@ export function getSharedSession() {
 }
 
 export function forgetSharedSession() {
+  clearAdminPlayersCache();
   try {
     sessionStorage.removeItem(STORAGE);
   } catch {
@@ -26,6 +28,7 @@ export function forgetSharedSession() {
 }
 
 export async function signInSharedConsul(password) {
+  clearAdminPlayersCache();
   const data = await requestJson("/api/shared-consul/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

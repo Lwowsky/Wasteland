@@ -46,6 +46,14 @@ export async function getAdminRegistrations() {
   };
 }
 
+export async function getAdminRegistrationChanges(periodId, cursor) {
+  const data = await adminRequest(
+    `/api/admin/registrations/changes?periodId=${encodeURIComponent(periodId)}&after=${encodeURIComponent(cursor)}`,
+    { cache: "no-store" },
+  );
+  return { ...data, upserts: (data.upserts || []).map(normalizeRegistration) };
+}
+
 export async function createAdminRegistration(player) {
   return adminRequest("/api/admin/registrations", {
     method: "POST",

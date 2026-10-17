@@ -65,7 +65,7 @@ export async function handleAdminUpdateRegistration(
   );
 
   await env.DB.batch(prepareUpdateRegistrationStatements(
-    env, registrationId, existing.period_id, record,
+    env, registrationId, existing.period_id, record, existing,
   ));
   try {
     await clearPublicCaches(request, env);

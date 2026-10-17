@@ -54,6 +54,7 @@ import {
   handleAdminDeleteRegistration,
   handleAdminImportRegistrations,
   handleAdminRegistrations,
+  handleAdminRegistrationChanges,
   handleAdminUpdateRegistration,
 } from "./admin/registrations.js";
 import {
@@ -305,6 +306,10 @@ export default {
         if (request.method === "PUT") {
           return await handleAdminSiteSettingsPut(request, env);
         }
+      }
+
+      if (request.method === "GET" && url.pathname === "/api/admin/registrations/changes") {
+        return await handleAdminRegistrationChanges(request, env);
       }
 
       if (

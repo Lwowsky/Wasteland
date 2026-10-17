@@ -1,4 +1,4 @@
-import { prepareStatsRefresh } from "./stats.js";
+import { prepareStatsInsert, prepareStatsUpdate, prepareStatsDelete } from "./stats.js";
 import { boolToInt } from "../utils/normalize.js";
 
 export function prepareRegistrationInsert(env, periodId, record) {
@@ -267,7 +267,7 @@ export function preparePublicPlayerUpdate(env, registrationId, record) {
   );
 }
 
-export function prepareDeleteRegistrationStatements(env, registrationId) {
+export function prepareDeleteRegistrationStatements(env, registrationId, existing) {
   return [
     env.DB.prepare(`DELETE FROM public_players WHERE registration_id = ?`).bind(
       registrationId,
@@ -275,6 +275,7 @@ export function prepareDeleteRegistrationStatements(env, registrationId) {
     env.DB.prepare(`DELETE FROM registrations WHERE id = ?`).bind(
       registrationId,
     ),
+    prepareStatsDelete(env, existing.period_id, existing),
   ];
 }
 
@@ -297,14 +298,14 @@ export function prepareCreateRegistrationStatements(env, periodId, record) {
   return [
     prepareRegistrationInsert(env, periodId, record),
     preparePublicPlayerInsertFromRegistration(env, periodId, record.nicknameNormalized),
-    prepareStatsRefresh(env, periodId),
+    prepareStatsInsert(env, periodId, record),
   ];
 }
 
-export function prepareUpdateRegistrationStatements(env, registrationId, periodId, record) {
+export function prepareUpdateRegistrationStatements(env, registrationId, periodId, record, existing) {
   return [
     prepareRegistrationUpdate(env, registrationId, record),
     preparePublicPlayerUpdate(env, registrationId, record),
-    prepareStatsRefresh(env, periodId),
+    prepareStatsUpdate(env, periodId, existing, record),
   ];
 }

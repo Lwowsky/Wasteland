@@ -101,6 +101,7 @@ export async function cleanupOldRegistrationPeriods(
     env.DB.prepare(
       `DELETE FROM registrations WHERE period_id IN (${placeholders})`,
     ).bind(...ids),
+    env.DB.prepare(`DELETE FROM registration_changes WHERE period_id IN (${placeholders})`).bind(...ids),
     env.DB.prepare(`DELETE FROM stats WHERE period_id IN (${placeholders})`).bind(
       ...ids,
     ),

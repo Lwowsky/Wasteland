@@ -13,6 +13,7 @@ export function toPeriodResponse(period) {
 
   return {
     id: period.id,
+    createdAt: period.created_at ?? null,
     cycleNumber: period.cycle_number ?? null,
     cycleKey: period.cycle_key ?? null,
     opensAt: period.opens_at ?? null,
