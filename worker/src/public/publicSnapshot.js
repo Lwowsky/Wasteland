@@ -1,4 +1,5 @@
 import { json } from "../utils/response.js";
+import { fetchAllPublicPlayers } from "./fetchAllPublicPlayers.js";
 import { handlePlayers } from "./players.js";
 import { handleStats } from "./stats.js";
 import { handleRecent } from "./recent.js";
@@ -47,7 +48,7 @@ export async function handlePublicSnapshot(request, env) {
   // these reads must lead to another publication after this one is acked.
   const revision = await getPublicSnapshotRevision(env);
   const [playersResponse, statsResponse, recentResponse, siteSettingsResponse, registrationSettingsResponse, accessSetting] = await Promise.all([
-    handlePlayers(env, new URL("https://internal.invalid/api/players?page=1&limit=500")),
+    fetchAllPublicPlayers(env, handlePlayers),
     handleStats(env),
     handleRecent(env, new URL("https://internal.invalid/api/recent?limit=5")),
     handlePublicSiteSettings(env),
