@@ -428,7 +428,8 @@
       "saved": "Access settings saved.",
       "generated": "Link created. It will work after the next snapshot publication; earlier links remain active.",
       "revoked": "Link revoked. Static access will stop after the next snapshot publication.",
-      "copied": "Copied."
+      "copied": "Copied.",
+      "historyDeleted": "Archived link record deleted."
     },
     "errors": {
       "load": "Could not load access settings.",
@@ -436,12 +437,16 @@
       "generate": "Could not create a code or private link.",
       "revoke": "Could not revoke access.",
       "copy": "Could not copy.",
-      "noPeriod": "There is no current cycle for private access."
+      "noPeriod": "There is no current cycle for private access.",
+      "deleteLink": "Could not delete the archived link."
     },
     "staticLinks": {
       "title": "Created links (Owner and Admin can copy saved links)",
       "active": "Active",
-      "inactive": "Expired or revoked"
+      "inactive": "Expired or revoked",
+      "history": "History — expired and revoked",
+      "delete": "Delete record",
+      "confirmDelete": "Permanently delete this inactive link record?"
     }
   },
   "sharedConsul": {

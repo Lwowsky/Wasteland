@@ -42,3 +42,12 @@ export function revokeAdminSingleStaticLink(resource, id) {
     "CONTENT_ACCESS_REVOKE_FAILED",
   );
 }
+
+
+export function deleteAdminInactiveStaticLink(resource, id) {
+  return adminRequest(
+    `/api/admin/content-access/${resource}/token?id=${encodeURIComponent(id)}&action=delete`,
+    { method: "DELETE" },
+    "CONTENT_ACCESS_DELETE_FAILED",
+  );
+}

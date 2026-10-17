@@ -3,6 +3,7 @@ import { clearPublicCaches } from "../utils/cache.js";
 import { json } from "../utils/response.js";
 import {
   CONTENT_ACCESS_RESOURCES,
+  deleteSingleInactiveStaticLink,
   generateContentAccessToken,
   getContentAccessSummary,
   isContentAccessResource,
@@ -126,10 +127,20 @@ export async function handleAdminContentAccessRevoke(
     return json({ success: false, error: "INVALID_CONTENT_RESOURCE" }, 404);
   }
 
-  const id = new URL(request.url).searchParams.get("id");
-  const summary = id
-    ? await revokeSingleStaticLink(env, resource, id)
-    : (await revokeContentAccess(env, resource), await getContentAccessSummary(env, resource));
+  const query = new URL(request.url).searchParams;
+  const id = query.get("id");
+  const deleting = query.get("action") === "delete";
+  if (deleting && !id) return errorResponse(new Error("INVALID_CONTENT_TOKEN"));
+  let summary;
+  try {
+    summary = deleting
+      ? await deleteSingleInactiveStaticLink(env, resource, id)
+      : id
+        ? await revokeSingleStaticLink(env, resource, id)
+        : (await revokeContentAccess(env, resource), await getContentAccessSummary(env, resource));
+  } catch (error) {
+    return errorResponse(error);
+  }
 
   if (resource === "players") {
     await clearPublicCaches(request);

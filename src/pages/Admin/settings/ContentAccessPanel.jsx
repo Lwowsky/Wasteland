@@ -7,6 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import {
   generateAdminContentAccessToken,
+  deleteAdminInactiveStaticLink,
   getAdminContentAccess,
   revokeAdminContentAccessToken,
   revokeAdminSingleStaticLink,
@@ -222,6 +223,25 @@ function ContentAccessPanel({ t, language, sharedConsulT, cancelLabel }) {
     }
   }
 
+  async function deleteOne(id) {
+    if (busy) return;
+    const confirmed = window.confirm(t.staticLinks.confirmDelete);
+    if (!confirmed) return;
+    setBusy(true);
+    setErrorKey("");
+    setMessageKey("");
+    try {
+      const result = await deleteAdminInactiveStaticLink(selectedResource, id);
+      applyResource(selectedResource, result.resource);
+      setMessageKey("historyDeleted");
+    } catch (err) {
+      console.error("Delete archived link:", err);
+      setErrorKey("deleteLink");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   async function copyStoredLink(token, resource) {
     if (!token) return;
     const path = `${import.meta.env.BASE_URL}s/${resource === "players" ? "p" : "f"}${token}`;
@@ -328,6 +348,7 @@ function ContentAccessPanel({ t, language, sharedConsulT, cancelLabel }) {
           generate={generate}
           revoke={revoke}
           revokeOne={revokeOne}
+          deleteOne={deleteOne}
           copyStoredLink={copyStoredLink}
         />
       )}

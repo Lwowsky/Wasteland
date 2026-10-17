@@ -3,6 +3,7 @@ import { getRegistrationSettings } from "../db/registrationSettings.js";
 import { markPublicSnapshotDirty } from "./publicSnapshotSync.js";
 import {
   createStaticShareLink,
+  deleteInactiveStaticShareLink,
   listStaticShareLinks,
   revokeStaticShareLink,
 } from "./staticShareLinks.js";
@@ -263,6 +264,13 @@ export async function generateContentAccessToken(env, resource) {
     tokenId: Number(result.meta.last_row_id),
     summary: await getContentAccessSummary(env, resource),
   };
+}
+
+export async function deleteSingleInactiveStaticLink(env, resource, id) {
+  const normalizedResource = normalizeResource(resource);
+  if (!normalizedResource) throw new Error("INVALID_CONTENT_RESOURCE");
+  await deleteInactiveStaticShareLink(env, normalizedResource, id);
+  return getContentAccessSummary(env, normalizedResource);
 }
 
 export async function revokeSingleStaticLink(env, resource, id) {

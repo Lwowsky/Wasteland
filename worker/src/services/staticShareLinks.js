@@ -41,3 +41,28 @@ export async function revokeStaticShareLink(env, resource, id) {
   `).bind(new Date().toISOString(), numericId, resource).run();
   await markPublicSnapshotDirty(env);
 }
+
+
+// Only inactive rows may be removed. Active codes must be revoked first so
+// a removed database row can never leave an unmanageable published link.
+export async function deleteInactiveStaticShareLink(env, resource, id) {
+  const numericId = Number(id);
+  if (!Number.isSafeInteger(numericId) || numericId < 1) {
+    throw new Error("INVALID_CONTENT_TOKEN");
+  }
+  const existing = await env.DB.prepare(`
+    SELECT id, revoked_at, expires_at FROM static_share_links
+    WHERE id = ? AND resource = ? LIMIT 1
+  `).bind(numericId, resource).first();
+  if (!existing) throw new Error("CONTENT_LINK_NOT_FOUND");
+  const inactive = Boolean(existing.revoked_at) ||
+    (Boolean(existing.expires_at) && Date.parse(existing.expires_at) <= Date.now());
+  if (!inactive) throw new Error("CONTENT_LINK_ACTIVE");
+  await env.DB.prepare(`
+    DELETE FROM static_share_links
+    WHERE id = ? AND resource = ?
+      AND (revoked_at IS NOT NULL OR (expires_at IS NOT NULL AND expires_at <= ?))
+  `).bind(numericId, resource, new Date().toISOString()).run();
+  // Publish updated static metadata on next snapshot (if needed).
+  await markPublicSnapshotDirty(env);
+}

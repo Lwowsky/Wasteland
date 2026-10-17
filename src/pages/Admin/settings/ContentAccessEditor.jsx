@@ -20,6 +20,7 @@ export default function ContentAccessEditor({
   generate,
   revoke,
   revokeOne,
+  deleteOne,
   copyStoredLink,
 }) {
   return (
@@ -115,33 +116,53 @@ export default function ContentAccessEditor({
         </label>
       )}
       {active?.mode === "link" && (active.staticLinks || []).length > 0 && (
-        <div className="settings-access-options">
-          <strong>{t.staticLinks.title}</strong>
-          {(active.staticLinks || []).map((link) => (
-            <div key={link.id} className="settings-access-token-status">
-              <span>{link.hint} — {link.active ? t.staticLinks.active : t.staticLinks.inactive}</span>
-              <span>{link.expiresAt
-                ? formatMediumDateTime(link.expiresAt, language)
-                : t.duration.forever}</span>
-              {link.active && link.token && (
-                <code className="settings-access-stored-url">
-                  {new URL(`${import.meta.env.BASE_URL}s/${selectedResource === "players" ? "p" : "f"}${link.token}`, window.location.origin).toString()}
-                </code>
-              )}
-              {link.active && link.token && (
-                <button type="button" className="settings-access-copy"
-                  onClick={() => copyStoredLink(link.token, selectedResource)} disabled={busy}>
-                  <Copy size={16} aria-hidden="true" /> {t.actions.copy}
-                </button>
-              )}
-              {link.active && (
-                <button type="button" className="settings-access-revoke"
-                  onClick={() => revokeOne(link.id)} disabled={busy}>
-                  {t.actions.revoke}
-                </button>
-              )}
-            </div>
-          ))}
+        <div className="settings-access-link-groups">
+          {[true, false].map((isActive) => {
+            const links = (active.staticLinks || []).filter((link) => Boolean(link.active) === isActive);
+            if (!links.length) return null;
+            return (
+              <section key={String(isActive)} className="settings-access-link-section">
+                <h4>{isActive ? t.staticLinks.title : t.staticLinks.history}</h4>
+                <div className="settings-access-link-list">
+                  {links.map((link) => (
+                    <div key={link.id} className={`settings-access-link-row${isActive ? "" : " is-archived"}`}>
+                      <div className="settings-access-link-info">
+                        <strong>{link.hint}</strong>
+                        <span>{isActive ? t.staticLinks.active : t.staticLinks.inactive}</span>
+                        <span>{link.expiresAt
+                          ? formatMediumDateTime(link.expiresAt, language)
+                          : t.duration.forever}</span>
+                      </div>
+                      {isActive && link.token ? (
+                        <code className="settings-access-stored-url">
+                          {new URL(`${import.meta.env.BASE_URL}s/${selectedResource === "players" ? "p" : "f"}${link.token}`, window.location.origin).toString()}
+                        </code>
+                      ) : null}
+                      <div className="settings-access-link-buttons">
+                        {isActive && link.token && (
+                          <button type="button" className="settings-access-copy"
+                            onClick={() => copyStoredLink(link.token, selectedResource)} disabled={busy}>
+                            <Copy size={16} aria-hidden="true" /> {t.actions.copy}
+                          </button>
+                        )}
+                        {isActive ? (
+                          <button type="button" className="settings-access-revoke"
+                            onClick={() => revokeOne(link.id)} disabled={busy}>
+                            {t.actions.revoke}
+                          </button>
+                        ) : (
+                          <button type="button" className="settings-access-revoke"
+                            onClick={() => deleteOne(link.id)} disabled={busy}>
+                            {t.staticLinks.delete}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            );
+          })}
         </div>
       )}
 
@@ -169,7 +190,7 @@ export default function ContentAccessEditor({
         </div>
       )}
 
-      {generated?.resource === selectedResource && (
+      {generated?.resource === selectedResource && !(generated.kind === "link" && active?.staticLinks?.some((link) => link.token && generated.value.endsWith(link.token))) && (
         <div className="settings-access-generated">
           <div>
             <strong>{t.generated.title}</strong>

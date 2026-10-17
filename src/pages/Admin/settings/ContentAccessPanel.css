@@ -334,3 +334,36 @@
   font-weight: 900;
   cursor: pointer;
 }
+
+
+/* Stage 2C.1: one-column full-width list; never intermix heading and cards in a grid. */
+.settings-access-link-groups, .settings-access-link-section, .settings-access-link-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 9px;
+  min-width: 0;
+}
+.settings-access-link-section h4 {
+  margin: 5px 0 0;
+  color: #254a72;
+  font-size: 12px;
+}
+.settings-access-link-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 9px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #d5e2f1;
+  border-radius: 12px;
+  background: #f7faff;
+}
+.settings-access-link-row.is-archived { background: #fafbfd; }
+.settings-access-link-info { display: flex; flex-wrap: wrap; align-items: center; gap: 7px 12px; min-width: 0; }
+.settings-access-link-info strong { color: #214977; font-size: 12px; }
+.settings-access-link-info span { color: #657e99; font-size: 11px; }
+.settings-access-link-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.settings-access-link-row .settings-access-stored-url { width: 100%; box-sizing: border-box; }
+@media (max-width: 620px) {
+  .settings-access-link-buttons > button { flex: 1; justify-content: center; }
+}
