@@ -370,6 +370,7 @@ function ContentAccessPanel({ t, language, sharedConsulT, cancelLabel }) {
         confirmLabel={t.staticLinks.delete}
         cancelLabel={cancelLabel || t.staticLinks.cancel}
         tone="danger"
+        iconSrc={publicAsset("/images/admin/icons/actions/delete.webp")}
         busy={busy}
         onConfirm={confirmDeleteLink}
         onCancel={() => { if (!busy) setPendingDelete(null); }}

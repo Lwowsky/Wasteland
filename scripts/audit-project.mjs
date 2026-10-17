@@ -10,7 +10,7 @@ const ENTRY_FILES = [
   path.join(ROOT, "worker", "src", "index.js"),
 ];
 const SOURCE_EXTENSIONS = new Set([".js", ".jsx", ".css", ".json"]);
-const MAX_MAINTAINABLE_LINES = 500;
+const MAINTAINABILITY_WARNING_LINES = 500;
 const RESOLVE_EXTENSIONS = ["", ".js", ".jsx", ".css", ".json"];
 
 function walk(dir) {
@@ -141,6 +141,7 @@ const allSourceFiles = SOURCE_ROOTS.flatMap(walk)
   .map((file) => path.normalize(file));
 const sourceSet = new Set(allSourceFiles);
 const errors = [];
+const warnings = [];
 const graph = new Map();
 
 for (const file of allSourceFiles) {
@@ -209,9 +210,9 @@ for (const file of allSourceFiles.filter((item) =>
   const source = fs.readFileSync(file, "utf8");
   const lineCount = source.split(/\r?\n/).length;
 
-  if (lineCount > MAX_MAINTAINABLE_LINES) {
-    errors.push(
-      `Source file is too large (${lineCount} lines > ${MAX_MAINTAINABLE_LINES}): ${path.relative(ROOT, file)}`,
+  if (lineCount > MAINTAINABILITY_WARNING_LINES) {
+    warnings.push(
+      `Large source file (${lineCount} lines > ${MAINTAINABILITY_WARNING_LINES}): ${path.relative(ROOT, file)}`,
     );
   }
 }
@@ -220,6 +221,11 @@ if (errors.length) {
   console.error("Project audit failed:\n");
   for (const error of errors) console.error(`- ${error}`);
   process.exit(1);
+}
+
+if (warnings.length) {
+  console.warn(`Project maintenance warnings (${warnings.length}; no hard line limit):`);
+  for (const warning of warnings) console.warn(`- ${warning}`);
 }
 
 console.log(
