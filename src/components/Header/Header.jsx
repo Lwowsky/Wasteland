@@ -108,7 +108,7 @@ function Header({
                 <div className="header__info-card">
                   <div className="header__info-header">
                     <span className="header__info-title">
-                      {t.header.registrationOpens}
+                      {event.manualScheduleExpired ? t.header.registrationNotScheduled : t.header.registrationOpens}
                     </span>
 
                     <small className="header__time-zone">
@@ -129,7 +129,7 @@ function Header({
                 <div className="header__info-card">
                   <div className="header__info-header">
                     <span className="header__info-title">
-                      {t.header.registrationDeadline}
+                      {event.manualScheduleExpired ? t.header.registrationNotScheduled : t.header.registrationDeadline}
                     </span>
 
                     <small className="header__time-zone">

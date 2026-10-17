@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { getRegistrationSettings } from "../registration/registrationApi.js";
 import { normalizeRegistrationSettings } from "../registration/registrationSettings.js";
-import { getRegistrationCycleSchedule } from "../registration/registrationCycle.js";
+import { getRegistrationCycleSchedule, getAutomaticRegistrationCycleSchedule } from "../registration/registrationCycle.js";
 
 const STATIC_REGION = {
   region: 987,
@@ -24,13 +24,23 @@ function resolveOrganizerAlliance(settings) {
 }
 
 function buildEvent(settings = {}) {
-  const schedule = getRegistrationCycleSchedule(settings, Date.now());
-
+  const nowMs = Date.now();
+  const schedule = getRegistrationCycleSchedule(settings, nowMs);
+  // Old manual dates are not a promise of another registration period.
+  // In automatic mode use the upcoming cycle instead of displaying dates
+  // belonging to the previous event.
+  const nextAutomatic = getAutomaticRegistrationCycleSchedule(settings, nowMs);
+  const manualExpired = settings.cycleMode === "manual" &&
+    Number(schedule.closeAtMs) <= nowMs;
+  const displaySchedule = settings.cycleMode === "manual" ? schedule :
+    schedule.closeAtMs <= nowMs ?
+      getAutomaticRegistrationCycleSchedule(settings, nextAutomatic.eventStartAtMs + 1) : schedule;
   return {
     ...STATIC_REGION,
     wastelandDate: new Date(schedule.eventStartAtMs),
-    registrationOpensAt: new Date(schedule.openAtMs),
-    registrationDeadline: new Date(schedule.closeAtMs),
+    registrationOpensAt: manualExpired || !displaySchedule.openAtMs ? null : new Date(displaySchedule.openAtMs),
+    registrationDeadline: manualExpired || !displaySchedule.closeAtMs ? null : new Date(displaySchedule.closeAtMs),
+    manualScheduleExpired: manualExpired,
     organizerAlliance: resolveOrganizerAlliance(settings),
     governor: String(settings.governor || "").trim(),
   };
