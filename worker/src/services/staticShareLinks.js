@@ -58,11 +58,20 @@ export async function deleteInactiveStaticShareLink(env, resource, id) {
   const inactive = Boolean(existing.revoked_at) ||
     (Boolean(existing.expires_at) && Date.parse(existing.expires_at) <= Date.now());
   if (!inactive) throw new Error("CONTENT_LINK_ACTIVE");
-  await env.DB.prepare(`
+  const deleted = await env.DB.prepare(`
     DELETE FROM static_share_links
     WHERE id = ? AND resource = ?
       AND (revoked_at IS NOT NULL OR (expires_at IS NOT NULL AND expires_at <= ?))
   `).bind(numericId, resource, new Date().toISOString()).run();
+  // Do not report success when D1 did not delete the intended row.
+  // A prior SELECT alone is insufficient (the row may change meanwhile).
+  if (Number(deleted.meta?.changes ?? 0) !== 1) {
+    throw new Error("CONTENT_LINK_DELETE_NOT_APPLIED");
+  }
+  const remaining = await env.DB.prepare(`
+    SELECT id FROM static_share_links WHERE id = ? AND resource = ? LIMIT 1
+  `).bind(numericId, resource).first();
+  if (remaining) throw new Error("CONTENT_LINK_DELETE_NOT_APPLIED");
   // Publish updated static metadata on next snapshot (if needed).
   await markPublicSnapshotDirty(env);
 }

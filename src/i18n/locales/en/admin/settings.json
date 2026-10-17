@@ -446,7 +446,9 @@
       "inactive": "Expired or revoked",
       "history": "History — expired and revoked",
       "delete": "Delete record",
-      "confirmDelete": "Permanently delete this inactive link record?"
+      "confirmDelete": "Permanently delete this inactive link record?",
+      "deleteTitle": "Delete archived link?",
+      "cancel": "Cancel"
     }
   },
   "sharedConsul": {

@@ -1,5 +1,6 @@
 import SharedConsulPanel from "./SharedConsulPanel.jsx";
 import ContentAccessEditor from "./ContentAccessEditor.jsx";
+import ConfirmModal from "../../../components/ConfirmModal/ConfirmModal.jsx";
 import { publicAsset } from "../../../utils/publicAsset.js";
 
 import { RefreshCw } from "lucide-react";
@@ -48,6 +49,7 @@ function ContentAccessPanel({ t, language, sharedConsulT, cancelLabel }) {
   const [errorKey, setErrorKey] = useState("");
   const [messageKey, setMessageKey] = useState("");
   const [generated, setGenerated] = useState(null);
+  const [pendingDelete, setPendingDelete] = useState(null);
 
   const active = resources[selectedResource] || null;
   const draft = drafts[selectedResource] || createDraft(active);
@@ -100,6 +102,7 @@ function ContentAccessPanel({ t, language, sharedConsulT, cancelLabel }) {
     }
 
     setSelectedResource(resource);
+    setPendingDelete(null);
     setGenerated(null);
     setMessageKey("");
     setErrorKey("");
@@ -223,16 +226,24 @@ function ContentAccessPanel({ t, language, sharedConsulT, cancelLabel }) {
     }
   }
 
-  async function deleteOne(id) {
+  function deleteOne(id) {
     if (busy) return;
-    const confirmed = window.confirm(t.staticLinks.confirmDelete);
-    if (!confirmed) return;
+    setPendingDelete({ id, resource: selectedResource });
+  }
+
+  async function confirmDeleteLink() {
+    if (busy || !pendingDelete) return;
+    const { id, resource } = pendingDelete;
     setBusy(true);
     setErrorKey("");
     setMessageKey("");
     try {
-      const result = await deleteAdminInactiveStaticLink(selectedResource, id);
-      applyResource(selectedResource, result.resource);
+      const result = await deleteAdminInactiveStaticLink(resource, id);
+      if (result.resource?.staticLinks?.some((link) => Number(link.id) === Number(id))) {
+        throw new Error("CONTENT_LINK_DELETE_NOT_APPLIED");
+      }
+      applyResource(resource, result.resource);
+      setPendingDelete(null);
       setMessageKey("historyDeleted");
     } catch (err) {
       console.error("Delete archived link:", err);
@@ -352,6 +363,17 @@ function ContentAccessPanel({ t, language, sharedConsulT, cancelLabel }) {
           copyStoredLink={copyStoredLink}
         />
       )}
+      <ConfirmModal
+        open={Boolean(pendingDelete)}
+        title={t.staticLinks.deleteTitle}
+        message={t.staticLinks.confirmDelete}
+        confirmLabel={t.staticLinks.delete}
+        cancelLabel={cancelLabel || t.staticLinks.cancel}
+        tone="danger"
+        busy={busy}
+        onConfirm={confirmDeleteLink}
+        onCancel={() => { if (!busy) setPendingDelete(null); }}
+      />
     </article>
   );
 }
