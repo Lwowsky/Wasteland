@@ -32,6 +32,6 @@ test("pagination fails closed on an incomplete page", async () => {
   let calls = 0;
   await assert.rejects(() => fetchAllPublicPlayers({}, async () => {
     calls += 1;
-    return Response.json(calls === 1 ? { total: 501, players: Array(500).fill({ id: 1 }) } : { players: [] });
+    return Response.json(calls === 1 ? { total: 501, players: Array.from({ length: 500 }, (_, i) => ({ id: i + 1 })) } : { players: [] });
   }), /INCOMPLETE_PUBLIC_PLAYERS_EXPORT/);
 });

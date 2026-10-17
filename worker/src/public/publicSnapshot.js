@@ -10,7 +10,7 @@ import { getPublicDisplayPeriod } from "../db/periods.js";
 import { getRegistrationSettings } from "../db/registrationSettings.js";
 import { readPublishedPlan } from "../turrets/storage.js";
 import { countPublishedPlanPlayers } from "./publishedPlanCount.js";
-import { isSnapshotPublic, redactSnapshotPlayers } from "./snapshotVisibility.js";
+import { isSnapshotPublic } from "./snapshotVisibility.js";
 import {
   getPublicSnapshotRevision,
   hasPublicSnapshotAccess,
@@ -29,6 +29,23 @@ export function publicPlayer(row) {
     shift: row.shift,
     captain: row.captain,
     createdAt: row.createdAt,
+  };
+}
+
+// Explicit allowlist: never spread the internal D1/API player payload into a
+// static GitHub Pages file. A future private field must not become public by accident.
+export function buildSafeSnapshotPlayers(players, accessMode, shareLinks, expose) {
+  const rows = expose && Array.isArray(players?.players)
+    ? players.players.map(publicPlayer)
+    : [];
+  return {
+    page: 1,
+    limit: Math.max(rows.length, 1),
+    total: rows.length,
+    pages: rows.length ? 1 : 0,
+    accessMode,
+    shareLinks: Array.isArray(shareLinks) ? shareLinks.map(({ hash, expiresAt }) => ({ hash, expiresAt })) : [],
+    players: rows,
   };
 }
 
@@ -100,12 +117,12 @@ export async function handlePublicSnapshot(request, env) {
     registrationSettings,
     // Public-view fields only; short share codes and admin credentials are NEVER exported.
     // The Pages JSON itself remains publicly readable in every access mode.
-    players: {
-      ...redactSnapshotPlayers(players, exposePlayers),
-      accessMode: latestPlayersAccess.mode,
-      shareLinks: Object.fromEntries(links).players,
-      players: exposePlayers ? (players.players || []).map(publicPlayer) : [],
-    },
+    players: buildSafeSnapshotPlayers(
+      players,
+      latestPlayersAccess.mode,
+      Object.fromEntries(links).players,
+      exposePlayers,
+    ),
   }, 200, { "cache-control": "no-store" });
 }
 

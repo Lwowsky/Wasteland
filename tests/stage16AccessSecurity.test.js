@@ -13,7 +13,8 @@ test('stage16: protected player table stays redacted, while home preview is publ
   assert.match(source, /const exposePlayers = isSnapshotPublic\(accessSetting, latestPlayersAccess\)/);
   assert.match(source, /const exposePlan = isSnapshotPublic\(finalAccess, latestPlanAccess\)/);
   assert.match(source, /recentPlayers: getPublicRecentRegistrations\(recent\)/);
-  assert.match(source, /players: exposePlayers \? \(players\.players \|\| \[\]\)\.map\(publicPlayer\) : \[\]/);
+  assert.match(source, /players: buildSafeSnapshotPlayers\(/);
+  assert.match(source, /rows = expose && Array\.isArray\(players\?\.players\)/);
   assert.match(source, /plan: exposePlan \? \(published\?\.plan \?\? null\) : null/);
 });
 test('stage16: live server check is authoritative before rendering protected resources', () => {

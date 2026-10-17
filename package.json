@@ -15,7 +15,8 @@
     "verify": "npm run audit:translations && npm run audit:project && npm run lint && npm test && npm run build",
     "audit:i18n-usage": "node scripts/audit-i18n-usage.mjs",
     "audit:code-css": "node scripts/audit-code-css.mjs",
-    "audit:i18n-static": "node scripts/audit-i18n-static-access.mjs"
+    "audit:i18n-static": "node scripts/audit-i18n-static-access.mjs",
+    "smoke:public": "node scripts/stage3-public-smoke.mjs"
   },
   "dependencies": {
     "firebase": "^12.19.0",
