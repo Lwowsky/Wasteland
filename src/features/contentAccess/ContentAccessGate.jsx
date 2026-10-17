@@ -94,6 +94,19 @@ function ContentAccessGate({ resource, children }) {
       try {
         if (sharedToken) {
           try {
+            const staticStatus = /^[a-zA-Z0-9_-]{16}$/.test(sharedToken)
+              ? await getPublicContentAccessHint(resource, sharedToken)
+              : null;
+            if (staticStatus) {
+              if (!staticStatus.allowed) {
+                setStatus(staticStatus);
+                setLoading(false);
+                return;
+              }
+              setStatus(staticStatus);
+              setLoading(false);
+              return;
+            }
             activatedSession = await activateContentAccess(resource, sharedToken);
             shouldRemoveSharedToken = true;
           } catch (activationError) {

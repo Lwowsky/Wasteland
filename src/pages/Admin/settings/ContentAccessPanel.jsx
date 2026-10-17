@@ -5,11 +5,11 @@ import { publicAsset } from "../../../utils/publicAsset.js";
 import { RefreshCw } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
-import { ROUTES, getRoute } from "../../../config/routes.js";
 import {
   generateAdminContentAccessToken,
   getAdminContentAccess,
   revokeAdminContentAccessToken,
+  revokeAdminSingleStaticLink,
   saveAdminContentAccess,
 } from "../services/contentAccessApi.js";
 import "./ContentAccessPanel.css";
@@ -162,15 +162,12 @@ function ContentAccessPanel({ t, language, sharedConsulT, cancelLabel }) {
       const result = await generateAdminContentAccessToken(selectedResource);
       applyResource(selectedResource, result.resource);
 
-      const route =
-        selectedResource === "players" ? ROUTES.players : ROUTES.finalPlan;
-      const value =
-        result.resource?.mode === "link"
-          ? new URL(
-              `${import.meta.env.BASE_URL}${getRoute(language, route).slice(1)}?access=${encodeURIComponent(result.token)}`,
-              window.location.origin,
-            ).toString()
-          : result.token;
+      const value = result.resource?.mode === "link"
+        ? new URL(`${import.meta.env.BASE_URL}s/${selectedResource === "players" ? "p" : "f"}${result.token}`, window.location.origin).toString()
+        : result.token;
+      // The short URL becomes active after the next successful public snapshot
+      // publication. No account/API secrets are embedded in the address.
+
 
       setGenerated({
         resource: selectedResource,
@@ -202,6 +199,23 @@ function ContentAccessPanel({ t, language, sharedConsulT, cancelLabel }) {
       setMessageKey("revoked");
     } catch (nextError) {
       console.error("Revoke content access token:", nextError);
+      setErrorKey("revoke");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function revokeOne(id) {
+    if (busy) return;
+    setBusy(true);
+    setMessageKey("");
+    setErrorKey("");
+    try {
+      const result = await revokeAdminSingleStaticLink(selectedResource, id);
+      applyResource(selectedResource, result.resource);
+      setMessageKey("revoked");
+    } catch (err) {
+      console.error("Revoke short link:", err);
       setErrorKey("revoke");
     } finally {
       setBusy(false);
@@ -302,6 +316,7 @@ function ContentAccessPanel({ t, language, sharedConsulT, cancelLabel }) {
           save={save}
           generate={generate}
           revoke={revoke}
+          revokeOne={revokeOne}
         />
       )}
     </article>

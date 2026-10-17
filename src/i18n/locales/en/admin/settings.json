@@ -366,7 +366,7 @@
     },
     "loading": "Loading access settings…",
     "cycle": "Cycle #{{cycle}}",
-    "cycleNote": "Codes and private links are bound to the current cycle. When a new cycle becomes current, old credentials automatically stop working.",
+    "cycleNote": "Legacy codes belong to a cycle. New static share links can remain active across cycles and are only for public-view data.",
     "noPeriod": "There is no current cycle. A cycle must exist before a code or private link can be created.",
     "modeLabel": "Access mode",
     "modes": {
@@ -399,7 +399,12 @@
       "minutes30": "30 minutes",
       "hours2": "2 hours",
       "hours24": "24 hours",
-      "cycle": "Until the end of the current cycle"
+      "cycle": "Until the end of the current cycle",
+      "hours1": "1 hour",
+      "hours6": "6 hours",
+      "hours12": "12 hours",
+      "days7": "7 days",
+      "forever": "Never expires"
     },
     "currentToken": {
       "title": "Current access",
@@ -410,7 +415,7 @@
     },
     "generated": {
       "title": "New access created",
-      "once": "Save or copy it now. The full value is not shown again after the page is refreshed."
+      "once": "Copy this link now. It becomes active after the next JSON publication; the full code is not stored in public GitHub."
     },
     "actions": {
       "save": "Save",
@@ -421,8 +426,8 @@
     },
     "messages": {
       "saved": "Access settings saved.",
-      "generated": "New access created. The previous code or link was revoked.",
-      "revoked": "The current code or link was revoked.",
+      "generated": "Link created. It will work after the next snapshot publication; earlier links remain active.",
+      "revoked": "Link revoked. Static access will stop after the next snapshot publication.",
       "copied": "Copied."
     },
     "errors": {
@@ -432,6 +437,11 @@
       "revoke": "Could not revoke access.",
       "copy": "Could not copy.",
       "noPeriod": "There is no current cycle for private access."
+    },
+    "staticLinks": {
+      "title": "Created links (short codes are shown only once)",
+      "active": "Active",
+      "inactive": "Expired or revoked"
     }
   },
   "sharedConsul": {

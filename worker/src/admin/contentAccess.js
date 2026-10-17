@@ -7,6 +7,7 @@ import {
   getContentAccessSummary,
   isContentAccessResource,
   revokeContentAccess,
+  revokeSingleStaticLink,
   updateContentAccessSetting,
 } from "../services/contentAccess.js";
 
@@ -125,7 +126,10 @@ export async function handleAdminContentAccessRevoke(
     return json({ success: false, error: "INVALID_CONTENT_RESOURCE" }, 404);
   }
 
-  await revokeContentAccess(env, resource);
+  const id = new URL(request.url).searchParams.get("id");
+  const summary = id
+    ? await revokeSingleStaticLink(env, resource, id)
+    : (await revokeContentAccess(env, resource), await getContentAccessSummary(env, resource));
 
   if (resource === "players") {
     await clearPublicCaches(request);
@@ -133,6 +137,6 @@ export async function handleAdminContentAccessRevoke(
 
   return json({
     success: true,
-    resource: await getContentAccessSummary(env, resource),
+    resource: summary,
   });
 }

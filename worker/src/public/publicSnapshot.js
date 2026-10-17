@@ -55,37 +55,47 @@ export async function handlePublicSnapshot(request, env) {
     siteSettingsResponse.json(), registrationSettingsResponse.json(),
   ]);
   const finalAccess = await getContentAccessSetting(env, "final_plan");
-  // Never export protected plan contents. Public mode is only a display hint.
+  // Export only the whitelisted public-view plan in public or link mode.
+  // In link mode these data are intentionally NOT secret: the static JSON is public.
   const registration = await getRegistrationSettings(env);
   const period = await getPublicDisplayPeriod(env, registration);
   const publishedForStats = period ? await readPublishedPlan(env, period.id) : null;
-  const published = finalAccess.mode === "public" ? publishedForStats : null;
+  const published = ["public", "link"].includes(finalAccess.mode) ? publishedForStats : null;
   // Re-check immediately before exporting: an admin may have closed access
   // while the database reads above were in progress.
   const [latestPlayersAccess, latestPlanAccess] = await Promise.all([
     getContentAccessSetting(env, "players"),
     getContentAccessSetting(env, "final_plan"),
   ]);
-  const exposePlayers = isSnapshotPublic(accessSetting, latestPlayersAccess);
-  const exposePlan = isSnapshotPublic(finalAccess, latestPlanAccess);
+  const exposePlayers = isSnapshotPublic(accessSetting, latestPlayersAccess) ||
+    (accessSetting.mode === "link" && latestPlayersAccess.mode === "link");
+  const exposePlan = isSnapshotPublic(finalAccess, latestPlanAccess) ||
+    (finalAccess.mode === "link" && latestPlanAccess.mode === "link");
+  const links = await Promise.all(["players", "final_plan"].map(async (resource) => {
+    const rows = await env.DB.prepare(`SELECT token_hash, expires_at FROM static_share_links
+      WHERE resource = ? AND revoked_at IS NULL
+      AND (expires_at IS NULL OR expires_at > ?)`).bind(resource, new Date().toISOString()).all();
+    return [resource, (rows.results || []).map((row) => ({ hash: row.token_hash, expiresAt: row.expires_at }))];
+  }));
   return json({
     revision,
     finalPlan: {
-      success: true, accessMode: latestPlanAccess.mode, periodId: period?.id ?? null,
+      success: true, accessMode: latestPlanAccess.mode, shareLinks: Object.fromEntries(links).final_plan, periodId: period?.id ?? null,
       plan: exposePlan ? (published?.plan ?? null) : null,
       publishedAt: exposePlan ? (published?.publishedAt ?? null) : null,
       revision: exposePlan ? (published?.revision ?? null) : null,
     },
-    summary: { ...stats, finalPlayers: countPublishedPlanPlayers(publishedForStats?.plan), recentPlayers: exposePlayers ? recent.map(publicPlayer) : [] },
+    summary: { ...stats, finalPlayers: countPublishedPlanPlayers(publishedForStats?.plan), recentPlayers: latestPlayersAccess.mode === "public" && exposePlayers ? recent.map(publicPlayer) : [] },
     // Identical to the pre-existing PUBLIC API response shapes. Never copy
     // admin-only settings, secrets, codes, or authorization sessions.
     siteSettings,
     registrationSettings,
-    // PUBLIC metadata only: never export code/link tokens or sessions.
+    // Public-view fields only; short share codes and admin credentials are NEVER exported.
     // The Pages JSON itself remains publicly readable in every access mode.
     players: {
       ...redactSnapshotPlayers(players, exposePlayers),
       accessMode: latestPlayersAccess.mode,
+      shareLinks: Object.fromEntries(links).players,
       players: exposePlayers ? (players.players || []).map(publicPlayer) : [],
     },
   }, 200, { "cache-control": "no-store" });

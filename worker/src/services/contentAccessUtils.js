@@ -60,6 +60,12 @@ export function generateAccessCode() {
   return `${chars.slice(0, 5).join("")}-${chars.slice(5).join("")}`;
 }
 
+// 12 cryptographically random bytes -> 16 URL-safe characters (96-bit entropy).
+// This code is a public-view capability only, NEVER an admin credential.
+export function generateStaticShareCode() {
+  return base64Url(randomBytes(12));
+}
+
 export function generateLinkToken() {
   return base64Url(randomBytes(32));
 }

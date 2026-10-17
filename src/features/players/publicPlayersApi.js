@@ -39,7 +39,7 @@ export async function getPublicPlayers(verifiedStatus = null) {
       ? await getPublicContentAccessHint("players")
       : await getContentAccessStatus("players");
   if (!status?.allowed) throw new Error(status?.reason || "CONTENT_ACCESS_REQUIRED");
-  const data = isPublicSnapshotEnabled() && status.mode === "public"
+  const data = isPublicSnapshotEnabled() && (status.mode === "public" || status.staticLink)
     ? await getPublicSnapshot("players.json", { reuseRecentlyVerified: true, requireNetwork: true })
     : await requestJson("/api/players?page=1&limit=500", {
         headers: getContentAccessHeaders("players"), cache: "no-store",

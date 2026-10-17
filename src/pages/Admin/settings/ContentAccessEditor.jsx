@@ -19,6 +19,7 @@ export default function ContentAccessEditor({
   save,
   generate,
   revoke,
+  revokeOne,
 }) {
   return (
     <div className="settings-access-body">
@@ -49,7 +50,7 @@ export default function ContentAccessEditor({
         </select>
       </label>
 
-      {["code", "link"].includes(draft.mode) && (
+      {draft.mode === "code" && (
         <div className="settings-access-options">
           <label className="settings-access-field">
             <span>{t.useLimit.label}</span>
@@ -98,7 +99,41 @@ export default function ContentAccessEditor({
         </div>
       )}
 
-      {["code", "link"].includes(active?.mode) && active?.token && (
+      {draft.mode === "link" && (
+        <label className="settings-access-field">
+          <span>{t.tokenLifetime.label}</span>
+          <select value={draft.tokenTtlMinutes}
+            onChange={(event) => updateDraft("tokenTtlMinutes", Number(event.target.value))}>
+            <option value={60}>{t.duration.hours1}</option>
+            <option value={360}>{t.duration.hours6}</option>
+            <option value={720}>{t.duration.hours12}</option>
+            <option value={1440}>{t.duration.hours24}</option>
+            <option value={10080}>{t.duration.days7}</option>
+            <option value={0}>{t.duration.forever}</option>
+          </select>
+        </label>
+      )}
+      {active?.mode === "link" && (active.staticLinks || []).length > 0 && (
+        <div className="settings-access-options">
+          <strong>{t.staticLinks.title}</strong>
+          {(active.staticLinks || []).map((link) => (
+            <div key={link.id} className="settings-access-token-status">
+              <span>{link.hint} — {link.active ? t.staticLinks.active : t.staticLinks.inactive}</span>
+              <span>{link.expiresAt
+                ? formatMediumDateTime(link.expiresAt, language)
+                : t.duration.forever}</span>
+              {link.active && (
+                <button type="button" className="settings-access-revoke"
+                  onClick={() => revokeOne(link.id)} disabled={busy}>
+                  {t.actions.revoke}
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {active?.mode === "code" && active?.token && (
         <div className="settings-access-token-status">
           <strong>{t.currentToken.title}</strong>
           <span>
@@ -162,7 +197,7 @@ export default function ContentAccessEditor({
             type="button"
             className="admin-primary-button"
             onClick={generate}
-            disabled={busy || !active?.period}
+            disabled={busy}
           >
             <img
               className="settings-access-inline-icon"
@@ -176,7 +211,7 @@ export default function ContentAccessEditor({
           </button>
         )}
 
-        {active?.token?.active && (
+        {active?.mode !== "link" && active?.token?.active && (
           <button
             type="button"
             className="settings-access-revoke"
@@ -189,7 +224,7 @@ export default function ContentAccessEditor({
         )}
       </div>
 
-      {!active?.period && ["code", "link"].includes(draft.mode) && (
+      {!active?.period && draft.mode === "code" && (
         <p className="settings-access-note">{t.noPeriod}</p>
       )}
 

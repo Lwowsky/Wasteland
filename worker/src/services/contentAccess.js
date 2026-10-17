@@ -1,11 +1,15 @@
 import { getPublicDisplayPeriod } from "../db/periods.js";
 import { getRegistrationSettings } from "../db/registrationSettings.js";
 import { markPublicSnapshotDirty } from "./publicSnapshotSync.js";
+import {
+  createStaticShareLink,
+  listStaticShareLinks,
+  revokeStaticShareLink,
+} from "./staticShareLinks.js";
 
 import {
   clampInteger,
   generateAccessCode,
-  generateLinkToken,
   generateSessionToken,
   getContentAccessSessionHeader,
   getTokenExpiryIso,
@@ -120,8 +124,11 @@ export async function getContentAccessSummary(env, resource) {
 
   const tokenSummary = mapContentAccessToken(token);
 
+  const staticLinks = setting.mode === "link"
+    ? await listStaticShareLinks(env, resource) : [];
   return {
     ...setting,
+    staticLinks,
     period: mapPeriod(period),
     token: tokenSummary,
     tokenRequired:
@@ -179,8 +186,7 @@ export async function updateContentAccessSetting(env, resource, payload = {}) {
 
   if (current.mode !== next.mode) {
     await revokeContentAccess(env, normalizedResource);
-    // Publish the new PUBLIC UI hint after an admin switches mode.
-    // Protected API routes continue to enforce the live D1 setting.
+      // Protected API routes continue to enforce the live D1 setting.
     await markPublicSnapshotDirty(env);
   } else if (period && ["code", "link"].includes(next.mode)) {
     const expiresAt = getTokenExpiryIso(next.tokenTtlMinutes);
@@ -192,12 +198,14 @@ export async function updateContentAccessSetting(env, resource, payload = {}) {
         WHERE resource = ?
           AND period_id = ?
           AND revoked_at IS NULL
+          AND token_hint NOT LIKE 'S:%'
       `,
     )
       .bind(next.useLimit, expiresAt, normalizedResource, period.id)
       .run();
   }
 
+  if (next.mode === "link" && current.mode === "link") await markPublicSnapshotDirty(env);
   return getContentAccessSummary(env, normalizedResource);
 }
 
@@ -209,19 +217,20 @@ export async function generateContentAccessToken(env, resource) {
   }
 
   const period = await getCurrentContentPeriod(env);
-
-  if (!period) {
+  if (!period && setting.mode === "code") {
     throw new Error("NO_CURRENT_PERIOD");
   }
 
-  await revokeContentAccess(env, resource);
+  if (setting.mode === "code") await revokeContentAccess(env, resource);
 
-  const token = setting.mode === "code" ? generateAccessCode() : generateLinkToken();
+  if (setting.mode === "link") {
+    const created = await createStaticShareLink(env, resource, setting.tokenTtlMinutes);
+    return { ...created, summary: await getContentAccessSummary(env, resource) };
+  }
+
+  const token = generateAccessCode();
   const tokenHash = await sha256(token);
-  const tokenHint =
-    setting.mode === "code"
-      ? token.slice(-4)
-      : `${token.slice(0, 4)}…${token.slice(-4)}`;
+  const tokenHint = token.slice(-4);
   const expiresAt = getTokenExpiryIso(setting.tokenTtlMinutes);
 
   const result = await env.DB.prepare(
@@ -256,6 +265,13 @@ export async function generateContentAccessToken(env, resource) {
   };
 }
 
+export async function revokeSingleStaticLink(env, resource, id) {
+  const normalizedResource = normalizeResource(resource);
+  if (!normalizedResource) throw new Error("INVALID_CONTENT_RESOURCE");
+  await revokeStaticShareLink(env, normalizedResource, id);
+  return getContentAccessSummary(env, normalizedResource);
+}
+
 export async function revokeContentAccess(env, resource) {
   const normalizedResource = normalizeResource(resource);
 
@@ -272,12 +288,16 @@ export async function revokeContentAccess(env, resource) {
         SET revoked_at = COALESCE(revoked_at, ?)
         WHERE resource = ?
           AND revoked_at IS NULL
+          AND token_hint NOT LIKE 'S:%'
       `,
     ).bind(now, normalizedResource),
     env.DB.prepare(
       `DELETE FROM content_access_sessions WHERE resource = ?`,
     ).bind(normalizedResource),
+    env.DB.prepare(`UPDATE static_share_links SET revoked_at = COALESCE(revoked_at, ?)
+      WHERE resource = ? AND revoked_at IS NULL`).bind(now, normalizedResource),
   ]);
+  await markPublicSnapshotDirty(env);
 }
 
 async function hasValidSession(request, env, resource, periodId) {

@@ -5,6 +5,7 @@ import RouteLoading from "./components/RouteLoading/RouteLoading.jsx";
 import { ROUTES } from "./config/routes.js";
 import { resolvePreferredLanguage } from "./utils/language.js";
 
+const StaticShareRedirect = lazy(() => import("./features/contentAccess/StaticShareRedirect.jsx"));
 const MainLayout = lazy(() => import("./layouts/MainLayout.jsx"));
 const Home = lazy(() => import("./pages/Home/Home.jsx"));
 const Registration = lazy(() => import("./pages/Registration/Registration.jsx"));
@@ -30,6 +31,8 @@ function App() {
           path="/"
           element={<Navigate to={`/${resolvePreferredLanguage()}`} replace />}
         />
+
+        <Route path="/s/:shortCode" element={<StaticShareRedirect />} />
 
         <Route path="/:lang" element={<MainLayout />}>
           <Route index element={<Home />} />

@@ -86,7 +86,13 @@ export async function activateContentAccess(resource, token) {
 
 // Public UI access hints are not an authorization mechanism.
 // The protected API independently checks active sessions in D1.
-export async function getPublicContentAccessHint(resource) {
+async function sha256Hex(value) {
+  const bytes = new TextEncoder().encode(value);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+export async function getPublicContentAccessHint(resource, shortCode = "") {
   if (!isPublicSnapshotEnabled()) return null;
   const file = resource === "players" ? "players.json" : resource === "final_plan" ? "final-plan.json" : null;
   if (!file) return null;
@@ -94,6 +100,17 @@ export async function getPublicContentAccessHint(resource) {
     const data = await getPublicSnapshot(file, { requireNetwork: true });
     const mode = data?.accessMode;
     if (!["public", "private", "code", "link"].includes(mode)) return null;
+    if (mode === "link" && /^[a-zA-Z0-9_-]{16}$/.test(shortCode)) {
+      // Codes are not kept in GitHub; only their hashes and expiry timestamps.
+      // The snapshot must be network-revalidated; a stale hash may briefly
+      // remain active until publication/caches catch up after revocation.
+      const manifest = data;
+      const hash = await sha256Hex(shortCode);
+      const link = (manifest?.shareLinks || []).find((entry) => entry.hash === hash);
+      const valid = link && (!link.expiresAt || Date.parse(link.expiresAt) > Date.now());
+      return { resource, mode, allowed: Boolean(valid), staticLink: Boolean(valid),
+        reason: valid ? null : "CONTENT_ACCESS_REQUIRED" };
+    }
     return { resource, mode, allowed: mode === "public", reason: mode === "private" ? "CONTENT_PRIVATE" : "CONTENT_ACCESS_REQUIRED" };
   } catch {
     // Fail closed: never switch to Worker when static hosting is unavailable.

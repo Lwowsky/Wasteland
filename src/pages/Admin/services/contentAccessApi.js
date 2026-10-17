@@ -34,3 +34,11 @@ export function revokeAdminContentAccessToken(resource) {
     "CONTENT_ACCESS_REVOKE_FAILED",
   );
 }
+
+export function revokeAdminSingleStaticLink(resource, id) {
+  return adminRequest(
+    `/api/admin/content-access/${resource}/token?id=${encodeURIComponent(id)}`,
+    { method: "DELETE" },
+    "CONTENT_ACCESS_REVOKE_FAILED",
+  );
+}
