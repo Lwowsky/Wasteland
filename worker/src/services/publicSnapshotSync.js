@@ -58,14 +58,15 @@ export async function getPublicSnapshotRevision(env) {
 
 export async function acknowledgePublicSnapshot(env, revision) {
   if (!Number.isSafeInteger(revision) || revision < 1) return false;
-  // Never acknowledge a newer revision than the one known by this D1 instance.
-  // Stale deploys cannot move the published pointer backwards.
-  await env.DB.prepare(`
+  // Accept only a revision that actually exists in D1. Old acknowledgements
+  // are harmless and can never roll the published pointer backwards.
+  // The WHERE guard is atomic with the UPDATE, including concurrent writes.
+  const result = await env.DB.prepare(`
     UPDATE public_snapshot_sync
-    SET published_revision = MAX(published_revision, MIN(revision, ?))
-    WHERE id = 1
-  `).bind(revision).run();
-  return true;
+    SET published_revision = MAX(published_revision, ?)
+    WHERE id = 1 AND revision >= ?
+  `).bind(revision, revision).run();
+  return Number(result.meta?.changes || 0) > 0;
 }
 
 function safeRepository(raw) {

@@ -34,11 +34,13 @@ function fakeEnv(revision = 3, published = 2) {
                   state.last_dispatch_ms = values[1];
                 }
                 if (sql.includes("published_revision = MAX")) {
+                  if (state.revision < values[1]) return { meta: { changes: 0 } };
                   state.published_revision = Math.max(
                     state.published_revision,
-                    Math.min(state.revision, values[0]),
+                    values[0],
                   );
                 }
+                return { meta: { changes: 1 } };
               },
             };
           },
