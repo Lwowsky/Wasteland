@@ -18,6 +18,9 @@ import {
 // 10 admins * 8 hours * (3600 / 30) = 9600 small checks per day, not
 // 9600 scans of the full player table. Auth + cursor checks still cost money.
 const CHANGE_CHECK_INTERVAL_MS = 30_000;
+// A browser focus usually fires both focus and visibilitychange. Avoid duplicate
+// authenticated Worker + Firestore requests within the same short burst.
+const AUTO_CHECK_COOLDOWN_MS = 10_000;
 const MAX_DELTA_PAGES = 20;
 
 export default function useAdminPlayersData({ enabled, canDelete, autoSync = false, cacheIdentity = "" }) {
@@ -29,6 +32,7 @@ export default function useAdminPlayersData({ enabled, canDelete, autoSync = fal
   const inflightRef = useRef(null);
   const generationRef = useRef(0);
   const activeRef = useRef(false);
+  const lastAutoCheckAtRef = useRef(0);
   const snapshotRef = useRef(snapshot);
 
   const replaceSnapshot = useCallback((next) => {
@@ -142,6 +146,9 @@ export default function useAdminPlayersData({ enabled, canDelete, autoSync = fal
     }
     function check() {
       if (document.visibilityState === "hidden") return;
+      const now = Date.now();
+      if (now - lastAutoCheckAtRef.current < AUTO_CHECK_COOLDOWN_MS) return;
+      lastAutoCheckAtRef.current = now;
       syncChanges().catch((error) => console.error("Incremental registrations sync:", error));
     }
     if (!activeRef.current) check();
