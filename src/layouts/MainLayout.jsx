@@ -58,6 +58,7 @@ function MainLayout() {
           useLocalTime={useLocalTime}
           setUseLocalTime={setUseLocalTime}
           event={resolvedEvent}
+          registrationConfig={registrationConfig}
           siteSettings={siteSettings}
           loading={eventLoading}
           error={eventError}

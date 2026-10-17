@@ -3,6 +3,8 @@ import BurgerMenu from "../BurgerMenu/BurgerMenu.jsx";
 
 import { publicAsset } from "../../utils/publicAsset.js";
 import { formatDate, getUserTimeZone } from "../../utils/date.js";
+import useNow from "../../hooks/useNow.js";
+import { getHeaderWasteland } from "./headerWasteland.js";
 
 import "./Header.css";
 
@@ -12,10 +14,13 @@ function Header({
   useLocalTime,
   setUseLocalTime,
   event,
+  registrationConfig,
   siteSettings,
   loading,
   error,
 }) {
+  const nowMs = useNow(1000);
+  const wasteland = getHeaderWasteland(registrationConfig?.settings, nowMs);
   const localTimeZone = getUserTimeZone();
   const activeTimeZone = useLocalTime ? localTimeZone : "UTC";
   const showOrganizerAlliance = Boolean(event?.organizerAlliance);
@@ -87,7 +92,7 @@ function Header({
                 <div className="header__info-card">
                   <div className="header__info-header">
                     <span className="header__info-title">
-                      {t.header.wastelandDate}
+                      {wasteland?.active ? t.header.nextWasteland : t.header.wastelandDate}
                     </span>
 
                     <small className="header__time-zone">
@@ -97,7 +102,7 @@ function Header({
 
                   <strong>
                     {formatDate(
-                      event.wastelandDate,
+                      wasteland?.date ?? event.wastelandDate,
                       language,
                       activeTimeZone,
                       true,
