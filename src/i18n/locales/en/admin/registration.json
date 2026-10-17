@@ -175,7 +175,9 @@
   "notifications": {
     "saved": "Settings saved.",
     "currentApplied": "Settings were applied to the current cycle.",
-    "defaultsRestored": "Default settings restored. Alliances and their rotation were not changed."
+    "defaultsRestored": "Default settings restored. Alliances and their rotation were not changed.",
+    "closedOnServer": "Registration closed on the server: new submissions are rejected. The public page will update after JSON publication.",
+    "openedOnServer": "Registration enabled on the server (within the cycle dates). The public page will update after JSON publication."
   },
   "confirm": {
     "cycleTitle": "Change the registration cycle?",

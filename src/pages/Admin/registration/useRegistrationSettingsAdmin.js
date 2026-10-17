@@ -58,13 +58,19 @@ export default function useRegistrationSettingsAdmin({
       setActiveModal("");
       setConfirmState(null);
       setShiftRemapState(null);
-      setToastKey(
-        options.applyToCurrentCycle
+      // The Worker has already committed the access toggle in D1.
+      // The static public JSON is published asynchronously by GitHub Actions:
+      // do not imply that visitors already see the new state.
+      const statusChanged = section === "cycleStatus";
+      setToastKey(statusChanged
+        ? prepared.publicRegistration === false
+          ? "closedOnServer"
+          : "openedOnServer"
+        : options.applyToCurrentCycle
           ? "currentApplied"
           : section === "defaults"
             ? "defaultsRestored"
-            : "saved",
-      );
+            : "saved");
     } catch (saveError) {
       console.error(`Save registration section ${section}:`, saveError);
       setErrorKey(String(saveError?.message || "").includes("CYCLE_WINDOW_CLOSED") ? "cycleWindowClosed" : "save");
