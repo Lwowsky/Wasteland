@@ -26,7 +26,7 @@ export default function useRegistrationSettingsAdmin({
   const [shiftRemapState, setShiftRemapState] = useState(null);
 
   useEffect(() => {
-    if (!toastKey) {
+    if (!toastKey || toastKey === "closedOnServer" || toastKey === "openedOnServer") {
       return undefined;
     }
 
@@ -197,6 +197,7 @@ export default function useRegistrationSettingsAdmin({
     savingSection,
     errorKey,
     toastKey,
+    dismissToast: () => setToastKey(""),
     confirmState,
     setConfirmState,
     cycleChoice,

@@ -216,5 +216,11 @@
     "description": "Some players are registered in shifts you are disabling. Choose a new shift for each group.",
     "players": "players",
     "apply": "Move and apply"
+  },
+  "resultModal": {
+    "closedTitle": "Registration closed",
+    "openedTitle": "Registration opened",
+    "acknowledge": "Got it",
+    "staticNote": "The server state has already been saved. The static public page updates after the next successful JSON publication."
   }
 }

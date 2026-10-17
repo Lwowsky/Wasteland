@@ -1,0 +1,7 @@
+.registration-status-result-modal__content { display: flex; align-items: flex-start; gap: 20px; min-width: 0; padding: 4px 0 6px; }
+.registration-status-result-modal__icon { width: 76px; height: 76px; flex: 0 0 76px; object-fit: contain; }
+.registration-status-result-modal__text { min-width: 0; }
+.registration-status-result-modal__message { margin: 0; font-size: 17px; line-height: 1.6; font-weight: 650; color: #173b67; }
+.registration-status-result-modal__note { margin: 12px 0 0; font-size: 14px; line-height: 1.55; color: #526e8e; }
+.registration-status-result-modal__action { min-width: 148px; }
+@media (max-width: 520px) { .registration-status-result-modal__content { gap: 12px; } .registration-status-result-modal__icon { width: 55px; height: 55px; flex-basis: 55px; } .registration-status-result-modal__message { font-size: 15px; } .registration-status-result-modal__action { width: 100%; } }
