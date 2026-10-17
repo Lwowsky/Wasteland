@@ -1,5 +1,7 @@
 // Read-only production smoke test. Fetches ONLY the public GitHub Pages JSON.
 // Usage: node scripts/stage3-public-smoke.mjs https://<user>.github.io/Wasteland-Public-Data/data
+import { auditPublishedSnapshot } from "../worker/src/public/snapshotAudit.js";
+
 const input = process.argv[2];
 if (!input) {
   console.error("Usage: node scripts/stage3-public-smoke.mjs https://<github-pages-site>/data");
@@ -58,6 +60,16 @@ if (plan && !["public", "link", "code", "private", "closed"].includes(plan.acces
 if (plan && !["public", "link"].includes(plan.accessMode) && plan.plan != null) {
   failures += 1;
   console.error("FAIL: protected plan leaked into static JSON");
+}
+const auditErrors = auditPublishedSnapshot({
+  revision: snapshots["revision.json"],
+  summary: snapshots["summary.json"],
+  players: snapshots["players.json"],
+  finalPlan: snapshots["final-plan.json"],
+});
+for (const error of auditErrors) {
+  failures += 1;
+  console.error(`FAIL snapshot audit: ${error}`);
 }
 console.log(failures ? `FAILED (${failures} issues)` : "STAGE3_PUBLIC_SMOKE_OK");
 process.exitCode = failures ? 1 : 0;

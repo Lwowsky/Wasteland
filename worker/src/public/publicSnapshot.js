@@ -10,6 +10,7 @@ import { getPublicDisplayPeriod } from "../db/periods.js";
 import { getRegistrationSettings } from "../db/registrationSettings.js";
 import { readPublishedPlan } from "../turrets/storage.js";
 import { countPublishedPlanPlayers } from "./publishedPlanCount.js";
+import { auditPublishedSnapshot } from "./snapshotAudit.js";
 import { isSnapshotPublic } from "./snapshotVisibility.js";
 import {
   getPublicSnapshotRevision,
@@ -102,7 +103,7 @@ export async function handlePublicSnapshot(request, env) {
       AND (expires_at IS NULL OR expires_at > ?)`).bind(resource, new Date().toISOString()).all();
     return [resource, (rows.results || []).map((row) => ({ hash: row.token_hash, expiresAt: row.expires_at }))];
   }));
-  return json({
+  const payload = {
     revision,
     finalPlan: {
       success: true, accessMode: latestPlanAccess.mode, shareLinks: Object.fromEntries(links).final_plan, periodId: period?.id ?? null,
@@ -123,7 +124,19 @@ export async function handlePublicSnapshot(request, env) {
       Object.fromEntries(links).players,
       exposePlayers,
     ),
-  }, 200, { "cache-control": "no-store" });
+  };
+  // Validate export before publishing. Failure keeps the previous Pages revision.
+  const issues = auditPublishedSnapshot({
+    revision: { revision },
+    summary: { stats: { finalPlayers: payload.summary.finalPlayers }, recentPlayers: payload.summary.recentPlayers },
+    players: payload.players,
+    finalPlan: payload.finalPlan,
+  });
+  if (issues.length) {
+    console.error("PUBLIC_SNAPSHOT_VALIDATION_FAILED", issues.join(","));
+    return json({ error: "INVALID_PUBLIC_SNAPSHOT" }, 500, { "cache-control": "no-store" });
+  }
+  return json(payload, 200, { "cache-control": "no-store" });
 }
 
 export async function handlePublicSnapshotAck(request, env) {
