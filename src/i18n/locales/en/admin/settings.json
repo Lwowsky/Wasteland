@@ -439,7 +439,7 @@
       "noPeriod": "There is no current cycle for private access."
     },
     "staticLinks": {
-      "title": "Created links (short codes are shown only once)",
+      "title": "Created links (Owner and Admin can copy saved links)",
       "active": "Active",
       "inactive": "Expired or revoked"
     }

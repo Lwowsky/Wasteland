@@ -21,7 +21,7 @@ async function authorize(request, env) {
     };
   }
 
-  if (!adminHasPermission(admin, "manage_content_access")) {
+  if (!["owner", "admin"].includes(admin.role) || !adminHasPermission(admin, "manage_content_access")) {
     return {
       response: json({ success: false, error: "FORBIDDEN" }, 403),
       admin: null,

@@ -20,6 +20,7 @@ export default function ContentAccessEditor({
   generate,
   revoke,
   revokeOne,
+  copyStoredLink,
 }) {
   return (
     <div className="settings-access-body">
@@ -122,6 +123,17 @@ export default function ContentAccessEditor({
               <span>{link.expiresAt
                 ? formatMediumDateTime(link.expiresAt, language)
                 : t.duration.forever}</span>
+              {link.active && link.token && (
+                <code className="settings-access-stored-url">
+                  {new URL(`${import.meta.env.BASE_URL}s/${selectedResource === "players" ? "p" : "f"}${link.token}`, window.location.origin).toString()}
+                </code>
+              )}
+              {link.active && link.token && (
+                <button type="button" className="settings-access-copy"
+                  onClick={() => copyStoredLink(link.token, selectedResource)} disabled={busy}>
+                  <Copy size={16} aria-hidden="true" /> {t.actions.copy}
+                </button>
+              )}
               {link.active && (
                 <button type="button" className="settings-access-revoke"
                   onClick={() => revokeOne(link.id)} disabled={busy}>

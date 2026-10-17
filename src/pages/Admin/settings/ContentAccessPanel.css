@@ -305,3 +305,32 @@
 @media (max-width: 600px) {
   .settings-access-tabs { grid-template-columns: 1fr; }
 }
+
+/* Stage 2C: keep persisted links readable and copyable on narrow screens. */
+.settings-access-stored-url {
+  display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  padding: 8px;
+  font-size: 11px;
+  background: #fff;
+  border: 1px solid #d0e0f3;
+  border-radius: 8px;
+  color: #244f91;
+}
+.settings-access-copy {
+  width: fit-content;
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  border: 1px solid #bcd3ed;
+  border-radius: 9px;
+  background: white;
+  color: #2c68bb;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 900;
+  cursor: pointer;
+}

@@ -222,6 +222,17 @@ function ContentAccessPanel({ t, language, sharedConsulT, cancelLabel }) {
     }
   }
 
+  async function copyStoredLink(token, resource) {
+    if (!token) return;
+    const path = `${import.meta.env.BASE_URL}s/${resource === "players" ? "p" : "f"}${token}`;
+    try {
+      await navigator.clipboard.writeText(new URL(path, window.location.origin).toString());
+      setMessageKey("copied");
+    } catch {
+      setErrorKey("copy");
+    }
+  }
+
   async function copyGenerated() {
     if (!generated?.value) return;
 
@@ -317,6 +328,7 @@ function ContentAccessPanel({ t, language, sharedConsulT, cancelLabel }) {
           generate={generate}
           revoke={revoke}
           revokeOne={revokeOne}
+          copyStoredLink={copyStoredLink}
         />
       )}
     </article>
