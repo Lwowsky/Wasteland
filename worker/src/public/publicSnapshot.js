@@ -31,6 +31,13 @@ export function publicPlayer(row) {
   };
 }
 
+// The home page intentionally shows up to five recent registrations from the
+// current cycle in ALL player-table access modes. This is a separate public
+// preview, not permission to expose the protected /players table.
+export function getPublicRecentRegistrations(rows) {
+  return Array.isArray(rows) ? rows.slice(0, 5).map(publicPlayer) : [];
+}
+
 export async function handlePublicSnapshot(request, env) {
   if (!hasPublicSnapshotAccess(request, env)) {
     return json({ error: "UNAUTHORIZED" }, 401, { "cache-control": "no-store" });
@@ -85,7 +92,7 @@ export async function handlePublicSnapshot(request, env) {
       publishedAt: exposePlan ? (published?.publishedAt ?? null) : null,
       revision: exposePlan ? (published?.revision ?? null) : null,
     },
-    summary: { ...stats, finalPlayers: countPublishedPlanPlayers(publishedForStats?.plan), recentPlayers: latestPlayersAccess.mode === "public" && exposePlayers ? recent.map(publicPlayer) : [] },
+    summary: { ...stats, finalPlayers: countPublishedPlanPlayers(publishedForStats?.plan), recentPlayers: getPublicRecentRegistrations(recent) },
     // Identical to the pre-existing PUBLIC API response shapes. Never copy
     // admin-only settings, secrets, codes, or authorization sessions.
     siteSettings,
