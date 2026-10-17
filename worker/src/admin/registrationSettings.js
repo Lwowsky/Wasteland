@@ -5,6 +5,7 @@ import {
   getPeriodRules,
   isPeriodOpen,
   remapPeriodShifts,
+  startFreshRegistrationCycle,
   updatePeriodRulesSnapshot,
 } from "../db/periods.js";
 import {
@@ -226,6 +227,7 @@ export async function handleAdminRegistrationSettingsPut(request, env) {
   }
 
   const body = await request.json();
+  const cycleAction = normalizeText(body._cycleAction);
   const applyToCurrentCycle = body._applyToCurrentCycle === true;
   const applySection = normalizeText(body._applySection);
   const shiftMapping = body._shiftMapping || {};
@@ -246,6 +248,28 @@ export async function handleAdminRegistrationSettingsPut(request, env) {
       { success: false, error: "INVALID_REGISTRATION_PERIOD" },
       400,
     );
+  }
+
+  if (cycleAction === "new" || cycleAction === "continue") {
+    const nowMs = Date.now();
+    if (settings.publicRegistration !== true ||
+        !(schedule.openAtMs <= nowMs && nowMs < schedule.closeAtMs &&
+          nowMs < schedule.eventStartAtMs)) {
+      return json({ success: false, error: "CYCLE_WINDOW_CLOSED" }, 409);
+    }
+  }
+
+  // Keep registration closed while the fresh period is created. Publishing
+  // the open flag first could allow requests to enter the previous cycle.
+  if (cycleAction === "new") {
+    try {
+      await startFreshRegistrationCycle(env, settings);
+    } catch (error) {
+      if (String(error?.message).includes("CYCLE_WINDOW_CLOSED")) {
+        return json({ success: false, error: "CYCLE_WINDOW_CLOSED" }, 409);
+      }
+      throw error;
+    }
   }
 
   await saveRegistrationSettings(env, settings);

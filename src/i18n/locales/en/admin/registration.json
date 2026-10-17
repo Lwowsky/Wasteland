@@ -168,7 +168,8 @@
     "period": "Closing time must be later than opening time.",
     "periodMissing": "Enter valid opening and closing times.",
     "shiftRequired": "At least one shift must remain available.",
-    "tierRequired": "At least one tier must remain available."
+    "tierRequired": "At least one tier must remain available.",
+    "cycleWindowClosed": "A cycle may only be started or resumed within its registration window and before Wasteland begins. Check the cycle dates."
   },
   "defaultsButton": "Default settings",
   "notifications": {
@@ -201,7 +202,12 @@
     "closeRegistrationDetail": "Existing registrations will remain in the player table. You can reopen registration using the same button.",
     "openRegistrationTitle": "Open registration?",
     "openRegistrationDescription": "Are you sure you want to allow new submissions?",
-    "openRegistrationDetail": "Manual closure will be removed. Registration will still only be available within the configured cycle dates."
+    "openRegistrationDetail": "Manual closure will be removed. Registration will still only be available within the configured cycle dates.",
+    "cycleActionTitle": "What should happen to the cycle?",
+    "cycleActionContinue": "Continue the current cycle",
+    "cycleActionContinueDetail": "Keep all registrations, captains and existing assignments unchanged.",
+    "cycleActionNew": "Start a new cycle",
+    "cycleActionNewDetail": "Start a fresh empty cycle; previous registrations stay archived for 30 days. Not permitted after Wasteland begins."
   },
   "shiftRemap": {
     "title": "Move players between shifts",

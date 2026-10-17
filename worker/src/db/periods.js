@@ -87,6 +87,58 @@ export async function getPublicDisplayPeriod(env, settings, nowMs = Date.now()) 
   return isPublicDisplayPeriodVisible(previous, nowMs) ? previous : null;
 }
 
+// A manual reset creates a fresh period without changing the recurring schedule.
+// This mapping is only consulted for the matching schedule key; future weeks
+// continue following the configured automatic schedule normally.
+async function getEffectiveCycleKey(env, scheduleKey) {
+  if (!scheduleKey) return "";
+  try {
+    const row = await env.DB.prepare(`
+      SELECT active_cycle_key AS cycleKey
+      FROM registration_cycle_resets WHERE schedule_key = ? LIMIT 1
+    `).bind(scheduleKey).first();
+    return row?.cycleKey || scheduleKey;
+  } catch (error) {
+    // Allow normal public traffic during rolling migration deployments.
+    if (/no such table: registration_cycle_resets/i.test(String(error))) {
+      return scheduleKey;
+    }
+    throw error;
+  }
+}
+
+export async function startFreshRegistrationCycle(env, settings, nowMs = Date.now()) {
+  const schedule = getRegistrationCycleSchedule(settings, nowMs);
+  if (!(schedule.openAtMs <= nowMs && nowMs < schedule.closeAtMs &&
+      nowMs < schedule.eventStartAtMs)) {
+    throw new Error("CYCLE_WINDOW_CLOSED");
+  }
+  const scheduleKey = getRegistrationCycleKey(settings, schedule);
+  if (!scheduleKey) throw new Error("INVALID_REGISTRATION_PERIOD");
+  const cycleNumber = await getNextCycleNumber(env);
+  const uniqueKey = `${scheduleKey}:reset:${cycleNumber}`;
+  const snapshot = buildRegistrationRulesSnapshot(settings);
+  // D1 batch provides transactional all-or-nothing behavior. No old players
+  // are deleted; the new period gets a fresh, empty registration namespace.
+  await env.DB.batch([
+    env.DB.prepare(`UPDATE registration_periods SET status = 'closed',
+      updated_at = CURRENT_TIMESTAMP WHERE status = 'open'`),
+    env.DB.prepare(`INSERT INTO registration_periods (
+      cycle_number, cycle_key, name, status, opens_at, closes_at,
+      wasteland_start_at, wasteland_end_at, rules_snapshot_json
+    ) VALUES (?, ?, ?, 'open', ?, ?, ?, ?, ?)`)
+      .bind(cycleNumber, uniqueKey, `Registration cycle ${cycleNumber}`,
+        schedule.opensAt, schedule.closesAt, schedule.eventStartAt,
+        schedule.eventEndAt, JSON.stringify(snapshot)),
+    env.DB.prepare(`INSERT INTO registration_cycle_resets
+      (schedule_key, active_cycle_key, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP)
+      ON CONFLICT(schedule_key) DO UPDATE SET
+      active_cycle_key = excluded.active_cycle_key,
+      updated_at = CURRENT_TIMESTAMP`).bind(scheduleKey, uniqueKey),
+  ]);
+  return getPeriodByCycleKey(env, uniqueKey);
+}
+
 export async function getPeriodByCycleKey(env, cycleKey) {
   if (!cycleKey) {
     return null;
@@ -216,7 +268,7 @@ export async function ensureCurrentRegistrationPeriod(
     };
   }
 
-  const cycleKey = getRegistrationCycleKey(settings, schedule);
+  const cycleKey = await getEffectiveCycleKey(env, getRegistrationCycleKey(settings, schedule));
 
   if (!cycleKey) {
     return {

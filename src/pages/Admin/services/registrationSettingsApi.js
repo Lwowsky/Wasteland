@@ -12,6 +12,7 @@ export async function saveAdminRegistrationSettings(settings, options = {}) {
       _applyToCurrentCycle: options.applyToCurrentCycle === true,
       _applySection: options.applySection || "",
       _shiftMapping: options.shiftMapping || {},
+      _cycleAction: options.cycleAction || "",
     }),
   }, "REGISTRATION_SETTINGS_REQUEST_FAILED");
 

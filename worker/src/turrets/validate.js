@@ -69,6 +69,7 @@ export function validateTurretDraft(settingsInput, input, players) {
     throw new PlanError("TURRET_FLEXIBLE_LIMIT_EXCEEDED");
   }
   const seen = new Set();
+  const assignedRoles = new Map();
   const assignedPerShift = Object.fromEntries(PLANNER_SHIFTS.map((shift) => [shift, 0]));
   const assignments = createEmptyAssignments();
   const requestedShifts = Object.keys(input.shifts);
@@ -79,6 +80,7 @@ export function validateTurretDraft(settingsInput, input, players) {
   }
 
   for (const shift of PLANNER_SHIFTS) {
+    const inThisShift = new Set();
     const towers = input.shifts[shift] || createEmptyAssignments().shifts[shift];
     if (!isObject(towers) || Object.keys(towers).length !== TURRET_IDS.length ||
       !Object.keys(towers).every((tower) => TURRET_IDS.includes(tower))) {
@@ -100,13 +102,17 @@ export function validateTurretDraft(settingsInput, input, players) {
         throw new PlanError("TURRET_CAPACITY_EXCEEDED");
       }
       const captain = captainId ? roster.get(captainId) : null;
-      if (captainId && (!captain || seen.has(captainId) ||
+      if (captainId && (!captain || inThisShift.has(captainId) ||
+        (assignedRoles.has(captainId) && assignedRoles.get(captainId) !== "captain") ||
         (towerSettings.onlyCaptains && captain.captain !== true) ||
-        !availableForShift(captain, shift, towerSettings))) {
+        !(availableForShift(captain, shift, towerSettings) ||
+          assignedRoles.get(captainId) === "captain"))) {
         throw new PlanError("INVALID_TURRET_CAPTAIN");
       }
       if (captainId) {
         seen.add(captainId);
+        inThisShift.add(captainId);
+        assignedRoles.set(captainId, "captain");
         assignedPerShift[shift] += 1;
         if (assignedPerShift[shift] > getShiftCapacity(settings, shift)) {
           throw new PlanError("TURRET_SHIFT_CAPACITY_EXCEEDED");
@@ -117,13 +123,17 @@ export function validateTurretDraft(settingsInput, input, players) {
       for (const id of slot.helperIds) {
         const player = roster.get(id);
         const march = slot.helperMarches[id];
-        if (!finiteId(id) || !player || seen.has(id) || !captain ||
-          !availableForShift(player, shift, towerSettings) ||
+        if (!finiteId(id) || !player || inThisShift.has(id) || !captain ||
+          (assignedRoles.has(id) && assignedRoles.get(id) !== "helper") ||
+          !(availableForShift(player, shift, towerSettings) ||
+            assignedRoles.get(id) === "helper") ||
           (towerSettings.sameTroopType && player.troopType !== captain.troopType) ||
           !positiveInteger(march) || march > getHelperMarch(player, settings)) {
           throw new PlanError("INVALID_TURRET_HELPER");
         }
         seen.add(id);
+        inThisShift.add(id);
+        assignedRoles.set(id, "helper");
         assignedPerShift[shift] += 1;
         if (assignedPerShift[shift] > getShiftCapacity(settings, shift)) {
           throw new PlanError("TURRET_SHIFT_CAPACITY_EXCEEDED");

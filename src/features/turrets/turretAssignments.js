@@ -54,25 +54,26 @@ function toMarch(value) {
 }
 
 // Reconcile stale local ids after an import, a cycle change, or a database edit.
-// Each player may appear only ONCE across both shifts, including captain slots.
+// A player can be manually reused in different shifts, but never twice in one shift.
 export function normalizeAssignments(raw, players) {
   const next = createEmptyAssignments();
   const roster = rosterMap(players);
-  const seen = new Set();
   const source = raw?.shifts || {};
   // Reserve every manually selected captain before considering any helper.
   // A stale helper entry must never take precedence over a captain elsewhere.
-  const captainIds = new Set();
   for (const shift of PLANNER_SHIFTS) {
+    const captainIds = new Set();
     for (const tower of TURRET_IDS) {
       const captainId = idValue(source[shift]?.[tower]?.captainId);
       if (!captainId || captainIds.has(captainId)) continue;
       captainIds.add(captainId);
       next.shifts[shift][tower].captainId = captainId;
-      seen.add(captainId);
     }
   }
+  const allCaptainIds = new Set(PLANNER_SHIFTS.flatMap((shift) =>
+    TURRET_IDS.map((tower) => next.shifts[shift][tower].captainId)).filter(Boolean));
   for (const shift of PLANNER_SHIFTS) {
+    const seen = new Set(allCaptainIds);
     for (const tower of TURRET_IDS) {
       const slot = source[shift]?.[tower] || {};
       const rawHelpers = Array.isArray(slot.helperIds) ? slot.helperIds : [];
@@ -110,6 +111,24 @@ export function locateAssignment(assignments, playerId) {
   return null;
 }
 
+export function locateAssignmentInShift(assignments, playerId, shift) {
+  const id = idValue(playerId);
+  if (!id || !PLANNER_SHIFTS.includes(shift)) return null;
+  for (const tower of TURRET_IDS) {
+    const slot = assignments?.shifts?.[shift]?.[tower];
+    if (idValue(slot?.captainId) === id) return { shift, tower, role: "captain" };
+    if (slot?.helperIds?.some((candidate) => idValue(candidate) === id)) {
+      return { shift, tower, role: "helper" };
+    }
+  }
+  return null;
+}
+
+function assignedInOtherShift(assignments, playerId, shift, role) {
+  return PLANNER_SHIFTS.some((other) => other !== shift &&
+    locateAssignmentInShift(assignments, playerId, other)?.role === role);
+}
+
 export function availableForShift(player, shift, settings) {
   if (!PLANNER_SHIFTS.includes(shift)) return false;
   if (!settings?.respectShift) return true;
@@ -125,11 +144,14 @@ export function getCaptainCandidates(assignments, players, shift, tower, setting
       const id = idValue(player?.id);
       if (!id) return false;
       if (id === selected) return true;
-      if (locateAssignment(assignments, id)) return false;
+      if (locateAssignmentInShift(assignments, id, shift) ||
+        PLANNER_SHIFTS.some((other) => other !== shift &&
+          locateAssignmentInShift(assignments, id, other)?.role === "helper")) return false;
       // Swapping an existing captain does not add a new occupied seat.
       if (!selected && countAssignedInShift(assignments, shift) >= getShiftCapacity(settings, shift)) return false;
       if (settings?.onlyCaptains && player.captain !== true) return false;
-      return availableForShift(player, shift, settings);
+      return assignedInOtherShift(assignments, id, shift, "captain") ||
+        availableForShift(player, shift, settings);
     })
     .sort((a, b) => toMarch(b.rallySize) - toMarch(a.rallySize) ||
       toMarch(b.marchSize) - toMarch(a.marchSize) ||
@@ -189,8 +211,11 @@ export function getHelperCandidates(assignments, players, shift, tower, settings
   const captain = roster.get(slot.captainId);
   if (!captain) return [];
   return (Array.isArray(players) ? players : []).filter((player) => {
-    if (!idValue(player?.id) || locateAssignment(assignments, player.id)) return false;
-    if (!availableForShift(player, shift, settings)) return false;
+    if (!idValue(player?.id) || locateAssignmentInShift(assignments, player.id, shift) ||
+      PLANNER_SHIFTS.some((other) => other !== shift &&
+        locateAssignmentInShift(assignments, player.id, other)?.role === "captain")) return false;
+    if (!availableForShift(player, shift, settings) &&
+      !assignedInOtherShift(assignments, player.id, shift, "helper")) return false;
     if (settings.sameTroopType && player.troopType !== captain.troopType) return false;
     return getHelperMarch(player, settings) > 0;
   }).sort(comparePlayersByTier);
@@ -218,19 +243,29 @@ export function addHelper(assignments, shift, tower, playerId, players, settings
 }
 
 export function removeAssignedPlayer(assignments, id) {
-  const location = locateAssignment(assignments, id);
-  if (!location) return { assignments };
+  const target = idValue(id);
+  if (!target) return { assignments };
   const next = structuredClone(assignments);
-  const slot = next.shifts[location.shift][location.tower];
-  if (location.role === "captain") {
-    // Captains cannot disappear while helpers depend on their rally.
-    if (slot.helperIds.length) return { error: "helpersPresent" };
-    slot.captainId = null;
-  } else {
-    slot.helperIds = slot.helperIds.filter((candidate) => candidate !== id);
-    delete slot.helperMarches[id];
+  let changed = false;
+  // Removing a player from Player Status must clear *all* placements, not
+  // silently leave the same person assigned in another shift.
+  for (const shift of PLANNER_SHIFTS) {
+    for (const tower of TURRET_IDS) {
+      const slot = next.shifts?.[shift]?.[tower];
+      if (!slot) continue;
+      if (idValue(slot.captainId) === target) {
+        if (slot.helperIds?.length) return { error: "helpersPresent" };
+        slot.captainId = null;
+        changed = true;
+      }
+      if (slot.helperIds?.some((row) => idValue(row) === target)) {
+        slot.helperIds = slot.helperIds.filter((row) => idValue(row) !== target);
+        delete slot.helperMarches[target];
+        changed = true;
+      }
+    }
   }
-  return { assignments: next };
+  return { assignments: changed ? next : assignments };
 }
 
 export function clearTurret(assignments, shift, tower) {
@@ -275,13 +310,15 @@ export function findAssignmentConflicts(assignments, players, settings) {
       if (towerSettings.onlyCaptains && captain.captain !== true) {
         conflicts.push({ shift, tower, playerId: slot.captainId, reason: "captain" });
       }
-      if (!availableForShift(captain, shift, towerSettings)) {
+      if (!availableForShift(captain, shift, towerSettings) &&
+        !assignedInOtherShift(assignments, captain.id, shift, "captain")) {
         conflicts.push({ shift, tower, playerId: slot.captainId, reason: "shift" });
       }
       for (const id of slot.helperIds) {
         const player = roster.get(id);
         if (!player) continue;
-        if (!availableForShift(player, shift, towerSettings)) {
+        if (!availableForShift(player, shift, towerSettings) &&
+          !assignedInOtherShift(assignments, id, shift, "helper")) {
           conflicts.push({ shift, tower, playerId: id, reason: "shift" });
         }
         if (towerSettings.sameTroopType && player.troopType !== captain.troopType) {

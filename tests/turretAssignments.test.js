@@ -39,11 +39,27 @@ test("assignments: only genuine eligible captains are selectable", () => {
   assert.ok(getCaptainCandidates(createEmptyAssignments(), players, "shift1", "hub", flexible).some((p) => p.id === "3"));
 });
 
-test("assignments: the same registration cannot become captain of two turrets or shifts", () => {
+test("assignments: captain may lead different shifts but never two turrets in the same shift", () => {
   const assigned = withCaptain();
-  const rejected = changeCaptain(assigned, "shift2", "north", "1", players, { ...settings, respectShift: false });
-  assert.equal(rejected.error, "unavailable");
+  const second = changeCaptain(assigned, "shift2", "north", "1", players, settings);
+  assert.ok(second.assignments);
+  assert.equal(second.assignments.shifts.shift1.hub.captainId, "1");
+  assert.equal(second.assignments.shifts.shift2.north.captainId, "1");
+  assert.equal(changeCaptain(second.assignments, "shift2", "west", "1", players, settings).error, "unavailable");
   assert.deepEqual(locateAssignment(assigned, "1"), { shift: "shift1", tower: "hub", role: "captain" });
+});
+
+test("assignments: helper may join another shift manually, never twice within one shift", () => {
+  const crossSettings = { ...settings, respectShift: false };
+  const firstCaptain = changeCaptain(createEmptyAssignments(), "shift1", "hub", "1", players, crossSettings).assignments;
+  const secondCaptain = changeCaptain(firstCaptain, "shift2", "north", "4", players, crossSettings).assignments;
+  const withHelper = addHelper(secondCaptain, "shift1", "hub", "2", players, crossSettings).assignments;
+  const repeated = addHelper(withHelper, "shift2", "north", "2", players, { ...crossSettings, sameTroopType: false });
+  assert.ok(repeated.assignments);
+  assert.equal(repeated.assignments.shifts.shift2.north.helperIds.includes("2"), true);
+  const normalized = normalizeAssignments(repeated.assignments, players);
+  assert.deepEqual(normalized.shifts.shift1.hub.helperIds, ["2"]);
+  assert.deepEqual(normalized.shifts.shift2.north.helperIds, ["2"]);
 });
 
 test("assignments: helper candidates enforce troop type and shift", () => {

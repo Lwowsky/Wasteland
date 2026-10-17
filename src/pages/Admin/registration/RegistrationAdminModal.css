@@ -1,2 +1,26 @@
 @import "./RegistrationAdminModal.core.css";
 @import "./RegistrationAdminModal.details.css";
+
+/* Stage 2H-I: explicit continue/new registration cycle choice. */
+.registration-confirm-cycle-options {
+  min-width: 0;
+  margin: 16px 0 0;
+  padding: 12px;
+  border: 1px solid var(--border-color, #d5e4f3);
+  border-radius: 14px;
+}
+.registration-confirm-cycle-options legend { padding: 0 6px; font-weight: 700; }
+.registration-confirm-cycle-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 8px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+.registration-confirm-cycle-option + .registration-confirm-cycle-option {
+  border-top: 1px solid #d5e4f3;
+}
+.registration-confirm-cycle-option input { margin-top: 4px; flex-shrink: 0; }
+.registration-confirm-cycle-option span { display: grid; gap: 4px; min-width: 0; }
+.registration-confirm-cycle-option small { opacity: .82; line-height: 1.5; }

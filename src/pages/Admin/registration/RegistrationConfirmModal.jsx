@@ -15,6 +15,7 @@ function RegistrationConfirmModal({
   countdownSeconds = 10,
   busy = false,
   iconSrc = "",
+  cycleOptions = null,
 }) {
   const secondsLeft = useCountdown({
     active: open,
@@ -89,6 +90,22 @@ function RegistrationConfirmModal({
           )}
         </div>
       </div>
+      {cycleOptions && (
+        <fieldset className="registration-confirm-cycle-options">
+          <legend>{cycleOptions.title}</legend>
+          {[
+            { id: "continue", label: cycleOptions.continueLabel, detail: cycleOptions.continueDescription },
+            { id: "new", label: cycleOptions.newLabel, detail: cycleOptions.newDescription },
+          ].map((option) => (
+            <label className="registration-confirm-cycle-option" key={option.id}>
+              <input type="radio" name="registration-cycle-action"
+                value={option.id} checked={cycleOptions.value === option.id}
+                disabled={busy} onChange={() => cycleOptions.onChange(option.id)} />
+              <span><strong>{option.label}</strong><small>{option.detail}</small></span>
+            </label>
+          ))}
+        </fieldset>
+      )}
     </Modal>
   );
 }

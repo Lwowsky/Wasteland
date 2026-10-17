@@ -22,6 +22,7 @@ export default function useRegistrationSettingsAdmin({
   const [errorKey, setErrorKey] = useState("");
   const [toastKey, setToastKey] = useState("");
   const [confirmState, setConfirmState] = useState(null);
+  const [cycleChoice, setCycleChoice] = useState("continue");
   const [shiftRemapState, setShiftRemapState] = useState(null);
 
   useEffect(() => {
@@ -66,7 +67,7 @@ export default function useRegistrationSettingsAdmin({
       );
     } catch (saveError) {
       console.error(`Save registration section ${section}:`, saveError);
-      setErrorKey("save");
+      setErrorKey(String(saveError?.message || "").includes("CYCLE_WINDOW_CLOSED") ? "cycleWindowClosed" : "save");
     } finally {
       setSavingSection("");
     }
@@ -146,6 +147,7 @@ export default function useRegistrationSettingsAdmin({
     });
 
     setErrorKey("");
+    setCycleChoice("continue");
     setConfirmState({
       kind: "status",
       section: "cycleStatus",
@@ -166,6 +168,8 @@ export default function useRegistrationSettingsAdmin({
 
     performSave(confirmState.section, confirmState.candidate, {
       applySection: confirmState.section,
+      cycleAction: confirmState.kind === "status" && !confirmState.closing
+        ? cycleChoice : "",
     });
   }
 
@@ -189,6 +193,8 @@ export default function useRegistrationSettingsAdmin({
     toastKey,
     confirmState,
     setConfirmState,
+    cycleChoice,
+    setCycleChoice,
     shiftRemapState,
     setShiftRemapState,
     summary,

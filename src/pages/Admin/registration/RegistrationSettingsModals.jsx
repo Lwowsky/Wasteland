@@ -37,6 +37,8 @@ export default function RegistrationSettingsModals({
     savingSection,
     confirmState,
     setConfirmState,
+    cycleChoice,
+    setCycleChoice,
     shiftRemapState,
     setShiftRemapState,
     requestSave,
@@ -127,6 +129,15 @@ export default function RegistrationSettingsModals({
           onPrimary={saveConfirmedState}
           busy={Boolean(savingSection)}
           iconSrc={CONFIRM_WARNING_ICON}
+          cycleOptions={confirmState.kind === "status" && !confirmState.closing ? {
+            value: cycleChoice,
+            onChange: setCycleChoice,
+            title: r.confirm.cycleActionTitle,
+            continueLabel: r.confirm.cycleActionContinue,
+            continueDescription: r.confirm.cycleActionContinueDetail,
+            newLabel: r.confirm.cycleActionNew,
+            newDescription: r.confirm.cycleActionNewDetail,
+          } : null}
         />
       )}
 

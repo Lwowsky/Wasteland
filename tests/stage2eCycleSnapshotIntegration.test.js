@@ -32,6 +32,7 @@ function database({ periods = [oldPeriod, nextPeriod], players = [], revision = 
         async first() {
           log.push({ sql, params });
           if (sql.includes('FROM registration_settings')) return null;
+          if (sql.includes('FROM registration_cycle_resets')) return null;
           if (sql.includes('FROM registration_periods') && sql.includes('cycle_key = ?'))
             return periods.find((period) => period.cycle_key === params[0]) ?? null;
           if (sql.includes('FROM registration_periods') && sql.includes('wasteland_end_at > ?')) {
