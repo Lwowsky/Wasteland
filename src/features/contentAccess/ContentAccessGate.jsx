@@ -14,6 +14,9 @@ import {
 } from "./contentAccessApi.js";
 
 import { ContentAccessContext } from "./ContentAccessContext.js";
+import { getPublicCycleViewState } from "../../../shared/registrationCycle.js";
+import useNow from "../../hooks/useNow.js";
+import { publicAsset } from "../../utils/publicAsset.js";
 
 import "./ContentAccessGate.css";
 
@@ -45,7 +48,14 @@ function getErrorCode(error) {
 }
 
 function ContentAccessGate({ resource, children }) {
-  const { t } = useOutletContext();
+  const { t, registrationConfig, eventError } = useOutletContext();
+  const now = useNow(60_000);
+  const settingsLoaded = Boolean(registrationConfig?.settings);
+  const cycleState = settingsLoaded
+    ? getPublicCycleViewState(registrationConfig.settings, now)
+    : null;
+  const cycleClosed = cycleState?.state === "closed";
+  const cycleEpoch = cycleState?.eventStartAt || (settingsLoaded ? "manual" : "");
   const location = useLocation();
   const navigate = useNavigate();
   const copy = t.contentAccess;
@@ -82,6 +92,13 @@ function ContentAccessGate({ resource, children }) {
       return undefined;
     }
 
+    if (cycleClosed || !settingsLoaded) {
+      if (cycleClosed && sharedToken) removeSharedTokenFromUrl();
+      // A stale public snapshot must not authorize a closed cycle. Do not
+      // fetch /decrypt it or create sessions while the calendar is closed.
+      return undefined;
+    }
+
     let cancelled = false;
 
     async function load() {
@@ -95,16 +112,16 @@ function ContentAccessGate({ resource, children }) {
         if (sharedToken) {
           try {
             const staticStatus = /^[a-zA-Z0-9_-]{16}$/.test(sharedToken)
-              ? await getPublicContentAccessHint(resource, sharedToken)
+              ? await getPublicContentAccessHint(resource, sharedToken, cycleEpoch === "manual" ? "" : cycleEpoch)
               : null;
             if (staticStatus) {
               if (!staticStatus.allowed) {
-                setStatus(staticStatus);
+                setStatus({ ...staticStatus, cycleEpoch });
                 setLoading(false);
                 return;
               }
               if (!cancelled) {
-                setStatus(staticStatus);
+                setStatus({ ...staticStatus, cycleEpoch });
                 setLoading(false);
                 // Prevent sharing the raw capability via browser history/referrers.
                 skipNextSessionLoadRef.current = resource;
@@ -134,14 +151,14 @@ function ContentAccessGate({ resource, children }) {
               period: activatedSession.period,
             }
           : (!getContentAccessSession(resource)
-              ? (await getPublicContentAccessHint(resource)) || await getContentAccessStatus(resource)
+              ? (await getPublicContentAccessHint(resource, "", cycleEpoch === "manual" ? "" : cycleEpoch)) || await getContentAccessStatus(resource)
               : await getContentAccessStatus(resource));
 
         if (cancelled) {
           return;
         }
 
-        setStatus(nextStatus);
+        setStatus({ ...nextStatus, cycleEpoch });
         setLoading(false);
 
         if (shouldRemoveSharedToken) {
@@ -152,7 +169,7 @@ function ContentAccessGate({ resource, children }) {
         clearContentAccessSession(resource);
 
         if (!cancelled) {
-          setStatus({ resource, mode: "private", allowed: false });
+          setStatus({ resource, mode: "private", allowed: false, cycleEpoch });
           setErrorCode(getErrorCode(nextError));
           setLoading(false);
         }
@@ -164,7 +181,7 @@ function ContentAccessGate({ resource, children }) {
     return () => {
       cancelled = true;
     };
-  }, [resource, sharedToken]);
+  }, [resource, sharedToken, cycleClosed, settingsLoaded, cycleEpoch]);
 
   async function submitCode(event) {
     event.preventDefault();
@@ -181,7 +198,7 @@ function ContentAccessGate({ resource, children }) {
       const activated = await activateContentAccess(resource, code);
       // The activation response is proof of the newly issued server session.
       // Protected API endpoints independently enforce that session.
-      setStatus({ resource, mode: "code", allowed: true, period: activated.period });
+      setStatus({ resource, mode: "code", allowed: true, period: activated.period, cycleEpoch });
       setCode("");
     } catch (nextError) {
       clearContentAccessSession(resource);
@@ -196,7 +213,7 @@ function ContentAccessGate({ resource, children }) {
     }
   }
 
-  const currentStatus = status?.resource === resource ? status : null;
+  const currentStatus = status?.resource === resource && status.cycleEpoch === cycleEpoch ? status : null;
   // Recomputed after an invalid attempt; the browser also persists attempts across F5.
   void attemptsVersion;
   const codeAttemptState = getCodeAttemptState(resource);
@@ -204,6 +221,29 @@ function ContentAccessGate({ resource, children }) {
   // Keep already-authorized content mounted during any background re-check.
   // On the first check, show only the neutral route spinner so the private
   // access card never flashes for a public/authorized page during refresh.
+  if (cycleClosed) {
+    const label = t.contentAccess.cycleClosed;
+    return <Page containerClassName="content-access-container">
+      <div className="content-access-page"><PagePanel className="content-access-panel">
+        <div className="content-access-icon" aria-hidden="true">
+          <img src={publicAsset("/images/registration-settings/cycle-close-icon.webp")} alt="" width="36" height="36" />
+        </div>
+        <h1>{copy.resources[resource] || resource}</h1>
+        <h2>{label.title}</h2>
+        <p>{resource === "players" ? label.players : label.finalPlan}</p>
+      </PagePanel></div>
+    </Page>;
+  }
+
+  if (!settingsLoaded) {
+    if (!eventError) return <RouteLoading />;
+    return <Page containerClassName="content-access-container"><div className="content-access-page"><PagePanel className="content-access-panel">
+      <h1>{copy.resources[resource] || resource}</h1><p>{copy.cycleUnavailable}</p>
+    </PagePanel></div></Page>;
+  }
+
+  if (status?.cycleEpoch !== cycleEpoch && cycleEpoch) return <RouteLoading />;
+
   if (currentStatus?.allowed) {
     return <ContentAccessContext.Provider value={currentStatus}>{children}</ContentAccessContext.Provider>;
   }
@@ -236,8 +276,10 @@ function ContentAccessGate({ resource, children }) {
 
           <h1>{resourceLabel}</h1>
 
-          <h2>{copy.modes[mode].title}</h2>
-          <p>{copy.modes[mode].text}</p>
+          <h2>{currentStatus?.reason === "SNAPSHOT_CYCLE_MISMATCH"
+            ? copy.cycleUpdating.title : copy.modes[mode].title}</h2>
+          <p>{currentStatus?.reason === "SNAPSHOT_CYCLE_MISMATCH"
+            ? copy.cycleUpdating.text : copy.modes[mode].text}</p>
 
           {mode === "code" && (
             <form className="content-access-form" onSubmit={submitCode}>

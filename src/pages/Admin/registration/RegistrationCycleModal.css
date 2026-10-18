@@ -447,3 +447,10 @@
 .registration-cycle-site-modal .registration-cycle-preview__icon svg{ width: 34px; height: 34px; }
   .registration-cycle-site-modal .registration-cycle-section-title img{ width: 34px; height: 34px; flex-basis: 34px; }
 }
+
+/* Stage 039: stable, read-only rolling Wasteland dates; anchor remains editable on demand. */
+.registration-cycle-field--history { display: flex; flex-direction: column; gap: 6px; }
+.registration-cycle-field--history small { font-size: 12px; color: #607b9b; }
+.registration-cycle-readonly-date { font-size: 15px; color: #173a67; padding: 9px 11px; background: #f4f9ff; border: 1px solid #d5e5f7; border-radius: 10px; }
+.registration-cycle-anchor-toggle { border: 1px solid #bbd6f3; border-radius: 9px; padding: 7px 11px; color: #245db0; font-weight: 700; background: #f2f8ff; cursor: pointer; align-self: flex-start; }
+.registration-cycle-anchor-toggle:disabled { opacity: .6; cursor: not-allowed; }

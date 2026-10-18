@@ -56,7 +56,7 @@
     "defaults": "Default settings",
     "save": "Save cycle",
     "wastelandTitle": "Wasteland cycle",
-    "anchor": "Base Wasteland start UTC",
+    "anchor": "Wasteland reference date UTC",
     "repeat": "Cycle repeat, days",
     "duration": "Wasteland duration, hours",
     "closeTitle": "Registration closing",
@@ -93,7 +93,13 @@
     "closeTime": "Closing time UTC",
     "manualOpenFallback": "If no date is set, use the automatic opening time",
     "manualCloseFallback": "If no date is set, use the automatic closing time",
-    "manualFallbackNote": "A manual date has priority. If the field is empty and the checkbox is enabled, the automatic cycle date is used."
+    "manualFallbackNote": "A manual date has priority. If the field is empty and the checkbox is enabled, the automatic cycle date is used.",
+    "lastCompleted": "Last completed Wasteland UTC",
+    "nextEvent": "Next Wasteland UTC",
+    "lastCompletedHint": "Automatically advances after each Wasteland ends.",
+    "notCompleted": "No completed event yet",
+    "editAnchor": "Change reference date",
+    "hideAnchor": "Hide reference date"
   },
   "shiftsModal": {
     "title": "Available shifts",

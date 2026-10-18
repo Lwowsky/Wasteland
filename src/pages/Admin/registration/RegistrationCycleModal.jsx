@@ -5,6 +5,8 @@ import { useMemo, useState } from "react";
 import Modal from "../../../components/Modal/Modal.jsx";
 import { getUserTimeZone } from "../../../utils/date.js";
 import { getRegistrationCycleSchedule } from "../../../features/registration/registrationCycle.js";
+import { getLastCompletedWastelandStart } from "../../../../shared/registrationCycle.js";
+import useNow from "../../../hooks/useNow.js";
 import RegistrationCycleFields from "./RegistrationCycleFields.jsx";
 import RegistrationCyclePreview from "./RegistrationCyclePreview.jsx";
 import {
@@ -27,7 +29,9 @@ function RegistrationCycleModal({
 }) {
   const localTimeZone = getUserTimeZone();
   const [draft, setDraft] = useState(() => createRegistrationCycleDraft(settings));
-  const schedule = useMemo(() => getRegistrationCycleSchedule(draft), [draft]);
+  const now = useNow(60_000);
+  const schedule = useMemo(() => getRegistrationCycleSchedule(draft, now), [draft, now]);
+  const lastCompletedAt = getLastCompletedWastelandStart(draft, now);
 
   function update(field, value) {
     setDraft((current) => ({ ...current, [field]: value }));
@@ -64,7 +68,7 @@ function RegistrationCycleModal({
             type="button"
             className="registration-secondary-button registration-cycle-reset-button"
             disabled={!canEdit}
-            onClick={() => setDraft(getDefaultRegistrationCycleDraft())}
+            onClick={() => setDraft(getDefaultRegistrationCycleDraft(settings))}
           >
             <img
               src={publicAsset("/images/registration-settings/reset-defaults-icon.webp")}
@@ -142,6 +146,7 @@ function RegistrationCycleModal({
         <RegistrationCycleFields
           draft={draft}
           schedule={schedule}
+          lastCompletedAt={lastCompletedAt}
           canEdit={canEdit}
           r={r}
           update={update}

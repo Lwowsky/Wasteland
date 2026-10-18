@@ -38,5 +38,15 @@
     "default": "Access could not be checked. Refresh the page and try again.",
     "CONTENT_CODE_RATE_LIMITED": "Too many invalid codes. Try again in one hour.",
     "RATE_LIMITED": "Too many attempts. Try again in a minute."
+  },
+  "cycleClosed": {
+    "title": "Wasteland cycle finished",
+    "players": "The player list for this cycle is closed. The next registration opens on Friday.",
+    "finalPlan": "The final plan for this cycle is closed. A new plan will be available in the next cycle through a new private link."
+  },
+  "cycleUnavailable": "Unable to verify the access schedule. Please try again later.",
+  "cycleUpdating": {
+    "title": "Waiting for the new cycle",
+    "text": "The next registration cycle is open. Public data is being updated; please try again shortly."
   }
 }

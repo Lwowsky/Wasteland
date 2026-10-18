@@ -12,10 +12,12 @@ export function getUtcTime(value) {
   ).padStart(2, "0")}`;
 }
 
-export function getDefaultRegistrationCycleDraft() {
+export function getDefaultRegistrationCycleDraft(current = {}) {
   return {
     cycleMode: DEFAULT_REGISTRATION_SETTINGS.cycleMode,
-    wastelandAnchorAt: DEFAULT_REGISTRATION_SETTINGS.wastelandAnchorAt,
+    // Resetting cycle options is NOT permission to move an established
+    // Wasteland calendar back to its original 2026 anchor.
+    wastelandAnchorAt: current.wastelandAnchorAt || DEFAULT_REGISTRATION_SETTINGS.wastelandAnchorAt,
     wastelandIntervalDays:
       DEFAULT_REGISTRATION_SETTINGS.wastelandIntervalDays,
     wastelandDurationHours:

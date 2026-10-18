@@ -4,6 +4,7 @@ import {
   isScheduleOpen,
 } from "../services/registrationCycle.js";
 import { buildRegistrationRulesSnapshot } from "../services/registrationRules.js";
+import { getPublicCycleCloseAtMs } from "../../../shared/registrationCycle.js";
 import { cleanupOldRegistrationPeriods } from "./periods/periodMaintenance.js";
 
 // Keep existing public imports stable while grouping related D1 operations.
@@ -52,9 +53,8 @@ export async function getAdminWorkingPeriod(env, settings, nowMs = Date.now()) {
   return latestPeriod;
 }
 
-// Public tables stay visible during registration, during the Wasteland event,
-// and for 24 hours AFTER the event ends. Closing registration only blocks new
-// submissions; it must never hide already-registered players.
+// Retain at most the former 24-hour grace window; for the ordinary
+// Saturday/Sunday Wasteland close exactly at Monday 00:00 UTC.
 export const PUBLIC_POST_WASTELAND_HOURS = 24;
 const PUBLIC_POST_WASTELAND_MS = PUBLIC_POST_WASTELAND_HOURS * 60 * 60 * 1000;
 
@@ -64,7 +64,7 @@ export function isPublicDisplayPeriodVisible(period, nowMs = Date.now()) {
   const opensMs = Date.parse(period.opens_at || "");
   return Number.isFinite(eventEndMs) &&
     (!Number.isFinite(opensMs) || nowMs >= opensMs) &&
-    nowMs < eventEndMs + PUBLIC_POST_WASTELAND_MS;
+    nowMs < getPublicCycleCloseAtMs(eventEndMs);
 }
 
 export async function getPublicDisplayPeriod(env, settings, nowMs = Date.now()) {
@@ -73,7 +73,8 @@ export async function getPublicDisplayPeriod(env, settings, nowMs = Date.now()) 
   if (isPublicDisplayPeriodVisible(period, nowMs)) return period;
 
   // In particular, after the Wasteland starts, the automatic schedule points
-  // at the NEXT event. Look up the previous event until its +24h cutoff.
+  // at the NEXT event. Look up the previous event within the maximum grace window;
+  // isPublicDisplayPeriodVisible applies the earlier Monday midnight cutoff.
   const cutoff = new Date(nowMs - PUBLIC_POST_WASTELAND_MS).toISOString();
   const nowIso = new Date(nowMs).toISOString();
   const previous = await env.DB.prepare(`

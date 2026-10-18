@@ -134,3 +134,55 @@ export function getRegistrationCycleSchedule(settings = {}, fromMs = Date.now())
     closesAt: closeAtMs ? new Date(closeAtMs).toISOString() : "",
   };
 }
+
+// A fixed anchor is kept for cycle arithmetic. The displayed "last completed"
+// value is derived from the browser/server clock, not persisted every fortnight.
+export function getLastCompletedWastelandStart(settings = {}, fromMs = Date.now()) {
+  const anchorMs = new Date(settings.wastelandAnchorAt || DEFAULT_WASTELAND_ANCHOR_ISO).getTime();
+  if (!Number.isFinite(anchorMs) || !Number.isFinite(Number(fromMs))) return null;
+  const intervalMs = normalizePositiveNumber(settings.wastelandIntervalDays, DEFAULT_WASTELAND_INTERVAL_DAYS) * DAY_MS;
+  const firstCompletion = anchorMs + DEFAULT_WASTELAND_DURATION_HOURS * HOUR_MS;
+  if (fromMs < firstCompletion) return null;
+  const completedIndex = Math.floor((fromMs - firstCompletion) / intervalMs);
+  return new Date(anchorMs + completedIndex * intervalMs).toISOString();
+}
+
+// Published roster and final plan close together at Monday 00:00 UTC after
+// the 24-hour event. A non-Saturday manual/custom schedule never extends
+// public retention beyond the pre-existing 24-hour grace window.
+export function getPublicCycleCloseAtMs(eventEndAtMs) {
+  if (!Number.isFinite(Number(eventEndAtMs))) return NaN;
+  const date = new Date(Number(eventEndAtMs));
+  const daysUntilMonday = (8 - date.getUTCDay()) % 7;
+  const monday = new Date(date);
+  monday.setUTCDate(monday.getUTCDate() + daysUntilMonday);
+  monday.setUTCHours(0, 0, 0, 0);
+  if (monday.getTime() <= date.getTime()) monday.setUTCDate(monday.getUTCDate() + 7);
+  return Math.min(monday.getTime(), date.getTime() + DAY_MS);
+}
+
+// Pure display guard for static Pages. It prevents a stale cached encrypted
+// JSON from remaining visible after the deadline, without Worker/D1 requests.
+// Manual schedule dates are managed explicitly and cannot be inferred from
+// a recurring calendar; the server still filters those by period.
+export function getPublicCycleViewState(settings = {}, fromMs = Date.now()) {
+  if (settings.cycleMode === "manual") return { state: "manual", visible: true, closesAt: null };
+  const intervalMs = normalizePositiveNumber(settings.wastelandIntervalDays, DEFAULT_WASTELAND_INTERVAL_DAYS) * DAY_MS;
+  const upcoming = getAutomaticRegistrationCycleSchedule(settings, fromMs);
+  const previous = getAutomaticRegistrationCycleSchedule(settings, upcoming.eventStartAtMs - intervalMs);
+  const anchorMs = new Date(settings.wastelandAnchorAt || DEFAULT_WASTELAND_ANCHOR_ISO).getTime();
+  const visible = [upcoming, previous].find((schedule) =>
+    schedule.eventStartAtMs >= anchorMs &&
+    fromMs >= schedule.openAtMs &&
+    fromMs < getPublicCycleCloseAtMs(schedule.eventEndAtMs));
+  return visible
+    ? { state: "open", visible: true, eventStartAt: visible.eventStartAt,
+        closesAt: new Date(getPublicCycleCloseAtMs(visible.eventEndAtMs)).toISOString() }
+    : { state: "closed", visible: false, eventStartAt: null, closesAt: null };
+}
+
+// Reject an old Friday's static snapshot instead of displaying last cycle's
+// private data while GitHub Pages/CDN are still publishing the new cycle.
+export function isSnapshotForCycle(snapshot, expectedEventStartAt) {
+  return !expectedEventStartAt || snapshot?.cycleEventStartAt === expectedEventStartAt;
+}

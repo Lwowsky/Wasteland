@@ -65,13 +65,13 @@ test("Stage 8 retention: registration closing does not hide the public players",
   assert.equal(isPublicDisplayPeriodVisible(publicPeriod, at("2026-10-16T01:00:00Z")), true);
 });
 
-test("Stage 8 retention: shows current cycle during Wasteland and through 23:59:59 after it", async () => {
+test("Stage 039: shows current cycle until Monday 00:00 UTC following Wasteland", async () => {
   const { env } = fixture();
   const settings = {cycleMode: "automatic"};
-  for (const time of ["2026-10-17T10:01:00Z", "2026-10-18T10:00:00Z", "2026-10-19T09:59:59Z"]) {
+  for (const time of ["2026-10-17T10:01:00Z", "2026-10-18T10:00:00Z", "2026-10-18T23:59:59Z"]) {
     assert.equal((await getPublicDisplayPeriod(env, settings, at(time)))?.id, period.id, time);
   }
-  assert.equal(await getPublicDisplayPeriod(env, settings, at("2026-10-19T10:00:00Z")), null);
+  assert.equal(await getPublicDisplayPeriod(env, settings, at("2026-10-19T00:00:00Z")), null);
 });
 
 test("Stage 8 retention: cron bumps JSON version only on visible-period transitions", async () => {
@@ -81,7 +81,7 @@ test("Stage 8 retention: cron bumps JSON version only on visible-period transiti
   assert.equal(state.revision, 2);
   assert.equal(await syncPublicVisibilityRevision(env, at("2026-10-18T10:00:00Z")), false);
   assert.equal(state.revision, 2);
-  assert.equal(await syncPublicVisibilityRevision(env, at("2026-10-19T10:00:00Z")), true);
+  assert.equal(await syncPublicVisibilityRevision(env, at("2026-10-19T00:00:00Z")), true);
   assert.equal(state.visible_period_key, "none");
   assert.equal(state.revision, 3);
   assert.equal(await syncPublicVisibilityRevision(env, at("2026-10-19T10:01:00Z")), false);

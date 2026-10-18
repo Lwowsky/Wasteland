@@ -162,7 +162,7 @@ export function getStandardRegistrationSettings(current = {}) {
   return normalizeRegistrationSettings({
     ...current,
     cycleMode: DEFAULT_REGISTRATION_SETTINGS.cycleMode,
-    wastelandAnchorAt: DEFAULT_REGISTRATION_SETTINGS.wastelandAnchorAt,
+    wastelandAnchorAt: current.wastelandAnchorAt || DEFAULT_REGISTRATION_SETTINGS.wastelandAnchorAt,
     wastelandIntervalDays: DEFAULT_REGISTRATION_SETTINGS.wastelandIntervalDays,
     wastelandDurationHours: DEFAULT_REGISTRATION_SETTINGS.wastelandDurationHours,
     registrationCloseMode: DEFAULT_REGISTRATION_SETTINGS.registrationCloseMode,

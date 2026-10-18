@@ -17,11 +17,16 @@ import OverviewSection from "./sections/OverviewSection.jsx";
 import NavigationSection from "./sections/NavigationSection.jsx";
 
 import { EMPTY_PUBLIC_STATS } from "../../../shared/publicStatsConfig.js";
+import { getPublicCycleViewState } from "../../../shared/registrationCycle.js";
+import useNow from "../../hooks/useNow.js";
 
 import "./Home.css";
 
 function Home() {
   const { t, language, eventLoading, registrationConfig } = useOutletContext();
+  const now = useNow(60_000);
+  const cycleClosed = registrationConfig?.settings?.cycleMode !== "manual" &&
+    (!registrationConfig?.settings || !getPublicCycleViewState(registrationConfig.settings, now).visible);
 
   const [dashboardStats, setDashboardStats] = useState(EMPTY_PUBLIC_STATS);
 
@@ -70,14 +75,14 @@ function Home() {
       <Page>
         <div className="home-dashboard">
           <PagePanel>
-            <StatsSection t={t} dashboardStats={dashboardStats} />
+            <StatsSection t={t} dashboardStats={cycleClosed ? EMPTY_PUBLIC_STATS : dashboardStats} />
 
             <CountdownSection t={t} registrationConfig={registrationConfig} />
 
             <OverviewSection
               t={t}
-              dashboardStats={dashboardStats}
-              recentPlayers={recentPlayers}
+              dashboardStats={cycleClosed ? EMPTY_PUBLIC_STATS : dashboardStats}
+              recentPlayers={cycleClosed ? [] : recentPlayers}
             />
 
             <NavigationSection t={t} language={language} />

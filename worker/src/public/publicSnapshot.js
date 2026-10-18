@@ -135,6 +135,7 @@ export async function handlePublicSnapshot(request, env) {
     revision,
     finalPlan: {
       success: true, accessMode: latestPlanAccess.mode, shareLinks: encryptedPlan?.shareLinks || [], sealed: encryptedPlan?.sealed ?? null, periodId: period?.id ?? null,
+      cycleEventStartAt: period?.wasteland_start_at ?? null,
       plan: exposePlan ? (published?.plan ?? null) : null,
       publishedAt: exposePlan ? (published?.publishedAt ?? null) : null,
       revision: exposePlan ? (published?.revision ?? null) : null,
@@ -153,6 +154,9 @@ export async function handlePublicSnapshot(request, env) {
       exposePlayers,
     ),
   };
+  // Public cycle metadata lets the static client reject a stale prior-cycle
+  // snapshot at the next Friday without reading D1 on every refresh.
+  payload.players.cycleEventStartAt = period?.wasteland_start_at ?? null;
   if (encryptedPlayers) payload.players.sealed = encryptedPlayers.sealed;
   // Reject a malformed export BEFORE sending it to a public repository.
   if ((latestPlayersAccess.mode === "link" && (payload.players.players.length || !payload.players.sealed)) ||

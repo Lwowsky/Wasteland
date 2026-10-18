@@ -5,6 +5,8 @@ import {
   toUtcDateTimeLocalValue,
 } from "../../../features/registration/registrationCycle.js";
 import { getUtcTime } from "./registrationCycleDraft.js";
+import { DEFAULT_WASTELAND_DURATION_HOURS } from "../../../../shared/registrationConfig.js";
+import { useState } from "react";
 
 function SectionTitle({ icon, children }) {
   return (
@@ -15,7 +17,10 @@ function SectionTitle({ icon, children }) {
   );
 }
 
-function AutomaticCycleFields({ draft, schedule, canEdit, r, update }) {
+function AutomaticCycleFields({ draft, schedule, lastCompletedAt, canEdit, r, update }) {
+  const [editingAnchor, setEditingAnchor] = useState(false);
+  const completedDisplay = lastCompletedAt ? toUtcDateTimeLocalValue(lastCompletedAt).replace("T", " ") : r.cycle.notCompleted;
+  const nextDisplay = toUtcDateTimeLocalValue(schedule.eventStartAt).replace("T", " ");
   return (
     <>
       <section className="registration-modal-section registration-modal-section--compact">
@@ -24,20 +29,25 @@ function AutomaticCycleFields({ draft, schedule, canEdit, r, update }) {
         </SectionTitle>
 
         <div className="registration-cycle-grid registration-cycle-grid--three">
-          <label className="admin-field">
-            <span>{r.cycle.anchor}</span>
-            <input
-              type="datetime-local"
-              value={toUtcDateTimeLocalValue(draft.wastelandAnchorAt)}
-              disabled={!canEdit}
-              onChange={(event) =>
-                update(
-                  "wastelandAnchorAt",
-                  fromUtcDateTimeLocalValue(event.target.value),
-                )
-              }
-            />
-          </label>
+          <div className="admin-field registration-cycle-field--history">
+            <span>{r.cycle.lastCompleted}</span>
+            <strong className="registration-cycle-readonly-date">{completedDisplay} UTC</strong>
+            <small>{r.cycle.lastCompletedHint}</small>
+            <span>{r.cycle.nextEvent}</span>
+            <strong className="registration-cycle-readonly-date">{nextDisplay} UTC</strong>
+            <button type="button" className="registration-cycle-anchor-toggle"
+              onClick={() => setEditingAnchor((current) => !current)}
+              disabled={!canEdit}>
+              {editingAnchor ? r.cycle.hideAnchor : r.cycle.editAnchor}
+            </button>
+            {editingAnchor && <label className="admin-field">
+              <span>{r.cycle.anchor}</span>
+              <input type="datetime-local"
+                value={toUtcDateTimeLocalValue(draft.wastelandAnchorAt)}
+                disabled={!canEdit}
+                onChange={(event) => update("wastelandAnchorAt", fromUtcDateTimeLocalValue(event.target.value))}/>
+            </label>}
+          </div>
 
           <label className="admin-field">
             <span>{r.cycle.repeat}</span>
@@ -57,13 +67,9 @@ function AutomaticCycleFields({ draft, schedule, canEdit, r, update }) {
             <span>{r.cycle.duration}</span>
             <input
               type="number"
-              min="1"
-              max="72"
-              value={draft.wastelandDurationHours}
-              disabled={!canEdit}
-              onChange={(event) =>
-                update("wastelandDurationHours", Number(event.target.value))
-              }
+              value={DEFAULT_WASTELAND_DURATION_HOURS}
+              disabled
+              readOnly
             />
           </label>
         </div>

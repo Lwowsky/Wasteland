@@ -1,6 +1,7 @@
 import { getPublicSnapshot, isPublicSnapshotEnabled } from "../players/publicSnapshot.js";
 import { requestJson } from "../../utils/apiClient.js";
 import { openSnapshotFromLink } from "../../../shared/sealedSnapshot.js";
+import { isSnapshotForCycle } from "../../../shared/registrationCycle.js";
 
 const SESSION_PREFIX = "wasteland-content-access-";
 
@@ -119,12 +120,17 @@ export async function unlockStaticShareSnapshot(resource, snapshot) {
   return openSnapshotFromLink(resource, snapshot.sealed, entry, code);
 }
 
-export async function getPublicContentAccessHint(resource, shortCode = "") {
+export async function getPublicContentAccessHint(resource, shortCode = "", expectedCycleStartAt = "") {
   if (!isPublicSnapshotEnabled()) return null;
   const file = resource === "players" ? "players.json" : resource === "final_plan" ? "final-plan.json" : null;
   if (!file) return null;
   try {
     const data = await getPublicSnapshot(file, { requireNetwork: true });
+    // Do not accidentally reopen the prior cycle when a CDN serves yesterday's
+    // encrypted JSON after the next Friday. Metadata is public, players are not.
+    if (!isSnapshotForCycle(data, expectedCycleStartAt)) {
+      return { resource, mode: "private", allowed: false, reason: "SNAPSHOT_CYCLE_MISMATCH" };
+    }
     const mode = data?.accessMode;
     if (!["public", "private", "code", "link"].includes(mode)) return null;
     if (mode === "link") {
