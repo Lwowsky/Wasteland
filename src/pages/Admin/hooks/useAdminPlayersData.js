@@ -14,6 +14,7 @@ import {
   readAdminPlayersCheckAt,
   markAdminPlayersCheckAt,
   writeAdminPlayersCache,
+  isAdminRosterPastDeadline,
 } from "../services/adminPlayersCache.js";
 import { ADMIN_PLAYERS_AUTO_CHECK_MS, shouldCheckAdminPlayers } from "../services/adminPlayersSyncPolicy.js";
 
@@ -59,6 +60,7 @@ export default function useAdminPlayersData({ enabled, canDelete, autoSync = fal
       players: result.registrations || [],
       period: result.period || null,
       cursor: Number(result.cursor || 0),
+      nextOpensAt: result.nextOpensAt || null,
     });
     return result;
   }, [replaceSnapshot, markChecked]);
@@ -76,6 +78,8 @@ export default function useAdminPlayersData({ enabled, canDelete, autoSync = fal
       const generation = generationRef.current;
       let current = snapshotRef.current;
       if (!current?.period?.id) {
+        const nextOpenMs = Date.parse(current?.nextOpensAt || "");
+        if (Number.isFinite(nextOpenMs) && Date.now() < nextOpenMs) return;
         await reload();
         return;
       }
@@ -141,6 +145,7 @@ export default function useAdminPlayersData({ enabled, canDelete, autoSync = fal
           replaceSnapshot({
             players: result.registrations || [], period: result.period || null,
             cursor: Number(result.cursor || 0),
+            nextOpensAt: result.nextOpensAt || null,
           });
         }
       } catch (error) {
@@ -163,6 +168,21 @@ export default function useAdminPlayersData({ enabled, canDelete, autoSync = fal
     function check() {
       if (document.visibilityState === "hidden") return;
       const now = Date.now();
+      // Drop Sunday's roster precisely at Monday 09:00 JST, even in an
+      // already-open admin tab. One server read obtains next Friday's time.
+      if (isAdminRosterPastDeadline(snapshotRef.current?.period, now)) {
+        replaceSnapshot({ players: [], period: null, cursor: 0, nextOpensAt: null });
+        reload().catch((error) => console.error("New-cycle roster refresh:", error));
+        return;
+      }
+      const nextOpenMs = Date.parse(snapshotRef.current?.nextOpensAt || "");
+      if (!snapshotRef.current?.period && Number.isFinite(nextOpenMs)) {
+        if (now < nextOpenMs) return;
+        // First opening check is a single GET, not a periodic poll storm.
+        replaceSnapshot({ players: [], period: null, cursor: 0, nextOpensAt: null });
+        reload().catch((error) => console.error("New registration cycle refresh:", error));
+        return;
+      }
       // sessionStorage is intentionally re-read, so a recent successful full
       // load or an F5 in the same tab cannot trigger another GET immediately.
       const latest = Math.max(lastAutoCheckAtRef.current, readAdminPlayersCheckAt(cacheIdentity));
@@ -180,7 +200,7 @@ export default function useAdminPlayersData({ enabled, canDelete, autoSync = fal
       window.removeEventListener("focus", check);
       document.removeEventListener("visibilitychange", check);
     };
-  }, [enabled, autoSync, loaded, syncChanges, cacheIdentity, markChecked]);
+  }, [enabled, autoSync, loaded, syncChanges, cacheIdentity, markChecked, replaceSnapshot, reload]);
 
   async function performWrite(write, error = "save") {
     setSaving(true);
@@ -222,8 +242,10 @@ export default function useAdminPlayersData({ enabled, canDelete, autoSync = fal
   }
 
   return {
-    players: snapshot?.players || [],
-    period: snapshot?.period || null,
+    // A backgrounded browser tab might not run timers at the deadline.
+    // Never render an expired roster when it resumes or changes tabs.
+    players: isAdminRosterPastDeadline(snapshot?.period) ? [] : snapshot?.players || [],
+    period: isAdminRosterPastDeadline(snapshot?.period) ? null : snapshot?.period || null,
     loading: enabled && !loaded ? true : loading,
     saving,
     errorKey,

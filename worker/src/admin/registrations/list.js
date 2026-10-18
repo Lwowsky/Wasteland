@@ -1,6 +1,8 @@
 import { verifyAdminRequest, adminHasPermission } from "../../auth/adminAuth.js";
 import { json } from "../../utils/response.js";
 import { getAdminRegistrationPeriod, toPeriodResponse } from "./period.js";
+import { getRegistrationSettings } from "../../db/registrationSettings.js";
+import { getRegistrationCycleSchedule } from "../../../../shared/registrationCycle.js";
 import { getRegistrationRows, getRegistrationCursor, getRegistrationChanges } from "../../db/registrationQueries.js";
 
 export async function handleAdminRegistrations(request, env) {
@@ -17,7 +19,13 @@ export async function handleAdminRegistrations(request, env) {
   const period = await getAdminRegistrationPeriod(env);
 
   if (!period) {
-    return json({ registrations: [], total: 0, period: null, cursor: 0 }, 200, { "Cache-Control": "private, no-store" });
+    // No active roster between Monday 09:00 JST and the next Friday.
+    // Give the browser the next opening time so it does not poll D1 every
+    // two minutes while the region is waiting for the next registration.
+    const settings = await getRegistrationSettings(env);
+    const schedule = getRegistrationCycleSchedule(settings);
+    return json({ registrations: [], total: 0, period: null, cursor: 0,
+      nextOpensAt: schedule.opensAt || null }, 200, { "Cache-Control": "private, no-store" });
   }
 
   const cursor = await getRegistrationCursor(env, period.id);

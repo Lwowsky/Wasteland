@@ -42,15 +42,18 @@ export async function getAdminWorkingPeriod(env, settings, nowMs = Date.now()) {
     return null;
   }
 
-  const cycleEndMs = Date.parse(
-    latestPeriod.wasteland_end_at || latestPeriod.closes_at || "",
-  );
-
-  if (!Number.isFinite(cycleEndMs) || cycleEndMs < nowMs) {
-    return null;
+  // Do not retire the working roster the instant Wasteland ends on Sunday.
+  // Public Pages and admin must share the Monday 09:00 JST (00:00 UTC)
+  // handover. Keeping the period readable is NOT the same as keeping
+  // registration open; submissions still obey closes_at.
+  const eventEndMs = Date.parse(latestPeriod.wasteland_end_at || "");
+  if (Number.isFinite(eventEndMs)) {
+    return nowMs < getPublicCycleCloseAtMs(eventEndMs) ? latestPeriod : null;
   }
 
-  return latestPeriod;
+  // Legacy periods without an event end keep their previous behavior.
+  const legacyEndMs = Date.parse(latestPeriod.closes_at || "");
+  return Number.isFinite(legacyEndMs) && nowMs <= legacyEndMs ? latestPeriod : null;
 }
 
 // Retain at most the former 24-hour grace window; for the ordinary

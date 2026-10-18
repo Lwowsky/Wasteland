@@ -3,7 +3,15 @@
 // Importantly, the hook can read this ONLY after AdminRoute verifies access.
 const PREFIX = "wasteland-admin-players-v1:";
 const CHECK_PREFIX = "wasteland-admin-players-checked-v1:";
+import { getPublicCycleCloseAtMs } from "../../../../shared/registrationCycle.js";
+
 const MAX_CACHE_AGE_MS = 30 * 60 * 1000;
+
+export function isAdminRosterPastDeadline(period, now = Date.now()) {
+  if (!period) return false;
+  const endMs = Date.parse(period.wastelandEndAt || "");
+  return Number.isFinite(endMs) && now >= getPublicCycleCloseAtMs(endMs);
+}
 
 function storage() {
   try { return window.sessionStorage; } catch { return null; }
@@ -22,7 +30,10 @@ export function readAdminPlayersCache(identity, now = Date.now()) {
       !Number.isSafeInteger(cached.cursor) || cached.cursor < 0 ||
       !Number.isFinite(cached.savedAt) ||
       now - cached.savedAt < 0 || now - cached.savedAt > MAX_CACHE_AGE_MS ||
-      (cached.period && !Number.isSafeInteger(Number(cached.period.id)))
+      (cached.period && !Number.isSafeInteger(Number(cached.period.id))) ||
+      isAdminRosterPastDeadline(cached.period, now) ||
+      // Once the next Friday opens, never reuse an idle-cycle snapshot.
+      (!cached.period && cached.nextOpensAt && now >= Date.parse(cached.nextOpensAt))
     ) return null;
     return cached;
   } catch { return null; }
