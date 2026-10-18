@@ -9,6 +9,10 @@ export function getSubmitErrorMessage(code, t) {
     REGISTRATION_FULL: t.registration.errors.full,
     INVALID_DATA: t.registration.errors.invalidData,
     REQUIRED_FIELDS: t.registration.errors.requiredFields,
+    CHALLENGE_REQUIRED: t.registration.errors.challenge,
+    CHALLENGE_FAILED: t.registration.errors.challenge,
+    CHALLENGE_UNAVAILABLE: t.registration.errors.challengeUnavailable,
+    RATE_LIMITED: t.registration.errors.rateLimited,
   };
 
   return messages[code] || t.registration.errors.submit;

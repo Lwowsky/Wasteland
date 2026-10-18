@@ -1,4 +1,6 @@
 import PagePanel from "../../components/PagePanel/PagePanel.jsx";
+import TurnstileWidget from "../../components/Turnstile/TurnstileWidget.jsx";
+import { turnstileEnabled } from "../../components/Turnstile/turnstileConfig.js";
 import ExtraSquadsSection from "../../features/registration/components/ExtraSquadsSection.jsx";
 import PlayerSection from "../../features/registration/components/PlayerSection.jsx";
 import ReadinessSection from "../../features/registration/components/ReadinessSection.jsx";
@@ -32,6 +34,9 @@ function RegistrationSection({
     submitSuccess,
     submitErrorCode,
     submitting,
+    challengeToken,
+    setChallengeToken,
+    challengeNonce,
     feedbackRef,
     invalidFieldSet,
     isVisible,
@@ -143,11 +148,13 @@ function RegistrationSection({
             onChange={handleCommentChange}
           />
 
+          {turnstileEnabled && <TurnstileWidget key={challengeNonce} language={language} action="registration" onTokenChange={setChallengeToken} />}
+
           <div className="registration__actions">
             <button
               type="submit"
               className="registration__submit"
-              disabled={submitting}
+              disabled={submitting || (turnstileEnabled && !challengeToken)}
             >
               {submitting ? t.registration.submitting : t.registration.submit}
             </button>

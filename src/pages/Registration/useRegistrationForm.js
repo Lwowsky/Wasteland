@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState } from "react";
+import { turnstileEnabled } from "../../components/Turnstile/turnstileConfig.js";
 
 import { submitRegistration } from "../../features/registration/registrationApi.js";
 import {
@@ -70,6 +71,8 @@ export default function useRegistrationForm(registrationConfig) {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitErrorCode, setSubmitErrorCode] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [challengeToken, setChallengeToken] = useState("");
+  const [challengeNonce, setChallengeNonce] = useState(0);
   const [validationAttempted, setValidationAttempted] = useState(false);
   const feedbackRef = useRef(null);
 
@@ -141,13 +144,18 @@ export default function useRegistrationForm(registrationConfig) {
       return;
     }
 
+    if (turnstileEnabled && !challengeToken) {
+      setSubmitErrorCode("CHALLENGE_REQUIRED");
+      scrollToFeedback(feedbackRef);
+      return;
+    }
     try {
       setSubmitting(true);
       setValidationAttempted(false);
       setSubmitErrorCode("");
       setSubmitSuccess(false);
 
-      await submitRegistration(registrationData);
+      await submitRegistration(registrationData, challengeToken);
 
       setRegistrationData(createEmptyRegistration(customFields));
       setTemplateMessageKey("");
@@ -158,6 +166,8 @@ export default function useRegistrationForm(registrationConfig) {
       setSubmitErrorCode(error.message || "REGISTRATION_FAILED");
       scrollToFeedback(feedbackRef);
     } finally {
+      setChallengeToken("");
+      setChallengeNonce((current) => current + 1);
       setSubmitting(false);
     }
   }
@@ -232,6 +242,8 @@ export default function useRegistrationForm(registrationConfig) {
     setSubmitSuccess(false);
     setSubmitErrorCode("");
     setValidationAttempted(false);
+    setChallengeToken("");
+    setChallengeNonce((current) => current + 1);
   }
 
   return {
@@ -247,6 +259,9 @@ export default function useRegistrationForm(registrationConfig) {
     submitSuccess,
     submitErrorCode,
     submitting,
+    challengeToken,
+    setChallengeToken,
+    challengeNonce,
     feedbackRef,
     invalidFieldSet,
     isVisible,

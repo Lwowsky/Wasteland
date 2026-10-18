@@ -27,12 +27,16 @@ export function forgetSharedSession() {
   window.dispatchEvent(new Event("wasteland-shared-auth"));
 }
 
-export async function signInSharedConsul(password) {
+export async function signInSharedConsul(password, turnstileToken = "") {
   clearAdminPlayersCache();
+  const existing = getSharedSession();
   const data = await requestJson("/api/shared-consul/login", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ password }),
+    headers: {
+      "Content-Type": "application/json",
+      ...(existing ? { Authorization: `Bearer ${existing.token}` } : {}),
+    },
+    body: JSON.stringify({ password, turnstileToken }),
   });
   sessionStorage.setItem(
     STORAGE,

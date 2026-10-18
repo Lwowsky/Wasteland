@@ -1,5 +1,5 @@
 import { handleCloudflareMetrics } from "./admin/cloudflareMetrics.js";
-import { handleSharedLogin, handleSharedStatus, handleSharedManage } from "./auth/sharedConsul.js";
+import { handleSharedLogin, handleSharedStatus, handleSharedManage, cleanupSharedConsulSessions } from "./auth/sharedConsul.js";
 import {
   handleAdminTurretPlanGet, handleAdminTurretDraftPut,
   handleAdminTurretPublish, handleAdminTurretRestore, handlePublicFinalPlan,
@@ -8,7 +8,8 @@ import {
 import { JSON_HEADERS } from "./config/headers.js";
 
 import { json } from "./utils/response.js";
-import { guardSensitiveRequest } from "./utils/requestGuard.js";
+import { guardSensitiveRequest, readBoundedSensitiveRequest } from "./utils/requestGuard.js";
+import { verifySensitiveTurnstile } from "./utils/turnstile.js";
 
 import { handleCachedGet } from "./utils/cache.js";
 
@@ -82,7 +83,11 @@ export default {
 
       if (request.method === "POST" && url.pathname === "/api/registration") {
         const blocked = await guardSensitiveRequest(request, env, "registration");
-        return blocked || await handleRegistration(request, env);
+        if (blocked) return blocked;
+        const bounded = await readBoundedSensitiveRequest(request, "registration");
+        if (bounded instanceof Response) return bounded;
+        const challenge = await verifySensitiveTurnstile(bounded, env, "registration");
+        return challenge || await handleRegistration(bounded, env);
       }
 
       if (
@@ -167,7 +172,10 @@ export default {
         url.pathname === "/api/content-access/activate"
       ) {
         const blocked = await guardSensitiveRequest(request, env, "accessActivation");
-        return blocked || await handleContentAccessActivation(request, env);
+        if (blocked) return blocked;
+        const bounded = await readBoundedSensitiveRequest(request, "accessActivation");
+        if (bounded instanceof Response) return bounded;
+        return handleContentAccessActivation(bounded, env);
       }
 
       if (request.method === "GET" && url.pathname === "/api/players") {
@@ -201,7 +209,11 @@ export default {
 
       if (url.pathname === "/api/shared-consul/login" && request.method === "POST") {
         const blocked = await guardSensitiveRequest(request, env, "sharedLogin");
-        return blocked || handleSharedLogin(request, env);
+        if (blocked) return blocked;
+        const bounded = await readBoundedSensitiveRequest(request, "sharedLogin");
+        if (bounded instanceof Response) return bounded;
+        const challenge = await verifySensitiveTurnstile(bounded, env, "shared_login");
+        return challenge || handleSharedLogin(bounded, env);
       }
       if (url.pathname === "/api/shared-consul/status" && request.method === "GET") return handleSharedStatus(request,env);
       if (url.pathname === "/api/admin/shared-consul" && ["GET","POST","DELETE"].includes(request.method)) return handleSharedManage(request,env);
@@ -392,7 +404,10 @@ export default {
 
   async scheduled(event, env, ctx) {
     if (event.cron === "17 0 * * *") {
-      ctx.waitUntil(cleanupOldRegistrationPeriods(env));
+      ctx.waitUntil(Promise.all([
+        cleanupOldRegistrationPeriods(env),
+        cleanupSharedConsulSessions(env),
+      ]));
     }
     if (event.cron === "* * * * *") {
       ctx.waitUntil((async () => {

@@ -86,7 +86,10 @@
     "invalidData": "Please check the form data.",
     "submit": "Failed to submit the registration. Please try again.",
     "requiredFields": "Please complete all required fields. We have highlighted the first missing field for you.",
-    "requiredFieldsTitle": "Please fill in the required fields"
+    "requiredFieldsTitle": "Please fill in the required fields",
+    "challenge": "Complete the security check before submitting.",
+    "challengeUnavailable": "Security check is temporarily unavailable. Please try again later.",
+    "rateLimited": "Too many registration attempts. Wait a minute and try again."
   },
   "customFields": {
     "title": "Additional fields",

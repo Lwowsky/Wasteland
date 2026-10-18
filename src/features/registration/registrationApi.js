@@ -32,7 +32,7 @@ function fetchRegistrationSettings() {
   );
 }
 
-export async function submitRegistration(data) {
+export async function submitRegistration(data, turnstileToken = "") {
   const result = await requestJson(
     "/api/registration",
     {
@@ -40,7 +40,7 @@ export async function submitRegistration(data) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...data, turnstileToken }),
     },
     "REGISTRATION_FAILED",
   );

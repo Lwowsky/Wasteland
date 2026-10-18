@@ -1,3 +1,6 @@
+import TurnstileWidget from "../../../components/Turnstile/TurnstileWidget.jsx";
+import { turnstileEnabled } from "../../../components/Turnstile/turnstileConfig.js";
+
 export default function LoginSharedForm({
   copy,
   sharedPassword,
@@ -6,6 +9,9 @@ export default function LoginSharedForm({
   setShowSharedPassword,
   error,
   loading,
+  challengeToken,
+  setChallengeToken,
+  challengeNonce,
   onSharedLogin,
 }) {
   return (
@@ -21,8 +27,13 @@ export default function LoginSharedForm({
             </button>
           </div>
         </label>
+        {turnstileEnabled && (
+          <div className="login-field">
+            <TurnstileWidget key={challengeNonce} onTokenChange={setChallengeToken} />
+          </div>
+        )}
         {error && <p className="login-error">{error}</p>}
-        <button type="submit" className="login-submit" disabled={loading}>{copy.sharedConsul.submit}</button>
+        <button type="submit" className="login-submit" disabled={loading || (turnstileEnabled && !challengeToken)}>{copy.sharedConsul.submit}</button>
       </form>
     </>
   );

@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import RouteLoading from "./components/RouteLoading/RouteLoading.jsx";
+import NotFound from "./pages/NotFound/NotFound.jsx";
 import MainLayout from "./layouts/MainLayout.jsx";
 import { ROUTES } from "./config/routes.js";
 import { resolvePreferredLanguage } from "./utils/language.js";
@@ -16,7 +17,6 @@ const Login = lazy(() => import("./pages/Auth/Login/Login.jsx"));
 const AccessDenied = lazy(() =>
   import("./pages/Auth/AccessDenied/AccessDenied.jsx"),
 );
-const NotFound = lazy(() => import("./pages/NotFound/NotFound.jsx"));
 const AdminRoute = lazy(() => import("./features/auth/AdminRoute.jsx"));
 const ContentAccessGate = lazy(() =>
   import("./features/contentAccess/ContentAccessGate.jsx"),

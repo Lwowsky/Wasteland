@@ -1,4 +1,5 @@
 import { signInSharedConsul } from "../../../features/auth/sharedConsulClient.js";
+import { turnstileEnabled } from "../../../components/Turnstile/turnstileConfig.js";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import {
@@ -38,6 +39,8 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const [sharedPassword, setSharedPassword] = useState("");
+  const [challengeToken, setChallengeToken] = useState("");
+  const [challengeNonce, setChallengeNonce] = useState(0);
   const [displayName, setDisplayName] = useState("");
 
   const [requestedRole, setRequestedRole] = useState("consul");
@@ -80,14 +83,24 @@ function Login() {
     setLoading(true);
     clearMessages();
     try {
-      const result = await signInSharedConsul(sharedPassword.trim());
+      if (turnstileEnabled && !challengeToken) {
+        setError(copy.sharedConsul.challengeRequired);
+        return;
+      }
+      const result = await signInSharedConsul(sharedPassword.trim(), challengeToken);
       setSharedPassword("");
       setSharedResult(result);
     } catch (error) {
       setError(error?.message === "RATE_LIMITED"
         ? copy.sharedConsul.rateLimited
-        : copy.sharedConsul.error);
-    } finally { setLoading(false); }
+        : ["CHALLENGE_FAILED", "CHALLENGE_REQUIRED", "CHALLENGE_UNAVAILABLE"].includes(error?.message)
+          ? copy.sharedConsul.challengeRequired
+          : copy.sharedConsul.error);
+    } finally {
+      setLoading(false);
+      setChallengeToken("");
+      setChallengeNonce((number) => number + 1);
+    }
   }
 
   async function handleEmailLogin(event) {
@@ -282,6 +295,9 @@ function Login() {
             setShowSharedPassword={setShowSharedPassword}
             error={error}
             loading={loading}
+            challengeToken={challengeToken}
+            setChallengeToken={setChallengeToken}
+            challengeNonce={challengeNonce}
             onSharedLogin={handleSharedLogin}
           />
         )}

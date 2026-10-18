@@ -1,0 +1,58 @@
+// Stage 040: REVIEW TEMPLATE — not deployed by GitHub/Cloudflare.
+// Review active production rules in Firebase before choosing to deploy.
+// First provision Owner adminUsers/<owner UID> with Firebase Console/Admin SDK.
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function staffDoc() {
+      return get(/databases/$(database)/documents/adminUsers/$(request.auth.uid));
+    }
+    function isStaffManager() {
+      return signedIn() && staffDoc().data.active == true
+        && staffDoc().data.role in ['owner', 'admin'];
+    }
+    function validManagedRole() {
+      return request.resource.data.role in ['admin', 'consul'];
+    }
+
+    match /adminUsers/{uid} {
+      // The Worker REST GET checks the *calling user's own* admin document.
+      allow get: if signedIn() && (request.auth.uid == uid || isStaffManager());
+      allow list: if isStaffManager();
+      // Never allow creation/updating/deletion of Owner via the browser client.
+      allow create: if isStaffManager() && validManagedRole()
+        && request.resource.data.active is bool
+        && request.resource.data.permissions is map;
+      allow update: if isStaffManager() && resource.data.role != 'owner'
+        && validManagedRole() && request.resource.data.active is bool
+        && request.resource.data.permissions is map;
+      allow delete: if isStaffManager() && resource.data.role != 'owner'
+        && uid != request.auth.uid;
+    }
+
+    match /accessRequests/{emailId} {
+      // A user may inspect only their own access request.
+      allow get: if signedIn() && (isStaffManager() ||
+        (resource.data.uid == request.auth.uid &&
+          emailId == request.auth.token.email.lower()));
+      allow list: if isStaffManager();
+      allow create: if signedIn() &&
+        request.resource.data.keys().hasOnly([
+          'uid', 'email', 'displayName', 'requestedRole', 'comment',
+          'status', 'createdAt', 'updatedAt'
+        ]) &&
+        request.resource.data.uid == request.auth.uid &&
+        request.resource.data.email == request.auth.token.email.lower() &&
+        emailId == request.auth.token.email.lower() &&
+        request.resource.data.status == 'pending' &&
+        request.resource.data.requestedRole in ['admin', 'consul'];
+      allow update, delete: if isStaffManager();
+    }
+
+    // No other collections are exposed to browser users by this template.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

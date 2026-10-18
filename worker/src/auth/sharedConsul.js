@@ -64,6 +64,23 @@ export async function handleSharedLogin(request, env) {
   if (typeof password !== "string" || password.length < 32 || password.length > 150) return failure("INVALID_PASSWORD", 401);
   const hash = await digest(password);
   const timestamp = now();
+  // Correct repeated login in the SAME browser reuses the active credential
+  // session. It still checks the supplied password hash and revocation in D1;
+  // it never treats a session alone as proof of a newly typed password.
+  const authorization = request.headers.get("Authorization") || "";
+  if (authorization.startsWith("Bearer shared_") && authorization.length <= 263) {
+    const existingToken = authorization.slice(7);
+    const existing = await env.DB.prepare(`SELECT s.expires_at AS session_expiry, c.expires_at AS credential_expiry
+      FROM shared_consul_sessions_v2 s JOIN shared_consul_credentials c ON c.id = s.credential_id
+      WHERE s.token_hash = ? AND c.secret_hash = ? AND c.revoked_at IS NULL`)
+      .bind(await digest(existingToken), hash).first();
+    if (existing && existing.session_expiry > timestamp &&
+        (existing.credential_expiry == null || existing.credential_expiry > timestamp)) {
+      return success({ token: existingToken, expiresAt: existing.session_expiry,
+        credentialExpiresAt: existing.credential_expiry, role: "consul",
+        permissions: sharedPermissions() });
+    }
+  }
   const credential = await env.DB.prepare(`SELECT id, expires_at, revoked_at FROM shared_consul_credentials WHERE secret_hash = ?`).bind(hash).first();
   if (credential && !credential.revoked_at && (credential.expires_at == null || credential.expires_at > timestamp)) {
     const token = `shared_${secret()}`;
@@ -173,4 +190,15 @@ export async function handleSharedManage(request, env) {
     .bind(idNew, body.label.trim(), await digest(password), encrypted.encrypted, encrypted.iv, expiry, timestamp, timestamp, timestamp).run();
   if (!inserted.meta?.changes) return failure("MAX_ACTIVE_KEYS", 409);
   return success({ password, credential: { id: idNew, label: body.label.trim(), createdAt: timestamp, expiresAt: expiry, revokedAt: null } });
+}
+
+
+// Existing daily cron. No scans of registered players. Indexes on token_hash
+// continue to make authentication targeted; this only reclaims expired sessions.
+export async function cleanupSharedConsulSessions(env, timestamp = now()) {
+  if (!env.DB) return;
+  await env.DB.batch([
+    env.DB.prepare("DELETE FROM shared_consul_sessions_v2 WHERE expires_at <= ?").bind(timestamp),
+    env.DB.prepare("DELETE FROM shared_consul_sessions WHERE expires_at <= ?").bind(timestamp),
+  ]);
 }

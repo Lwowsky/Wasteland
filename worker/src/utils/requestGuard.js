@@ -41,3 +41,44 @@ export async function guardSensitiveRequest(request, env, kind) {
   }
   return null;
 }
+
+
+// Read small public POST bodies once and refuse oversized chunked payloads
+// without ever buffering an unbounded request. Handlers receive a fresh Request
+// with identical credentials/method and the validated body.
+export async function readBoundedSensitiveRequest(request, kind) {
+  const config = ROUTES[kind];
+  if (!config) throw new Error("UNKNOWN_RATE_LIMIT_ROUTE");
+  const reader = request.body?.getReader();
+  if (!reader) return request;
+  const parts = [];
+  let length = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      length += value.byteLength;
+      if (length > config.maxBytes) {
+        // Stop reading immediately, including for chunked or forged lengths.
+        reader.cancel().catch(() => {});
+        return json({ success: false, error: "REQUEST_TOO_LARGE" }, 413,
+          { "Cache-Control": "no-store" });
+      }
+      parts.push(value);
+    }
+  } catch {
+    return json({ success: false, error: "INVALID_REQUEST_BODY" }, 400,
+      { "Cache-Control": "no-store" });
+  } finally {
+    reader.releaseLock();
+  }
+  const bytes = new Uint8Array(length);
+  let offset = 0;
+  for (const part of parts) {
+    bytes.set(part, offset);
+    offset += part.byteLength;
+  }
+  const headers = new Headers(request.headers);
+  headers.delete("content-length");
+  return new Request(request, { headers, body: bytes });
+}
