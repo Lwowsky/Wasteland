@@ -17,8 +17,8 @@
 }
 
 .content-access-icon {
-  width: 68px;
-  height: 68px;
+  width: 88px;
+  height: 88px;
   display: grid;
   place-items: center;
   color: #356cf0;
@@ -115,8 +115,8 @@
 
 
 .content-access-icon img {
-  width: 42px;
-  height: 42px;
+  width: 76px;
+  height: 76px;
   object-fit: contain;
 }
 
@@ -124,4 +124,10 @@
   width: 18px;
   height: 18px;
   object-fit: contain;
+}
+
+/* Both unavailable sections use one shared centered card across desktop/mobile. */
+@media (max-width: 600px) {
+  .content-access-page { padding: 28px 0; }
+  .content-access-panel { padding: 28px 18px; }
 }

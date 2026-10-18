@@ -370,89 +370,13 @@
 }
 
 
-.registration__panel--unavailable {
-  display: grid;
-  gap: 18px;
-}
-
-.registration-access-card {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 18px;
-  align-items: flex-start;
-  padding: 22px;
-  background: linear-gradient(180deg, rgba(246, 251, 255, 0.98), rgba(232, 243, 253, 0.98));
-  border: 1px solid rgba(85, 145, 225, 0.24);
-  border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(39, 81, 140, 0.08);
-}
-
-.registration-access-card__icon {
-  width: 72px;
-  height: 72px;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(145deg, #edf5ff, #e5ecff);
-  border: 1px solid #cfdef6;
-  border-radius: 20px;
-}
-
-.registration-access-card__icon img {
-  width: 42px;
-  height: 42px;
-  object-fit: contain;
-}
-
-.registration-access-card__content {
-  display: grid;
-  gap: 8px;
-}
-
-.registration-access-card__content h2,
-.registration-access-card__content strong,
-.registration-access-card__content p {
-  margin: 0;
-}
-
-.registration-access-card__content h2 {
-  color: #173a66;
-  font-size: clamp(26px, 4vw, 38px);
-}
-
-.registration-access-card__content strong {
-  color: #31577f;
-  font-size: 18px;
-}
-
-.registration-access-card__content p {
-  color: #6d8198;
-  line-height: 1.6;
+/* Keep the unavailable registration view identical to player/plan access cards. */
+.registration.registration--unavailable {
   max-width: 760px;
-}
-
-.registration-access-card--closed,
-.registration-access-card--disabled {
-  border-color: rgba(241, 167, 183, 0.45);
-  background: linear-gradient(180deg, rgba(255, 247, 249, 0.98), rgba(247, 239, 245, 0.98));
-}
-
-.registration-access-card--full {
-  border-color: rgba(241, 210, 135, 0.5);
-  background: linear-gradient(180deg, rgba(255, 250, 238, 0.98), rgba(255, 245, 223, 0.98));
+  padding: 42px 0;
+  min-height: 62vh;
 }
 
 @media (max-width: 600px) {
-  .registration-access-card {
-    grid-template-columns: 1fr;
-    padding: 18px;
-  }
-
-  .registration-access-card__icon {
-    width: 62px;
-    height: 62px;
-  }
-
-  .registration-access-card__content h2 {
-    font-size: 25px;
-  }
+  .registration.registration--unavailable { padding: 28px 0; }
 }

@@ -20,20 +20,11 @@ import { publicAsset } from "../../utils/publicAsset.js";
 import "./ContentAccessGate.css";
 
 
-function getAccessIcon(resource, mode, reason) {
-  if (resource === "players") {
-    if (reason === "SNAPSHOT_CYCLE_MISMATCH") return publicAsset("/images/registration-settings/cycle-start-icon.webp");
-    if (mode === "private") return publicAsset("/images/registration-settings/cycle-close-icon.webp");
-    if (mode === "code") return publicAsset("/images/admin/icons/consul.webp");
-    if (mode === "link") return publicAsset("/images/home/nav-players.webp");
-    return publicAsset("/images/home/nav-players.webp");
-  }
-
-  if (reason === "SNAPSHOT_CYCLE_MISMATCH") return publicAsset("/images/registration-settings/cycle-start-icon.webp");
-  if (mode === "private") return publicAsset("/images/registration-settings/cycle-close-icon.webp");
-  if (mode === "code") return publicAsset("/images/admin/icons/consul.webp");
-  if (mode === "link") return publicAsset("/images/admin/icons/final-plan.webp");
-  return publicAsset("/images/admin/icons/final-plan.webp");
+// Use the site's existing square, transparent artwork, never a wide navigation banner.
+function getAccessIcon(resource) {
+  return publicAsset(resource === "players"
+    ? "/images/admin/region-editor/player.webp"
+    : "/images/admin/icons/final-plan.webp");
 }
 
 function getAccessCopy(copy, resource, status) {
@@ -254,7 +245,7 @@ function ContentAccessGate({ resource, children }) {
     return <Page containerClassName="content-access-container">
       <div className="content-access-page"><PagePanel className="content-access-panel">
         <div className="content-access-icon" aria-hidden="true">
-          <img src={getAccessIcon(resource, "private", "CYCLE_CLOSED")} alt="" width="42" height="42" />
+          <img src={getAccessIcon(resource)} alt="" width="76" height="76" />
         </div>
         <h1>{copy.resources[resource] || resource}</h1>
         <h2>{label.title}</h2>
@@ -291,7 +282,7 @@ function ContentAccessGate({ resource, children }) {
       <div className="content-access-page">
         <PagePanel className="content-access-panel">
           <div className="content-access-icon" aria-hidden="true">
-            <img src={getAccessIcon(resource, mode, currentStatus?.reason)} alt="" width="42" height="42" />
+            <img src={getAccessIcon(resource)} alt="" width="76" height="76" />
           </div>
 
           <h1>{resourceLabel}</h1>
@@ -312,7 +303,7 @@ function ContentAccessGate({ resource, children }) {
               </label>
 
               <button type="submit" disabled={!code.trim() || activating || codeAttemptState.blocked}>
-                <><img className="content-access-button-icon" src={getAccessIcon(resource, "code")} alt="" width="18" height="18" />{activating ? copy.code.activating : copy.code.submit}</>
+                <><img className="content-access-button-icon" src={getAccessIcon(resource)} alt="" width="18" height="18" />{activating ? copy.code.activating : copy.code.submit}</>
               </button>
             </form>
           )}

@@ -1,39 +1,22 @@
 import PagePanel from "../../components/PagePanel/PagePanel.jsx";
 import { publicAsset } from "../../utils/publicAsset.js";
-import RegistrationHeader from "./RegistrationHeader.jsx";
 import { getUnavailableState } from "./registrationMessages.js";
 
-function RegistrationUnavailable({
-  t,
-  rules,
-  reason,
-  language,
-  useLocalTime,
-}) {
-  const status = getUnavailableState({
-    rules,
-    reason,
-    t,
-    language,
-    useLocalTime,
-  });
+// Registration and protected player/plan pages intentionally share the same card design.
+import "../../features/contentAccess/ContentAccessGate.css";
+
+function RegistrationUnavailable({ t, rules, reason, language, useLocalTime }) {
+  const status = getUnavailableState({ rules, reason, t, language, useLocalTime });
 
   return (
-    <section id="registration" className="registration">
-      <PagePanel className="registration__panel registration__panel--unavailable">
-        <RegistrationHeader t={t} />
-
-        <div className={`registration-access-card registration-access-card--${status.state}`} role="status">
-          <div className="registration-access-card__icon" aria-hidden="true">
-            <img src={publicAsset(status.icon)} alt="" width="42" height="42" />
-          </div>
-
-          <div className="registration-access-card__content">
-            <h2>{t.registration.title}</h2>
-            <strong>{status.title}</strong>
-            <p>{status.text}</p>
-          </div>
+    <section id="registration" className="registration registration--unavailable content-access-page">
+      <PagePanel className="content-access-panel">
+        <div className="content-access-icon" aria-hidden="true">
+          <img src={publicAsset("/images/registration-settings/registration-fields-icon.webp")} alt="" width="76" height="76" />
         </div>
+        <h1>{t.registration.title}</h1>
+        <h2>{status.title}</h2>
+        <p role="status">{status.text}</p>
       </PagePanel>
     </section>
   );
