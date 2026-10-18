@@ -112,3 +112,16 @@
   border-radius: 11px;
   font-weight: 800;
 }
+
+
+.content-access-icon img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.content-access-button-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}

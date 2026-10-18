@@ -76,7 +76,11 @@
     "full": "Registration is currently unavailable.",
     "closed": "Registration is currently closed. Check the opening date and try again later.",
     "notOpenYet": "Registration has not opened yet.",
-    "opensAt": "Opens on {{date}}."
+    "opensAt": "Opens on {{date}}.",
+    "disabledTitle": "Registration disabled",
+    "fullTitle": "Registration is full",
+    "closedTitle": "Registration closed",
+    "notOpenYetTitle": "Registration has not opened yet"
   },
   "errors": {
     "alreadyRegistered": "A player with this nickname is already registered for this cycle.",

@@ -1,4 +1,3 @@
-import { KeyRound, Link2, LockKeyhole, ShieldCheck } from "lucide-react";
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 
@@ -19,6 +18,35 @@ import useNow from "../../hooks/useNow.js";
 import { publicAsset } from "../../utils/publicAsset.js";
 
 import "./ContentAccessGate.css";
+
+
+function getAccessIcon(resource, mode, reason) {
+  if (resource === "players") {
+    if (reason === "SNAPSHOT_CYCLE_MISMATCH") return publicAsset("/images/registration-settings/cycle-start-icon.webp");
+    if (mode === "private") return publicAsset("/images/registration-settings/cycle-close-icon.webp");
+    if (mode === "code") return publicAsset("/images/admin/icons/consul.webp");
+    if (mode === "link") return publicAsset("/images/home/nav-players.webp");
+    return publicAsset("/images/home/nav-players.webp");
+  }
+
+  if (reason === "SNAPSHOT_CYCLE_MISMATCH") return publicAsset("/images/registration-settings/cycle-start-icon.webp");
+  if (mode === "private") return publicAsset("/images/registration-settings/cycle-close-icon.webp");
+  if (mode === "code") return publicAsset("/images/admin/icons/consul.webp");
+  if (mode === "link") return publicAsset("/images/admin/icons/final-plan.webp");
+  return publicAsset("/images/admin/icons/final-plan.webp");
+}
+
+function getAccessCopy(copy, resource, status) {
+  if (status?.reason === "SNAPSHOT_CYCLE_MISMATCH") {
+    return {
+      title: copy.cycleUpdating.title,
+      text: copy.cycleUpdating[resource] || copy.cycleUpdating.text,
+    };
+  }
+
+  const mode = status?.mode || "private";
+  return copy.modes[mode] || copy.modes.private;
+}
 
 
 const CODE_ATTEMPT_WINDOW_MS = 60 * 60 * 1000;
@@ -226,7 +254,7 @@ function ContentAccessGate({ resource, children }) {
     return <Page containerClassName="content-access-container">
       <div className="content-access-page"><PagePanel className="content-access-panel">
         <div className="content-access-icon" aria-hidden="true">
-          <img src={publicAsset("/images/registration-settings/cycle-close-icon.webp")} alt="" width="36" height="36" />
+          <img src={getAccessIcon(resource, "private", "CYCLE_CLOSED")} alt="" width="42" height="42" />
         </div>
         <h1>{copy.resources[resource] || resource}</h1>
         <h2>{label.title}</h2>
@@ -263,23 +291,13 @@ function ContentAccessGate({ resource, children }) {
       <div className="content-access-page">
         <PagePanel className="content-access-panel">
           <div className="content-access-icon" aria-hidden="true">
-            {mode === "code" ? (
-              <KeyRound size={32} />
-            ) : mode === "link" ? (
-              <Link2 size={32} />
-            ) : mode === "public" ? (
-              <ShieldCheck size={32} />
-            ) : (
-              <LockKeyhole size={32} />
-            )}
+            <img src={getAccessIcon(resource, mode, currentStatus?.reason)} alt="" width="42" height="42" />
           </div>
 
           <h1>{resourceLabel}</h1>
 
-          <h2>{currentStatus?.reason === "SNAPSHOT_CYCLE_MISMATCH"
-            ? copy.cycleUpdating.title : copy.modes[mode].title}</h2>
-          <p>{currentStatus?.reason === "SNAPSHOT_CYCLE_MISMATCH"
-            ? copy.cycleUpdating.text : copy.modes[mode].text}</p>
+          <h2>{getAccessCopy(copy, resource, currentStatus).title}</h2>
+          <p>{getAccessCopy(copy, resource, currentStatus).text}</p>
 
           {mode === "code" && (
             <form className="content-access-form" onSubmit={submitCode}>
@@ -294,8 +312,7 @@ function ContentAccessGate({ resource, children }) {
               </label>
 
               <button type="submit" disabled={!code.trim() || activating || codeAttemptState.blocked}>
-                <KeyRound size={18} aria-hidden="true" />
-                {activating ? copy.code.activating : copy.code.submit}
+                <><img className="content-access-button-icon" src={getAccessIcon(resource, "code")} alt="" width="18" height="18" />{activating ? copy.code.activating : copy.code.submit}</>
               </button>
             </form>
           )}

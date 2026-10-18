@@ -46,7 +46,9 @@
   },
   "cycleUnavailable": "Unable to verify the access schedule. Please try again later.",
   "cycleUpdating": {
-    "title": "Waiting for the new cycle",
-    "text": "The next registration cycle is open. Public data is being updated; please try again shortly."
+    "title": "Waiting for updated cycle data",
+    "text": "The new cycle has already started, but public data is still being updated. Please try again shortly.",
+    "players": "The player table for the new cycle is still being updated. Please try again shortly.",
+    "final_plan": "The final plan for the new cycle is still being updated. Please try again shortly."
   }
 }

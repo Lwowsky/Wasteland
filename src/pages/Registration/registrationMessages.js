@@ -30,15 +30,29 @@ function getClosedMessage(reason, t) {
   return t.registration.unavailable.closed;
 }
 
-export function getUnavailableMessage({
+export function getUnavailableState({
   rules,
   reason,
   t,
   language,
   useLocalTime,
 }) {
-  if (reason && reason !== "REGISTRATION_CLOSED") {
-    return getClosedMessage(reason, t);
+  if (reason === "REGISTRATION_DISABLED") {
+    return {
+      title: t.registration.unavailable.disabledTitle,
+      text: t.registration.unavailable.disabled,
+      state: "disabled",
+      icon: "/images/registration-settings/cycle-close-icon.webp",
+    };
+  }
+
+  if (reason === "REGISTRATION_FULL") {
+    return {
+      title: t.registration.unavailable.fullTitle,
+      text: t.registration.unavailable.full,
+      state: "full",
+      icon: "/images/registration-settings/warning-icon.webp",
+    };
   }
 
   const schedule = getRegistrationCycleSchedule(rules, Date.now());
@@ -47,8 +61,22 @@ export function getUnavailableMessage({
     const timeZone = useLocalTime ? getUserTimeZone() : "UTC";
     const date = formatDate(schedule.opensAt, language, timeZone, true);
 
-    return `${t.registration.unavailable.notOpenYet} ${t.registration.unavailable.opensAt.replace("{{date}}", date)}`;
+    return {
+      title: t.registration.unavailable.notOpenYetTitle,
+      text: `${t.registration.unavailable.notOpenYet} ${t.registration.unavailable.opensAt.replace("{{date}}", date)}`,
+      state: "notOpenYet",
+      icon: "/images/registration-settings/cycle-open-icon.webp",
+    };
   }
 
-  return t.registration.unavailable.closed;
+  return {
+    title: t.registration.unavailable.closedTitle,
+    text: getClosedMessage(reason, t),
+    state: "closed",
+    icon: "/images/registration-settings/cycle-close-icon.webp",
+  };
+}
+
+export function getUnavailableMessage(args) {
+  return getUnavailableState(args).text;
 }
