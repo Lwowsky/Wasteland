@@ -2,11 +2,11 @@ import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import RouteLoading from "./components/RouteLoading/RouteLoading.jsx";
+import MainLayout from "./layouts/MainLayout.jsx";
 import { ROUTES } from "./config/routes.js";
 import { resolvePreferredLanguage } from "./utils/language.js";
 
 const StaticShareRedirect = lazy(() => import("./features/contentAccess/StaticShareRedirect.jsx"));
-const MainLayout = lazy(() => import("./layouts/MainLayout.jsx"));
 const Home = lazy(() => import("./pages/Home/Home.jsx"));
 const Registration = lazy(() => import("./pages/Registration/Registration.jsx"));
 const Players = lazy(() => import("./pages/Players/Players.jsx"));

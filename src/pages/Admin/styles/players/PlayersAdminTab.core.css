@@ -269,8 +269,15 @@
   background: linear-gradient(135deg, #fff7db, #ffedbd);
 }
 
-.admin-players-attention-summary svg {
+.admin-players-attention-summary svg,
+.admin-players-attention-icon {
   flex: 0 0 auto;
+}
+
+.admin-players-attention-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
 }
 
 /* =========================

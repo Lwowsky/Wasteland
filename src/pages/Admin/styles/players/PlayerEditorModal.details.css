@@ -93,8 +93,15 @@
     border-color 0.18s ease;
 }
 
-.player-editor-button svg {
+.player-editor-button svg,
+.player-editor-button__icon {
   flex: 0 0 auto;
+}
+
+.player-editor-button__icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
 }
 
 .player-editor-button:disabled {

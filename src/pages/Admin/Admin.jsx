@@ -1,6 +1,6 @@
 import { forgetSharedSession } from "../../features/auth/sharedConsulClient.js";
 import { LogOut } from "lucide-react";
-import { lazy, Suspense, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal.jsx";
@@ -31,6 +31,23 @@ const SettingsTab = lazy(() => import("./tabs/SettingsTab.jsx"));
 
 function replaceName(template, name) {
   return String(template || "").replace("{{name}}", name || "");
+}
+
+// Save only the selected TAB ID, never admin data or permissions.
+// Restoring the last allowed tab avoids downloading the entire Firestore
+// adminUsers collection after every F5 when the owner was viewing Players.
+const TAB_STORAGE_PREFIX = "wasteland-admin-active-tab-v1:";
+
+function getSavedTab(identity) {
+  if (!identity) return "";
+  try { return sessionStorage.getItem(`${TAB_STORAGE_PREFIX}${identity}`) || ""; }
+  catch { return ""; }
+}
+
+function saveTab(identity, tab) {
+  if (!identity || !tab) return;
+  try { sessionStorage.setItem(`${TAB_STORAGE_PREFIX}${identity}`, tab); }
+  catch { /* Storage can be unavailable. */ }
 }
 
 function Admin() {
@@ -93,15 +110,12 @@ function Admin() {
     admin.permissions,
   );
 
+  const tabStorageIdentity = `${user?.uid || ""}:${admin?.role || ""}`;
   const [activeTab, setActiveTab] = useState(() => {
-    if (canViewAccess) {
-      return "access";
-    }
-
-    if (canViewPlayers) {
-      return "players";
-    }
-
+    const restored = getSavedTab(tabStorageIdentity);
+    if (restored) return restored;
+    if (canViewAccess) return "access";
+    if (canViewPlayers) return "players";
     return "distribution";
   });
 
@@ -137,6 +151,10 @@ function Admin() {
   const resolvedActiveTab = tabs.some((tab) => tab.id === activeTab)
     ? activeTab
     : tabs[0]?.id || "";
+
+  useEffect(() => {
+    saveTab(tabStorageIdentity, resolvedActiveTab);
+  }, [tabStorageIdentity, resolvedActiveTab]);
 
   const needsPlayersData =
     (canViewPlayers || canViewDistribution) &&

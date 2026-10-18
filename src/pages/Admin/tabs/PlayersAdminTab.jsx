@@ -1,4 +1,4 @@
-import { AlertTriangle } from "lucide-react";
+import { publicAsset } from "../../../utils/publicAsset.js";
 import { lazy, Suspense, useState } from "react";
 
 import ConfirmModal from "../../../components/ConfirmModal/ConfirmModal.jsx";
@@ -205,7 +205,7 @@ function PlayersAdminTab({
             }))
           }
         >
-          <AlertTriangle size={18} aria-hidden="true" />
+          <img className="admin-players-attention-icon" src={publicAsset("/images/registration-settings/warning-icon.webp")} alt="" aria-hidden="true" width="18" height="18" />
           <span>
             {pt.ruleStatus.attentionSummary.replace(
               "{{count}}",

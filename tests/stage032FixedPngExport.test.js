@@ -15,7 +15,7 @@ function makeBoard({
   imageNaturalWidth = 360,
 } = {}) {
   let removed = false;
-  let currentSrc = "/images/final-plan/board-signature-flatflags.svg";
+  let currentSrc = "/images/final-plan/board-signature-flatflags.png";
   const elements = [];
   const listeners = {};
   const image = {

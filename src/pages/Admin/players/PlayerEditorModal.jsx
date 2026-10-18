@@ -1,6 +1,7 @@
 import { useState } from "react";
 
-import { Save, Trash2, X } from "lucide-react";
+import { Save, X } from "lucide-react";
+import { publicAsset } from "../../../utils/publicAsset.js";
 
 import ConfirmModal from "../../../components/ConfirmModal/ConfirmModal.jsx";
 import Modal from "../../../components/Modal/Modal.jsx";
@@ -99,7 +100,7 @@ function PlayerEditorModal({
             disabled={saving}
             onClick={handleDelete}
           >
-            <Trash2 size={18} aria-hidden="true" />
+            <img className="player-editor-button__icon" src={publicAsset("/images/admin/icons/actions/delete.webp")} alt="" aria-hidden="true" width="18" height="18" />
 
             {t.actions.delete}
           </button>

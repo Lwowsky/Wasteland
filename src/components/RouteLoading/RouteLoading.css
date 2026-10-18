@@ -1,5 +1,7 @@
 .route-loading {
-  min-height: 44vh;
+  /* Match .page to keep the content footprint stable between routes. */
+  min-height: 70svh;
+  flex: 1;
   display: grid;
   place-items: center;
 }

@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import RouteLoading from "../components/RouteLoading/RouteLoading.jsx";
 import { Outlet, useParams } from "react-router-dom";
 
 import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } from "../config/site.js";
@@ -64,18 +65,21 @@ function MainLayout() {
           error={eventError}
         />
 
-        <Outlet
-          context={{
-            t,
-            language,
-            useLocalTime,
-            event: resolvedEvent,
-            eventLoading,
-            eventError,
-            registrationConfig,
-            siteSettings,
-          }}
-        />
+        {/* Keep the header and footer mounted while lazy routes load. */}
+        <Suspense fallback={<RouteLoading />}>
+          <Outlet
+            context={{
+              t,
+              language,
+              useLocalTime,
+              event: resolvedEvent,
+              eventLoading,
+              eventError,
+              registrationConfig,
+              siteSettings,
+            }}
+          />
+        </Suspense>
 
         <Footer t={t} language={language} siteSettings={siteSettings} />
       </div>

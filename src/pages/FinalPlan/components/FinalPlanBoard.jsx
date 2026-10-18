@@ -37,14 +37,8 @@ const FinalPlanBoard = forwardRef(function FinalPlanBoard(
 
       <div className="final-plan-signature">
         <img
-          src={publicAsset("/images/final-plan/board-signature-flatflags.svg")}
+          src={publicAsset("/images/final-plan/board-signature-flatflags.png")}
           alt={t.finalPlan.signatureAlt}
-          onError={(event) => {
-            event.currentTarget.onerror = null;
-
-            event.currentTarget.src =
-              publicAsset("/images/final-plan/board-signature-flatflags.png");
-          }}
         />
       </div>
     </div>
