@@ -4,7 +4,8 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import RouteLoading from "./components/RouteLoading/RouteLoading.jsx";
 import NotFound from "./pages/NotFound/NotFound.jsx";
 import MainLayout from "./layouts/MainLayout.jsx";
-import { ROUTES } from "./config/routes.js";
+import { LANGUAGELESS_ROUTE_ALIASES, ROUTES } from "./config/routes.js";
+import PreferredLanguageRedirect from "./features/routing/PreferredLanguageRedirect.jsx";
 import { resolvePreferredLanguage } from "./utils/language.js";
 
 const StaticShareRedirect = lazy(() => import("./features/contentAccess/StaticShareRedirect.jsx"));
@@ -34,10 +35,19 @@ function App() {
 
         <Route path="/s/:shortCode" element={<StaticShareRedirect />} />
 
+        {Object.entries(LANGUAGELESS_ROUTE_ALIASES).map(([segment, target]) => (
+          <Route
+            key={segment}
+            path={`/${segment}`}
+            element={<PreferredLanguageRedirect route={target} />}
+          />
+        ))}
+
         <Route path="/:lang" element={<MainLayout />}>
           <Route index element={<Home />} />
 
           <Route path={ROUTES.registration} element={<Registration />} />
+          <Route path="player" element={<PreferredLanguageRedirect route={ROUTES.players} />} />
 
           <Route
             path={ROUTES.players}

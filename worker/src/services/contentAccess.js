@@ -162,9 +162,9 @@ export async function updateContentAccessSetting(env, resource, payload = {}) {
     ),
   };
 
-  // Public and legacy code modes are read-only for migration compatibility.
-  // New access choices are restricted to private and link-only.
-  if (!["private", "link"].includes(next.mode)) {
+  // Public viewing is intentionally supported alongside link-only and closed.
+  // Legacy one-time code mode stays read-only for compatibility.
+  if (!["public", "private", "link"].includes(next.mode)) {
     throw new Error("CONTENT_ACCESS_MODE_DISABLED");
   }
 
@@ -192,9 +192,9 @@ export async function updateContentAccessSetting(env, resource, payload = {}) {
   const period = await getCurrentContentPeriod(env);
 
   if (current.mode !== next.mode) {
+    // This revokes previously granted private links/sessions and marks the
+    // public JSON revision dirty. Avoid a redundant second D1 update.
     await revokeContentAccess(env, normalizedResource);
-      // Protected API routes continue to enforce the live D1 setting.
-    await markPublicSnapshotDirty(env);
   } else if (period && ["code", "link"].includes(next.mode)) {
     const expiresAt = getTokenExpiryIso(next.tokenTtlMinutes);
 

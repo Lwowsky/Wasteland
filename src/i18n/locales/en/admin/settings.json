@@ -369,6 +369,7 @@
     "cycleNote": "Legacy codes belong to a cycle. New static share links can remain active across cycles and are only for public-view data.",
     "noPeriod": "There is no current cycle. A cycle must exist before a code or private link can be created.",
     "modeLabel": "Access mode",
+    "publicWarning": "Public mode makes current-cycle data available to everyone without a password after the next successful JSON publication. Switching modes revokes previously issued private links. Calendar-based cycle closure remains active.",
     "modes": {
       "public": "Public — visible to everyone",
       "private": "Closed — public page unavailable",

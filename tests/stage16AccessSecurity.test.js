@@ -4,7 +4,9 @@ import { readFileSync } from 'node:fs';
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 test('stage16: every access mode change queues snapshot publication', () => {
   const source = read('worker/src/services/contentAccess.js');
-  assert.match(source, /if \(current\.mode !== next\.mode\)\s*\{\s*await revokeContentAccess\(env, normalizedResource\);[\s\S]*?await markPublicSnapshotDirty\(env\)/);
+  assert.match(source, /if \(current\.mode !== next\.mode\)\s*\{[\s\S]*?await revokeContentAccess\(env, normalizedResource\)/);
+  // revokeContentAccess already marks the snapshot dirty; do not write twice.
+  assert.match(source, /export async function revokeContentAccess[\s\S]*?await markPublicSnapshotDirty\(env\)/);
 });
 test('stage16: protected player table stays redacted, while home preview is public', () => {
   const source = read('worker/src/public/publicSnapshot.js');

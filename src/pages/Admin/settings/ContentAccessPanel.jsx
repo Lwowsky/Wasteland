@@ -32,7 +32,7 @@ const ACCESS_UI_ICONS = {
 
 function createDraft(resource) {
   return {
-    mode: resource?.mode || "public",
+    mode: resource?.mode || "private",
     useLimit: Number(resource?.useLimit ?? 1),
     sessionMinutes: Number(resource?.sessionMinutes ?? 30),
     tokenTtlMinutes: Number(resource?.tokenTtlMinutes ?? 0),
