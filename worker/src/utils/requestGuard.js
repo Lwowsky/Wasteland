@@ -9,6 +9,7 @@ const ROUTES = Object.freeze({
   registration: { binding: "REGISTRATION_RATE_LIMIT", maxBytes: 24_576 },
   sharedLogin: { binding: "SHARED_LOGIN_RATE_LIMIT", maxBytes: 1_024 },
   accessActivation: { binding: "ACCESS_ACTIVATION_RATE_LIMIT", maxBytes: 1_024 },
+  adminRead: { binding: "ADMIN_READ_RATE_LIMIT", maxBytes: 0 },
 });
 
 export async function guardSensitiveRequest(request, env, kind) {

@@ -2,6 +2,7 @@
 // F5 but is tab-scoped and is discarded on explicit logout.
 // Importantly, the hook can read this ONLY after AdminRoute verifies access.
 const PREFIX = "wasteland-admin-players-v1:";
+const CHECK_PREFIX = "wasteland-admin-players-checked-v1:";
 const MAX_CACHE_AGE_MS = 30 * 60 * 1000;
 
 function storage() {
@@ -34,13 +35,29 @@ export function writeAdminPlayersCache(identity, data, now = Date.now()) {
   } catch { /* Browser storage may be disabled or over quota. */ }
 }
 
+// Only the timestamp is persisted, never shared between users. Keeping it in
+// sessionStorage makes F5 inexpensive while preserving tab-scoped admin data.
+export function readAdminPlayersCheckAt(identity) {
+  if (!identity) return 0;
+  try {
+    const value = Number(storage()?.getItem(`${CHECK_PREFIX}${identity}`));
+    return Number.isSafeInteger(value) && value > 0 ? value : 0;
+  } catch { return 0; }
+}
+
+export function markAdminPlayersCheckAt(identity, at = Date.now()) {
+  if (!identity || !Number.isSafeInteger(at) || at <= 0) return;
+  try { storage()?.setItem(`${CHECK_PREFIX}${identity}`, String(at)); }
+  catch { /* Browser storage may be unavailable or over quota. */ }
+}
+
 export function clearAdminPlayersCache() {
   const target = storage();
   if (!target) return;
   try {
     for (let i = target.length - 1; i >= 0; i -= 1) {
       const name = target.key(i);
-      if (name?.startsWith(PREFIX)) target.removeItem(name);
+      if (name?.startsWith(PREFIX) || name?.startsWith(CHECK_PREFIX)) target.removeItem(name);
     }
   } catch { /* Do not block logout if storage is inaccessible. */ }
 }

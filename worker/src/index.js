@@ -327,14 +327,17 @@ export default {
       }
 
       if (request.method === "GET" && url.pathname === "/api/admin/registrations/changes") {
-        return await handleAdminRegistrationChanges(request, env);
+        // Edge limiter runs before Firebase role reads and D1 cursor queries.
+        const blocked = await guardSensitiveRequest(request, env, "adminRead");
+        return blocked || await handleAdminRegistrationChanges(request, env);
       }
 
       if (
         request.method === "GET" &&
         url.pathname === "/api/admin/registrations"
       ) {
-        return await handleAdminRegistrations(request, env);
+        const blocked = await guardSensitiveRequest(request, env, "adminRead");
+        return blocked || await handleAdminRegistrations(request, env);
       }
 
       if (

@@ -38,6 +38,14 @@
       }
     },
     {
+      "name": "ADMIN_READ_RATE_LIMIT",
+      "namespace_id": "913704",
+      "simple": {
+        "limit": 120,
+        "period": 60
+      }
+    },
+    {
       "name": "REGISTRATION_RATE_LIMIT",
       "namespace_id": "913703",
       "simple": {

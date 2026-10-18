@@ -35,8 +35,9 @@ test("shared modal is portaled above the app, and standalone login dialog is cen
 
 test("admin auto-sync coalesces focus/visibility bursts without slowing post-write sync", () => {
   const sync = readFileSync(new URL("../src/pages/Admin/hooks/useAdminPlayersData.js", import.meta.url), "utf8");
-  assert.match(sync, /const AUTO_CHECK_COOLDOWN_MS = 10_000/);
-  assert.match(sync, /now - lastAutoCheckAtRef\.current < AUTO_CHECK_COOLDOWN_MS/);
+  assert.match(sync, /shouldCheckAdminPlayers\(latest, now, ADMIN_PLAYERS_AUTO_CHECK_MS\)/);
+  assert.match(sync, /readAdminPlayersCheckAt\(cacheIdentity\)/);
+  assert.match(sync, /markAdminPlayersCheckAt\(cacheIdentity, at\)/);
   assert.match(sync, /window\.addEventListener\("focus", check\)/);
   assert.match(sync, /document\.addEventListener\("visibilitychange", check\)/);
   assert.match(sync, /syncChanges\(\{ afterWrite: true \}\)/);

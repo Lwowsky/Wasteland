@@ -11,16 +11,16 @@ import {
   clearAdminPlayersCache,
   mergeAdminRegistrationChanges,
   readAdminPlayersCache,
+  readAdminPlayersCheckAt,
+  markAdminPlayersCheckAt,
   writeAdminPlayersCache,
 } from "../services/adminPlayersCache.js";
+import { ADMIN_PLAYERS_AUTO_CHECK_MS, shouldCheckAdminPlayers } from "../services/adminPlayersSyncPolicy.js";
 
-// Poll only while the table is visible, never every 10 seconds.
-// 10 admins * 8 hours * (3600 / 30) = 9600 small checks per day, not
-// 9600 scans of the full player table. Auth + cursor checks still cost money.
-const CHANGE_CHECK_INTERVAL_MS = 30_000;
-// A browser focus usually fires both focus and visibilitychange. Avoid duplicate
-// authenticated Worker + Firestore requests within the same short burst.
-const AUTO_CHECK_COOLDOWN_MS = 10_000;
+// A local timer checks eligibility every 15s, but only one network request
+// every 2 minutes. This avoids delaying fresh registrations after F5 without
+// increasing Worker, D1 or Firestore quotas.
+const LOCAL_TICK_MS = 15_000;
 const MAX_DELTA_PAGES = 20;
 
 export default function useAdminPlayersData({ enabled, canDelete, autoSync = false, cacheIdentity = "" }) {
@@ -32,8 +32,17 @@ export default function useAdminPlayersData({ enabled, canDelete, autoSync = fal
   const inflightRef = useRef(null);
   const generationRef = useRef(0);
   const activeRef = useRef(false);
-  const lastAutoCheckAtRef = useRef(0);
+  const lastAutoCheckAtRef = useRef(readAdminPlayersCheckAt(cacheIdentity));
   const snapshotRef = useRef(snapshot);
+
+  const markChecked = useCallback((at = Date.now()) => {
+    lastAutoCheckAtRef.current = at;
+    markAdminPlayersCheckAt(cacheIdentity, at);
+  }, [cacheIdentity]);
+
+  useEffect(() => {
+    lastAutoCheckAtRef.current = readAdminPlayersCheckAt(cacheIdentity);
+  }, [cacheIdentity]);
 
   const replaceSnapshot = useCallback((next) => {
     snapshotRef.current = next;
@@ -44,6 +53,7 @@ export default function useAdminPlayersData({ enabled, canDelete, autoSync = fal
   const reload = useCallback(async () => {
     const generation = ++generationRef.current;
     const result = await getAdminRegistrations();
+    markChecked(); // Fresh full snapshot already includes the latest changes.
     if (generation !== generationRef.current) return result;
     replaceSnapshot({
       players: result.registrations || [],
@@ -51,7 +61,7 @@ export default function useAdminPlayersData({ enabled, canDelete, autoSync = fal
       cursor: Number(result.cursor || 0),
     });
     return result;
-  }, [replaceSnapshot]);
+  }, [replaceSnapshot, markChecked]);
 
   const syncChanges = useCallback(async ({ afterWrite = false } = {}) => {
     if (inflightRef.current) {
@@ -59,6 +69,9 @@ export default function useAdminPlayersData({ enabled, canDelete, autoSync = fal
       try { await previous; } catch { /* Retry below if explicitly requested. */ }
       if (!afterWrite) return;
     }
+    // Save the attempted time before network access. A run of F5s after a
+    // transient error must not repeatedly invoke authenticated Firestore+D1.
+    markChecked();
     const promise = (async () => {
       const generation = generationRef.current;
       let current = snapshotRef.current;
@@ -107,7 +120,7 @@ export default function useAdminPlayersData({ enabled, canDelete, autoSync = fal
     } finally {
       if (inflightRef.current === promise) inflightRef.current = null;
     }
-  }, [reload, replaceSnapshot]);
+  }, [reload, replaceSnapshot, markChecked]);
 
   // Browser cache is only consumed AFTER AdminRoute has authenticated the user.
   useEffect(() => {
@@ -123,10 +136,13 @@ export default function useAdminPlayersData({ enabled, canDelete, autoSync = fal
       setErrorKey("");
       try {
         const result = await getAdminRegistrations();
-        if (active) replaceSnapshot({
-          players: result.registrations || [], period: result.period || null,
-          cursor: Number(result.cursor || 0),
-        });
+        if (active) {
+          markChecked(); // Avoid an immediate duplicate delta after the initial GET.
+          replaceSnapshot({
+            players: result.registrations || [], period: result.period || null,
+            cursor: Number(result.cursor || 0),
+          });
+        }
       } catch (error) {
         console.error("Load D1 registrations:", error);
         if (active) setErrorKey("load");
@@ -136,7 +152,7 @@ export default function useAdminPlayersData({ enabled, canDelete, autoSync = fal
     }
     load();
     return () => { active = false; };
-  }, [enabled, loaded, replaceSnapshot]);
+  }, [enabled, loaded, replaceSnapshot, markChecked]);
 
   useEffect(() => {
     const active = enabled && autoSync && loaded;
@@ -147,13 +163,16 @@ export default function useAdminPlayersData({ enabled, canDelete, autoSync = fal
     function check() {
       if (document.visibilityState === "hidden") return;
       const now = Date.now();
-      if (now - lastAutoCheckAtRef.current < AUTO_CHECK_COOLDOWN_MS) return;
-      lastAutoCheckAtRef.current = now;
+      // sessionStorage is intentionally re-read, so a recent successful full
+      // load or an F5 in the same tab cannot trigger another GET immediately.
+      const latest = Math.max(lastAutoCheckAtRef.current, readAdminPlayersCheckAt(cacheIdentity));
+      if (!shouldCheckAdminPlayers(latest, now, ADMIN_PLAYERS_AUTO_CHECK_MS)) return;
+      markChecked(now);
       syncChanges().catch((error) => console.error("Incremental registrations sync:", error));
     }
     if (!activeRef.current) check();
     activeRef.current = true;
-    const interval = window.setInterval(check, CHANGE_CHECK_INTERVAL_MS);
+    const interval = window.setInterval(check, LOCAL_TICK_MS);
     window.addEventListener("focus", check);
     document.addEventListener("visibilitychange", check);
     return () => {
@@ -161,7 +180,7 @@ export default function useAdminPlayersData({ enabled, canDelete, autoSync = fal
       window.removeEventListener("focus", check);
       document.removeEventListener("visibilitychange", check);
     };
-  }, [enabled, autoSync, loaded, syncChanges]);
+  }, [enabled, autoSync, loaded, syncChanges, cacheIdentity, markChecked]);
 
   async function performWrite(write, error = "save") {
     setSaving(true);
