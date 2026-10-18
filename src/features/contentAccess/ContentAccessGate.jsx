@@ -2,7 +2,7 @@ import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 
 import Page from "../../components/Page/Page.jsx";
-import PagePanel from "../../components/PagePanel/PagePanel.jsx";
+import AccessStatusCard from "../../components/AccessStatusCard/AccessStatusCard.jsx";
 import RouteLoading from "../../components/RouteLoading/RouteLoading.jsx";
 import {
   activateContentAccess,
@@ -242,23 +242,33 @@ function ContentAccessGate({ resource, children }) {
   // access card never flashes for a public/authorized page during refresh.
   if (cycleClosed) {
     const label = t.contentAccess.cycleClosed;
-    return <Page containerClassName="content-access-container">
-      <div className="content-access-page"><PagePanel className="content-access-panel">
-        <div className="content-access-icon" aria-hidden="true">
-          <img src={getAccessIcon(resource)} alt="" width="76" height="76" />
+    return (
+      <Page containerClassName="content-access-container">
+        <div className="content-access-page">
+          <AccessStatusCard
+            iconSrc={getAccessIcon(resource)}
+            title={copy.resources[resource] || resource}
+            heading={label.title}
+            text={resource === "players" ? label.players : label.finalPlan}
+          />
         </div>
-        <h1>{copy.resources[resource] || resource}</h1>
-        <h2>{label.title}</h2>
-        <p>{resource === "players" ? label.players : label.finalPlan}</p>
-      </PagePanel></div>
-    </Page>;
+      </Page>
+    );
   }
 
   if (!settingsLoaded) {
     if (!eventError) return <RouteLoading />;
-    return <Page containerClassName="content-access-container"><div className="content-access-page"><PagePanel className="content-access-panel">
-      <h1>{copy.resources[resource] || resource}</h1><p>{copy.cycleUnavailable}</p>
-    </PagePanel></div></Page>;
+    return (
+      <Page containerClassName="content-access-container">
+        <div className="content-access-page">
+          <AccessStatusCard
+            iconSrc={getAccessIcon(resource)}
+            title={copy.resources[resource] || resource}
+            text={copy.cycleUnavailable}
+          />
+        </div>
+      </Page>
+    );
   }
 
   if (status?.cycleEpoch !== cycleEpoch && cycleEpoch) return <RouteLoading />;
@@ -280,16 +290,12 @@ function ContentAccessGate({ resource, children }) {
   return (
     <Page containerClassName="content-access-container">
       <div className="content-access-page">
-        <PagePanel className="content-access-panel">
-          <div className="content-access-icon" aria-hidden="true">
-            <img src={getAccessIcon(resource)} alt="" width="76" height="76" />
-          </div>
-
-          <h1>{resourceLabel}</h1>
-
-          <h2>{getAccessCopy(copy, resource, currentStatus).title}</h2>
-          <p>{getAccessCopy(copy, resource, currentStatus).text}</p>
-
+        <AccessStatusCard
+          iconSrc={getAccessIcon(resource)}
+          title={resourceLabel}
+          heading={getAccessCopy(copy, resource, currentStatus).title}
+          text={getAccessCopy(copy, resource, currentStatus).text}
+        >
           {mode === "code" && (
             <form className="content-access-form" onSubmit={submitCode}>
               <label>
@@ -316,7 +322,7 @@ function ContentAccessGate({ resource, children }) {
           {errorText && (
             <div className="content-access-error">{errorText}</div>
           )}
-        </PagePanel>
+        </AccessStatusCard>
       </div>
     </Page>
   );

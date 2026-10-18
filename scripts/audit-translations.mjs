@@ -1,3 +1,4 @@
+import { findDuplicateJsonKeys } from "./audit-json-duplicate-keys.mjs";
 import { auditStaticTranslationAccesses } from "./audit-i18n-static-access.mjs";
 import fs from "node:fs";
 import path from "node:path";
@@ -189,6 +190,19 @@ function auditDirectJsxText() {
   return errors;
 }
 
+function auditDuplicateTranslationKeys() {
+  const errors = [];
+  for (const language of LANGUAGES) {
+    for (const file of relativeLocaleFiles(language)) {
+      const source = fs.readFileSync(path.join(LOCALES_ROOT, language, file), "utf8");
+      for (const duplicate of findDuplicateJsonKeys(source)) {
+        errors.push(`${language}/${file}:${duplicate.line}: duplicate JSON key ${duplicate.key}`);
+      }
+    }
+  }
+  return errors;
+}
+
 function auditCatalogLeafTypes() {
   const errors = [];
   for (const language of LANGUAGES) {
@@ -218,6 +232,7 @@ function auditCatalogLeafTypes() {
 
 export function runTranslationAudit() {
   return [
+    ...auditDuplicateTranslationKeys(),
     ...auditLocaleParity(),
     ...auditCatalogLeafTypes(),
     ...auditDirectJsxText(),

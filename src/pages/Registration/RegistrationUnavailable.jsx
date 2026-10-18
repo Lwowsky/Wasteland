@@ -1,4 +1,4 @@
-import PagePanel from "../../components/PagePanel/PagePanel.jsx";
+import AccessStatusCard from "../../components/AccessStatusCard/AccessStatusCard.jsx";
 import { publicAsset } from "../../utils/publicAsset.js";
 import { getUnavailableState } from "./registrationMessages.js";
 
@@ -10,14 +10,12 @@ function RegistrationUnavailable({ t, rules, reason, language, useLocalTime }) {
 
   return (
     <section id="registration" className="registration registration--unavailable content-access-page">
-      <PagePanel className="content-access-panel">
-        <div className="content-access-icon" aria-hidden="true">
-          <img src={publicAsset("/images/registration-settings/registration-fields-icon.webp")} alt="" width="76" height="76" />
-        </div>
-        <h1>{t.registration.title}</h1>
-        <h2>{status.title}</h2>
-        <p role="status">{status.text}</p>
-      </PagePanel>
+      <AccessStatusCard
+        iconSrc={publicAsset("/images/registration-settings/registration-fields-icon.webp")}
+        title={t.registration.title}
+        heading={status.title}
+        text={status.text}
+      />
     </section>
   );
 }

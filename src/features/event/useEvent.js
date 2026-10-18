@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
+import useNow from "../../hooks/useNow.js";
+import { DEFAULT_SITE_SETTINGS } from "../../../shared/siteSettingsConfig.js";
 
 import { getRegistrationSettings } from "../registration/registrationApi.js";
 import { normalizeRegistrationSettings } from "../registration/registrationSettings.js";
 import { getRegistrationCycleSchedule, getAutomaticRegistrationCycleSchedule } from "../registration/registrationCycle.js";
 
+// One canonical source for default region identity; site settings override it.
 const STATIC_REGION = {
-  region: 987,
-  regionName: "We are One",
+  region: DEFAULT_SITE_SETTINGS.regionNumber,
+  regionName: DEFAULT_SITE_SETTINGS.regionName,
 };
 
 function resolveOrganizerAlliance(settings) {
@@ -23,8 +26,7 @@ function resolveOrganizerAlliance(settings) {
   return tag || match?.name || "";
 }
 
-function buildEvent(settings = {}) {
-  const nowMs = Date.now();
+function buildEvent(settings = {}, nowMs = Date.now()) {
   const schedule = getRegistrationCycleSchedule(settings, nowMs);
   // Old manual dates are not a promise of another registration period.
   // In automatic mode use the upcoming cycle instead of displaying dates
@@ -47,7 +49,9 @@ function buildEvent(settings = {}) {
 }
 
 function useEvent() {
-  const [event, setEvent] = useState(null);
+  // Calendar dates roll forward even if a player leaves the tab open for days.
+  // Pure client-side calculation: no polling or additional Worker/D1 reads.
+  const nowMs = useNow(60_000);
   const [registrationConfig, setRegistrationConfig] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -75,7 +79,6 @@ function useEvent() {
           ...result,
           settings,
         });
-        setEvent(buildEvent(settings));
         setError(null);
       } catch (loadError) {
         console.error("Load event settings:", loadError);
@@ -124,6 +127,10 @@ function useEvent() {
       window.removeEventListener("storage", handleStorage);
     };
   }, []);
+
+  const event = registrationConfig?.settings
+    ? buildEvent(registrationConfig.settings, nowMs)
+    : null;
 
   return {
     event,

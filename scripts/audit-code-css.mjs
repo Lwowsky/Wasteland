@@ -107,6 +107,7 @@ export function inspectCodeCss(root = ROOT) {
   const cssFiles = files.filter((file) => file.endsWith(".css"));
   const hashes = new Map();
   const scopedSelectors = new Map();
+  const declarationGroups = new Map();
   const largeFiles = [];
   let selectorCount = 0;
 
@@ -124,6 +125,13 @@ export function inspectCodeCss(root = ROOT) {
       const key = JSON.stringify([rule.context, rule.selector]);
       if (!scopedSelectors.has(key)) scopedSelectors.set(key, []);
       scopedSelectors.get(key).push({ file: relative, declarations: rule.declarations });
+      // Identical declaration blocks under different selectors are possible
+      // refactoring candidates, NOT necessarily duplicate or overridden CSS.
+      if (rule.declarations.size >= 6) {
+        const fingerprint = JSON.stringify([...rule.declarations].sort(([a], [b]) => a.localeCompare(b)));
+        if (!declarationGroups.has(fingerprint)) declarationGroups.set(fingerprint, []);
+        declarationGroups.get(fingerprint).push({ file: relative, selector: rule.selector });
+      }
     }
   }
 
@@ -150,6 +158,8 @@ export function inspectCodeCss(root = ROOT) {
     selectorCount,
     identicalFiles: [...hashes.values()].filter((group) => group.length > 1),
     repeatedSelectors,
+    matchingDeclarationBlocks: [...declarationGroups.values()].filter((group) =>
+      group.length > 1 && new Set(group.map(({ file }) => file)).size > 1),
     largeFiles: largeFiles.sort((a, b) => b.lines - a.lines),
   };
 }
@@ -161,8 +171,11 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   } else {
     console.log(`CODE_CSS_REVIEW: ${report.sourceFiles} source files, ${report.cssFiles} CSS files, ${report.selectorCount} rules`);
     console.log(`${report.identicalFiles.length} byte-identical file groups, ${report.repeatedSelectors.length} repeated selector scopes`);
+    console.log(`${report.matchingDeclarationBlocks.length} cross-file matching declaration blocks (review only)`);
     report.repeatedSelectors.forEach((item) =>
       console.log(`? CSS ${item.selector} (${item.context || "global"}): ${item.files.join(", ")}`));
+    report.matchingDeclarationBlocks.forEach((group) =>
+      console.log(`  similar CSS: ${group.map((item) => `${item.file} [${item.selector}]`).join(" | ")}`));
     console.log(`Large files (>400 lines): ${report.largeFiles.length}`);
     report.largeFiles.forEach(({ file, lines }) => console.log(`  ${lines} ${file}`));
     console.log("NOTE: This report never deletes files; computed class names and runtime usage need manual review.");

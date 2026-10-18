@@ -20,10 +20,15 @@ export function getStoredLanguage() {
     return "";
   }
 
-  return normalizeLanguage(
-    window.localStorage.getItem(PREFERRED_LANGUAGE_STORAGE_KEY),
-    "",
-  );
+  try {
+    return normalizeLanguage(
+      window.localStorage.getItem(PREFERRED_LANGUAGE_STORAGE_KEY),
+      "",
+    );
+  } catch {
+    // Browser privacy settings can forbid storage. Language routing must survive.
+    return "";
+  }
 }
 
 export function savePreferredLanguage(language) {
@@ -31,10 +36,14 @@ export function savePreferredLanguage(language) {
     return;
   }
 
-  window.localStorage.setItem(
-    PREFERRED_LANGUAGE_STORAGE_KEY,
-    normalizeLanguage(language),
-  );
+  try {
+    window.localStorage.setItem(
+      PREFERRED_LANGUAGE_STORAGE_KEY,
+      normalizeLanguage(language),
+    );
+  } catch {
+    // Language choice still works for this navigation without persistent storage.
+  }
 }
 
 export function getBrowserLanguage() {
@@ -65,9 +74,19 @@ export function resolvePreferredLanguage() {
 
 export function getLanguagePath(pathname, newLanguage) {
   const nextLanguage = normalizeLanguage(newLanguage);
-  const parts = pathname.split("/");
+  const path = String(pathname || "/");
+  const absolute = path.startsWith("/") ? path : `/${path}`;
+  const parts = absolute.split("/");
 
-  parts[1] = nextLanguage;
+  // Canonical language-prefixed routes: replace only the existing prefix.
+  if (SUPPORTED_LANGUAGES.includes(parts[1])) {
+    parts[1] = nextLanguage;
+    return parts.join("/");
+  }
 
-  return parts.join("/");
+  // Share links are opaque capability URLs, never language-prefixed.
+  if (parts[1] === "s" && parts[2]) return absolute;
+
+  // /players, /final-plan, /registration etc. must keep their full path.
+  return `/${nextLanguage}${absolute === "/" ? "" : absolute}`;
 }
