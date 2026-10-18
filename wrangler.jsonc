@@ -2,22 +2,48 @@
   "name": "wasteland-king-api",
   "main": "worker/src/index.js",
   "compatibility_date": "2026-10-04",
-
   "vars": {
     "FIREBASE_PROJECT_ID": "wasteland-king-region",
     "GITHUB_SNAPSHOT_REPOSITORY": "Lwowsky/Wasteland-Public-Data"
   },
-
   "triggers": {
-    "crons": ["17 0 * * *", "* * * * *"]
+    "crons": [
+      "17 0 * * *",
+      "* * * * *"
+    ]
   },
-
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "wasteland-king",
       "database_id": "28071aea-2c11-417b-99b4-50ad2518b96d",
       "migrations_dir": "worker/migrations"
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "SHARED_LOGIN_RATE_LIMIT",
+      "namespace_id": "913701",
+      "simple": {
+        "limit": 8,
+        "period": 60
+      }
+    },
+    {
+      "name": "ACCESS_ACTIVATION_RATE_LIMIT",
+      "namespace_id": "913702",
+      "simple": {
+        "limit": 15,
+        "period": 60
+      }
+    },
+    {
+      "name": "REGISTRATION_RATE_LIMIT",
+      "namespace_id": "913703",
+      "simple": {
+        "limit": 30,
+        "period": 60
+      }
     }
   ]
 }

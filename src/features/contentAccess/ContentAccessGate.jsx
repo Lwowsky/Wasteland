@@ -103,8 +103,13 @@ function ContentAccessGate({ resource, children }) {
                 setLoading(false);
                 return;
               }
-              setStatus(staticStatus);
-              setLoading(false);
+              if (!cancelled) {
+                setStatus(staticStatus);
+                setLoading(false);
+                // Prevent sharing the raw capability via browser history/referrers.
+                skipNextSessionLoadRef.current = resource;
+                removeSharedTokenFromUrl();
+              }
               return;
             }
             activatedSession = await activateContentAccess(resource, sharedToken);

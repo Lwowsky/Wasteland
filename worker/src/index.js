@@ -8,6 +8,7 @@ import {
 import { JSON_HEADERS } from "./config/headers.js";
 
 import { json } from "./utils/response.js";
+import { guardSensitiveRequest } from "./utils/requestGuard.js";
 
 import { handleCachedGet } from "./utils/cache.js";
 
@@ -80,7 +81,8 @@ export default {
       /* PUBLIC REGISTRATION */
 
       if (request.method === "POST" && url.pathname === "/api/registration") {
-        return await handleRegistration(request, env);
+        const blocked = await guardSensitiveRequest(request, env, "registration");
+        return blocked || await handleRegistration(request, env);
       }
 
       if (
@@ -164,7 +166,8 @@ export default {
         request.method === "POST" &&
         url.pathname === "/api/content-access/activate"
       ) {
-        return await handleContentAccessActivation(request, env);
+        const blocked = await guardSensitiveRequest(request, env, "accessActivation");
+        return blocked || await handleContentAccessActivation(request, env);
       }
 
       if (request.method === "GET" && url.pathname === "/api/players") {
@@ -196,7 +199,10 @@ export default {
         return await handlePublicFinalPlan(request, env);
       }
 
-      if (url.pathname === "/api/shared-consul/login" && request.method === "POST") return handleSharedLogin(request,env);
+      if (url.pathname === "/api/shared-consul/login" && request.method === "POST") {
+        const blocked = await guardSensitiveRequest(request, env, "sharedLogin");
+        return blocked || handleSharedLogin(request, env);
+      }
       if (url.pathname === "/api/shared-consul/status" && request.method === "GET") return handleSharedStatus(request,env);
       if (url.pathname === "/api/admin/shared-consul" && ["GET","POST","DELETE"].includes(request.method)) return handleSharedManage(request,env);
 

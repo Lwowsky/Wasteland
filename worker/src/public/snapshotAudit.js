@@ -15,9 +15,14 @@ export function auditPublishedSnapshot({ revision, summary, players, finalPlan }
       break;
     }
   }
+  if (players?.accessMode === "link" &&
+      (players.players?.length || !players.sealed || players.sealed.version !== 1)) {
+    errors.push("UNENCRYPTED_LINK_PLAYERS");
+  }
   if (!finalPlan || !["public", "link", "code", "private", "closed"].includes(finalPlan.accessMode)) {
     errors.push("INVALID_PLAN_ACCESS");
-  } else if (!["public", "link"].includes(finalPlan.accessMode) && finalPlan.plan != null) {
+  } else if ((finalPlan.accessMode !== "public" && finalPlan.plan != null) ||
+      (finalPlan.accessMode === "link" && (!finalPlan.sealed || finalPlan.sealed.version !== 1))) {
     errors.push("PROTECTED_PLAN_EXPOSED");
   }
   const count = summary?.stats?.finalPlayers;

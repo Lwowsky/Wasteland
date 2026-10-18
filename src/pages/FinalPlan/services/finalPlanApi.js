@@ -1,5 +1,5 @@
 import { getPublicSnapshot, isPublicSnapshotEnabled } from "../../../features/players/publicSnapshot.js";
-import { getContentAccessHeaders, getContentAccessStatus, getPublicContentAccessHint } from "../../../features/contentAccess/contentAccessApi.js";
+import { getContentAccessHeaders, getContentAccessStatus, getPublicContentAccessHint, unlockStaticShareSnapshot } from "../../../features/contentAccess/contentAccessApi.js";
 import { requestJson } from "../../../utils/apiClient.js";
 
 export async function getPublicFinalPlan(verifiedStatus = null) {
@@ -14,7 +14,11 @@ export async function getPublicFinalPlan(verifiedStatus = null) {
   if (isPublicSnapshotEnabled() && (status.mode === "public" || status.staticLink)) {
     try {
       const snapshot = await getPublicSnapshot("final-plan.json", { requireNetwork: true, reuseRecentlyVerified: true });
-      if (snapshot?.success === true && (snapshot.accessMode === "public" || (status.staticLink && snapshot.accessMode === "link"))) return snapshot;
+      if (snapshot?.success !== true) throw new Error("INVALID_SNAPSHOT");
+      if (status.staticLink && snapshot.accessMode === "link") {
+        return await unlockStaticShareSnapshot("final_plan", snapshot);
+      }
+      if (status.mode === "public" && snapshot.accessMode === "public") return snapshot;
     } catch {
       // Public snapshots are the only read path when enabled. Never fall
       // back to Worker/D1 on a CDN outage or repeated refreshes.

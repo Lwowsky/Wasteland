@@ -2,7 +2,7 @@ export const CONTENT_ACCESS_RESOURCES = ["players", "final_plan"];
 export const CONTENT_ACCESS_MODES = ["public", "private", "code", "link"];
 
 const DEFAULT_ACCESS = {
-  mode: "public",
+  mode: "private",
   useLimit: 1,
   sessionMinutes: 30,
   tokenTtlMinutes: 0,

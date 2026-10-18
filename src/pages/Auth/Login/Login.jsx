@@ -83,8 +83,11 @@ function Login() {
       const result = await signInSharedConsul(sharedPassword.trim());
       setSharedPassword("");
       setSharedResult(result);
-    } catch { setError(copy.sharedConsul.error); }
-    finally { setLoading(false); }
+    } catch (error) {
+      setError(error?.message === "RATE_LIMITED"
+        ? copy.sharedConsul.rateLimited
+        : copy.sharedConsul.error);
+    } finally { setLoading(false); }
   }
 
   async function handleEmailLogin(event) {

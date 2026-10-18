@@ -43,7 +43,9 @@ export default function ContentAccessEditor({
           value={draft.mode}
           onChange={(event) => updateDraft("mode", event.target.value)}
         >
-          <option value="public">{t.modes.public}</option>
+          {draft.mode === "public" && (
+            <option value="public" disabled>{t.modes.public}</option>
+          )}
           <option value="private">{t.modes.private}</option>
           {draft.mode === "code" && (
             <option value="code" disabled>{t.modes.code}</option>

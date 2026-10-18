@@ -6,8 +6,8 @@ const player = (name, alliance, id) => ({ id, nickname: name, alliance, troopTyp
 const fixture = () => ({
   revision: { revision: 42 },
   summary: { stats: { finalPlayers: 2 }, recentPlayers: [player("Alice", "AAA", 1)] },
-  players: { total: 2, players: [player("Alice", "AAA", 1), player("Bob", "BBB", 2)] },
-  finalPlan: { accessMode: "link", plan: {
+  players: { accessMode: "public", total: 2, players: [player("Alice", "AAA", 1), player("Bob", "BBB", 2)] },
+  finalPlan: { accessMode: "public", plan: {
     shift1: { hub: { captain: { id: "shift1-hub-captain", nickname: "Alice", alliance: "AAA" }, players: [{ id: "one", nickname: "Bob", alliance: "BBB" }] } },
     shift2: { hub: { captain: { id: "shift2-hub-captain", nickname: "Alice", alliance: "AAA" }, players: [{ id: "two", nickname: "Bob", alliance: "BBB" }] } },
   } },
@@ -36,4 +36,19 @@ test("Stage 3 release: catches incomplete public list or missing revision", () =
   const errors = auditPublishedSnapshot(snapshot);
   assert.ok(errors.includes("INCOMPLETE_PLAYERS"));
   assert.ok(errors.includes("INVALID_REVISION"));
+});
+
+test("Stage 037: link-only JSON must never include plaintext records", () => {
+  const snapshot = fixture();
+  snapshot.players.accessMode = "link";
+  snapshot.finalPlan.accessMode = "link";
+  const errors = auditPublishedSnapshot(snapshot);
+  assert.ok(errors.includes("UNENCRYPTED_LINK_PLAYERS"));
+  assert.ok(errors.includes("PROTECTED_PLAN_EXPOSED"));
+  snapshot.players.players = [];
+  snapshot.players.total = 0;
+  snapshot.players.sealed = { version: 1 };
+  snapshot.finalPlan.plan = null;
+  snapshot.finalPlan.sealed = { version: 1 };
+  assert.deepEqual(auditPublishedSnapshot(snapshot), []);
 });

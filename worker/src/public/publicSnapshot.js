@@ -1,4 +1,6 @@
 import { json } from "../utils/response.js";
+import { sealSnapshotForLinks } from "../../../shared/sealedSnapshot.js";
+import { decryptShareCode } from "../services/shareLinkEncryption.js";
 import { fetchAllPublicPlayers } from "./fetchAllPublicPlayers.js";
 import { handlePlayers } from "./players.js";
 import { handleStats } from "./stats.js";
@@ -45,7 +47,9 @@ export function buildSafeSnapshotPlayers(players, accessMode, shareLinks, expose
     total: rows.length,
     pages: rows.length ? 1 : 0,
     accessMode,
-    shareLinks: Array.isArray(shareLinks) ? shareLinks.map(({ hash, expiresAt }) => ({ hash, expiresAt })) : [],
+    shareLinks: Array.isArray(shareLinks) ? shareLinks.map(({ hash, expiresAt, wrappedKey }) => ({
+      hash, expiresAt, ...(wrappedKey ? { wrappedKey } : {}),
+    })) : [],
     players: rows,
   };
 }
@@ -81,8 +85,8 @@ export async function handlePublicSnapshot(request, env) {
     siteSettingsResponse.json(), registrationSettingsResponse.json(),
   ]);
   const finalAccess = await getContentAccessSetting(env, "final_plan");
-  // Export only the whitelisted public-view plan in public or link mode.
-  // In link mode these data are intentionally NOT secret: the static JSON is public.
+  // Public mode may export plaintext. Link mode exports ciphertext only:
+  // one AES-GCM sealed plan with a separately wrapped key per active link.
   const registration = await getRegistrationSettings(env);
   const period = await getPublicDisplayPeriod(env, registration);
   const publishedForStats = period ? await readPublishedPlan(env, period.id) : null;
@@ -93,20 +97,44 @@ export async function handlePublicSnapshot(request, env) {
     getContentAccessSetting(env, "players"),
     getContentAccessSetting(env, "final_plan"),
   ]);
-  const exposePlayers = isSnapshotPublic(accessSetting, latestPlayersAccess) ||
-    (accessSetting.mode === "link" && latestPlayersAccess.mode === "link");
-  const exposePlan = isSnapshotPublic(finalAccess, latestPlanAccess) ||
-    (finalAccess.mode === "link" && latestPlanAccess.mode === "link");
+  // Only genuinely public modes may include plaintext. Link mode is encrypted.
+  const exposePlayers = isSnapshotPublic(accessSetting, latestPlayersAccess);
+  const exposePlan = isSnapshotPublic(finalAccess, latestPlanAccess);
+  const nowIso = new Date().toISOString();
   const links = await Promise.all(["players", "final_plan"].map(async (resource) => {
-    const rows = await env.DB.prepare(`SELECT token_hash, expires_at FROM static_share_links
+    if ((resource === "players" ? latestPlayersAccess : latestPlanAccess).mode !== "link") {
+      return [resource, []];
+    }
+    const rows = await env.DB.prepare(`SELECT token_hash, encrypted_token, expires_at FROM static_share_links
       WHERE resource = ? AND revoked_at IS NULL
-      AND (expires_at IS NULL OR expires_at > ?)`).bind(resource, new Date().toISOString()).all();
-    return [resource, (rows.results || []).map((row) => ({ hash: row.token_hash, expiresAt: row.expires_at }))];
+      AND (expires_at IS NULL OR expires_at > ?)`)
+      .bind(resource, nowIso).all();
+    // Links created before encrypted_token existed cannot safely be reissued:
+    // they do not have a recoverable key. Omit them; the owner must regenerate.
+    const codes = await Promise.all((rows.results || [])
+      .filter((row) => Boolean(row.encrypted_token))
+      .map(async (row) => ({
+        hash: row.token_hash, expiresAt: row.expires_at,
+        code: await decryptShareCode(env, row.encrypted_token, resource),
+      })));
+    return [resource, codes];
   }));
+  const activeLinks = Object.fromEntries(links);
+  const encryptedPlayers = latestPlayersAccess.mode === "link"
+    ? await sealSnapshotForLinks("players",
+      buildSafeSnapshotPlayers(players, "link", [], true), activeLinks.players)
+    : null;
+  const encryptedPlan = latestPlanAccess.mode === "link"
+    ? await sealSnapshotForLinks("final_plan", {
+      success: true, plan: published?.plan ?? null,
+      publishedAt: published?.publishedAt ?? null, revision: published?.revision ?? null,
+      periodId: period?.id ?? null,
+    }, activeLinks.final_plan)
+    : null;
   const payload = {
     revision,
     finalPlan: {
-      success: true, accessMode: latestPlanAccess.mode, shareLinks: Object.fromEntries(links).final_plan, periodId: period?.id ?? null,
+      success: true, accessMode: latestPlanAccess.mode, shareLinks: encryptedPlan?.shareLinks || [], sealed: encryptedPlan?.sealed ?? null, periodId: period?.id ?? null,
       plan: exposePlan ? (published?.plan ?? null) : null,
       publishedAt: exposePlan ? (published?.publishedAt ?? null) : null,
       revision: exposePlan ? (published?.revision ?? null) : null,
@@ -116,15 +144,21 @@ export async function handlePublicSnapshot(request, env) {
     // admin-only settings, secrets, codes, or authorization sessions.
     siteSettings,
     registrationSettings,
-    // Public-view fields only; short share codes and admin credentials are NEVER exported.
-    // The Pages JSON itself remains publicly readable in every access mode.
+    // Public-view fields only. In link mode these rows are encrypted above.
+    // Pages JSON is publicly downloadable but holds no link-only plaintext.
     players: buildSafeSnapshotPlayers(
       players,
       latestPlayersAccess.mode,
-      Object.fromEntries(links).players,
+      encryptedPlayers?.shareLinks || [],
       exposePlayers,
     ),
   };
+  if (encryptedPlayers) payload.players.sealed = encryptedPlayers.sealed;
+  // Reject a malformed export BEFORE sending it to a public repository.
+  if ((latestPlayersAccess.mode === "link" && (payload.players.players.length || !payload.players.sealed)) ||
+      (latestPlanAccess.mode === "link" && (payload.finalPlan.plan != null || !payload.finalPlan.sealed))) {
+    return json({ error: "UNENCRYPTED_LINK_EXPORT" }, 500);
+  }
   // Validate export before publishing. Failure keeps the previous Pages revision.
   const issues = auditPublishedSnapshot({
     revision: { revision },

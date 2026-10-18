@@ -19,7 +19,7 @@
     },
     "link": {
       "title": "Private link required",
-      "text": "Open the private link sent by the administrator. If it has already been used or expired, request a new one."
+      "text": "Open the link provided by an administrator. If it was revoked or expired, request a new one."
     }
   },
   "code": {
@@ -36,6 +36,7 @@
     "NO_CURRENT_PERIOD": "There is no active cycle to issue private access for.",
     "CONTENT_PRIVATE": "Public access is closed.",
     "default": "Access could not be checked. Refresh the page and try again.",
-    "CONTENT_CODE_RATE_LIMITED": "Too many invalid codes. Try again in one hour."
+    "CONTENT_CODE_RATE_LIMITED": "Too many invalid codes. Try again in one hour.",
+    "RATE_LIMITED": "Too many attempts. Try again in a minute."
   }
 }

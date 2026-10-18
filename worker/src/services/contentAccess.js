@@ -80,7 +80,7 @@ export async function getContentAccessSetting(env, resource) {
           session_minutes,
           token_ttl_minutes
         )
-        VALUES (?, 'public', 1, 30, 0)
+        VALUES (?, 'private', 1, 30, 0)
       `,
     )
       .bind(normalizedResource)
@@ -161,6 +161,12 @@ export async function updateContentAccessSetting(env, resource, payload = {}) {
       10080,
     ),
   };
+
+  // Public and legacy code modes are read-only for migration compatibility.
+  // New access choices are restricted to private and link-only.
+  if (!["private", "link"].includes(next.mode)) {
+    throw new Error("CONTENT_ACCESS_MODE_DISABLED");
+  }
 
   await env.DB.prepare(
     `

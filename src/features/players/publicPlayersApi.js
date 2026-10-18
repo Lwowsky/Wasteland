@@ -1,5 +1,5 @@
 import { getPublicSnapshot, isPublicSnapshotEnabled } from "./publicSnapshot.js";
-import { getContentAccessHeaders, getContentAccessStatus, getPublicContentAccessHint } from "../contentAccess/contentAccessApi.js";
+import { getContentAccessHeaders, getContentAccessStatus, getPublicContentAccessHint, unlockStaticShareSnapshot } from "../contentAccess/contentAccessApi.js";
 import { requestJson } from "../../utils/apiClient.js";
 import { readSessionCache, writeSessionCache } from "../../utils/sessionCache.js";
 
@@ -39,11 +39,19 @@ export async function getPublicPlayers(verifiedStatus = null) {
       ? await getPublicContentAccessHint("players")
       : await getContentAccessStatus("players");
   if (!status?.allowed) throw new Error(status?.reason || "CONTENT_ACCESS_REQUIRED");
-  const data = isPublicSnapshotEnabled() && (status.mode === "public" || status.staticLink)
-    ? await getPublicSnapshot("players.json", { reuseRecentlyVerified: true, requireNetwork: true })
-    : await requestJson("/api/players?page=1&limit=500", {
-        headers: getContentAccessHeaders("players"), cache: "no-store",
-      });
+  let data;
+  if (isPublicSnapshotEnabled() && (status.mode === "public" || status.staticLink)) {
+    const snapshot = await getPublicSnapshot("players.json", { reuseRecentlyVerified: true, requireNetwork: true });
+    data = status.staticLink && snapshot.accessMode === "link"
+      ? await unlockStaticShareSnapshot("players", snapshot)
+      : status.mode === "public" && snapshot.accessMode === "public"
+        ? snapshot : null;
+    if (!data) throw new Error("CONTENT_ACCESS_REQUIRED");
+  } else {
+    data = await requestJson("/api/players?page=1&limit=500", {
+      headers: getContentAccessHeaders("players"), cache: "no-store",
+    });
+  }
   return { ...data, players: (data.players || []).map(normalizePlayer) };
 }
 
