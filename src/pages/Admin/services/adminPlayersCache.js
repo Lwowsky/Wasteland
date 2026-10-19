@@ -4,12 +4,26 @@
 const PREFIX = "wasteland-admin-players-v1:";
 const CHECK_PREFIX = "wasteland-admin-players-checked-v1:";
 import { getPublicCycleCloseAtMs } from "../../../../shared/registrationCycle.js";
+import { DEFAULT_WASTELAND_DURATION_HOURS } from "../../../../shared/registrationConfig.js";
 
 const MAX_CACHE_AGE_MS = 30 * 60 * 1000;
 
 export function isAdminRosterPastDeadline(period, now = Date.now()) {
   if (!period) return false;
-  const endMs = Date.parse(period.wastelandEndAt || "");
+  let endMs = Date.parse(period.wastelandEndAt || "");
+  if (!Number.isFinite(endMs)) {
+    // Legacy cached period responses may not have an explicit event end.
+    // Infer the fixed 24-hour event from its start or automatic cycle key,
+    // so F5 cannot briefly resurrect an expired roster from sessionStorage.
+    const start = period.wastelandStartAt ||
+      (String(period.cycleKey || "").startsWith("auto:")
+        ? String(period.cycleKey).slice(5)
+        : "");
+    const startMs = Date.parse(start);
+    if (Number.isFinite(startMs)) {
+      endMs = startMs + DEFAULT_WASTELAND_DURATION_HOURS * 60 * 60 * 1000;
+    }
+  }
   return Number.isFinite(endMs) && now >= getPublicCycleCloseAtMs(endMs);
 }
 

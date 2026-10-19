@@ -30,30 +30,14 @@ export async function getLatestPeriod(env) {
 }
 
 export async function getAdminWorkingPeriod(env, settings, nowMs = Date.now()) {
-  const current = await ensureCurrentRegistrationPeriod(env, settings, nowMs);
-
-  if (current.period) {
-    return current.period;
-  }
-
-  const latestPeriod = await getLatestPeriod(env);
-
-  if (!latestPeriod) {
-    return null;
-  }
-
-  // Do not retire the working roster the instant Wasteland ends on Sunday.
-  // Public Pages and admin must share the Monday 09:00 JST (00:00 UTC)
-  // handover. Keeping the period readable is NOT the same as keeping
-  // registration open; submissions still obey closes_at.
-  const eventEndMs = Date.parse(latestPeriod.wasteland_end_at || "");
-  if (Number.isFinite(eventEndMs)) {
-    return nowMs < getPublicCycleCloseAtMs(eventEndMs) ? latestPeriod : null;
-  }
-
-  // Legacy periods without an event end keep their previous behavior.
-  const legacyEndMs = Date.parse(latestPeriod.closes_at || "");
-  return Number.isFinite(legacyEndMs) && nowMs <= legacyEndMs ? latestPeriod : null;
+  // Admin and public roster selection must use the SAME calendar boundary.
+  // The old `getLatestPeriod()` fallback could select a future period whose
+  // registration has not opened yet, surfacing its rows between Monday and
+  // Friday. getPublicDisplayPeriod already excludes future opens_at values
+  // and expires the previous event precisely at Monday 00:00 UTC.
+  // This preserves historical D1 rows for recovery without leaking them into
+  // the active admin roster, and avoids a second competing period algorithm.
+  return getPublicDisplayPeriod(env, settings, nowMs);
 }
 
 // Retain at most the former 24-hour grace window; for the ordinary
