@@ -17,7 +17,6 @@ import {
 
 const DEFAULT_SETTINGS = {
   publicRegistration: true,
-  maxPlayers: 300,
   ...DEFAULT_REGISTRATION_CYCLE_SETTINGS,
   manualOpensAt: "",
   manualClosesAt: "",
@@ -102,7 +101,6 @@ export async function getRegistrationSettings(env) {
     `
       SELECT
         public_registration AS publicRegistration,
-        max_players AS maxPlayers,
         cycle_mode AS cycleMode,
         wasteland_anchor_at AS wastelandAnchorAt,
         wasteland_interval_days AS wastelandIntervalDays,
@@ -156,7 +154,6 @@ export async function getRegistrationSettings(env) {
 
   return {
     publicRegistration: toBool(row.publicRegistration),
-    maxPlayers: Number(row.maxPlayers ?? DEFAULT_SETTINGS.maxPlayers),
     cycleMode: row.cycleMode === "manual" ? "manual" : "automatic",
     wastelandAnchorAt:
       normalizeIso(row.wastelandAnchorAt) || DEFAULT_SETTINGS.wastelandAnchorAt,
@@ -223,7 +220,6 @@ export async function saveRegistrationSettings(env, settings) {
       INSERT INTO registration_settings (
         id,
         public_registration,
-        max_players,
         cycle_mode,
         wasteland_anchor_at,
         wasteland_interval_days,
@@ -254,7 +250,7 @@ export async function saveRegistrationSettings(env, settings) {
       )
       VALUES (
         1,
-        ?, ?,
+        ?,
         ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
         ?, ?, ?, ?,
         ?, ?, ?, ?, ?,
@@ -263,7 +259,6 @@ export async function saveRegistrationSettings(env, settings) {
       )
       ON CONFLICT(id) DO UPDATE SET
         public_registration = excluded.public_registration,
-        max_players = excluded.max_players,
         cycle_mode = excluded.cycle_mode,
         wasteland_anchor_at = excluded.wasteland_anchor_at,
         wasteland_interval_days = excluded.wasteland_interval_days,
@@ -295,7 +290,6 @@ export async function saveRegistrationSettings(env, settings) {
   )
     .bind(
       settings.publicRegistration === false ? 0 : 1,
-      Number(settings.maxPlayers ?? DEFAULT_SETTINGS.maxPlayers),
       settings.cycleMode === "manual" ? "manual" : "automatic",
       normalizeIso(settings.wastelandAnchorAt) || DEFAULT_SETTINGS.wastelandAnchorAt,
       Number(settings.wastelandIntervalDays || DEFAULT_SETTINGS.wastelandIntervalDays),

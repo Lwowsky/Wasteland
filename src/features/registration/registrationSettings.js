@@ -125,9 +125,13 @@ export function normalizeRegistrationSettings(settings = {}) {
     }
   }
 
+  // Old GitHub snapshots and browser caches may still contain maxPlayers: 300.
+  // It is a removed setting, not a limit on the current registration cycle.
+  const { maxPlayers: _legacyMaxPlayers, ...activeSettings } = settings;
+  void _legacyMaxPlayers;
   const normalized = {
     ...DEFAULT_REGISTRATION_SETTINGS,
-    ...settings,
+    ...activeSettings,
 
     cycleMode: settings.cycleMode === "manual" ? "manual" : "automatic",
     hostAlliance: String(settings.hostAlliance ?? "").trim().toUpperCase(),

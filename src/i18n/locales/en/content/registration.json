@@ -73,12 +73,10 @@
   "unavailable": {
     "title": "Registration unavailable",
     "disabled": "Registration is currently unavailable.",
-    "full": "Registration is currently unavailable.",
     "closed": "Registration is currently closed. Check the opening date and try again later.",
     "notOpenYet": "Registration has not opened yet.",
     "opensAt": "Opens on {{date}}.",
     "disabledTitle": "Registration disabled",
-    "fullTitle": "Registration is full",
     "closedTitle": "Registration closed",
     "notOpenYetTitle": "Registration has not opened yet"
   },
@@ -86,7 +84,6 @@
     "alreadyRegistered": "A player with this nickname is already registered for this cycle.",
     "closed": "Registration is currently closed.",
     "disabled": "Registration is currently unavailable.",
-    "full": "Registration is currently unavailable.",
     "invalidData": "Please check the form data.",
     "submit": "Failed to submit the registration. Please try again.",
     "requiredFields": "Please complete all required fields. We have highlighted the first missing field for you.",

@@ -1,6 +1,7 @@
 import { getPublicSnapshot, isPublicSnapshotEnabled } from "./publicSnapshot.js";
 import { getContentAccessHeaders, getContentAccessStatus, getPublicContentAccessHint, unlockStaticShareSnapshot } from "../contentAccess/contentAccessApi.js";
 import { requestJson } from "../../utils/apiClient.js";
+import { fetchCompleteWorkerPlayers } from "./workerPlayersPagination.js";
 import { readSessionCache, writeSessionCache } from "../../utils/sessionCache.js";
 
 const STATS_CACHE_KEY = "wasteland-public-stats";
@@ -48,9 +49,12 @@ export async function getPublicPlayers(verifiedStatus = null) {
         ? snapshot : null;
     if (!data) throw new Error("CONTENT_ACCESS_REQUIRED");
   } else {
-    data = await requestJson("/api/players?page=1&limit=500", {
-      headers: getContentAccessHeaders("players"), cache: "no-store",
-    });
+    // Protected/Worker mode: API pages contain at most 500 rows each.
+    // Request every page so 501+ registrations are never silently hidden.
+    data = await fetchCompleteWorkerPlayers((page, limit) => requestJson(
+      `/api/players?page=${page}&limit=${limit}`,
+      { headers: getContentAccessHeaders("players"), cache: "no-store" },
+    ));
   }
   return { ...data, players: (data.players || []).map(normalizePlayer) };
 }

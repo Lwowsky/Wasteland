@@ -6,7 +6,6 @@ export function getSubmitErrorMessage(code, t) {
     ALREADY_REGISTERED: t.registration.errors.alreadyRegistered,
     REGISTRATION_CLOSED: t.registration.errors.closed,
     REGISTRATION_DISABLED: t.registration.errors.disabled,
-    REGISTRATION_FULL: t.registration.errors.full,
     INVALID_DATA: t.registration.errors.invalidData,
     REQUIRED_FIELDS: t.registration.errors.requiredFields,
     CHALLENGE_REQUIRED: t.registration.errors.challenge,
@@ -21,10 +20,6 @@ export function getSubmitErrorMessage(code, t) {
 function getClosedMessage(reason, t) {
   if (reason === "REGISTRATION_DISABLED") {
     return t.registration.unavailable.disabled;
-  }
-
-  if (reason === "REGISTRATION_FULL") {
-    return t.registration.unavailable.full;
   }
 
   return t.registration.unavailable.closed;
@@ -43,15 +38,6 @@ export function getUnavailableState({
       text: t.registration.unavailable.disabled,
       state: "disabled",
       icon: "/images/registration-settings/cycle-close-icon.webp",
-    };
-  }
-
-  if (reason === "REGISTRATION_FULL") {
-    return {
-      title: t.registration.unavailable.fullTitle,
-      text: t.registration.unavailable.full,
-      state: "full",
-      icon: "/images/registration-settings/warning-icon.webp",
     };
   }
 

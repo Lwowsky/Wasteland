@@ -83,7 +83,6 @@ function sanitizeSettings(body, current = {}) {
   return {
     ...current,
     publicRegistration,
-    maxPlayers: Number(current.maxPlayers ?? 300),
     cycleMode: body.cycleMode === "manual" ? "manual" : "automatic",
     wastelandAnchorAt:
       normalizeIso(body.wastelandAnchorAt) ||
