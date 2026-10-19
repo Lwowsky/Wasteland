@@ -41,8 +41,10 @@
   },
   "cycleClosed": {
     "title": "Wasteland cycle finished",
-    "players": "The player list for this cycle is closed. The next registration opens on Friday.",
-    "finalPlan": "The final plan for this cycle is closed. A new plan will be available in the next cycle through a new private link."
+    "players": "The player table for this cycle is closed. The next registration opens on {{date}}.",
+    "playersUnknown": "The player table for this cycle is closed. The next registration date will be announced separately.",
+    "finalPlan": "The final plan for this cycle is closed. A new plan will appear only after an administrator publishes it in the next cycle.",
+    "opensIn": "Registration opens in {{days}}d {{hours}}h {{minutes}}m"
   },
   "cycleUnavailable": "Unable to verify the access schedule. Please try again later.",
   "cycleUpdating": {

@@ -3,6 +3,7 @@ import useNow from "../../hooks/useNow.js";
 import { DEFAULT_SITE_SETTINGS } from "../../../shared/siteSettingsConfig.js";
 
 import { getRegistrationSettings } from "../registration/registrationApi.js";
+import { isPublicSnapshotEnabled } from "../players/publicSnapshot.js";
 import { normalizeRegistrationSettings } from "../registration/registrationSettings.js";
 import { getRegistrationCycleSchedule, getAutomaticRegistrationCycleSchedule } from "../registration/registrationCycle.js";
 
@@ -68,7 +69,12 @@ function useEvent() {
       }
 
       try {
-        const result = await getRegistrationSettings({ force });
+        const result = await getRegistrationSettings({
+          force,
+          // Once JSON snapshots are enabled, public calendar reads never
+          // silently switch to a paid/metered Worker path on repeated F5.
+          staticOnly: !force && isPublicSnapshotEnabled(),
+        });
         const settings = normalizeRegistrationSettings(result.settings || {});
 
         if (cancelled || currentVersion !== requestVersion) {

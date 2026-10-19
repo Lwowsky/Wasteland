@@ -131,3 +131,15 @@
   .content-access-page { padding: 28px 0; }
   .content-access-panel { padding: 28px 18px; }
 }
+
+/* A stable, text-only countdown: no polling and no layout movement. */
+.content-access-panel .content-access-countdown {
+  width: min(100%, 460px);
+  padding: 10px 16px;
+  border: 1px solid #d1e2f5;
+  border-radius: 12px;
+  background: #f3f8ff;
+  color: #224b78;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}

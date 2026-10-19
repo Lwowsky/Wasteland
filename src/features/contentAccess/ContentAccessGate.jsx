@@ -16,6 +16,8 @@ import { ContentAccessContext } from "./ContentAccessContext.js";
 import { getPublicCycleViewState } from "../../../shared/registrationCycle.js";
 import useNow from "../../hooks/useNow.js";
 import { publicAsset } from "../../utils/publicAsset.js";
+import { getClosedCycleCopy } from "./closedCycleCopy.js";
+import { getNextRegistrationOpening } from "./nextRegistrationOpening.js";
 
 import "./ContentAccessGate.css";
 
@@ -67,7 +69,7 @@ function getErrorCode(error) {
 }
 
 function ContentAccessGate({ resource, children }) {
-  const { t, registrationConfig, eventError } = useOutletContext();
+  const { t, language, useLocalTime, registrationConfig, eventError } = useOutletContext();
   const now = useNow(60_000);
   const settingsLoaded = Boolean(registrationConfig?.settings);
   const cycleState = settingsLoaded
@@ -241,16 +243,25 @@ function ContentAccessGate({ resource, children }) {
   // On the first check, show only the neutral route spinner so the private
   // access card never flashes for a public/authorized page during refresh.
   if (cycleClosed) {
-    const label = t.contentAccess.cycleClosed;
+    const closed = getClosedCycleCopy({
+      copy,
+      resource,
+      nextOpensAt: getNextRegistrationOpening(registrationConfig.settings, now),
+      nowMs: now,
+      language,
+      useLocalTime,
+    });
     return (
       <Page containerClassName="content-access-container">
         <div className="content-access-page">
           <AccessStatusCard
             iconSrc={getAccessIcon(resource)}
             title={copy.resources[resource] || resource}
-            heading={label.title}
-            text={resource === "players" ? label.players : label.finalPlan}
-          />
+            heading={closed.title}
+            text={closed.text}
+          >
+            {closed.countdown && <p className="content-access-countdown">{closed.countdown}</p>}
+          </AccessStatusCard>
         </div>
       </Page>
     );
