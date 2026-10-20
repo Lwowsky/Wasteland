@@ -1,7 +1,7 @@
 import { getPublicSnapshot, isPublicSnapshotEnabled } from "../players/publicSnapshot.js";
 import { requestJson } from "../../utils/apiClient.js";
 import { openSnapshotFromLink } from "../../../shared/sealedSnapshot.js";
-import { isSnapshotForCycle } from "../../../shared/registrationCycle.js";
+import { isSnapshotForCycle, isSnapshotForActivePeriod } from "../../../shared/registrationCycle.js";
 
 const SESSION_PREFIX = "wasteland-content-access-";
 
@@ -120,7 +120,7 @@ export async function unlockStaticShareSnapshot(resource, snapshot) {
   return openSnapshotFromLink(resource, snapshot.sealed, entry, code);
 }
 
-export async function getPublicContentAccessHint(resource, shortCode = "", expectedCycleStartAt = "") {
+export async function getPublicContentAccessHint(resource, shortCode = "", expectedCycleStartAt = "", expectedPeriodId = undefined) {
   if (!isPublicSnapshotEnabled()) return null;
   const file = resource === "players" ? "players.json" : resource === "final_plan" ? "final-plan.json" : null;
   if (!file) return null;
@@ -128,7 +128,8 @@ export async function getPublicContentAccessHint(resource, shortCode = "", expec
     const data = await getPublicSnapshot(file, { requireNetwork: true });
     // Do not accidentally reopen the prior cycle when a CDN serves yesterday's
     // encrypted JSON after the next Friday. Metadata is public, players are not.
-    if (!isSnapshotForCycle(data, expectedCycleStartAt)) {
+    if (!isSnapshotForCycle(data, expectedCycleStartAt) ||
+        !isSnapshotForActivePeriod(data, expectedPeriodId)) {
       return { resource, mode: "private", allowed: false, reason: "SNAPSHOT_CYCLE_MISMATCH" };
     }
     const mode = data?.accessMode;
@@ -142,14 +143,14 @@ export async function getPublicContentAccessHint(resource, shortCode = "", expec
           // Verify the AEAD now; a matching hash alone does not authorize content.
           await openSnapshotFromLink(resource, data.sealed, entry, candidate);
           saveStaticShareCode(resource, candidate);
-          return { resource, mode, allowed: true, staticLink: true, reason: null };
+          return { resource, mode, allowed: true, staticLink: true, reason: null, periodId: data.periodId ?? null };
         }
       }
       if (!shortCode) clearStaticShareCode(resource);
       return { resource, mode, allowed: false, reason: "CONTENT_ACCESS_REQUIRED" };
     }
     clearStaticShareCode(resource);
-    return { resource, mode, allowed: mode === "public",
+    return { resource, mode, allowed: mode === "public", periodId: data.periodId ?? null,
       reason: mode === "private" ? "CONTENT_PRIVATE" : "CONTENT_ACCESS_REQUIRED" };
   } catch {
     // An offline or malformed snapshot must never grant protected access.

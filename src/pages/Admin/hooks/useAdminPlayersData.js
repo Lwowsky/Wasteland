@@ -126,6 +126,31 @@ export default function useAdminPlayersData({ enabled, canDelete, autoSync = fal
     }
   }, [reload, replaceSnapshot, markChecked]);
 
+  // A cycle reset/open/close in this browser is authoritative. The old
+  // sessionStorage snapshot must disappear immediately instead of waiting for
+  // the next 2-minute delta poll (or continuing to show an old turret plan).
+  useEffect(() => {
+    function invalidateCycleRoster() {
+      generationRef.current += 1;
+      clearAdminPlayersCache();
+      snapshotRef.current = null;
+      setSnapshot(null);
+      setLoaded(false);
+      setErrorKey("");
+      // The enabled/loaded effect below makes ONE authoritative GET when this
+      // tab needs players. Inactive admin tabs perform no background request.
+    }
+    window.addEventListener("registration-settings-updated", invalidateCycleRoster);
+    function fromOtherTab(event) {
+      if (event.key === "wasteland-registration-settings-updated") invalidateCycleRoster();
+    }
+    window.addEventListener("storage", fromOtherTab);
+    return () => {
+      window.removeEventListener("registration-settings-updated", invalidateCycleRoster);
+      window.removeEventListener("storage", fromOtherTab);
+    };
+  }, []);
+
   // Browser cache is only consumed AFTER AdminRoute has authenticated the user.
   useEffect(() => {
     if (!cacheIdentity || !loaded || !snapshot) return;

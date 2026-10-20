@@ -92,7 +92,11 @@ export async function dispatchPendingPublicSnapshot(env, options = {}) {
   const now = options.now ?? Date.now();
   const last = Number(row.last_dispatch_ms || 0);
   const sameVersionAwaitingAck = Number(row.dispatched_revision) >= revision;
-  const cooldown = sameVersionAwaitingAck ? RETRY_AFTER_MS : DISPATCH_COOLDOWN_MS;
+  // Explicit new-cycle/open/close requests are rare: publish their revision
+  // promptly to prevent old public pages lingering for the regular 2-minute
+  // coalescing window. Keep a short safety interval to avoid repeated actions.
+  const cooldown = options.priority ? 15_000 :
+    sameVersionAwaitingAck ? RETRY_AFTER_MS : DISPATCH_COOLDOWN_MS;
   if (last && now - last < cooldown) return "waiting";
 
   const fetcher = options.fetcher || fetch;

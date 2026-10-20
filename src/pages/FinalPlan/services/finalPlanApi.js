@@ -1,6 +1,7 @@
 import { getPublicSnapshot, isPublicSnapshotEnabled } from "../../../features/players/publicSnapshot.js";
 import { getContentAccessHeaders, getContentAccessStatus, getPublicContentAccessHint, unlockStaticShareSnapshot } from "../../../features/contentAccess/contentAccessApi.js";
 import { requestJson } from "../../../utils/apiClient.js";
+import { isSnapshotForActivePeriod } from "../../../../shared/registrationCycle.js";
 
 export async function getPublicFinalPlan(verifiedStatus = null) {
   const status = verifiedStatus?.resource === "final_plan" && verifiedStatus.allowed
@@ -14,7 +15,8 @@ export async function getPublicFinalPlan(verifiedStatus = null) {
   if (isPublicSnapshotEnabled() && (status.mode === "public" || status.staticLink)) {
     try {
       const snapshot = await getPublicSnapshot("final-plan.json", { requireNetwork: true, reuseRecentlyVerified: true });
-      if (snapshot?.success !== true) throw new Error("INVALID_SNAPSHOT");
+      if (snapshot?.success !== true ||
+          !isSnapshotForActivePeriod(snapshot, status?.periodId)) throw new Error("INVALID_SNAPSHOT");
       if (status.staticLink && snapshot.accessMode === "link") {
         return await unlockStaticShareSnapshot("final_plan", snapshot);
       }

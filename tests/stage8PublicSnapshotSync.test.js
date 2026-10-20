@@ -206,3 +206,19 @@ test("Stage 8: public data changes are flagged by existing cache invalidation ho
     );
   }
 });
+
+test("Stage 050: priority cycle dispatch skips normal 2-minute delay but remains rate-bounded", async () => {
+  const env = fakeEnv(5, 4);
+  const calls = [];
+  const fetcher = async (...args) => {
+    calls.push(args);
+    return new Response(null, { status: 204 });
+  };
+  assert.equal(await dispatchPendingPublicSnapshot(env, { now: 600000, fetcher }), "dispatched");
+  // Admin opens a NEW cycle; a newer revision should go out promptly.
+  env.state.revision = 6;
+  assert.equal(await dispatchPendingPublicSnapshot(env, { now: 610000, fetcher, priority: true }), "waiting");
+  assert.equal(await dispatchPendingPublicSnapshot(env, { now: 616000, fetcher, priority: true }), "dispatched");
+  assert.equal(calls.length, 2);
+  assert.equal(JSON.parse(calls[1][1].body).client_payload.revision, 6);
+});

@@ -76,7 +76,9 @@ function ContentAccessGate({ resource, children }) {
     ? getPublicCycleViewState(registrationConfig.settings, now)
     : null;
   const cycleClosed = cycleState?.state === "closed";
-  const cycleEpoch = cycleState?.eventStartAt || (settingsLoaded ? "manual" : "");
+  const expectedPeriodId = settingsLoaded ? registrationConfig?.period?.id ?? null : undefined;
+  const manualCycle = cycleState?.state === "manual";
+  const cycleEpoch = cycleState?.eventStartAt || (settingsLoaded ? `manual:${expectedPeriodId ?? "none"}` : "");
   const location = useLocation();
   const navigate = useNavigate();
   const copy = t.contentAccess;
@@ -133,7 +135,7 @@ function ContentAccessGate({ resource, children }) {
         if (sharedToken) {
           try {
             const staticStatus = /^[a-zA-Z0-9_-]{16}$/.test(sharedToken)
-              ? await getPublicContentAccessHint(resource, sharedToken, cycleEpoch === "manual" ? "" : cycleEpoch)
+              ? await getPublicContentAccessHint(resource, sharedToken, manualCycle ? "" : cycleEpoch, expectedPeriodId)
               : null;
             if (staticStatus) {
               if (!staticStatus.allowed) {
@@ -172,7 +174,7 @@ function ContentAccessGate({ resource, children }) {
               period: activatedSession.period,
             }
           : (!getContentAccessSession(resource)
-              ? (await getPublicContentAccessHint(resource, "", cycleEpoch === "manual" ? "" : cycleEpoch)) || await getContentAccessStatus(resource)
+              ? (await getPublicContentAccessHint(resource, "", manualCycle ? "" : cycleEpoch, expectedPeriodId)) || await getContentAccessStatus(resource)
               : await getContentAccessStatus(resource));
 
         if (cancelled) {
@@ -202,7 +204,7 @@ function ContentAccessGate({ resource, children }) {
     return () => {
       cancelled = true;
     };
-  }, [resource, sharedToken, cycleClosed, settingsLoaded, cycleEpoch]);
+  }, [resource, sharedToken, cycleClosed, settingsLoaded, cycleEpoch, manualCycle, expectedPeriodId]);
 
   async function submitCode(event) {
     event.preventDefault();

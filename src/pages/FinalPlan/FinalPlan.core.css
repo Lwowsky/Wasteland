@@ -178,3 +178,22 @@
   .final-plan-toolbar__shifts, .final-plan-toolbar__actions { width: 100%; }
   .final-plan-toolbar__actions .final-plan-toolbar__button { flex: 1 1 150px; }
 }
+
+/* Exactly the same centered availability-card shell as a closed cycle. */
+.final-plan-unpublished-refresh {
+  margin-top: 10px;
+  min-height: 44px;
+  padding: 10px 22px;
+  color: #28549a;
+  background: #f3f8ff;
+  border: 1px solid #c3d8f2;
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+.final-plan-unpublished-refresh:hover,
+.final-plan-unpublished-refresh:focus-visible {
+  background: #e3efff;
+  border-color: #8eb8eb;
+}

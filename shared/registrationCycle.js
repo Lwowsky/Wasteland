@@ -186,3 +186,21 @@ export function getPublicCycleViewState(settings = {}, fromMs = Date.now()) {
 export function isSnapshotForCycle(snapshot, expectedEventStartAt) {
   return !expectedEventStartAt || snapshot?.cycleEventStartAt === expectedEventStartAt;
 }
+
+// A public JSON can remain cached at GitHub Pages/CDN after the old event
+// expires. Never resurrect its players/plan, including in MANUAL calendar mode.
+// This guard does not fetch Worker, Firebase, or D1.
+export function isSnapshotForActivePeriod(snapshot, expectedPeriodId, nowMs = Date.now()) {
+  if (!snapshot || typeof snapshot !== "object") return false;
+  if (expectedPeriodId !== undefined) {
+    const snapshotPeriod = snapshot.periodId == null ? null : Number(snapshot.periodId);
+    const expectedPeriod = expectedPeriodId == null ? null : Number(expectedPeriodId);
+    if (snapshotPeriod !== expectedPeriod) return false;
+  }
+  if (snapshot.cycleEventStartAt != null) {
+    const startMs = Date.parse(snapshot.cycleEventStartAt);
+    if (!Number.isFinite(startMs) || !Number.isFinite(Number(nowMs))) return false;
+    if (nowMs >= getPublicCycleCloseAtMs(startMs + DEFAULT_WASTELAND_DURATION_HOURS * HOUR_MS)) return false;
+  }
+  return true;
+}

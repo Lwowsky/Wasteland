@@ -4,6 +4,9 @@ import { useOutletContext } from "react-router-dom";
 import Page from "../../components/Page/Page.jsx";
 import PageMeta from "../../components/PageMeta/PageMeta.jsx";
 import PagePanel from "../../components/PagePanel/PagePanel.jsx";
+import AccessStatusCard from "../../components/AccessStatusCard/AccessStatusCard.jsx";
+import { publicAsset } from "../../utils/publicAsset.js";
+import "../../features/contentAccess/ContentAccessGate.css";
 import { ROUTES } from "../../config/routes.js";
 import FinalPlanToolbar from "./components/FinalPlanToolbar.jsx";
 import FinalPlanBoard from "./components/FinalPlanBoard.jsx";
@@ -56,6 +59,29 @@ function FinalPlan() {
   const shifts = PLANNER_SHIFTS.filter((shift) => Object.hasOwn(plan || {}, shift));
   const currentShift = shifts.includes(activeShift) ? activeShift : shifts[0];
   const shiftPlan = plan?.[currentShift];
+  // The unpublished state must match the existing closed/private cards,
+  // rather than showing a thin unstyled status strip inside a huge board.
+  if (!loading && !error && !shiftPlan) {
+    return (
+      <>
+        <PageMeta title={t.finalPlan.title} description={t.finalPlan.title}
+          language={language} path={ROUTES.finalPlan} />
+        <Page containerClassName="content-access-container">
+          <div className="content-access-page">
+            <AccessStatusCard
+              iconSrc={publicAsset("/images/admin/icons/final-plan.webp")}
+              title={t.finalPlan.title}
+              heading={t.finalPlan.unpublishedTitle}
+              text={t.finalPlan.notPublished}
+            >
+              <button type="button" className="final-plan-unpublished-refresh"
+                onClick={refresh}>{t.finalPlan.refreshPlan}</button>
+            </AccessStatusCard>
+          </div>
+        </Page>
+      </>
+    );
+  }
   return (
     <>
       <PageMeta title={t.finalPlan.title} description={t.finalPlan.title}
@@ -69,7 +95,6 @@ function FinalPlan() {
             </div>
             {loading ? <p className="final-plan-state" role="status">{t.finalPlan.loadingPlan}</p>
               : error ? <p className="final-plan-state final-plan-state--error" role="alert">{t.finalPlan.loadFailed}</p>
-              : !shiftPlan ? <p className="final-plan-state" role="status">{t.finalPlan.notPublished}</p>
               : <>
                 {publishedAt && <p className="final-plan-published-date">
                   {t.finalPlan.lastPublished.replace("{{date}}", formatMediumDateTime(publishedAt, language))}

@@ -22,7 +22,7 @@ export default function useRegistrationSettingsAdmin({
   const [errorKey, setErrorKey] = useState("");
   const [toastKey, setToastKey] = useState("");
   const [confirmState, setConfirmState] = useState(null);
-  const [cycleChoice, setCycleChoice] = useState("continue");
+  const [cycleChoice, setCycleChoice] = useState("new");
   const [shiftRemapState, setShiftRemapState] = useState(null);
 
   useEffect(() => {
@@ -153,7 +153,7 @@ export default function useRegistrationSettingsAdmin({
     });
 
     setErrorKey("");
-    setCycleChoice("continue");
+    setCycleChoice("new");
     setConfirmState({
       kind: "status",
       section: "cycleStatus",

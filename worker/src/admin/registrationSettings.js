@@ -32,6 +32,7 @@ import {
   sanitizeVisibleFields,
 } from "../services/registrationRules.js";
 import { clearPublicCaches } from "../utils/cache.js";
+import { dispatchPendingPublicSnapshot } from "../services/publicSnapshotSync.js";
 import { json } from "../utils/response.js";
 
 
@@ -323,6 +324,17 @@ export async function handleAdminRegistrationSettingsPut(request, env) {
     : null;
 
   await clearPublicCaches(request, env);
+  // Normal edits remain coalesced; a new/open/closed registration cycle should
+  // dispatch its PUBLIC JSON as soon as possible, not after a 2-minute delay.
+  const cycleChanged = cycleAction === "new" || cycleAction === "continue" ||
+    current.publicRegistration !== settings.publicRegistration ||
+    current.cycleMode !== settings.cycleMode ||
+    current.manualOpensAt !== settings.manualOpensAt ||
+    current.manualClosesAt !== settings.manualClosesAt;
+  if (cycleChanged) {
+    try { await dispatchPendingPublicSnapshot(env, { priority: true }); }
+    catch (error) { console.error("Priority cycle snapshot dispatch:", error); }
+  }
 
   return json({
     success: true,

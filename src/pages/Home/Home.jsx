@@ -17,7 +17,8 @@ import OverviewSection from "./sections/OverviewSection.jsx";
 import NavigationSection from "./sections/NavigationSection.jsx";
 
 import { EMPTY_PUBLIC_STATS } from "../../../shared/publicStatsConfig.js";
-import { getPublicCycleViewState } from "../../../shared/registrationCycle.js";
+import { getPublicCycleViewState, isSnapshotForActivePeriod } from "../../../shared/registrationCycle.js";
+import { isPublicSnapshotEnabled } from "../../features/players/publicSnapshot.js";
 import useNow from "../../hooks/useNow.js";
 
 import "./Home.css";
@@ -25,10 +26,17 @@ import "./Home.css";
 function Home() {
   const { t, language, eventLoading, registrationConfig } = useOutletContext();
   const now = useNow(60_000);
-  const cycleClosed = registrationConfig?.settings?.cycleMode !== "manual" &&
-    (!registrationConfig?.settings || !getPublicCycleViewState(registrationConfig.settings, now).visible);
+
 
   const [dashboardStats, setDashboardStats] = useState(EMPTY_PUBLIC_STATS);
+  const expectedPeriodId = registrationConfig?.period?.id;
+  // Even a cached GitHub summary must never show last cycle's counters or
+  // names after Monday's cutoff or a manual reset to another period.
+  const outdatedSummary = isPublicSnapshotEnabled() &&
+    (!registrationConfig?.settings || !isSnapshotForActivePeriod(
+      dashboardStats, expectedPeriodId, now));
+  const cycleClosed = outdatedSummary || (registrationConfig?.settings?.cycleMode !== "manual" &&
+    (!registrationConfig?.settings || !getPublicCycleViewState(registrationConfig.settings, now).visible));
 
   const [recentPlayers, setRecentPlayers] = useState([]);
 

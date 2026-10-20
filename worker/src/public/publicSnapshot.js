@@ -156,7 +156,10 @@ export async function handlePublicSnapshot(request, env) {
   };
   // Public cycle metadata lets the static client reject a stale prior-cycle
   // snapshot at the next Friday without reading D1 on every refresh.
+  payload.players.periodId = period?.id ?? null;
   payload.players.cycleEventStartAt = period?.wasteland_start_at ?? null;
+  payload.summary.periodId = period?.id ?? null;
+  payload.summary.cycleEventStartAt = period?.wasteland_start_at ?? null;
   if (encryptedPlayers) payload.players.sealed = encryptedPlayers.sealed;
   // Reject a malformed export BEFORE sending it to a public repository.
   if ((latestPlayersAccess.mode === "link" && (payload.players.players.length || !payload.players.sealed)) ||

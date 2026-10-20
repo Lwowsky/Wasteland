@@ -23,6 +23,7 @@
   },
   "loadingPlan": "Loading the published plan…",
   "loadFailed": "Could not load the plan. Please refresh the page.",
+  "unpublishedTitle": "Awaiting publication",
   "notPublished": "No final plan has been published for this cycle yet.",
   "lastPublished": "Published: {{date}}",
   "shift3": "Shift 3",
