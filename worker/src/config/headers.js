@@ -5,5 +5,5 @@ export const JSON_HEADERS = {
 
   "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
 
-  "access-control-allow-headers": "Content-Type, Authorization, X-Content-Access",
+  "access-control-allow-headers": "Content-Type, Authorization",
 };

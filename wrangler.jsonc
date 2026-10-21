@@ -30,14 +30,6 @@
       }
     },
     {
-      "name": "ACCESS_ACTIVATION_RATE_LIMIT",
-      "namespace_id": "913702",
-      "simple": {
-        "limit": 15,
-        "period": 60
-      }
-    },
-    {
       "name": "ADMIN_READ_RATE_LIMIT",
       "namespace_id": "913704",
       "simple": {

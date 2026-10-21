@@ -10,7 +10,6 @@ import {
   generateAdminContentAccessToken,
   deleteAdminInactiveStaticLink,
   getAdminContentAccess,
-  revokeAdminContentAccessToken,
   revokeAdminSingleStaticLink,
   saveAdminContentAccess,
 } from "../services/contentAccessApi.js";
@@ -25,16 +24,13 @@ const ACCESS_UI_ICONS = {
   private: publicAsset("/images/admin/icons/actions/lock.webp"),
   active: publicAsset("/images/admin/icons/settings/access-control.webp"),
   warning: publicAsset("/images/admin/icons/actions/reject.webp"),
-  code: publicAsset("/images/admin/icons/actions/lock.webp"),
   link: publicAsset("/images/admin/icons/settings/access-control.webp"),
   revoke: publicAsset("/images/admin/icons/actions/reject.webp"),
 };
 
 function createDraft(resource) {
   return {
-    mode: resource?.mode || "private",
-    useLimit: Number(resource?.useLimit ?? 1),
-    sessionMinutes: Number(resource?.sessionMinutes ?? 30),
+    mode: ["public", "private", "link"].includes(resource?.mode) ? resource.mode : "private",
     tokenTtlMinutes: Number(resource?.tokenTtlMinutes ?? 0),
   };
 }
@@ -166,9 +162,7 @@ function ContentAccessPanel({ t, language, sharedConsulT, cancelLabel }) {
       const result = await generateAdminContentAccessToken(selectedResource);
       applyResource(selectedResource, result.resource);
 
-      const value = result.resource?.mode === "link"
-        ? new URL(`${import.meta.env.BASE_URL}s/${selectedResource === "players" ? "p" : "f"}${result.token}`, window.location.origin).toString()
-        : result.token;
+      const value = new URL(`${import.meta.env.BASE_URL}s/${selectedResource === "players" ? "p" : "f"}${result.token}`, window.location.origin).toString();
       // The short URL becomes active after the next successful public snapshot
       // publication. No account/API secrets are embedded in the address.
 
@@ -184,26 +178,6 @@ function ContentAccessPanel({ t, language, sharedConsulT, cancelLabel }) {
       setErrorKey(
         nextError?.message === "NO_CURRENT_PERIOD" ? "noPeriod" : "generate",
       );
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  async function revoke() {
-    if (busy) return;
-
-    setBusy(true);
-    setErrorKey("");
-    setMessageKey("");
-
-    try {
-      const result = await revokeAdminContentAccessToken(selectedResource);
-      applyResource(selectedResource, result.resource);
-      setGenerated(null);
-      setMessageKey("revoked");
-    } catch (nextError) {
-      console.error("Revoke content access token:", nextError);
-      setErrorKey("revoke");
     } finally {
       setBusy(false);
     }
@@ -286,7 +260,7 @@ function ContentAccessPanel({ t, language, sharedConsulT, cancelLabel }) {
       return { icon: ACCESS_UI_ICONS.private, label: t.status.private, className: "is-private" };
     }
 
-    if (active.token?.active) {
+    if (active.staticLinks?.some((link) => link.active)) {
       return { icon: ACCESS_UI_ICONS.active, label: t.status.active, className: "is-active" };
     }
 
@@ -357,7 +331,6 @@ function ContentAccessPanel({ t, language, sharedConsulT, cancelLabel }) {
           copyGenerated={copyGenerated}
           save={save}
           generate={generate}
-          revoke={revoke}
           revokeOne={revokeOne}
           deleteOne={deleteOne}
           copyStoredLink={copyStoredLink}

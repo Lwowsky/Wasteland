@@ -24,10 +24,7 @@ import { handleStats } from "./public/stats.js";
 import { handlePlayers } from "./public/players.js";
 import { handlePublicSnapshot, handlePublicSnapshotAck } from "./public/publicSnapshot.js";
 import { dispatchPendingPublicSnapshot, syncPublicVisibilityRevision } from "./services/publicSnapshotSync.js";
-import {
-  handleContentAccessActivation,
-  handleContentAccessStatus,
-} from "./public/contentAccess.js";
+import { handleContentAccessStatus } from "./public/contentAccess.js";
 import { getContentAccessState } from "./services/contentAccess.js";
 import { cleanupOldRegistrationPeriods } from "./db/periods.js";
 
@@ -167,16 +164,6 @@ export default {
         );
       }
 
-      if (
-        request.method === "POST" &&
-        url.pathname === "/api/content-access/activate"
-      ) {
-        const blocked = await guardSensitiveRequest(request, env, "accessActivation");
-        if (blocked) return blocked;
-        const bounded = await readBoundedSensitiveRequest(request, "accessActivation");
-        if (bounded instanceof Response) return bounded;
-        return handleContentAccessActivation(bounded, env);
-      }
 
       if (request.method === "GET" && url.pathname === "/api/players") {
         const access = await getContentAccessState(request, env, "players");

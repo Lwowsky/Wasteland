@@ -1,5 +1,5 @@
 import { getPublicSnapshot, isPublicSnapshotEnabled } from "../../../features/players/publicSnapshot.js";
-import { getContentAccessHeaders, getContentAccessStatus, getPublicContentAccessHint, unlockStaticShareSnapshot } from "../../../features/contentAccess/contentAccessApi.js";
+import { getContentAccessStatus, getPublicContentAccessHint, unlockStaticShareSnapshot } from "../../../features/contentAccess/contentAccessApi.js";
 import { requestJson } from "../../../utils/apiClient.js";
 import { isSnapshotForActivePeriod } from "../../../../shared/registrationCycle.js";
 
@@ -10,8 +10,8 @@ export async function getPublicFinalPlan(verifiedStatus = null) {
       ? await getPublicContentAccessHint("final_plan")
       : await getContentAccessStatus("final_plan");
   if (!status?.allowed) throw new Error(status?.reason || "CONTENT_ACCESS_REQUIRED");
-  // Only PUBLIC plans can be loaded from GitHub Pages. Protected plans always
-  // use server-validated sessions and must never be exported to public JSON.
+  // Public plans load as plain JSON; link-only plans load as sealed JSON.
+  // Closed plans have no unauthenticated read path.
   if (isPublicSnapshotEnabled() && (status.mode === "public" || status.staticLink)) {
     try {
       const snapshot = await getPublicSnapshot("final-plan.json", { requireNetwork: true, reuseRecentlyVerified: true });
@@ -28,8 +28,5 @@ export async function getPublicFinalPlan(verifiedStatus = null) {
     }
     throw new Error("SNAPSHOT_UNAVAILABLE");
   }
-  return requestJson("/api/final-plan", {
-    headers: getContentAccessHeaders("final_plan"),
-    cache: "no-store",
-  });
+  return requestJson("/api/final-plan", { cache: "no-store" });
 }

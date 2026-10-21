@@ -17,6 +17,9 @@ test("public final plan never falls back to Worker after snapshot error", () => 
 
 test("admin cannot select or generate new password codes", () => {
   const code = read("src/pages/Admin/settings/ContentAccessEditor.jsx");
-  assert.match(code, /<option value="code" disabled>/);
+  assert.doesNotMatch(code, /<option value="code"/);
+  assert.doesNotMatch(code, /generateCode|draft.mode === "code"/);
+  assert.match(code, /<option value="public">/);
+  assert.match(code, /<option value="private">/);
   assert.match(code, /draft.mode === "link" && \(/);
 });

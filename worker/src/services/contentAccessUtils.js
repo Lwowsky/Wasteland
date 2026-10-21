@@ -1,14 +1,8 @@
 export const CONTENT_ACCESS_RESOURCES = ["players", "final_plan"];
-export const CONTENT_ACCESS_MODES = ["public", "private", "code", "link"];
+export const CONTENT_ACCESS_MODES = ["public", "private", "link"];
 
-const DEFAULT_ACCESS = {
-  mode: "private",
-  useLimit: 1,
-  sessionMinutes: 30,
-  tokenTtlMinutes: 0,
-};
+const DEFAULT_ACCESS = { mode: "private", tokenTtlMinutes: 0 };
 
-const CODE_ALPHABET = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
 
 export function clampInteger(value, fallback, minimum, maximum) {
   const parsed = Number(value);
@@ -50,40 +44,15 @@ function base64Url(bytes) {
     .replace(/=+$/g, "");
 }
 
-export function generateAccessCode() {
-  const bytes = randomBytes(10);
-  const chars = Array.from(
-    bytes,
-    (value) => CODE_ALPHABET[value % CODE_ALPHABET.length],
-  );
-
-  return `${chars.slice(0, 5).join("")}-${chars.slice(5).join("")}`;
-}
-
 // 12 cryptographically random bytes -> 16 URL-safe characters (96-bit entropy).
 // This code is a public-view capability only, NEVER an admin credential.
 export function generateStaticShareCode() {
   return base64Url(randomBytes(12));
 }
 
-export function generateLinkToken() {
-  return base64Url(randomBytes(32));
-}
-
-export function generateSessionToken() {
-  return base64Url(randomBytes(32));
-}
-
 /** Token TTL: 0 means no expiry; a positive value is measured in minutes. */
 export function getTokenExpiryIso(minutes, nowMs = Date.now()) {
   return minutes ? new Date(nowMs + minutes * 60_000).toISOString() : null;
-}
-
-export function normalizeCodeCandidate(value) {
-  return String(value || "")
-    .trim()
-    .toUpperCase()
-    .replace(/\s+/g, "");
 }
 
 export function normalizeResource(resource) {
@@ -98,11 +67,6 @@ export function mapContentAccessSetting(row) {
   return {
     resource: row?.resource || "",
     mode: normalizeMode(row?.mode),
-    useLimit: Math.max(0, Number(row?.use_limit ?? DEFAULT_ACCESS.useLimit)),
-    sessionMinutes: Math.max(
-      5,
-      Number(row?.session_minutes ?? DEFAULT_ACCESS.sessionMinutes),
-    ),
     tokenTtlMinutes: Math.max(
       0,
       Number(row?.token_ttl_minutes ?? DEFAULT_ACCESS.tokenTtlMinutes),
@@ -111,46 +75,3 @@ export function mapContentAccessSetting(row) {
   };
 }
 
-function isTokenActive(row, nowMs = Date.now()) {
-  if (!row || row.revoked_at) {
-    return false;
-  }
-
-  if (row.expires_at) {
-    const expiresAt = Date.parse(row.expires_at);
-
-    if (!Number.isFinite(expiresAt) || expiresAt <= nowMs) {
-      return false;
-    }
-  }
-
-  const useLimit = Number(row.use_limit || 0);
-  const usedCount = Number(row.used_count || 0);
-
-  return useLimit === 0 || usedCount < useLimit;
-}
-
-export function mapContentAccessToken(row) {
-  if (!row) {
-    return null;
-  }
-
-  const useLimit = Number(row.use_limit || 0);
-  const usedCount = Number(row.used_count || 0);
-
-  return {
-    id: Number(row.id),
-    kind: row.token_kind,
-    hint: row.token_hint || "",
-    useLimit,
-    usedCount,
-    remainingUses: useLimit === 0 ? null : Math.max(0, useLimit - usedCount),
-    expiresAt: row.expires_at || null,
-    createdAt: row.created_at || null,
-    active: isTokenActive(row),
-  };
-}
-
-export function getContentAccessSessionHeader(request) {
-  return String(request.headers.get("X-Content-Access") || "").trim();
-}

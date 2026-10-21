@@ -42,10 +42,10 @@ test("Stage 042: public mode is selectable independently on both resource tabs",
   assert.match(editor, /<option value="private">/);
   assert.match(editor, /<option value="link">/);
   assert.doesNotMatch(editor, /<option value="public" disabled>/);
-  assert.match(backend, /\["public", "private", "link"\]\.includes\(next\.mode\)/);
+  assert.match(backend, /\["public", "private", "link"\]\.includes\(payload\.mode\)/);
   assert.match(backend, /revokeContentAccess\(env, normalizedResource\)/);
   assert.match(panel, /const RESOURCES = \["players", "final_plan"\]/);
-  assert.match(panel, /mode: resource\?\.mode \|\| "private"/);
+  assert.match(panel, /\["public", "private", "link"\]\.includes\(resource\?\.mode\)/);
 });
 
 test("Stage 042: plaintext public snapshots keep only allowed player fields", () => {

@@ -13,30 +13,15 @@
       "title": "Access closed",
       "text": "The administrator has temporarily closed public access to this section."
     },
-    "code": {
-      "title": "Access code required",
-      "text": "Enter the code sent by the administrator. One activation creates a session, so a normal page refresh does not consume the code again."
-    },
     "link": {
       "title": "Private link required",
       "text": "Open the link provided by an administrator. If it was revoked or expired, request a new one."
     }
   },
-  "code": {
-    "label": "Access code",
-    "placeholder": "ABCDE-23456",
-    "submit": "Open access",
-    "activating": "Checking…"
-  },
   "errors": {
-    "CONTENT_TOKEN_INVALID": "The code or private link is invalid.",
-    "CONTENT_TOKEN_EXPIRED": "This access credential has expired.",
-    "CONTENT_TOKEN_EXHAUSTED": "This code or link has already reached its maximum number of uses.",
-    "CONTENT_TOKEN_REQUIRED": "Enter an access code.",
     "NO_CURRENT_PERIOD": "There is no active cycle to issue private access for.",
     "CONTENT_PRIVATE": "Public access is closed.",
     "default": "Access could not be checked. Refresh the page and try again.",
-    "CONTENT_CODE_RATE_LIMITED": "Too many invalid codes. Try again in one hour.",
     "RATE_LIMITED": "Too many attempts. Try again in a minute."
   },
   "cycleClosed": {

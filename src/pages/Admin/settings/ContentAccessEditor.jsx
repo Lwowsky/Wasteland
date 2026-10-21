@@ -18,7 +18,6 @@ export default function ContentAccessEditor({
   copyGenerated,
   save,
   generate,
-  revoke,
   revokeOne,
   deleteOne,
   copyStoredLink,
@@ -45,64 +44,12 @@ export default function ContentAccessEditor({
         >
           <option value="public">{t.modes.public}</option>
           <option value="private">{t.modes.private}</option>
-          {draft.mode === "code" && (
-            <option value="code" disabled>{t.modes.code}</option>
-          )}
           <option value="link">{t.modes.link}</option>
         </select>
       </label>
 
       {draft.mode === "public" && (
         <p className="settings-access-note" role="status">{t.publicWarning}</p>
-      )}
-
-      {draft.mode === "code" && (
-        <div className="settings-access-options">
-          <label className="settings-access-field">
-            <span>{t.useLimit.label}</span>
-            <select
-              value={draft.useLimit}
-              onChange={(event) =>
-                updateDraft("useLimit", Number(event.target.value))
-              }
-            >
-              <option value={1}>{t.useLimit.once}</option>
-              <option value={2}>{t.useLimit.twice}</option>
-              <option value={5}>{t.useLimit.five}</option>
-              <option value={10}>{t.useLimit.ten}</option>
-              <option value={0}>{t.useLimit.unlimited}</option>
-            </select>
-          </label>
-
-          <label className="settings-access-field">
-            <span>{t.session.label}</span>
-            <select
-              value={draft.sessionMinutes}
-              onChange={(event) =>
-                updateDraft("sessionMinutes", Number(event.target.value))
-              }
-            >
-              <option value={30}>{t.duration.minutes30}</option>
-              <option value={120}>{t.duration.hours2}</option>
-              <option value={1440}>{t.duration.hours24}</option>
-            </select>
-          </label>
-
-          <label className="settings-access-field settings-access-field--wide">
-            <span>{t.tokenLifetime.label}</span>
-            <select
-              value={draft.tokenTtlMinutes}
-              onChange={(event) =>
-                updateDraft("tokenTtlMinutes", Number(event.target.value))
-              }
-            >
-              <option value={30}>{t.duration.minutes30}</option>
-              <option value={120}>{t.duration.hours2}</option>
-              <option value={1440}>{t.duration.hours24}</option>
-              <option value={0}>{t.duration.cycle}</option>
-            </select>
-          </label>
-        </div>
       )}
 
       {draft.mode === "link" && (
@@ -170,30 +117,6 @@ export default function ContentAccessEditor({
         </div>
       )}
 
-      {active?.mode === "code" && active?.token && (
-        <div className="settings-access-token-status">
-          <strong>{t.currentToken.title}</strong>
-          <span>
-            {t.currentToken.hint.replace("{{hint}}", active.token.hint || "—")}
-          </span>
-          <span>
-            {active.token.useLimit === 0
-              ? t.currentToken.unlimited
-              : t.currentToken.uses
-                  .replace("{{used}}", String(active.token.usedCount || 0))
-                  .replace("{{limit}}", String(active.token.useLimit || 0))}
-          </span>
-          {active.token.expiresAt && (
-            <span>
-              {t.currentToken.expires.replace(
-                "{{date}}",
-                formatMediumDateTime(active.token.expiresAt, language),
-              )}
-            </span>
-          )}
-        </div>
-      )}
-
       {generated?.resource === selectedResource && !(generated.kind === "link" && active?.staticLinks?.some((link) => link.token && generated.value.endsWith(link.token))) && (
         <div className="settings-access-generated">
           <div>
@@ -238,32 +161,16 @@ export default function ContentAccessEditor({
           >
             <img
               className="settings-access-inline-icon"
-              src={draft.mode === "code" ? icons.code : icons.link}
+              src={icons.link}
               alt=""
               aria-hidden="true"
             />
-            {draft.mode === "code"
-              ? t.actions.generateCode
-              : t.actions.generateLink}
+            {t.actions.generateLink}
           </button>
         )}
 
-        {active?.mode !== "link" && active?.token?.active && (
-          <button
-            type="button"
-            className="settings-access-revoke"
-            onClick={revoke}
-            disabled={busy}
-          >
-            <img className="settings-access-inline-icon" src={icons.revoke} alt="" aria-hidden="true" />
-            {t.actions.revoke}
-          </button>
-        )}
       </div>
 
-      {!active?.period && draft.mode === "code" && (
-        <p className="settings-access-note">{t.noPeriod}</p>
-      )}
 
       <p className="settings-access-note">{t.cycleNote}</p>
     </div>

@@ -366,39 +366,24 @@
     },
     "loading": "Loading access settings…",
     "cycle": "Cycle #{{cycle}}",
-    "cycleNote": "Legacy codes belong to a cycle. New static share links can remain active across cycles and are only for public-view data.",
-    "noPeriod": "There is no current cycle. A cycle must exist before a code or private link can be created.",
+    "cycleNote": "Static share links can survive across cycles but only expose published data for the current cycle.",
     "modeLabel": "Access mode",
     "publicWarning": "Public mode makes current-cycle data available to everyone without a password after the next successful JSON publication. Switching modes revokes previously issued private links. Calendar-based cycle closure remains active.",
     "modes": {
       "public": "Public — visible to everyone",
       "private": "Closed — public page unavailable",
-      "code": "Access code",
       "link": "Private link"
     },
     "status": {
       "public": "Public access",
       "private": "Access closed",
       "active": "Private access active",
-      "needsToken": "Create a new code/link"
-    },
-    "useLimit": {
-      "label": "Activation limit",
-      "once": "1 time",
-      "twice": "2 times",
-      "five": "5 times",
-      "ten": "10 times",
-      "unlimited": "Unlimited"
-    },
-    "session": {
-      "label": "Session after activation"
+      "needsToken": "Create a private share link"
     },
     "tokenLifetime": {
-      "label": "Code / link lifetime"
+      "label": "Link lifetime"
     },
     "duration": {
-      "minutes30": "30 minutes",
-      "hours2": "2 hours",
       "hours24": "24 hours",
       "cycle": "Until the end of the current cycle",
       "hours1": "1 hour",
@@ -407,20 +392,12 @@
       "days7": "7 days",
       "forever": "Never expires"
     },
-    "currentToken": {
-      "title": "Current access",
-      "hint": "Identifier: ••••{{hint}}",
-      "uses": "Used: {{used}} / {{limit}}",
-      "unlimited": "Uses: unlimited",
-      "expires": "Valid until: {{date}}"
-    },
     "generated": {
       "title": "New access created",
       "once": "Copy this link now. It becomes active after the next JSON publication; the full code is not stored in public GitHub."
     },
     "actions": {
       "save": "Save",
-      "generateCode": "Create new code",
       "generateLink": "Create new link",
       "copy": "Copy",
       "revoke": "Revoke"
@@ -435,7 +412,7 @@
     "errors": {
       "load": "Could not load access settings.",
       "save": "Could not save access settings.",
-      "generate": "Could not create a code or private link.",
+      "generate": "Could not create the private link.",
       "revoke": "Could not revoke access.",
       "copy": "Could not copy.",
       "noPeriod": "There is no current cycle for private access.",

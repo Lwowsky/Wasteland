@@ -38,15 +38,16 @@ test("stage10+13: public route and menu do not eagerly import Firebase admin aut
   assert.match(adminRoute, /const \{ user, admin, loading \} = useAdminAuth\(\)/);
 });
 
-test("stage10: protected access is still checked on every fresh navigation", () => {
+test("stage10+51: private mode denies unauthorized Worker access and static links do not activate sessions", () => {
   const gate = read("src/features/contentAccess/ContentAccessGate.jsx");
   const server = read("worker/src/services/contentAccess.js");
   const worker = read("worker/src/index.js");
 
   assert.match(gate, /getContentAccessStatus\(resource\)/);
-  assert.match(gate, /activatedSession\s*\?/);
-  assert.match(gate, /await activateContentAccess\(resource, code\)/);
-  assert.match(server, /hasValidSession\(request, env, resource, period\.id\)/);
+  assert.match(gate, /getPublicContentAccessHint\(resource/);
+  assert.doesNotMatch(gate, /activateContentAccess|submitCode/);
+  assert.match(server, /allowed: setting\.mode === "public"/);
+  assert.doesNotMatch(server, /hasValidSession|function activateContentAccess/);
   assert.match(worker, /handleContentAccessStatus/);
   assert.match(worker, /getContentAccessState\(request, env, "players"\)/);
 });

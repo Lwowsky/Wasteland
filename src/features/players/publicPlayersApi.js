@@ -1,5 +1,5 @@
 import { getPublicSnapshot, isPublicSnapshotEnabled } from "./publicSnapshot.js";
-import { getContentAccessHeaders, getContentAccessStatus, getPublicContentAccessHint, unlockStaticShareSnapshot } from "../contentAccess/contentAccessApi.js";
+import { getContentAccessStatus, getPublicContentAccessHint, unlockStaticShareSnapshot } from "../contentAccess/contentAccessApi.js";
 import { requestJson } from "../../utils/apiClient.js";
 import { fetchCompleteWorkerPlayers } from "./workerPlayersPagination.js";
 import { readSessionCache, writeSessionCache } from "../../utils/sessionCache.js";
@@ -33,7 +33,7 @@ function normalizePlayer(player) {
 
 export async function getPublicPlayers(verifiedStatus = null) {
   // Never use public JSON as a fallback for a protected player table.
-  // The Worker validates code/link sessions and current access mode.
+  // The Worker permits unauthenticated fallback reads only in public mode.
   const status = verifiedStatus?.resource === "players" && verifiedStatus.allowed
     ? verifiedStatus
     : isPublicSnapshotEnabled()
@@ -53,7 +53,7 @@ export async function getPublicPlayers(verifiedStatus = null) {
     // Request every page so 501+ registrations are never silently hidden.
     data = await fetchCompleteWorkerPlayers((page, limit) => requestJson(
       `/api/players?page=${page}&limit=${limit}`,
-      { headers: getContentAccessHeaders("players"), cache: "no-store" },
+      { cache: "no-store" },
     ));
   }
   return { ...data, players: (data.players || []).map(normalizePlayer) };
@@ -90,9 +90,7 @@ export async function getRecentPlayers(limit = 5, { force = false } = {}) {
   try {
     const players = isPublicSnapshotEnabled()
       ? (await getPublicSnapshot("summary.json", { reuseRecentlyVerified: true })).recentPlayers.slice(0, limit)
-      : await requestJson(`/api/recent?limit=${limit}`, {
-          headers: getContentAccessHeaders("players"),
-        });
+      : await requestJson(`/api/recent?limit=${limit}`);
     writeSessionCache(cacheKey, players);
 
     return players.map(normalizePlayer);
