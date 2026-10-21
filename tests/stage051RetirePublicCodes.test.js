@@ -1,7 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-
 import {
   CONTENT_ACCESS_MODES,
   normalizeMode,
@@ -15,12 +14,10 @@ test("051: only public, closed, and link-only modes exist; legacy DB codes fail 
   assert.deepEqual(CONTENT_ACCESS_MODES, ["public", "private", "link"]);
   assert.equal(normalizeMode("code"), "private");
   assert.equal(normalizeMode("weird"), "private");
-
   assert.equal(
     mapContentAccessSetting({ resource: "players", mode: "code" }).mode,
     "private",
   );
-
   assert.equal(
     mapContentAccessSetting({ resource: "final_plan", mode: "link" }).mode,
     "link",
@@ -34,26 +31,21 @@ test("051: public Worker endpoints cannot be unlocked by an old code/session hea
 
   assert.doesNotMatch(worker, /content-access\/activate/);
   assert.doesNotMatch(publicHandler, /Activation|activateContentAccess/);
-
   assert.doesNotMatch(read("worker/src/config/headers.js"), /X-Content-Access/);
-
   assert.doesNotMatch(read("wrangler.jsonc"), /ACCESS_ACTIVATION_RATE_LIMIT/);
-
   assert.doesNotMatch(
     service,
     /hasValidSession|X-Content-Access|activateContentAccess|generateAccessCode/,
   );
 
   assert.match(service, /allowed:\s*setting\.mode\s*===\s*"public"/);
-
   assert.match(
     service,
     /setting\.mode\s*===\s*"private"\s*\?\s*"CONTENT_PRIVATE"\s*:\s*"CONTENT_ACCESS_REQUIRED"/,
   );
-
   assert.match(
     service,
-    /if\s*\(\s*payload\.mode\s*!==\s*undefined\s*&&\s*!\[\s*"public"\s*,\s*"private"\s*,\s*"link"\s*\]\.includes\(\s*payload\.mode\s*\)/,
+    /payload\.mode\s*!==\s*undefined\s*&&\s*!\["public",\s*"private",\s*"link"\]\.includes\(payload\.mode\)/,
   );
 });
 
@@ -65,11 +57,8 @@ test("051: static share links still use an encrypted snapshot without API activa
 
   assert.match(api, /openSnapshotFromLink\(/);
   assert.match(api, /staticLink:\s*true/);
-
   assert.doesNotMatch(api, /content-access\/activate|X-Content-Access/);
-
   assert.doesNotMatch(gate, /submitCode|activateContentAccess|invalid-code-v1/);
-
   assert.doesNotMatch(panel, /draft\.mode\s*===\s*"code"/);
   assert.match(panel, /staticLinks/);
   assert.match(staticShares, /encryptShareCode/);
@@ -84,7 +73,6 @@ test("051: migration closes legacy code modes and leaves existing static share l
   assert.match(migration, /SET mode = 'private'/);
   assert.match(migration, /WHERE mode = 'code'/);
   assert.match(migration, /DELETE FROM content_access_sessions/);
-
   assert.doesNotMatch(
     migration,
     /(?:DELETE FROM|UPDATE|DROP TABLE) static_share_links/,
