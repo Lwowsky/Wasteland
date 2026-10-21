@@ -199,6 +199,7 @@
   font-size: 12px;
 }
 
+.factory-reset-danger-button,
 .settings-danger-zone__button {
   min-height: 44px;
   display: inline-flex;

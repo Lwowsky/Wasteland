@@ -3,6 +3,10 @@ import {
   REGISTRATION_TROOP_TYPES,
 } from "../../../shared/registrationConfig.js";
 import { normalizeNickname, toInt } from "../utils/normalize.js";
+import {
+  isRegistrationFieldVisible,
+  isRegistrationFieldRequired,
+} from "../../../shared/registrationFieldRules.js";
 import { findDuplicateRegistration } from "../db/registrationQueries.js";
 import {
   prepareCreateRegistrationStatements,
@@ -21,11 +25,11 @@ const VALID_TROOP_TYPES = new Set(REGISTRATION_TROOP_TYPES);
 const VALID_SHIFTS = new Set(REGISTRATION_SHIFT_KEYS);
 
 function isVisible(settings, field) {
-  return settings.visibleFields?.[field] !== false;
+  return isRegistrationFieldVisible(settings.visibleFields, field);
 }
 
 function isRequired(settings, field) {
-  return isVisible(settings, field) && settings.requiredFields?.[field] === true;
+  return isRegistrationFieldRequired(settings.visibleFields, settings.requiredFields, field);
 }
 
 function isShiftAllowed(shift, settings) {

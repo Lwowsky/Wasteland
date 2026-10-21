@@ -15,6 +15,7 @@ import useAdminAccessData from "./hooks/useAdminAccessData.js";
 import useAdminPlayersData from "./hooks/useAdminPlayersData.js";
 import useAdminRegistrationSettings from "./hooks/useAdminRegistrationSettings.js";
 import { clearWastelandClientData } from "./services/systemSettingsApi.js";
+import { replaceTemplateName } from "./utils/replaceTemplateName.js";
 
 import "./Admin.css";
 import "./styles/AdminTabs.css";
@@ -28,10 +29,6 @@ const RegistrationSettingsTab = lazy(() =>
   import("./tabs/RegistrationSettingsTab.jsx"),
 );
 const SettingsTab = lazy(() => import("./tabs/SettingsTab.jsx"));
-
-function replaceName(template, name) {
-  return String(template || "").replace("{{name}}", name || "");
-}
 
 // Save only the selected TAB ID, never admin data or permissions.
 // Restoring the last allowed tab avoids downloading the entire Firestore
@@ -208,7 +205,7 @@ function Admin() {
     return new Promise((resolve) => {
       setConfirmDialog({
         title: t.common.actions.removeAccess,
-        message: replaceName(t.access.confirm.removeAccess, name),
+        message: replaceTemplateName(t.access.confirm.removeAccess, name),
         confirmLabel: t.common.actions.removeAccess,
         cancelLabel: t.common.actions.cancel,
         tone: "danger",
@@ -225,7 +222,7 @@ function Admin() {
 
     setConfirmDialog({
       title: t.common.actions.delete,
-      message: replaceName(t.requests.confirm.delete, name),
+      message: replaceTemplateName(t.requests.confirm.delete, name),
       confirmLabel: t.common.actions.delete,
       cancelLabel: t.common.actions.cancel,
       tone: "danger",

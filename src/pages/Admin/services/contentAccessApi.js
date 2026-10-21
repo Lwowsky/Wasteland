@@ -27,14 +27,6 @@ export function generateAdminContentAccessToken(resource) {
   );
 }
 
-export function revokeAdminContentAccessToken(resource) {
-  return adminRequest(
-    `/api/admin/content-access/${resource}/token`,
-    { method: "DELETE" },
-    "CONTENT_ACCESS_REVOKE_FAILED",
-  );
-}
-
 export function revokeAdminSingleStaticLink(resource, id) {
   return adminRequest(
     `/api/admin/content-access/${resource}/token?id=${encodeURIComponent(id)}`,

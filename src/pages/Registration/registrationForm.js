@@ -1,4 +1,10 @@
 import { DEFAULT_REGISTRATION_SETTINGS } from "../../features/registration/registrationSettings.js";
+import {
+  isRegistrationFieldRequired,
+  isRegistrationFieldVisible,
+} from "../../../shared/registrationFieldRules.js";
+
+export { isRegistrationFieldRequired, isRegistrationFieldVisible };
 import { REGISTRATION_TROOP_TYPES } from "../../../shared/registrationConfig.js";
 import { normalizeTemplateExtraSquads } from "../../features/playerTemplates/playerTemplatesStorage.js";
 
@@ -71,21 +77,6 @@ export function getRegistrationFormRules(settings = {}) {
     customFields,
     visibleCustomFields,
   };
-}
-
-export function isRegistrationFieldVisible(visibleFields, field) {
-  return visibleFields[field] !== false;
-}
-
-export function isRegistrationFieldRequired(
-  visibleFields,
-  requiredFields,
-  field,
-) {
-  return (
-    isRegistrationFieldVisible(visibleFields, field) &&
-    requiredFields[field] === true
-  );
 }
 
 function normalizeAllianceTag(value = "") {

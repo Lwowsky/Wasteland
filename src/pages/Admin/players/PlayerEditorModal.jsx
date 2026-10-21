@@ -8,6 +8,7 @@ import Modal from "../../../components/Modal/Modal.jsx";
 
 import PlayerMainFields from "./PlayerMainFields.jsx";
 import PlayerExtraSquads from "./PlayerExtraSquads.jsx";
+import { replaceTemplateName } from "../utils/replaceTemplateName.js";
 
 import {
   createEmptyPlayer,
@@ -17,10 +18,6 @@ import {
 } from "./playerForm.js";
 
 import "../styles/players/PlayerEditorModal.css";
-
-function replaceName(template, name) {
-  return String(template || "").replace("{{name}}", name || "");
-}
 
 function PlayerEditorModal({
   t,
@@ -142,7 +139,7 @@ function PlayerEditorModal({
       title={mode === "edit" ? t.editor.editTitle : t.editor.createTitle}
       subtitle={
         mode === "edit"
-          ? replaceName(t.editor.editSubtitle, player?.nickname)
+          ? replaceTemplateName(t.editor.editSubtitle, player?.nickname)
           : t.editor.createSubtitle
       }
       footer={footer}
@@ -170,7 +167,7 @@ function PlayerEditorModal({
       <ConfirmModal
         open={deleteConfirmOpen}
         title={t.actions.delete}
-        message={replaceName(t.editor.confirmDelete, player?.nickname)}
+        message={replaceTemplateName(t.editor.confirmDelete, player?.nickname)}
         confirmLabel={t.actions.delete}
         cancelLabel={t.actions.cancel}
         closeLabel={t.actions.cancel}

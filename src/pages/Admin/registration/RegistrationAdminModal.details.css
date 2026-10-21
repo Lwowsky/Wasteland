@@ -110,15 +110,6 @@
   font-size: 14px;
 }
 
-.registration-rotation-item__name {
-  min-width: 0;
-  overflow: hidden;
-  color: #315c88;
-  font-size: 14px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .registration-rotation-item__actions {
   display: flex;
   gap: 6px;

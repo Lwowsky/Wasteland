@@ -1,6 +1,10 @@
 import { useMemo, useState } from "react";
 
 import { getEnabledRegistrationTiers } from "../registrationTiers.js";
+import {
+  isRegistrationFieldVisible,
+  isRegistrationFieldRequired,
+} from "../../../../shared/registrationFieldRules.js";
 import { normalizeTemplateExtraSquads } from "../../playerTemplates/playerTemplatesStorage.js";
 import { REGISTRATION_FIELD_ICONS } from "../../playerTemplates/templateAssets.js";
 
@@ -45,8 +49,8 @@ function PlayerSection({
   const manualAllianceActive =
     !allianceIsListed && (manualAllianceRequested || Boolean(data.alliance));
 
-  const visible = (field) => visibleFields[field] !== false;
-  const required = (field) => visible(field) && requiredFields[field] === true;
+  const visible = (field) => isRegistrationFieldVisible(visibleFields, field);
+  const required = (field) => isRegistrationFieldRequired(visibleFields, requiredFields, field);
 
   const hasVisibleFields = [
     "nickname",

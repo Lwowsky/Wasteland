@@ -63,6 +63,3 @@ export function getUnavailableState({
   };
 }
 
-export function getUnavailableMessage(args) {
-  return getUnavailableState(args).text;
-}
