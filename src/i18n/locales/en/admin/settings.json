@@ -265,7 +265,7 @@
       "title": "Restore backup",
       "subtitle": "Current region data will be replaced with data from the selected file.",
       "warningTitle": "Current data will be overwritten",
-      "warningText": "Before restore, the system automatically downloads an emergency backup of the current state. Firebase Auth and adminUsers are unchanged.",
+      "warningText": "Before restore, the system automatically downloads an emergency backup of the current state. Firebase Auth and adminUsers are unchanged. All previously created secret player-table and final-plan links will be revoked. Create fresh links after restoring.",
       "createdAt": "Backup created",
       "players": "Players",
       "periods": "Cycles",

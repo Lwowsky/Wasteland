@@ -115,6 +115,11 @@ async function resetD1(env, selection) {
   const resetSequences = new Set();
 
   if (selection.players || selection.cycles || selection.registrationSettings) {
+    // Existing link-only shares must not open another roster after reset.
+    // History remains visible as revoked in the owner's link manager.
+    statements.push(env.DB.prepare(`UPDATE static_share_links
+      SET revoked_at = COALESCE(revoked_at, CURRENT_TIMESTAMP)
+      WHERE revoked_at IS NULL`));
     // Published plans cannot survive destructive changes to their source data.
     statements.push(env.DB.prepare("DELETE FROM turret_plan_publications"));
     statements.push(env.DB.prepare("DELETE FROM turret_plan_drafts"));

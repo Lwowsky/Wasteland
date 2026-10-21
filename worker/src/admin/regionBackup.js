@@ -5,6 +5,7 @@ import {
   restoreFirestoreDocuments,
 } from "../utils/firestore.js";
 import { json } from "../utils/response.js";
+import { isValidRegionBackup, hasRestorableAccessRequests } from "../../../shared/regionBackupValidation.js";
 
 const BACKUP_FORMAT = "wasteland-region-backup";
 const BACKUP_VERSION = 1;
@@ -70,17 +71,17 @@ function backupCounts(d1, accessRequests) {
 
 export async function createRegionBackupSnapshot(request, env) {
   const token = getBearerToken(request);
+  if (!env.FIREBASE_PROJECT_ID || !token) {
+    throw new Error("FIRESTORE_BACKUP_AUTH_UNAVAILABLE");
+  }
   const d1Entries = await Promise.all(
     TABLES.map(async (tableName) => [tableName, await listTable(env, tableName)]),
   );
   const d1 = Object.fromEntries(d1Entries);
 
-  let accessRequests = [];
-  try {
-    accessRequests = await listFirestoreDocuments(env, token, "accessRequests");
-  } catch (error) {
-    console.error("Backup accessRequests:", error);
-  }
+  // Do not produce a deceptively complete backup if Firestore cannot be read.
+  // Otherwise a later restore would delete valid access requests using [].
+  const accessRequests = await listFirestoreDocuments(env, token, "accessRequests");
 
   return {
     format: BACKUP_FORMAT,
@@ -112,16 +113,6 @@ export async function handleRegionBackupCreate(request, env) {
     success: true,
     backup,
   });
-}
-
-function isValidBackup(backup) {
-  return (
-    backup &&
-    backup.format === BACKUP_FORMAT &&
-    Number(backup.version) === BACKUP_VERSION &&
-    backup.d1 &&
-    typeof backup.d1 === "object"
-  );
 }
 
 async function getTableColumns(env, tableName) {
@@ -170,13 +161,30 @@ async function restoreD1(env, d1) {
     ? INSERT_ORDER
     : INSERT_ORDER.filter((tableName) => tableName !== "site_settings");
 
-  await env.DB.batch(
-    deleteOrder.map((tableName) => env.DB.prepare(`DELETE FROM ${tableName}`)),
-  );
+  // Destructive restore must never leave old share links able to open a
+  // replacement region. Retain the rows for owner's audit/history view.
+  // Revoke BEFORE deleting records (also fails closed if an insert later fails).
+  await env.DB.batch([
+    env.DB.prepare(`UPDATE static_share_links
+      SET revoked_at = COALESCE(revoked_at, CURRENT_TIMESTAMP)
+      WHERE revoked_at IS NULL`),
+    env.DB.prepare("DELETE FROM content_access_sessions"),
+    ...deleteOrder.map((tableName) => env.DB.prepare(`DELETE FROM ${tableName}`)),
+  ]);
 
   for (const tableName of insertOrder) {
-    await restoreTable(env, tableName, d1?.[tableName] || []);
+    await restoreTable(env, tableName, d1[tableName] || []);
   }
+  // Old backups may contain once-valid legacy code tokens. They cannot be
+  // reactivated by restoring a historical file.
+  await env.DB.batch([
+    env.DB.prepare(`UPDATE content_access_tokens
+      SET revoked_at = COALESCE(revoked_at, CURRENT_TIMESTAMP)
+      WHERE revoked_at IS NULL`),
+    env.DB.prepare(`UPDATE content_access_settings
+      SET mode = 'private', updated_at = CURRENT_TIMESTAMP
+      WHERE mode NOT IN ('public', 'private', 'link')`),
+  ]);
 }
 
 export async function handleRegionBackupRestore(request, env) {
@@ -192,22 +200,31 @@ export async function handleRegionBackupRestore(request, env) {
     return json({ success: false, error: "BACKUP_RESTORE_CONFIRMATION_REQUIRED" }, 400);
   }
 
-  if (!isValidBackup(body.backup)) {
+  if (!isValidRegionBackup(body.backup)) {
     return json({ success: false, error: "INVALID_REGION_BACKUP" }, 400);
   }
 
-  // Capture the current server state before destructive restore. It is returned
-  // to the caller so the UI can download it as an emergency rollback file.
+  // Capture the current server state before destructive restore. If that
+  // fails, NO deletion is attempted.
   const rollbackBackup = await createRegionBackupSnapshot(request, env);
 
-  await restoreD1(env, body.backup.d1);
-  await restoreFirestoreDocuments(
-    env,
-    getBearerToken(request),
-    "accessRequests",
-    body.backup.firestore?.accessRequests || [],
-  );
-  await clearPublicCaches(request, env);
+  try {
+    await restoreD1(env, body.backup.d1);
+    // Older backup files may omit the Firestore collection: do not interpret
+    // "not captured" as "empty" and delete live access requests.
+    if (hasRestorableAccessRequests(body.backup)) {
+      await restoreFirestoreDocuments(
+        env,
+        getBearerToken(request),
+        "accessRequests",
+        body.backup.firestore.accessRequests,
+      );
+    }
+  } finally {
+    // D1 batches can partially restore before a subsequent batch/Firestore
+    // operation fails. Never leave a static snapshot pointing at old state.
+    await clearPublicCaches(request, env);
+  }
 
   return json({
     success: true,

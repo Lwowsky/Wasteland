@@ -1,4 +1,5 @@
 import { publicAsset } from "../../../utils/publicAsset.js";
+import { isValidRegionBackup } from "../../../../shared/regionBackupValidation.js";
 
 import { RotateCcw } from "lucide-react";
 import { useRef, useState } from "react";
@@ -69,11 +70,7 @@ function RegionBackupPanel({ t, onRestored }) {
       const text = await file.text();
       const payload = JSON.parse(text);
 
-      if (
-        payload?.format !== "wasteland-region-backup" ||
-        Number(payload?.version) !== 1 ||
-        !payload?.d1
-      ) {
+      if (!isValidRegionBackup(payload)) {
         throw new Error("INVALID_REGION_BACKUP");
       }
 
@@ -111,13 +108,19 @@ function RegionBackupPanel({ t, onRestored }) {
       setRestoreBusy(true);
       setError("");
 
+      // Download an independent rollback file BEFORE the destructive API call.
+      // The server also snapshots immediately before applying the replacement.
+      const beforeRestore = await createRegionBackup();
+      if (!beforeRestore?.backup) throw new Error("BACKUP_PRECHECK_FAILED");
+      downloadRegionBackup(beforeRestore.backup, "before-restore");
+
       const result = await restoreRegionBackup({
         backup: selectedBackup,
         confirmed: true,
       });
 
       if (result.rollbackBackup) {
-        downloadRegionBackup(result.rollbackBackup, "before-restore");
+        downloadRegionBackup(result.rollbackBackup, "server-before-restore");
       }
 
       restoreWastelandClientData(selectedBackup.clientData);
