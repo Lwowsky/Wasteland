@@ -1,7 +1,7 @@
 import { normalizePlanLanguages } from "../../../src/features/turrets/planLanguages.js";
 import { MAX_HELPERS_PER_TURRET, PLANNER_SHIFTS, TURRET_IDS } from "../../../src/features/turrets/plannerConstants.js";
 import { normalizePlannerSettings } from "../../../src/features/turrets/plannerSettings.js";
-import { availableForShift, createEmptyAssignments, getHelperMarch } from "../../../src/features/turrets/turretAssignments.js";
+import { availableForShift, captainAvailableForShift, createEmptyAssignments, getHelperMarch } from "../../../src/features/turrets/turretAssignments.js";
 import { getPlannerShift } from "../../../src/features/turrets/plannerPlayers.js";
 import { getShiftCapacity } from "../../../src/features/turrets/shiftCapacity.js";
 import { comparePlayersByTier } from "../../../src/features/turrets/tierPriority.js";
@@ -105,7 +105,7 @@ export function validateTurretDraft(settingsInput, input, players) {
       if (captainId && (!captain || inThisShift.has(captainId) ||
         (assignedRoles.has(captainId) && assignedRoles.get(captainId) !== "captain") ||
         (towerSettings.onlyCaptains && captain.captain !== true) ||
-        !(availableForShift(captain, shift, towerSettings) ||
+        !(captainAvailableForShift(captain, shift, towerSettings) ||
           assignedRoles.get(captainId) === "captain"))) {
         throw new PlanError("INVALID_TURRET_CAPTAIN");
       }

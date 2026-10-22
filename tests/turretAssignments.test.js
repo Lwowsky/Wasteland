@@ -33,7 +33,7 @@ test("assignments: empty factory yields five turrets in all four supported shift
 
 test("assignments: only genuine eligible captains are selectable", () => {
   const candidates = getCaptainCandidates(createEmptyAssignments(), players, "shift1", "hub", settings);
-  assert.deepEqual(candidates.map((p) => p.id), ["1"]);
+  assert.deepEqual(candidates.map((p) => p.id), ["1", "3"]);
   assert.equal(availableForShift(players[2], "shift1", settings), false);
   const flexible = { ...settings, allowFlexible: true };
   assert.ok(getCaptainCandidates(createEmptyAssignments(), players, "shift1", "hub", flexible).some((p) => p.id === "3"));

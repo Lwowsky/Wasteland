@@ -136,6 +136,16 @@ export function availableForShift(player, shift, settings) {
   return available === shift || (available === "flexible" && settings.allowFlexible);
 }
 
+// Legacy tower-planner: an unassigned captain registered for Both/Any shift
+// remains selectable in every shift, even when the Any-shift helpers option is
+// disabled. This is manual captain selection only; it does not alter autofill
+// or the global availability rule used for helpers.
+export function captainAvailableForShift(player, shift, settings) {
+  if (!PLANNER_SHIFTS.includes(shift)) return false;
+  return (player?.captain === true && getPlannerShift(player) === "flexible") ||
+    availableForShift(player, shift, settings);
+}
+
 export function getCaptainCandidates(assignments, players, shift, tower, settings) {
   settings = effectiveTowerSettings(settings, assignments, shift, tower);
   const selected = assignments?.shifts?.[shift]?.[tower]?.captainId;
@@ -151,7 +161,7 @@ export function getCaptainCandidates(assignments, players, shift, tower, setting
       if (!selected && countAssignedInShift(assignments, shift) >= getShiftCapacity(settings, shift)) return false;
       if (settings?.onlyCaptains && player.captain !== true) return false;
       return assignedInOtherShift(assignments, id, shift, "captain") ||
-        availableForShift(player, shift, settings);
+        captainAvailableForShift(player, shift, settings);
     })
     .sort((a, b) => toMarch(b.rallySize) - toMarch(a.rallySize) ||
       toMarch(b.marchSize) - toMarch(a.marchSize) ||
@@ -310,7 +320,7 @@ export function findAssignmentConflicts(assignments, players, settings) {
       if (towerSettings.onlyCaptains && captain.captain !== true) {
         conflicts.push({ shift, tower, playerId: slot.captainId, reason: "captain" });
       }
-      if (!availableForShift(captain, shift, towerSettings) &&
+      if (!captainAvailableForShift(captain, shift, towerSettings) &&
         !assignedInOtherShift(assignments, captain.id, shift, "captain")) {
         conflicts.push({ shift, tower, playerId: slot.captainId, reason: "shift" });
       }

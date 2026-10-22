@@ -69,8 +69,10 @@ test("stage 019: worker validates draft overrides and original player availabili
   const good = validateTurretDraft({ shiftOverrides: { "5": "shift2" } }, assignments, registrations);
   assert.equal(good.settings.shiftOverrides["5"], "shift2");
   assert.equal(registrations[4].shift, "flexible");
-  assert.throws(() => validateTurretDraft({}, assignments, registrations), (e) =>
-    e instanceof PlanError && e.message === "INVALID_TURRET_CAPTAIN");
+  // Since Stage 058, a flexible CAPTAIN is manually eligible in any shift
+  // even without a shiftOverride or the Any-shift helper checkbox.
+  assert.equal(validateTurretDraft({}, assignments, registrations)
+    .assignments.shifts.shift2.hub.captainId, "5");
   assert.throws(() => validateTurretDraft({ shiftOverrides: { "1": "shift2" } }, createEmptyAssignments(), registrations), (e) =>
     e instanceof PlanError && e.message === "INVALID_TURRET_SHIFT_OVERRIDE");
   assert.throws(() => validateTurretDraft({ shiftOverrides: { "9999": "shift1" } }, createEmptyAssignments(), registrations), (e) =>
