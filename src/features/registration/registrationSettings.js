@@ -27,6 +27,8 @@ export const DEFAULT_REGISTRATION_SETTINGS = {
   governor: "",
   captureRegion1: false,
   captureRegion2: false,
+  captureRegion1Shifts: 2,
+  captureRegion2Shifts: 2,
   alliances: [],
   allianceRotation: [],
 
@@ -136,6 +138,8 @@ export function normalizeRegistrationSettings(settings = {}) {
     cycleMode: settings.cycleMode === "manual" ? "manual" : "automatic",
     hostAlliance: String(settings.hostAlliance ?? "").trim().toUpperCase(),
     governor: String(settings.governor ?? ""),
+    captureRegion1Shifts: Math.max(1, Math.min(4, Number(settings.captureRegion1Shifts) || 2)),
+    captureRegion2Shifts: Math.max(1, Math.min(4, Number(settings.captureRegion2Shifts) || 2)),
 
     availableShifts: {
       ...DEFAULT_REGISTRATION_SETTINGS.availableShifts,
@@ -199,6 +203,8 @@ export function getStandardRegistrationSettings(current = {}) {
     governor: current.governor ?? "",
     captureRegion1: current.captureRegion1 === true,
     captureRegion2: current.captureRegion2 === true,
+    captureRegion1Shifts: current.captureRegion1Shifts ?? 2,
+    captureRegion2Shifts: current.captureRegion2Shifts ?? 2,
     alliances: Array.isArray(current.alliances) ? current.alliances : [],
     allianceRotation: Array.isArray(current.allianceRotation)
       ? current.allianceRotation

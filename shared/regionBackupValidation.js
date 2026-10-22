@@ -29,6 +29,11 @@ export function isValidRegionBackup(backup) {
     return false;
   }
   if (d1.site_settings !== undefined && !Array.isArray(d1.site_settings)) return false;
+  // Old backups without capture region tables remain restorable, but new ones must be well-formed.
+  for (const table of ["capture_region_plan_drafts", "capture_region_plan_publications"]) {
+    if (d1[table] !== undefined && (!Array.isArray(d1[table]) ||
+      !d1[table].every((row) => row && !Array.isArray(row) && typeof row === "object"))) return false;
+  }
   if (backup.firestore !== undefined &&
       (!backup.firestore || Array.isArray(backup.firestore) ||
         typeof backup.firestore !== "object" ||

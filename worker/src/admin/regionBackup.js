@@ -16,6 +16,8 @@ const TABLES = [
   "registration_periods",
   "turret_plan_drafts",
   "turret_plan_publications",
+  "capture_region_plan_drafts",
+  "capture_region_plan_publications",
   "registrations",
   "public_players",
   "stats",
@@ -25,6 +27,8 @@ const TABLES = [
 ];
 
 const DELETE_ORDER = [
+  "capture_region_plan_publications",
+  "capture_region_plan_drafts",
   "turret_plan_publications",
   "turret_plan_drafts",
   "content_access_sessions",
@@ -46,6 +50,8 @@ const INSERT_ORDER = [
   "registration_periods",
   "turret_plan_drafts",
   "turret_plan_publications",
+  "capture_region_plan_drafts",
+  "capture_region_plan_publications",
   "registrations",
   "public_players",
   "stats",

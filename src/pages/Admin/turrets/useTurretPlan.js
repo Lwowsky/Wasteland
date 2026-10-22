@@ -23,7 +23,8 @@ import { initialTurretPlanSettings, emptyTurretPlanSnapshot, serverTurretPlanSna
 const initialAssignments = () => createEmptyAssignments();
 
 /** One working plan for all four tabs; editing is local until explicit sync or publication. */
-export default function useTurretPlan(periodId, registrations, editable = false, userId = "", registrationsReady = false, activeShifts = ["shift1", "shift2"], locale = "uk") {
+export default function useTurretPlan(periodId, registrations, editable = false, userId = "", registrationsReady = false, activeShifts = ["shift1", "shift2"], locale = "uk", region = "home") {
+  const workspaceUserId = region === "home" ? userId : `${userId}@${region}`;
   const [settings, setSettings] = useState(() => initialTurretPlanSettings(locale));
   const [raw, setRaw] = useState(initialAssignments);
   const [committed, setCommitted] = useState(() => emptyTurretPlanSnapshot(locale));
@@ -48,7 +49,7 @@ export default function useTurretPlan(periodId, registrations, editable = false,
   const conflicts = useMemo(() => findAssignmentConflicts(assignments, players, settings),
     [assignments, players, settings]);
   const ready = Boolean(periodId) && Number(periodId) === loadedPeriodId && !loading && !loadError;
-  const local = useTurretLocalPersistence({ periodId, userId, settings, raw, committed,
+  const local = useTurretLocalPersistence({ periodId, userId: workspaceUserId, settings, raw, committed,
     revision, fingerprint, ready, editable });
   const dirty = useMemo(() => isTurretPlanDirty(settings, assignments, committed) || stale,
     [settings, assignments, committed, stale]);
@@ -59,7 +60,7 @@ export default function useTurretPlan(periodId, registrations, editable = false,
     if (Number(response.periodId) !== Number(periodId)) throw new Error("TURRET_PERIOD_CHANGED");
     const snapshot = serverTurretPlanSnapshot(response.draft, locale);
     const nextRevision = response.draft?.revision || 0;
-    const stored = allowLocal && editable ? readTurretWorkspace(periodId, userId) : null;
+    const stored = allowLocal && editable ? readTurretWorkspace(periodId, workspaceUserId) : null;
     const chosen = resolveTurretWorkspace(snapshot, nextRevision, stored);
     setSettings(normalizePlannerSettings(chosen.snapshot.settings));
     setRaw(completeAssignmentShifts(chosen.snapshot.assignments));
@@ -79,7 +80,7 @@ export default function useTurretPlan(periodId, registrations, editable = false,
   useEffect(() => {
     if (!periodId) return undefined;
     let cancelled = false;
-    getAdminTurretPlan().then((response) => {
+    getAdminTurretPlan(region).then((response) => {
       if (!cancelled) loadResponse(response, { allowLocal: true });
     }).catch((error) => {
       if (!cancelled) {
@@ -90,7 +91,7 @@ export default function useTurretPlan(periodId, registrations, editable = false,
     return () => { cancelled = true; };
   // Period is keyed by the parent component. The first fetch must not be restarted on every edit.
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [periodId, userId]);
+  }, [periodId, workspaceUserId, region]);
 
   useEffect(() => {
     if (!ready || !registrationsReady || fingerprint) return;
@@ -173,7 +174,7 @@ export default function useTurretPlan(periodId, registrations, editable = false,
 
   async function putSharedDraft() {
     const result = await saveChangedTurretPlan({ periodId, revision, settings, assignments, committed },
-      saveAdminTurretDraft);
+      (payload) => saveAdminTurretDraft(payload, region));
     if (result.draft) {
       setCommitted({ settings: normalizePlannerSettings(result.draft.settings),
         assignments: result.draft.assignments });
@@ -205,7 +206,7 @@ export default function useTurretPlan(periodId, registrations, editable = false,
       setLastApiError("");
       // One PUT only if the local copy differs, followed by a distinct POST.
       const sourceRevision = await putSharedDraft();
-      const response = await publishAdminTurretPlan({ periodId: Number(periodId), revision: sourceRevision });
+      const response = await publishAdminTurretPlan({ periodId: Number(periodId), revision: sourceRevision }, region);
       setPublished(response.published);
       setMessage("published"); return true;
     } catch (error) { explainFailure(error, "publishFailed"); return false; }
@@ -215,7 +216,7 @@ export default function useTurretPlan(periodId, registrations, editable = false,
     if (!ready || busy || !published) return false;
     setBusy(true);
     try {
-      const response = await restoreAdminPublishedPlan({ periodId: Number(periodId), revision });
+      const response = await restoreAdminPublishedPlan({ periodId: Number(periodId), revision }, region);
       const snapshot = { settings: normalizePlannerSettings(response.draft.settings),
         assignments: completeAssignmentShifts(response.draft.assignments) };
       setSettings(snapshot.settings); setRaw(snapshot.assignments);
@@ -229,10 +230,10 @@ export default function useTurretPlan(periodId, registrations, editable = false,
     if (!ready || busy) return false;
     setBusy(true);
     try {
-      const response = await getAdminTurretPlan();
+      const response = await getAdminTurretPlan(region);
       // Clearing the old browser copy is deliberate, never part of an automatic refresh.
       if (Number(response.periodId) !== Number(periodId)) throw new Error("TURRET_PERIOD_CHANGED");
-      removeTurretWorkspace(periodId, userId);
+      removeTurretWorkspace(periodId, workspaceUserId);
       loadResponse(response);
       setMessage("sharedLoaded"); return true;
     } catch (error) { explainFailure(error, "loadFailed"); return false; }

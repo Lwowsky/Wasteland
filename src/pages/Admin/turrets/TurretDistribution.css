@@ -372,3 +372,8 @@
 @media (max-width:520px) {
   .turret-list { grid-template-columns:1fr; }
 }
+
+.capture-region-picker { display:flex; flex-wrap:wrap; gap:9px; margin:0 0 12px; padding:10px;
+  border:1px solid #cbdcf0; border-radius:12px; background:#f4f8fd; }
+.capture-region-picker .admin-secondary-button.capture-region-picker__active { color:white; border-color:#3367e9;
+  background:linear-gradient(100deg,#347df5,#6254e5); }

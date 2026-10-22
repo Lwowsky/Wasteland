@@ -10,7 +10,7 @@ import { handlePublicRegistrationSettings } from "./registrationSettings.js";
 import { getContentAccessSetting } from "../services/contentAccess.js";
 import { getPublicDisplayPeriod } from "../db/periods.js";
 import { getRegistrationSettings } from "../db/registrationSettings.js";
-import { readPublishedPlan } from "../turrets/storage.js";
+import { readPublishedPlanBundle } from "../turrets/storage.js";
 import { countPublishedPlanPlayers } from "./publishedPlanCount.js";
 import { auditPublishedSnapshot } from "./snapshotAudit.js";
 import { isSnapshotPublic } from "./snapshotVisibility.js";
@@ -89,7 +89,7 @@ export async function handlePublicSnapshot(request, env) {
   // one AES-GCM sealed plan with a separately wrapped key per active link.
   const registration = await getRegistrationSettings(env);
   const period = await getPublicDisplayPeriod(env, registration);
-  const publishedForStats = period ? await readPublishedPlan(env, period.id) : null;
+  const publishedForStats = period ? await readPublishedPlanBundle(env, period.id, registration) : null;
   const published = ["public", "link"].includes(finalAccess.mode) ? publishedForStats : null;
   // Re-check immediately before exporting: an admin may have closed access
   // while the database reads above were in progress.

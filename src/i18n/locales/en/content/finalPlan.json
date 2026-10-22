@@ -1,5 +1,11 @@
 {
   "title": "Final plan",
+  "regionSelector": {
+    "label": "Choose region",
+    "home": "Home region",
+    "captureRegion1": "Capture Region 1",
+    "captureRegion2": "Capture Region 2"
+  },
   "shift1": "Shift 1",
   "shift2": "Shift 2",
   "share": "Share",

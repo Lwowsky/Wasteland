@@ -13,7 +13,9 @@ function participantKey(player) {
 export function countPublishedPlanPlayers(plan) {
   if (!plan || typeof plan !== "object") return 0;
   const seen = new Set();
-  for (const [shift, towers] of Object.entries(plan)) {
+  // Region ids namespace independent boards; count a person only once across them.
+  const plans = [plan, ...Object.values(plan.__regions || {})];
+  for (const regionPlan of plans) for (const [shift, towers] of Object.entries(regionPlan || {})) {
     if (!/^shift[1-4]$/.test(shift) || !towers || typeof towers !== "object") continue;
     for (const tower of Object.values(towers)) {
       if (!tower || typeof tower !== "object") continue;

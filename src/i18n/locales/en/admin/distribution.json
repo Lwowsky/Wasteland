@@ -1,5 +1,9 @@
 {
   "title": "Turret distribution",
+  "regionPicker": {
+    "label": "Planning region",
+    "home": "Home region"
+  },
   "description": "Plan turrets, captains, reserve players and the final distribution.",
   "subtabs": {
     "settings": "Settings",

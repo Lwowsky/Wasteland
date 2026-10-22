@@ -1,23 +1,28 @@
 import { adminRequest } from "./adminApi.js";
 
-export function getAdminTurretPlan() {
-  return adminRequest("/api/admin/turret-plan");
+function regionUrl(path, region = "home") {
+  if (!["home", "region2", "region3"].includes(region)) throw new Error("INVALID_CAPTURE_REGION");
+  return `${path}?region=${encodeURIComponent(region)}`;
 }
 
-export function saveAdminTurretDraft(payload) {
-  return adminRequest("/api/admin/turret-plan/draft", {
+export function getAdminTurretPlan(region = "home") {
+  return adminRequest(regionUrl("/api/admin/turret-plan", region));
+}
+
+export function saveAdminTurretDraft(payload, region = "home") {
+  return adminRequest(regionUrl("/api/admin/turret-plan/draft", region), {
     method: "PUT", body: JSON.stringify(payload),
   });
 }
 
-export function publishAdminTurretPlan(payload) {
-  return adminRequest("/api/admin/turret-plan/publish", {
+export function publishAdminTurretPlan(payload, region = "home") {
+  return adminRequest(regionUrl("/api/admin/turret-plan/publish", region), {
     method: "POST", body: JSON.stringify(payload),
   });
 }
 
-export function restoreAdminPublishedPlan(payload) {
-  return adminRequest("/api/admin/turret-plan/restore", {
+export function restoreAdminPublishedPlan(payload, region = "home") {
+  return adminRequest(regionUrl("/api/admin/turret-plan/restore", region), {
     method: "POST", body: JSON.stringify(payload),
   });
 }

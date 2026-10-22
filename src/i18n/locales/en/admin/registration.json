@@ -126,6 +126,7 @@
     "governorPlaceholder": "Governor nickname",
     "captureRegion1": "Capture Region 1",
     "captureRegion2": "Capture Region 2",
+    "captureShiftCount": "Number of shifts",
     "alliancesTitle": "Alliance list",
     "allianceTag": "Alliance tag",
     "allianceTagPlaceholder": "MIR",

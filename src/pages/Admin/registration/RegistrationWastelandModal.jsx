@@ -24,6 +24,8 @@ function RegistrationWastelandModal({
     governor: settings.governor || "",
     captureRegion1: settings.captureRegion1 === true,
     captureRegion2: settings.captureRegion2 === true,
+    captureRegion1Shifts: settings.captureRegion1Shifts ?? 2,
+    captureRegion2Shifts: settings.captureRegion2Shifts ?? 2,
     alliances: initialAlliances,
     allianceRotation: normalizeAllianceRotation(
       settings.allianceRotation,
@@ -212,6 +214,13 @@ function RegistrationWastelandModal({
                 />
                 <span>{r.wastelandModal.captureRegion1}</span>
               </label>
+              {draft.captureRegion1 && <label className="admin-field">
+                <span>{r.wastelandModal.captureShiftCount}</span>
+                <select value={draft.captureRegion1Shifts} disabled={!canEdit}
+                  onChange={(event) => update("captureRegion1Shifts", Number(event.target.value))}>
+                  {[1, 2, 3, 4].map((count) => <option key={count} value={count}>{count}</option>)}
+                </select>
+              </label>}
 
               <label className="registration-choice-option">
                 <input
@@ -222,6 +231,13 @@ function RegistrationWastelandModal({
                 />
                 <span>{r.wastelandModal.captureRegion2}</span>
               </label>
+              {draft.captureRegion2 && <label className="admin-field">
+                <span>{r.wastelandModal.captureShiftCount}</span>
+                <select value={draft.captureRegion2Shifts} disabled={!canEdit}
+                  onChange={(event) => update("captureRegion2Shifts", Number(event.target.value))}>
+                  {[1, 2, 3, 4].map((count) => <option key={count} value={count}>{count}</option>)}
+                </select>
+              </label>}
             </div>
           </section>
         )}

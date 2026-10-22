@@ -14,15 +14,16 @@ import FinalPlanAdminPreview from "./FinalPlanAdminPreview.jsx";
 import useTurretPlan from "./useTurretPlan.js";
 import { getPlannerShift } from "../../../features/turrets/plannerPlayers.js";
 import { getActivePlannerShifts } from "../../../features/turrets/plannerShifts.js";
+import { captureRegionShifts } from "../../../../shared/captureRegions.js";
 
-function TurretDistributionCycle({ t, language, publicT, players, periodId, loading, error, onReload, editable, canPublish, registrationSettings, registrationSettingsReady = false, registrationSettingsError = "", onReloadRegistrationSettings, userId }) {
+function TurretDistributionCycle({ t, language, publicT, players, periodId, loading, error, onReload, editable, canPublish, registrationSettings, registrationSettingsReady = false, registrationSettingsError = "", onReloadRegistrationSettings, userId, region = "home" }) {
   const [section, setSection] = useState("settings");
   const [shift, setShift] = useState("shift1");
   const [actionNotice, setActionNotice] = useState(null);
   const { dialog, requestConfirm, closeConfirm, confirm } = useTurretConfirm();
-  const activeShifts = getActivePlannerShifts(registrationSettings?.availableShifts);
+  const activeShifts = region === "home" ? getActivePlannerShifts(registrationSettings?.availableShifts) : captureRegionShifts(registrationSettings, region);
   const displayedShift = activeShifts.includes(shift) ? shift : activeShifts[0];
-  const plan = useTurretPlan(periodId, players, editable, userId, !loading && !error && registrationSettingsReady, activeShifts, language);
+  const plan = useTurretPlan(periodId, players, editable, userId, !loading && !error && registrationSettingsReady, activeShifts, language, region);
   const a = { distribution: t.distribution, troops: t.players.troops, shifts: t.players.shifts };
   const effectivePlayers = plan.players;
   const loaded = !loading && !error && registrationSettingsReady && plan.ready;

@@ -121,6 +121,8 @@ async function resetD1(env, selection) {
       SET revoked_at = COALESCE(revoked_at, CURRENT_TIMESTAMP)
       WHERE revoked_at IS NULL`));
     // Published plans cannot survive destructive changes to their source data.
+    statements.push(env.DB.prepare("DELETE FROM capture_region_plan_publications"));
+    statements.push(env.DB.prepare("DELETE FROM capture_region_plan_drafts"));
     statements.push(env.DB.prepare("DELETE FROM turret_plan_publications"));
     statements.push(env.DB.prepare("DELETE FROM turret_plan_drafts"));
   }

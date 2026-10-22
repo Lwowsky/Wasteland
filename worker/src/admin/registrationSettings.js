@@ -165,6 +165,8 @@ function sanitizeSettings(body, current = {}) {
     governor: normalizeText(body.governor ?? current.governor),
     captureRegion1: body.captureRegion1 === true,
     captureRegion2: body.captureRegion2 === true,
+    captureRegion1Shifts: Math.max(1, Math.min(4, Number(body.captureRegion1Shifts ?? current.captureRegion1Shifts) || 2)),
+    captureRegion2Shifts: Math.max(1, Math.min(4, Number(body.captureRegion2Shifts ?? current.captureRegion2Shifts) || 2)),
     availableShifts: sanitizeAvailableShifts(
       body.availableShifts ?? current.availableShifts,
     ),

@@ -281,6 +281,8 @@ export function prepareDeleteRegistrationStatements(env, registrationId, existin
 
 export function prepareClearPeriodStatements(env, periodId) {
   return [
+    env.DB.prepare(`DELETE FROM capture_region_plan_publications WHERE period_id = ?`).bind(periodId),
+    env.DB.prepare(`DELETE FROM capture_region_plan_drafts WHERE period_id = ?`).bind(periodId),
     env.DB.prepare(`DELETE FROM turret_plan_publications WHERE period_id = ?`).bind(periodId),
     env.DB.prepare(`DELETE FROM turret_plan_drafts WHERE period_id = ?`).bind(periodId),
     env.DB.prepare(`DELETE FROM public_players WHERE period_id = ?`).bind(

@@ -23,6 +23,7 @@ function FinalPlan() {
   const boardRef = useRef(null);
   const [userLanguages, setUserLanguages, hasChosenLanguages] = usePlanLanguages(language);
   const [activeShift, setActiveShift] = useState("shift1");
+  const [activeRegion, setActiveRegion] = useState("home");
   const [plan, setPlan] = useState(null);
   const [publishedAt, setPublishedAt] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -52,13 +53,17 @@ function FinalPlan() {
 
   // Published language choices are shared with every visitor. Visitors may
   // additionally customize their own view without changing the publication.
-  const languages = hasChosenLanguages ? userLanguages : plan?.__languages || userLanguages;
+  const regions = Object.keys(plan?.__regions || {});
+  const hasHome = PLANNER_SHIFTS.some((shift) => Object.hasOwn(plan || {}, shift));
+  const selectedRegion = activeRegion !== "home" && regions.includes(activeRegion) ? activeRegion
+    : hasHome ? "home" : regions[0] || "home";
+  const selectedPlan = selectedRegion === "home" ? plan : plan?.__regions?.[selectedRegion];
+  const languages = hasChosenLanguages ? userLanguages : selectedPlan?.__languages || plan?.__languages || userLanguages;
   const boardT = getPlanBoardTranslations(t, languages, language);
   function chooseLanguages(codes) { setUserLanguages(codes); }
-
-  const shifts = PLANNER_SHIFTS.filter((shift) => Object.hasOwn(plan || {}, shift));
+  const shifts = PLANNER_SHIFTS.filter((shift) => Object.hasOwn(selectedPlan || {}, shift));
   const currentShift = shifts.includes(activeShift) ? activeShift : shifts[0];
-  const shiftPlan = plan?.[currentShift];
+  const shiftPlan = selectedPlan?.[currentShift];
   // The unpublished state must match the existing closed/private cards,
   // rather than showing a thin unstyled status strip inside a huge board.
   if (!loading && !error && !shiftPlan) {
@@ -99,8 +104,17 @@ function FinalPlan() {
                 {publishedAt && <p className="final-plan-published-date">
                   {t.finalPlan.lastPublished.replace("{{date}}", formatMediumDateTime(publishedAt, language))}
                 </p>}
+                {regions.length > 0 && <nav className="capture-region-picker" aria-label={t.finalPlan.regionSelector.label}>
+                  {(hasHome ? ["home", ...regions] : regions).map((id) => <button type="button" key={id}
+                    className={`final-plan-toolbar__button${id === selectedRegion ? " final-plan-toolbar__button--active" : ""}`}
+                    aria-pressed={id === selectedRegion} onClick={() => { setActiveRegion(id); setActiveShift("shift1"); }}>
+                    {id === "home" ? t.finalPlan.regionSelector.home :
+                      id === "region2" ? t.finalPlan.regionSelector.captureRegion1 :
+                        t.finalPlan.regionSelector.captureRegion2}
+                  </button>)}
+                </nav>}
                 <FinalPlanToolbar t={t} activeShift={currentShift} shifts={shifts}
-                  setActiveShift={setActiveShift} boardRef={boardRef} planByShift={plan}
+                  setActiveShift={setActiveShift} boardRef={boardRef} planByShift={selectedPlan}
                   language={language} languages={languages} setLanguages={chooseLanguages} />
                 <FinalPlanBoard ref={boardRef} t={boardT} language={language}
                   activeShift={currentShift} plan={shiftPlan} languages={languages} />

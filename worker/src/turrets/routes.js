@@ -8,9 +8,18 @@ import { json } from "../utils/response.js";
 import { readPlanDraft, readPublishedMeta, readPublishedPlan, publishDraft, upsertDraft } from "./storage.js";
 import { createPublicPlan, PlanError, validateTurretDraft } from "./validate.js";
 import { getActivePlannerShifts } from "../../../src/features/turrets/plannerShifts.js";
+import { normalizeCaptureRegion, isCaptureRegionEnabled, captureRegionShifts } from "../../../shared/captureRegions.js";
+import { readPublishedPlanBundle } from "./storage.js";
 
 const error = (code, status) => json({ success: false, error: code }, status);
 const numberId = (value) => Number.isSafeInteger(value) && value > 0;
+
+function requestedRegion(request) {
+  const value = new URL(request.url).searchParams.get("region") || "home";
+  const region = normalizeCaptureRegion(value);
+  if (!region) throw new PlanError("INVALID_CAPTURE_REGION");
+  return region;
+}
 
 async function authorize(request, env, mode = "read") {
   const admin = await verifyAdminRequest(request, env);
@@ -53,11 +62,14 @@ function handleFailure(e) {
 }
 
 export async function handleAdminTurretPlanGet(request, env) {
-  const { failure, period } = await authorize(request, env);
+  const { failure, period, registrationSettings } = await authorize(request, env);
   if (failure) return failure;
+  let region;
+  try { region = requestedRegion(request); } catch (e) { return handleFailure(e); }
+  if (!isCaptureRegionEnabled(registrationSettings, region)) return error("CAPTURE_REGION_DISABLED", 403);
   if (!period) return json({ success: true, periodId: null, draft: null, published: null });
   const [draft, published] = await Promise.all([
-    readPlanDraft(env, period.id), readPublishedMeta(env, period.id),
+    readPlanDraft(env, period.id, region), readPublishedMeta(env, period.id, region),
   ]);
   return json({ success: true, periodId: period.id, draft,
     published: published ? { revision: published.revision, sourceRevision: published.sourceRevision,
@@ -65,15 +77,17 @@ export async function handleAdminTurretPlanGet(request, env) {
 }
 
 export async function handleAdminTurretDraftPut(request, env) {
-  const { failure, admin, period } = await authorize(request, env, "edit");
+  const { failure, admin, period, registrationSettings } = await authorize(request, env, "edit");
   if (failure) return failure;
   try {
+    const region = requestedRegion(request);
+    if (!isCaptureRegionEnabled(registrationSettings, region)) throw new PlanError("CAPTURE_REGION_DISABLED", 403);
     const body = await readBody(request);
     assertPeriod(body, period);
     const revision = expectedRevision(body);
     const players = await getRegistrationRows(env, period.id);
     const valid = validateTurretDraft(body.settings, body.assignments, players);
-    const draft = await upsertDraft(env, period.id, revision, valid, admin.uid);
+    const draft = await upsertDraft(env, period.id, revision, valid, admin.uid, region);
     return json({ success: true, draft }, 200, { "Cache-Control": "no-store" });
   } catch (e) { return handleFailure(e); }
 }
@@ -82,18 +96,21 @@ export async function handleAdminTurretPublish(request, env) {
   const { failure, admin, period, registrationSettings } = await authorize(request, env, "publish");
   if (failure) return failure;
   try {
+    const region = requestedRegion(request);
+    if (!isCaptureRegionEnabled(registrationSettings, region)) throw new PlanError("CAPTURE_REGION_DISABLED", 403);
     const body = await readBody(request);
     assertPeriod(body, period);
     const revision = expectedRevision(body);
-    const draft = await readPlanDraft(env, period.id);
+    const draft = await readPlanDraft(env, period.id, region);
     if (!draft || draft.revision !== revision) throw new PlanError("TURRET_DRAFT_CONFLICT", 409);
     const players = await getRegistrationRows(env, period.id);
     const validated = validateTurretDraft(draft.settings, draft.assignments, players);
     if (validated.count === 0) throw new PlanError("TURRET_PLAN_EMPTY");
     const published = await publishDraft(env, period.id, revision, {
       ...validated, publicPlan: createPublicPlan(validated.assignments, players,
-        getActivePlannerShifts(registrationSettings.availableShifts), validated.settings.planLanguages),
-    }, admin.uid);
+        region === "home" ? getActivePlannerShifts(registrationSettings.availableShifts)
+          : captureRegionShifts(registrationSettings, region), validated.settings.planLanguages),
+    }, admin.uid, region);
     try { await markPublicSnapshotDirty(env); } catch (syncError) {
       console.error("Final plan snapshot revision:", syncError);
     }
@@ -105,17 +122,19 @@ export async function handleAdminTurretPublish(request, env) {
 }
 
 export async function handleAdminTurretRestore(request, env) {
-  const { failure, admin, period } = await authorize(request, env, "publish");
+  const { failure, admin, period, registrationSettings } = await authorize(request, env, "publish");
   if (failure) return failure;
   try {
+    const region = requestedRegion(request);
+    if (!isCaptureRegionEnabled(registrationSettings, region)) throw new PlanError("CAPTURE_REGION_DISABLED", 403);
     const body = await readBody(request);
     assertPeriod(body, period);
     const revision = expectedRevision(body);
-    const published = await readPublishedPlan(env, period.id, true);
+    const published = await readPublishedPlan(env, period.id, true, region);
     if (!published) throw new PlanError("TURRET_NO_PUBLICATION", 404);
     const players = await getRegistrationRows(env, period.id);
     const validated = validateTurretDraft(published.settings, published.assignments, players);
-    const draft = await upsertDraft(env, period.id, revision, validated, admin.uid);
+    const draft = await upsertDraft(env, period.id, revision, validated, admin.uid, region);
     return json({ success: true, draft }, 200, { "Cache-Control": "no-store" });
   } catch (e) { return handleFailure(e); }
 }
@@ -125,7 +144,7 @@ export async function handlePublicFinalPlan(request, env) {
   if (!access.allowed) return error(access.reason || "CONTENT_ACCESS_REQUIRED", 403);
   const settings = await getRegistrationSettings(env);
   const period = await getPublicDisplayPeriod(env, settings);
-  const published = period ? await readPublishedPlan(env, period.id) : null;
+  const published = period ? await readPublishedPlanBundle(env, period.id, settings) : null;
   return json({ success: true, periodId: period?.id ?? null,
     plan: published?.plan ?? null,
     publishedAt: published?.publishedAt ?? null,
