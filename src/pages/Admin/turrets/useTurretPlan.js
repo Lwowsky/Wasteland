@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { filterCaptureRegionRegistrations, hasOptedIntoRegionCapture, selectCapturePlanRegistrations } from "../../../../shared/captureRegions.js";
 import { runAutomaticDistribution } from "../../../features/turrets/autoDistribution.js";
 import { releaseAllTurretHelpers } from "../../../features/turrets/turretRedistribution.js";
 import { createEmptyAssignments, completeAssignmentShifts, findAssignmentConflicts, normalizeAssignments } from "../../../features/turrets/turretAssignments.js";
@@ -40,10 +41,19 @@ export default function useTurretPlan(periodId, registrations, editable = false,
   const [remoteConflict, setRemoteConflict] = useState(false);
   const [fingerprint, setFingerprint] = useState("");
   const rosterFingerprint = useMemo(() => getTurretRosterFingerprint(registrations), [registrations]);
+  const eligibleRegistrations = useMemo(() => filterCaptureRegionRegistrations(registrations, region),
+    [registrations, region]);
+  const plannerRegistrations = useMemo(() => selectCapturePlanRegistrations(registrations, region, raw),
+    [registrations, region, raw]);
 
   const players = useMemo(() => composePlanPlayers(
-    applyPlannerShiftOverrides(registrations, settings.shiftOverrides), raw),
-  [registrations, settings.shiftOverrides, raw]);
+    applyPlannerShiftOverrides(plannerRegistrations, settings.shiftOverrides), raw),
+  [plannerRegistrations, settings.shiftOverrides, raw]);
+  // Keep non-opted but manually assigned incumbents in the metrics/roster.
+  // They are not eligible for any new automatic placement in captured regions.
+  const autoPlayers = useMemo(() => region === "home" ? players : players.map((player) => ({
+    ...player, captureAutoExcluded: !hasOptedIntoRegionCapture(player),
+  })), [players, region]);
   const assignments = useMemo(() => normalizeAssignments(raw, players), [raw, players]);
   const stale = useMemo(() => JSON.stringify(raw) !== JSON.stringify(assignments), [raw, assignments]);
   const conflicts = useMemo(() => findAssignmentConflicts(assignments, players, settings),
@@ -112,7 +122,7 @@ export default function useTurretPlan(periodId, registrations, editable = false,
   }
   function applyFlexible(...counts) {
     if (!ready || busy) return { error: "notReady" };
-    const result = addPlannerFlexibleShifts(registrations, settings, assignments, ...counts);
+    const result = addPlannerFlexibleShifts(eligibleRegistrations, settings, assignments, ...counts);
     if (!result.error && (result.added1 || result.added2 || result.added3 || result.added4)) {
       changeSettings((current) => ({ ...current, shiftOverrides: result.shiftOverrides }));
     }
@@ -133,10 +143,10 @@ export default function useTurretPlan(periodId, registrations, editable = false,
       setMessage("rulesConflict"); return false;
     }
     if (settings.allianceLimits && activeShifts.reduce((sum, shift) => sum + Number(settings[`${shift}Extra`] || 0), 0) >
-      registrations.filter((row) => getPlannerShift(row) === "flexible").length) {
+      eligibleRegistrations.filter((row) => getPlannerShift(row) === "flexible").length) {
       setMessage("autoBlocked"); return false;
     }
-    const outcome = runAutomaticDistribution({ assignments, players, settings, activeShifts, ...options });
+    const outcome = runAutomaticDistribution({ assignments, players: autoPlayers, settings, activeShifts, ...options });
     if (outcome.error) { setMessage(outcome.error === "manualMode" ? "manualMode" : "autoBlocked"); return false; }
     const remainingConflicts = options.operation === "redistribute"
       ? findAssignmentConflicts(outcome.assignments, players, settings).length : 0;

@@ -82,6 +82,7 @@ export function eligibleAutoPlayers({ players, assignments, settings, shift, cap
 }
 
 export function canAutoUsePlayer({ player, assignments, settings, shift, captain = null, purpose, roster, context = null }) {
+  if (player?.captureAutoExcluded === true) return false;
   const id = autoPlayerId(player);
   if (!id || (context ? context.occupied.has(id) : locateAssignment(assignments, id))) return false;
   if (settings.respectShift) {

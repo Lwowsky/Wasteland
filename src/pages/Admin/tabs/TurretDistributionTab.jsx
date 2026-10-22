@@ -6,6 +6,8 @@ import "../turrets/TurretDistributionHeader.css";
 
 function TurretDistributionTab({ t, language, publicT, players, period, loading, error, onReload, editable, canPublish, registrationSettings, registrationSettingsReady, registrationSettingsError, onReloadRegistrationSettings, userId }) {
   const [region, setRegion] = useState("home");
+  // Keep the selected subtab when switching between independent region plans.
+  const [section, setSection] = useState("settings");
   const periodId = period?.id ?? null;
   const labels = {
     home: t.distribution.regionPicker.home,
@@ -22,6 +24,7 @@ function TurretDistributionTab({ t, language, publicT, players, period, loading,
         aria-pressed={id === active} onClick={() => setRegion(id)}>{labels[id]}</button>)}
     </div>
     <TurretDistributionCycle key={`${periodId || "no-period"}:${active}`} region={active}
+      section={section} onSectionChange={setSection}
       t={t} language={language} publicT={publicT} players={players} periodId={periodId}
       loading={loading} error={error} onReload={onReload}
       registrationSettings={registrationSettings} registrationSettingsReady={registrationSettingsReady}

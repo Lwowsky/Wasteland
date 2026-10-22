@@ -1,6 +1,7 @@
 import { publicAsset } from "../../../utils/publicAsset.js";
 
 import { useCallback, useState } from "react";
+import { filterCaptureRegionRegistrations } from "../../../../shared/captureRegions.js";
 import ConfirmModal from "../../../components/ConfirmModal/ConfirmModal.jsx";
 import TurretActionResultModal from "./TurretActionResultModal.jsx";
 import TurretWorkspaceStatus from "./TurretWorkspaceStatus.jsx";
@@ -16,20 +17,20 @@ import { getPlannerShift } from "../../../features/turrets/plannerPlayers.js";
 import { getActivePlannerShifts } from "../../../features/turrets/plannerShifts.js";
 import { captureRegionShifts } from "../../../../shared/captureRegions.js";
 
-function TurretDistributionCycle({ t, language, publicT, players, periodId, loading, error, onReload, editable, canPublish, registrationSettings, registrationSettingsReady = false, registrationSettingsError = "", onReloadRegistrationSettings, userId, region = "home" }) {
-  const [section, setSection] = useState("settings");
+function TurretDistributionCycle({ t, language, publicT, players, periodId, loading, error, onReload, editable, canPublish, registrationSettings, registrationSettingsReady = false, registrationSettingsError = "", onReloadRegistrationSettings, userId, region = "home", section = "settings", onSectionChange }) {
   const [shift, setShift] = useState("shift1");
   const [actionNotice, setActionNotice] = useState(null);
   const { dialog, requestConfirm, closeConfirm, confirm } = useTurretConfirm();
   const activeShifts = region === "home" ? getActivePlannerShifts(registrationSettings?.availableShifts) : captureRegionShifts(registrationSettings, region);
   const displayedShift = activeShifts.includes(shift) ? shift : activeShifts[0];
+  const eligibleRegistrations = filterCaptureRegionRegistrations(players, region);
   const plan = useTurretPlan(periodId, players, editable, userId, !loading && !error && registrationSettingsReady, activeShifts, language, region);
   const a = { distribution: t.distribution, troops: t.players.troops, shifts: t.players.shifts };
   const effectivePlayers = plan.players;
   const loaded = !loading && !error && registrationSettingsReady && plan.ready;
   const flexibleLimitInvalid = plan.settingsDraft.settings.allianceLimits &&
     activeShifts.reduce((sum, key) => sum + Number(plan.settingsDraft.settings[`${key}Extra`] || 0), 0) >
-      players.filter((player) => getPlannerShift(player) === "flexible").length;
+      eligibleRegistrations.filter((player) => getPlannerShift(player) === "flexible").length;
   const recoveryBlocked = !registrationSettingsReady || plan.assignmentsDraft.stale || plan.busy;
   const redistributeBlocked = recoveryBlocked || flexibleLimitInvalid;
   const autoBlocked = redistributeBlocked || plan.assignmentsDraft.conflicts.length > 0;
@@ -85,7 +86,7 @@ function TurretDistributionCycle({ t, language, publicT, players, periodId, load
         </button>
       </div>}
       <TurretDistributionNav labels={a.distribution.subtabs} active={section}
-        onChange={setSection} ariaLabel={a.distribution.title} />
+        onChange={onSectionChange} ariaLabel={a.distribution.title} />
       {translatedMessage && <p className={`turret-draft-feedback${feedbackIsError ? " turret-draft-feedback--error" : ""}`} role="status">
         {translatedMessage}
       </p>}
@@ -94,7 +95,7 @@ function TurretDistributionCycle({ t, language, publicT, players, periodId, load
       </p>}
       <TurretSettingsStage hidden={section !== "settings"} draft={plan.settingsDraft}
         assignments={plan.assignmentsDraft.assignments} a={a} registrationSettings={registrationSettings}
-        players={effectivePlayers} registrations={players} periodId={periodId} loaded={loaded} loading={loading || plan.loading || !registrationSettingsReady}
+        players={effectivePlayers} registrations={eligibleRegistrations} periodId={periodId} loaded={loaded} loading={loading || plan.loading || !registrationSettingsReady}
         error={error} onReload={onReload} editable={editable && !plan.busy && registrationSettingsReady}
         onAuto={runAuto} onClearHelpers={runClearHelpers}
         onActionFeedback={notify}
