@@ -1,10 +1,13 @@
+
 {
   "name": "wasteland-king-api",
   "main": "worker/src/index.js",
   "compatibility_date": "2026-10-04",
+  "keep_vars": true,
   "vars": {
     "FIREBASE_PROJECT_ID": "wasteland-king-region",
-    "GITHUB_SNAPSHOT_REPOSITORY": "Lwowsky/Wasteland-Public-Data"
+    "GITHUB_SNAPSHOT_REPOSITORY": "Lwowsky/Wasteland-Public-Data",
+    "CLOUDFLARE_ACCOUNT_ID": "7620773ae547a6bbcc8f8acc42f06926"
   },
   "triggers": {
     "crons": [
