@@ -25,3 +25,7 @@ export const LANGUAGES = {
 };
 
 export const SUPPORTED_LANGUAGES = Object.keys(LANGUAGES);
+
+// Languages from the legacy website are listed for future localization work.
+// They are intentionally NOT supported routes until every JSON catalog is ready.
+export const PLANNED_LANGUAGES = Object.freeze(["ru", "pl", "de", "ja", "zh", "ko", "vi", "ar"]);

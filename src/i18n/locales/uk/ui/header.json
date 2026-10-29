@@ -32,6 +32,50 @@
       "badge": "UA",
       "label": "Українська",
       "description": "Українська"
+    },
+    "ru": {
+      "badge": "RU",
+      "label": "Русский",
+      "description": "Російська"
+    },
+    "pl": {
+      "badge": "PL",
+      "label": "Polski",
+      "description": "Польська"
+    },
+    "de": {
+      "badge": "DE",
+      "label": "Deutsch",
+      "description": "Німецька"
+    },
+    "ja": {
+      "badge": "JA",
+      "label": "日本語",
+      "description": "Японська"
+    },
+    "zh": {
+      "badge": "ZH",
+      "label": "中文",
+      "description": "Китайська"
+    },
+    "ko": {
+      "badge": "KO",
+      "label": "한국어",
+      "description": "Корейська"
+    },
+    "vi": {
+      "badge": "VI",
+      "label": "Tiếng Việt",
+      "description": "В’єтнамська"
+    },
+    "ar": {
+      "badge": "AR",
+      "label": "العربية",
+      "description": "Арабська"
     }
-  }
+  },
+  "languagesAvailable": "активні",
+  "languageSelected": "Вибрана мова",
+  "languagesPlanned": "Інші мови зі старого сайту",
+  "languagesPlannedNote": "Ці мови поки в підготовці. Вони стануть доступними після повного перекладу й тестування нових сторінок та адмінки."
 }

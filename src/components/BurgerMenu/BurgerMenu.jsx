@@ -1,13 +1,14 @@
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import {
   Globe2,
   ChevronRight,
+  Check,
   X,
 } from "lucide-react";
 
-import { LANGUAGES, SUPPORTED_LANGUAGES } from "../../config/site.js";
+import { LANGUAGES, PLANNED_LANGUAGES, SUPPORTED_LANGUAGES } from "../../config/site.js";
 import { ROUTES, getRoute } from "../../config/routes.js";
 
 const AdminMenuLink = lazy(() => import("./AdminMenuLink.jsx"));
@@ -23,6 +24,36 @@ function BurgerMenu({
   brandText,
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const menuButtonRef = useRef(null);
+  const panelRef = useRef(null);
+
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    panelRef.current?.querySelector(".burger-menu__close")?.focus();
+    const onKeyDown = (event) => {
+      if (event.key === "Tab") {
+        const items = [...(panelRef.current?.querySelectorAll(
+          'button:not([disabled]), a[href], summary, input:not([disabled])',
+        ) || [])];
+        const first = items[0];
+        const last = items[items.length - 1];
+        if (first && last && event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (first && last && !event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setIsOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isOpen]);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -37,7 +68,12 @@ function BurgerMenu({
 
   function changeLanguage(newLanguage) {
     savePreferredLanguage(newLanguage);
-    navigate(getLanguagePath(location.pathname, newLanguage));
+    // Preserve URL queries and hashes (e.g. links carrying access context).
+    navigate({
+      pathname: getLanguagePath(location.pathname, newLanguage),
+      search: location.search,
+      hash: location.hash,
+    });
     closeMenu();
   }
 
@@ -78,11 +114,13 @@ function BurgerMenu({
   return (
     <div className="burger-menu">
       <button
+        ref={menuButtonRef}
         type="button"
         className="burger-menu__button"
         onClick={toggleMenu}
         aria-label={t.header.openNavigation}
         aria-expanded={isOpen}
+        aria-controls="wasteland-navigation-panel"
       >
         <span />
         <span />
@@ -98,7 +136,8 @@ function BurgerMenu({
             aria-label={t.header.closeNavigation}
           />
 
-          <aside className="burger-menu__panel">
+          <aside ref={panelRef} className="burger-menu__panel" id="wasteland-navigation-panel"
+            role="dialog" aria-modal="true" aria-label={t.header.openNavigation}>
             <div className="burger-menu__header">
               <div>
                 <strong className="burger-menu__brand">
@@ -161,56 +200,53 @@ function BurgerMenu({
               </Suspense>
             </nav>
 
-            <div className="burger-menu__languages">
+            <section className="burger-menu__languages" aria-label={t.header.language}>
               <div className="burger-menu__languages-head">
                 <span className="burger-menu__languages-title">
+                  <Globe2 size={17} aria-hidden="true" />
                   {t.header.language}
                 </span>
                 <span className="burger-menu__languages-note">
-                  <Globe2 size={16} aria-hidden="true" />
-                  {SUPPORTED_LANGUAGES.length}
+                  {SUPPORTED_LANGUAGES.length} {t.header.languagesAvailable}
                 </span>
               </div>
-
-              <div className="burger-menu__language-list" role="list">
+              <div className="burger-menu__language-list" role="group" aria-label={t.header.language}>
                 {SUPPORTED_LANGUAGES.map((languageCode) => {
-                  const translatedLanguage =
-                    t.header.languageOptions?.[languageCode] || {};
-                  const languageMeta = {
-                    badge:
-                      translatedLanguage.badge ||
-                      LANGUAGES[languageCode]?.badge ||
-                      languageCode.toUpperCase(),
-                    nativeLabel:
-                      translatedLanguage.label || languageCode.toUpperCase(),
-                    englishLabel:
-                      translatedLanguage.description || languageCode.toUpperCase(),
-                  };
-
+                  const option = t.header.languageOptions?.[languageCode] || {};
+                  const active = language === languageCode;
                   return (
-                    <button
-                      key={languageCode}
-                      type="button"
-                      className={
-                        language === languageCode
-                          ? "burger-menu__language burger-menu__language--active"
-                          : "burger-menu__language"
-                      }
+                    <button key={languageCode} type="button"
+                      className={`burger-menu__language${active ? " burger-menu__language--active" : ""}`}
+                      aria-pressed={active}
                       onClick={() => changeLanguage(languageCode)}
                     >
-                      <span className="burger-menu__language-badge">
-                        {languageMeta.badge || languageMeta.label}
-                      </span>
-
+                      <img className="burger-menu__language-flag"
+                        src={publicAsset(`/images/final-plan/lang/${languageCode}.svg`)}
+                        width="36" height="36" alt="" aria-hidden="true" />
                       <span className="burger-menu__language-copy">
-                        <strong>{languageMeta.nativeLabel || languageMeta.label}</strong>
-                        <small>{languageMeta.englishLabel || languageMeta.label}</small>
+                        <strong>{option.label || LANGUAGES[languageCode]?.nativeLabel || languageCode}</strong>
+                        <small>{option.description || LANGUAGES[languageCode]?.englishLabel || languageCode}</small>
                       </span>
+                      {active ? <Check className="burger-menu__language-check" size={18}
+                        aria-label={t.header.languageSelected} /> : null}
                     </button>
                   );
                 })}
               </div>
-            </div>
+              <details className="burger-menu__languages-future">
+                <summary>{t.header.languagesPlanned} ({PLANNED_LANGUAGES.length})</summary>
+                <p>{t.header.languagesPlannedNote}</p>
+                <div className="burger-menu__planned-grid">
+                  {PLANNED_LANGUAGES.map((code) => (
+                    <span className="burger-menu__planned-language" key={code}>
+                      <img src={publicAsset(`/images/final-plan/lang/${code}.svg`)}
+                        width="24" height="24" alt="" aria-hidden="true" />
+                      {t.header.languageOptions?.[code]?.label || code.toUpperCase()}
+                    </span>
+                  ))}
+                </div>
+              </details>
+            </section>
           </aside>
         </>
       )}

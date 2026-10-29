@@ -110,7 +110,11 @@ function Settings() {
     }
 
     savePreferredLanguage(newLanguage);
-    navigate(getLanguagePath(location.pathname, newLanguage));
+    navigate({
+      pathname: getLanguagePath(location.pathname, newLanguage),
+      search: location.search,
+      hash: location.hash,
+    });
   }
 
   function resetSettings() {

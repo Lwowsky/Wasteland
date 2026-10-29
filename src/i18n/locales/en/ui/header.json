@@ -32,6 +32,50 @@
       "badge": "UA",
       "label": "Українська",
       "description": "Ukrainian"
+    },
+    "ru": {
+      "badge": "RU",
+      "label": "Русский",
+      "description": "Russian"
+    },
+    "pl": {
+      "badge": "PL",
+      "label": "Polski",
+      "description": "Polish"
+    },
+    "de": {
+      "badge": "DE",
+      "label": "Deutsch",
+      "description": "German"
+    },
+    "ja": {
+      "badge": "JA",
+      "label": "日本語",
+      "description": "Japanese"
+    },
+    "zh": {
+      "badge": "ZH",
+      "label": "中文",
+      "description": "Chinese"
+    },
+    "ko": {
+      "badge": "KO",
+      "label": "한국어",
+      "description": "Korean"
+    },
+    "vi": {
+      "badge": "VI",
+      "label": "Tiếng Việt",
+      "description": "Vietnamese"
+    },
+    "ar": {
+      "badge": "AR",
+      "label": "العربية",
+      "description": "Arabic"
     }
-  }
+  },
+  "languagesAvailable": "active",
+  "languageSelected": "Selected language",
+  "languagesPlanned": "More languages from the old site",
+  "languagesPlannedNote": "These languages are planned. They will become selectable after the new pages and admin functions are fully translated and tested."
 }
