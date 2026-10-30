@@ -1,0 +1,74 @@
+{
+  "dashboard": {
+    "registered": "登録済みプレイヤー",
+    "allianceCount": "同盟",
+    "captains": "キャプテン",
+    "finalPlanPlayers": "最終プランの参加者",
+    "registrationCountdown": {
+      "title": "登録締め切りまで",
+      "subtitle": "登録が開始されました",
+      "open": "開く",
+      "closedTitle": "登録が終了しました",
+      "closedSubtitle": "次回登録開始まで",
+      "closed": "締め切り済み",
+      "disabledSubtitle": "登録は一時的に利用できません",
+      "disabledCountdown": "登録が無効の間はカウントダウンできません"
+    },
+    "eventCountdown": {
+      "title": "Wasteland開始まで",
+      "subtitle": "次回の地域イベント",
+      "activeTitle": "Wasteland開催中",
+      "activeSubtitle": "Wasteland終了まで",
+      "active": "開催中"
+    },
+    "time": {
+      "days": "日",
+      "hours": "時間",
+      "minutes": "分",
+      "seconds": "秒",
+      "unscheduled": "次回の開始日はまだ決まっていません"
+    },
+    "recent": {
+      "title": "最近の登録",
+      "text": "直近に申請した5人のプレイヤー。",
+      "nickname": "ニックネーム",
+      "alliance": "同盟",
+      "troop": "部隊",
+      "tier": "ティア",
+      "time": "日時",
+      "timeAgo": {
+        "justNow": "たった今",
+        "minutes": "{{count}}分前",
+        "hours": "{{count}}時間前",
+        "days": "{{count}}日前"
+      }
+    },
+    "allianceStats": {
+      "title": "同盟統計",
+      "text": "登録プレイヤーの内訳。",
+      "players": "プレイヤー",
+      "other": "その他",
+      "showAll": "すべての同盟を表示",
+      "showLess": "表示を減らす"
+    },
+    "navigation": {
+      "registration": {
+        "title": "登録",
+        "text": "Wastelandイベントに参加するための情報を入力・更新します。"
+      },
+      "players": {
+        "title": "プレイヤー表",
+        "text": "地域内の全プレイヤー申請を表示します。"
+      },
+      "finalPlan": {
+        "title": "最終プラン",
+        "text": "チーム、隊長、シフトの割り当て。"
+      },
+      "settings": {
+        "title": "設定",
+        "text": "言語、時刻、ブラウザーのローカル設定。"
+      }
+    },
+    "loading": "データを読み込み中..."
+  }
+}

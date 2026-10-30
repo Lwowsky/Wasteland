@@ -7,6 +7,7 @@ import App from "./App.jsx";
 import "./styles/reset.css";
 import "./styles/variables.css";
 import "./styles/global.css";
+import "./styles/arabic-ui.css";
 
 // / locally, /Wasteland/ when deployed as GitHub project Pages.
 const basename = import.meta.env.BASE_URL.replace(/\/$/, "") || "/";

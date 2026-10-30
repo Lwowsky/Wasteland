@@ -1,0 +1,55 @@
+{
+  "title": "설정",
+  "text": "이 브라우저의 로컬 사이트 설정입니다.",
+  "tabs": {
+    "settings": "설정",
+    "templates": "내 템플릿"
+  },
+  "language": {
+    "title": "언어",
+    "text": "사이트 인터페이스 언어를 선택하세요."
+  },
+  "time": {
+    "title": "시간 표시",
+    "text": "이벤트 및 교대 시간이 표시되는 방식을 선택하세요.",
+    "local": "현지 시간",
+    "utc": "UTC"
+  },
+  "timeZone": {
+    "title": "시간대",
+    "text": "날짜와 시간에 사용할 시간대를 선택하세요.",
+    "options": {
+      "local": "기기 현지 시간"
+    }
+  },
+  "reset": {
+    "title": "설정 초기화",
+    "text": "로컬 설정을 기본값으로 되돌립니다. 플레이어 템플릿은 삭제되지 않습니다.",
+    "button": "초기화"
+  },
+  "templates": {
+    "title": "내 플레이어 템플릿",
+    "text": "등록 양식을 빠르게 채우기 위해 저장한 템플릿입니다.",
+    "add": "템플릿 추가",
+    "edit": "편집",
+    "delete": "삭제",
+    "nickname": "닉네임",
+    "alliance": "동맹",
+    "troopType": "병종",
+    "tier": "티어",
+    "lairLevel": "소굴 레벨",
+    "marchSize": "행군 규모",
+    "rallySize": "랠리 규모",
+    "shift": "교대",
+    "shift1": "교대 1",
+    "shift2": "교대 2",
+    "save": "저장",
+    "cancel": "취소",
+    "empty": "저장된 템플릿이 없습니다.",
+    "shift3": "교대 3",
+    "shift4": "교대 4",
+    "flexible": "모든 교대 가능",
+    "extraSquads": "추가 부대",
+    "extraSquadsText": "플레이어 템플릿에 선택적인 추가 부대를 입력하세요."
+  }
+}

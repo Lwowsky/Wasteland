@@ -1,0 +1,18 @@
+{
+  "home": {
+    "title": "Главная",
+    "description": "Главная страница сайта."
+  },
+  "about": {
+    "title": "О проекте",
+    "description": "Информация о сайте."
+  },
+  "contact": {
+    "title": "Контакты",
+    "description": "Контактная информация."
+  },
+  "notFound": {
+    "title": "404",
+    "description": "Страница не найдена."
+  }
+}

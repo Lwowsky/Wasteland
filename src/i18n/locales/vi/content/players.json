@@ -1,0 +1,66 @@
+{
+  "title": "Bảng người chơi",
+  "text": "Danh sách đăng ký đã gửi ở chế độ xem công khai rút gọn.",
+  "empty": "Chưa có đơn đăng ký nào.",
+  "stats": {
+    "total": "Tổng người chơi",
+    "captains": "Đội trưởng sẵn sàng"
+  },
+  "troops": {
+    "fighter": "Đấu sĩ",
+    "rider": "Kỵ sĩ",
+    "shooter": "Xạ thủ"
+  },
+  "shifts": {
+    "shift1": "Ca 1",
+    "shift2": "Ca 2",
+    "shift3": "Ca 3",
+    "shift4": "Ca 4",
+    "flexible": "Bất kỳ ca nào"
+  },
+  "filters": {
+    "title": "Bộ lọc",
+    "search": "Tìm kiếm",
+    "searchPlaceholder": "Tên người chơi hoặc liên minh",
+    "alliance": "Liên minh",
+    "troopType": "Loại quân",
+    "shift": "Ca",
+    "captain": "Đội trưởng",
+    "readyCaptain": "Sẵn sàng làm đội trưởng",
+    "notCaptain": "Không phải đội trưởng",
+    "all": "Tất cả",
+    "reset": "Đặt lại bộ lọc",
+    "perPage": "Số người chơi mỗi trang",
+    "perPage10": "10 mỗi trang",
+    "perPage20": "20 mỗi trang",
+    "perPage50": "50 mỗi trang",
+    "perPageAll": "Tất cả"
+  },
+  "table": {
+    "nickname": "Biệt danh",
+    "alliance": "Liên minh",
+    "troops": "Quân đội",
+    "tier": "Cấp",
+    "shift": "Ca",
+    "captain": "Đội trưởng",
+    "when": "Thời điểm",
+    "yes": "Có",
+    "no": "Không"
+  },
+  "loading": "Đang tải...",
+  "errors": {
+    "load": "Không thể tải danh sách người chơi."
+  },
+  "time": {
+    "justNow": "vừa xong",
+    "minutesAgo": "{{count}} phút trước",
+    "hoursAgo": "{{count}} giờ trước",
+    "daysAgo": "{{count}} ngày trước"
+  },
+  "pagination": {
+    "label": "Các trang bảng người chơi",
+    "previous": "Trang trước",
+    "next": "Trang tiếp",
+    "pageOf": "Trang {{page}} / {{pages}}"
+  }
+}

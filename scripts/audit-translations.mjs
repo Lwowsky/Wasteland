@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 const ROOT = process.cwd();
 const LOCALES_ROOT = path.join(ROOT, "src", "i18n", "locales");
 const SRC_ROOT = path.join(ROOT, "src");
-const LANGUAGES = ["en", "uk"];
+const LANGUAGES = ["en", "uk", "ru", "pl", "de", "ja", "zh", "ko", "vi", "ar"];
 const ALLOWED_RAW_UI = new Set(["G"]);
 
 function walk(dir, predicate = () => true) {
@@ -94,52 +94,48 @@ function relativeLocaleFiles(language) {
 }
 
 function auditLocaleParity() {
-  const [baseLanguage, compareLanguage] = LANGUAGES;
+  const baseLanguage = "en";
   const baseFiles = relativeLocaleFiles(baseLanguage);
-  const compareFiles = relativeLocaleFiles(compareLanguage);
   const errors = [];
+  const baseCatalogs = new Map(baseFiles.map((file) => [file, JSON.parse(
+    fs.readFileSync(path.join(LOCALES_ROOT, baseLanguage, file), "utf8"),
+  )]));
 
-  for (const file of new Set([...baseFiles, ...compareFiles])) {
-    if (!baseFiles.includes(file)) {
-      errors.push(`${baseLanguage}: missing file ${file}`);
-      continue;
-    }
-
-    if (!compareFiles.includes(file)) {
-      errors.push(`${compareLanguage}: missing file ${file}`);
-      continue;
-    }
-
-    const base = JSON.parse(
-      fs.readFileSync(path.join(LOCALES_ROOT, baseLanguage, file), "utf8"),
-    );
-    const compare = JSON.parse(
-      fs.readFileSync(path.join(LOCALES_ROOT, compareLanguage, file), "utf8"),
-    );
-    const baseKeys = new Set(flattenKeys(base));
-    const compareKeys = new Set(flattenKeys(compare));
-    errors.push(...compareTranslationStrings(base, compare, file));
-    errors.push(...compareTranslationArrayShapes(base, compare, file));
-    for (const [key, value] of flattenValues(base)) {
-      if (!value.trim()) errors.push(`${baseLanguage}: ${file} empty translation ${key}`);
-    }
-    for (const [key, value] of flattenValues(compare)) {
-      if (!value.trim()) errors.push(`${compareLanguage}: ${file} empty translation ${key}`);
-    }
-
-    for (const key of baseKeys) {
-      if (!compareKeys.has(key)) {
-        errors.push(`${compareLanguage}: ${file} missing key ${key}`);
+  for (const compareLanguage of LANGUAGES.filter((language) => language !== baseLanguage)) {
+    const compareFiles = relativeLocaleFiles(compareLanguage);
+    for (const file of new Set([...baseFiles, ...compareFiles])) {
+      if (!baseFiles.includes(file)) {
+        errors.push(`${baseLanguage}: missing file ${file}`);
+        continue;
       }
-    }
-
-    for (const key of compareKeys) {
-      if (!baseKeys.has(key)) {
-        errors.push(`${baseLanguage}: ${file} missing key ${key}`);
+      if (!compareFiles.includes(file)) {
+        errors.push(`${compareLanguage}: missing file ${file}`);
+        continue;
+      }
+      const base = baseCatalogs.get(file);
+      const compare = JSON.parse(
+        fs.readFileSync(path.join(LOCALES_ROOT, compareLanguage, file), "utf8"),
+      );
+      const baseKeys = new Set(flattenKeys(base));
+      const compareKeys = new Set(flattenKeys(compare));
+      errors.push(...compareTranslationStrings(base, compare, `${compareLanguage}/${file}`));
+      errors.push(...compareTranslationArrayShapes(base, compare, `${compareLanguage}/${file}`));
+      for (const [key, value] of flattenValues(compare)) {
+        if (!value.trim()) errors.push(`${compareLanguage}: ${file} empty translation ${key}`);
+      }
+      for (const key of baseKeys) {
+        if (!compareKeys.has(key)) errors.push(`${compareLanguage}: ${file} missing key ${key}`);
+      }
+      for (const key of compareKeys) {
+        if (!baseKeys.has(key)) errors.push(`${compareLanguage}: ${file} extra key ${key}`);
       }
     }
   }
-
+  for (const [file, base] of baseCatalogs) {
+    for (const [key, value] of flattenValues(base)) {
+      if (!value.trim()) errors.push(`${baseLanguage}: ${file} empty translation ${key}`);
+    }
+  }
   return errors;
 }
 

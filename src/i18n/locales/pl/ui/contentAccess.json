@@ -1,0 +1,41 @@
+{
+  "loading": "Sprawdzanie dostępu…",
+  "resources": {
+    "players": "Tabela graczy",
+    "final_plan": "Plan końcowy"
+  },
+  "modes": {
+    "public": {
+      "title": "Dostęp publiczny",
+      "text": "Ta sekcja jest dostępna dla wszystkich. Trwa wczytywanie strony."
+    },
+    "private": {
+      "title": "Dostęp zamknięty",
+      "text": "Administrator tymczasowo zamknął publiczny dostęp do tej sekcji."
+    },
+    "link": {
+      "title": "Wymagany prywatny link",
+      "text": "Otwórz link przekazany przez administratora. Jeśli został cofnięty lub wygasł, poproś o nowy."
+    }
+  },
+  "errors": {
+    "NO_CURRENT_PERIOD": "Nie ma aktywnego cyklu, dla którego można przyznać prywatny dostęp.",
+    "CONTENT_PRIVATE": "Dostęp publiczny jest zamknięty.",
+    "default": "Nie udało się sprawdzić dostępu. Odśwież stronę i spróbuj ponownie.",
+    "RATE_LIMITED": "Zbyt wiele prób. Spróbuj ponownie za minutę."
+  },
+  "cycleClosed": {
+    "title": "Cykl Pustkowia zakończony",
+    "players": "Tabela graczy tego cyklu jest zamknięta. Następna rejestracja otworzy się {{date}}.",
+    "playersUnknown": "Tabela graczy tego cyklu jest zamknięta. Data kolejnej rejestracji zostanie ogłoszona osobno.",
+    "finalPlan": "Plan końcowy tego cyklu jest zamknięty. Nowy pojawi się dopiero po opublikowaniu go przez administratora w następnym cyklu.",
+    "opensIn": "Rejestracja otworzy się za {{days}} d {{hours}} godz. {{minutes}} min"
+  },
+  "cycleUnavailable": "Nie udało się sprawdzić harmonogramu dostępu. Spróbuj ponownie później.",
+  "cycleUpdating": {
+    "title": "Oczekiwanie na aktualizację danych cyklu",
+    "text": "Nowy cykl już się rozpoczął, ale dane publiczne są nadal aktualizowane. Spróbuj ponownie za chwilę.",
+    "players": "Tabela graczy nowego cyklu jest nadal aktualizowana. Spróbuj ponownie za chwilę.",
+    "final_plan": "Plan końcowy nowego cyklu jest nadal aktualizowany. Spróbuj ponownie za chwilę."
+  }
+}

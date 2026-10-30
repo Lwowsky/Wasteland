@@ -30,11 +30,19 @@ function MainLayout() {
   } = useEvent();
 
   useEffect(() => {
+    const previousLang = document.documentElement.lang;
+    const previousDir = document.documentElement.getAttribute("dir");
     document.documentElement.lang = language;
+    document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
 
     if (isSupported) {
       savePreferredLanguage(language);
     }
+    return () => {
+      document.documentElement.lang = previousLang;
+      if (previousDir === null) document.documentElement.removeAttribute("dir");
+      else document.documentElement.dir = previousDir;
+    };
   }, [isSupported, language]);
 
   if (!isSupported) {
@@ -52,7 +60,10 @@ function MainLayout() {
 
   return (
     <SiteSettingsContext.Provider value={siteSettings}>
-      <div className="app">
+      {/* Keep the interface geometry consistent across languages. Arabic text
+          is handled by the scoped bidi styles; the document remains RTL for
+          language-aware browser behavior and accessibility. */}
+      <div className="app" dir="ltr">
         <Header
           t={t}
           language={language}

@@ -1,0 +1,163 @@
+{
+  "title": "المستخدمون والوصول",
+  "description": "إدارة المستخدمين والأدوار والصلاحيات الفردية.",
+  "tabs": {
+    "users": "المستخدمون",
+    "requests": "الطلبات",
+    "limits": "الحدود"
+  },
+  "cards": {
+    "owner": {
+      "title": "المالك",
+      "description": "وصول كامل. لا يمكن تغيير الدور والصلاحيات إلا يدويًا عبر Firebase."
+    },
+    "admin": {
+      "title": "مسؤول",
+      "description": "جميع صلاحيات المالك باستثناء إعادة تعيين المنطقة."
+    },
+    "consul": {
+      "title": "القنصل",
+      "description": "جميع أدوات اللاعبين والأبراج والتسجيل وإعدادات العمل. دون إدارة الأدوار أو مظهر الموقع أو إعادة تعيين المنطقة."
+    },
+    "requests": {
+      "title": "الطلبات",
+      "description": "طلبات وصول إداري جديدة تنتظر المراجعة."
+    }
+  },
+  "roles": {
+    "owner": {
+      "title": "المالك",
+      "description": "وصول كامل. لا يمكن تغيير الدور والصلاحيات إلا يدويًا عبر Firebase."
+    },
+    "admin": {
+      "title": "مسؤول",
+      "description": "جميع صلاحيات المالك باستثناء إعادة تعيين المنطقة."
+    },
+    "consul": {
+      "title": "القنصل",
+      "description": "جميع أدوات اللاعبين والأبراج والتسجيل وإعدادات العمل. دون إدارة الأدوار أو مظهر الموقع أو إعادة تعيين المنطقة."
+    }
+  },
+  "usersCount": "مستخدمون",
+  "pendingCount": "معلق",
+  "columns": {
+    "user": "مستخدم",
+    "role": "الدور",
+    "permissions": "الصلاحيات",
+    "status": "الحالة",
+    "actions": "الإجراءات"
+  },
+  "permissions": {
+    "owner": "وصول كامل"
+  },
+  "actions": {
+    "removeAccess": "حذف الوصول",
+    "ownerLocked": "لا يمكن تغيير المالك إلا عبر Firebase",
+    "notAllowed": "صلاحيات غير كافية",
+    "openUser": "فتح المستخدم"
+  },
+  "modal": {
+    "role": "الدور",
+    "status": "الحالة",
+    "createdAt": "تم الإنشاء",
+    "updatedAt": "تم التحديث",
+    "permissions": "الصلاحيات",
+    "permissionsCount": "الصلاحيات",
+    "permissionsText": "يمكن تقييد الصلاحيات لكل مستخدم ضمن حدود دوره.",
+    "ownerPermissions": "يملك المالك دائمًا الوصول الكامل. لا يمكن تعديل صلاحياته عبر الموقع.",
+    "technicalInfo": "معلومات تقنية",
+    "uid": "UID",
+    "saving": "جارٍ الحفظ...",
+    "restoreDefaults": "استعادة إعدادات الدور الافتراضية",
+    "disableRolePermissions": "تعطيل جميع الصلاحيات"
+  },
+  "permissionGroups": {
+    "access": {
+      "title": "المستخدمون والوصول",
+      "description": "إدارة الأدوار والوصول الإداري."
+    },
+    "players": {
+      "title": "جدول اللاعبين",
+      "description": "عرض بيانات اللاعبين وإدارتها."
+    },
+    "distribution": {
+      "title": "التوزيع والخطة النهائية",
+      "description": "إدارة الأبراج والخطة النهائية."
+    },
+    "registration": {
+      "title": "التسجيل",
+      "description": "إدارة إعدادات التسجيل."
+    },
+    "requests": {
+      "title": "الطلبات",
+      "description": "عرض طلبات الوصول ومعالجتها."
+    },
+    "settings": {
+      "title": "الإعدادات",
+      "description": "الوصول إلى أدوات الاستيراد والتصدير والنظام."
+    }
+  },
+  "permissionLabels": {
+    "view_access": "عرض المستخدمين والأدوار",
+    "manage_access": "تعديل الوصول",
+    "manage_consuls": "إدارة مستخدمي القنصل",
+    "grant_admin": "منح دور المسؤول",
+    "view_players": "عرض جدول اللاعبين",
+    "edit_players": "تعديل اللاعبين",
+    "delete_players": "حذف اللاعبين",
+    "view_distribution": "عرض التوزيع",
+    "edit_distribution": "تعديل التوزيع",
+    "view_registration_settings": "عرض إعدادات التسجيل",
+    "edit_registration_settings": "تعديل إعدادات التسجيل",
+    "view_requests": "عرض الطلبات",
+    "manage_requests": "الموافقة على الطلبات ورفضها",
+    "view_settings": "إعدادات الوصول",
+    "import_players": "استيراد جدول اللاعبين",
+    "clear_players": "مسح جدول اللاعبين بالكامل",
+    "publish_final_plan": "نشر الخطة النهائية واستعادتها",
+    "manage_content_access": "إدارة الوصول إلى المحتوى العام",
+    "manage_site_appearance": "مظهر الموقع",
+    "manage_region_backup": "نسخ المنطقة احتياطيًا واستعادتها",
+    "reset_region": "إعادة تعيين بيانات المنطقة"
+  },
+  "loading": "جارٍ تحميل المستخدمين...",
+  "errors": {
+    "load": "تعذر تحميل المستخدمين.",
+    "save": "تعذر حفظ صلاحيات المستخدم.",
+    "delete": "تعذر حذف الوصول."
+  },
+  "confirm": {
+    "removeAccess": "هل تريد حذف وصول {{name}}؟"
+  },
+  "cloudflareLimits": {
+    "title": "Cloudflare — الحدود والاستخدام",
+    "description": "الاستخدام الحالي لـ Workers وD1 على مستوى الحساب بالكامل.",
+    "metricWorkers": "Workers — الطلبات",
+    "metricD1Reads": "D1 — الصفوف المقروءة",
+    "metricD1Writes": "D1 — الصفوف المكتوبة",
+    "note": "تعتمد الحصص على خطة Cloudflare لديك.",
+    "open": "لوحة تحكم Cloudflare",
+    "docs": "الحدود الرسمية",
+    "loadingMetrics": "جارٍ التحميل…",
+    "refreshMetrics": "تحديث",
+    "analyticsError": "تعذر تحميل التحليلات",
+    "updated": "تم التحديث",
+    "compactTitle": "استخدام Cloudflare",
+    "left": "المتبقي",
+    "noData": "لا توجد بيانات",
+    "dailyLimit": "الحد اليومي",
+    "showDetails": "إظهار التفاصيل",
+    "hideDetails": "إخفاء التفاصيل",
+    "perDatabase": "لكل قاعدة بيانات",
+    "perRequest": "لكل طلب",
+    "detailWorkersCount": "الحد الأقصى لـ Workers",
+    "detailCron": "مهام Cron",
+    "detailCpu": "وحدة المعالجة لكل طلب",
+    "detailMemory": "ذاكرة Worker",
+    "detailD1Databases": "قواعد بيانات D1",
+    "detailD1Storage": "تخزين D1",
+    "detailD1DatabaseSize": "الحد الأقصى لحجم قاعدة البيانات",
+    "detailD1Queries": "استعلامات D1 لكل استدعاء",
+    "utcLabel": "UTC"
+  }
+}

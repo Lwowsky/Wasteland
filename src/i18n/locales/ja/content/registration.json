@@ -1,0 +1,101 @@
+{
+  "title": "荒野登録",
+  "text": "地域イベントに参加するための情報を入力してください。",
+  "select": "値を選択",
+  "comment": "コメント",
+  "commentPlaceholder": "参加可能時間、制限、メモを追加できます",
+  "submit": "申請を送信",
+  "reset": "フォームをクリア",
+  "troops": {
+    "fighter": "ファイター",
+    "rider": "ライダー",
+    "shooter": "シューター"
+  },
+  "player": {
+    "title": "プレイヤー情報",
+    "text": "アカウントの基本情報",
+    "nickname": "ニックネーム",
+    "nicknamePlaceholder": "ニックネームを入力",
+    "alliance": "同盟",
+    "alliancePlaceholder": "同盟を選択",
+    "otherAlliance": "その他",
+    "troopType": "メイン兵種",
+    "tier": "ティア",
+    "lairLevel": "巣窟レベル",
+    "marchSize": "行軍規模",
+    "rallySize": "ラリー規模",
+    "select": "値を選択",
+    "allianceManualLabel": "同盟名を手入力",
+    "allianceManualPlaceholder": "例: ABC"
+  },
+  "readiness": {
+    "title": "準備状況",
+    "text": "イベントへの参加可否を選択してください。",
+    "attack": "別の地域を攻撃できます",
+    "attackText": "他の地域への攻撃に参加できます。",
+    "captain": "隊長可能",
+    "captainText": "行軍を率いて行動を調整できます。"
+  },
+  "shifts": {
+    "title": "シフト可否",
+    "text": "参加可能なシフトを選択してください。",
+    "shift1": "シフト 1",
+    "shift2": "シフト 2",
+    "shift3": "シフト3",
+    "shift4": "シフト4",
+    "flexible": "任意のシフト",
+    "flexibleText": "1つ以上のシフトに割り当て可能"
+  },
+  "extra": {
+    "title": "追加部隊",
+    "text": "他の兵種の追加の完全編成部隊を指定してください。",
+    "hasExtra": "別兵種の追加フル部隊があります",
+    "enable": "有効にする",
+    "tier": "追加ティア"
+  },
+  "template": {
+    "title": "プレイヤーテンプレート",
+    "text": "保存したプレイヤーテンプレートでフォームをすばやく入力できます。",
+    "select": "プレイヤーを選択",
+    "apply": "フォームに入力",
+    "empty": "保存済みのテンプレートがありません。設定から作成できます。",
+    "lair": "シェルター",
+    "saveCurrent": "現在の情報をテンプレートとして保存",
+    "saved": "テンプレートを保存しました。",
+    "updated": "既存のテンプレートを更新しました。"
+  },
+  "success": {
+    "title": "登録を受け付けました",
+    "text": "登録が正常に送信されました。"
+  },
+  "submitting": "送信中…",
+  "errorTitle": "エラー",
+  "unavailable": {
+    "title": "登録できません",
+    "disabled": "現在、登録は利用できません。",
+    "closed": "登録は現在締め切られています。開始日時を確認し、後でもう一度お試しください。",
+    "notOpenYet": "登録はまだ始まっていません。",
+    "opensAt": "{{date}}に開始します。",
+    "disabledTitle": "登録が無効です",
+    "closedTitle": "登録が終了しました",
+    "notOpenYetTitle": "登録はまだ始まっていません"
+  },
+  "errors": {
+    "alreadyRegistered": "このニックネームのプレイヤーは、このサイクルですでに登録されています。",
+    "closed": "現在、登録は締め切られています。",
+    "disabled": "現在、登録は利用できません。",
+    "invalidData": "フォームの入力内容を確認してください。",
+    "submit": "登録を送信できませんでした。もう一度お試しください。",
+    "requiredFields": "必須項目をすべて入力してください。最初の未入力項目を強調表示しました。",
+    "requiredFieldsTitle": "必須項目を入力してください",
+    "challenge": "送信する前にセキュリティチェックを完了してください。",
+    "challengeUnavailable": "セキュリティチェックは一時的に利用できません。後でもう一度お試しください。",
+    "rateLimited": "登録試行回数が多すぎます。1分待ってからやり直してください。"
+  },
+  "customFields": {
+    "title": "追加項目",
+    "text": "管理者が指定した追加情報を入力してください。"
+  },
+  "loading": "登録情報を読み込み中…",
+  "loadError": "登録情報を読み込めませんでした。"
+}

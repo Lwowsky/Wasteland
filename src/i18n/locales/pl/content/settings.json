@@ -1,0 +1,55 @@
+{
+  "title": "Ustawienia",
+  "text": "Lokalne ustawienia witryny dla tej przeglądarki.",
+  "tabs": {
+    "settings": "Ustawienia",
+    "templates": "Moje szablony"
+  },
+  "language": {
+    "title": "Język",
+    "text": "Wybierz język interfejsu witryny."
+  },
+  "time": {
+    "title": "Wyświetlanie czasu",
+    "text": "Wybierz sposób wyświetlania godzin wydarzenia i zmian.",
+    "local": "Czas lokalny",
+    "utc": "UTC"
+  },
+  "timeZone": {
+    "title": "Strefa czasowa",
+    "text": "Wybierz strefę czasową dla dat i godzin.",
+    "options": {
+      "local": "Czas lokalny urządzenia"
+    }
+  },
+  "reset": {
+    "title": "Zresetuj ustawienia",
+    "text": "Przywróć domyślne ustawienia lokalne. Szablony graczy nie zostaną usunięte.",
+    "button": "Resetuj"
+  },
+  "templates": {
+    "title": "Moje szablony graczy",
+    "text": "Zapisane szablony umożliwiające szybkie wypełnianie formularza rejestracji.",
+    "add": "Dodaj szablon",
+    "edit": "Edytuj",
+    "delete": "Usuń",
+    "nickname": "Nick",
+    "alliance": "Sojusz",
+    "troopType": "Typ wojsk",
+    "tier": "Poziom jednostek",
+    "lairLevel": "Poziom leża",
+    "marchSize": "Rozmiar marszu",
+    "rallySize": "Rozmiar rajdu",
+    "shift": "Zmiana",
+    "shift1": "Zmiana 1",
+    "shift2": "Zmiana 2",
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "empty": "Nie masz jeszcze zapisanych szablonów.",
+    "shift3": "Zmiana 3",
+    "shift4": "Zmiana 4",
+    "flexible": "Dowolna zmiana",
+    "extraSquads": "Dodatkowe oddziały",
+    "extraSquadsText": "Dodaj opcjonalne dodatkowe oddziały do szablonu gracza."
+  }
+}

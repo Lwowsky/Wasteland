@@ -1,0 +1,40 @@
+{
+  "title": "地域管理者",
+  "subtitle": "アクセス権、プレイヤー、タワー、登録を管理します。",
+  "checkingAccess": "アクセス権を確認中…",
+  "navigationLabel": "管理メニュー",
+  "tabs": {
+    "access": "役割とアクセス",
+    "players": "プレイヤー表",
+    "distribution": "タレット配置",
+    "registration": "登録設定",
+    "settings": "設定"
+  },
+  "actions": {
+    "save": "保存",
+    "cancel": "キャンセル",
+    "edit": "編集",
+    "delete": "削除",
+    "close": "閉じる",
+    "logout": "ログアウト",
+    "reset": "リセット",
+    "add": "追加",
+    "removeAccess": "アクセスを削除"
+  },
+  "status": {
+    "active": "有効",
+    "blocked": "ブロック済み",
+    "pending": "保留中",
+    "approved": "承認済み",
+    "rejected": "却下済み"
+  },
+  "yes": "はい",
+  "no": "いいえ",
+  "roles": {
+    "owner": "オーナー",
+    "admin": "管理画面",
+    "consul": "領事"
+  },
+  "loading": "読み込み中...",
+  "unknown": "不明"
+}

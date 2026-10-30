@@ -1,0 +1,101 @@
+{
+  "title": "Rejestracja na Pustkowie",
+  "text": "Wprowadź dane, aby wziąć udział w wydarzeniu regionu.",
+  "select": "Wybierz wartość",
+  "comment": "Komentarz",
+  "commentPlaceholder": "Możesz podać dostępność, ograniczenia lub uwagi",
+  "submit": "Wyślij zgłoszenie",
+  "reset": "Wyczyść formularz",
+  "troops": {
+    "fighter": "Wojownicy",
+    "rider": "Jeźdźcy",
+    "shooter": "Strzelcy"
+  },
+  "player": {
+    "title": "Informacje o graczu",
+    "text": "Podstawowe informacje o koncie",
+    "nickname": "Nick",
+    "nicknamePlaceholder": "Wpisz nick",
+    "alliance": "Sojusz",
+    "alliancePlaceholder": "Wybierz sojusz",
+    "otherAlliance": "Inne",
+    "troopType": "Główny typ wojsk",
+    "tier": "Poziom jednostek",
+    "lairLevel": "Poziom leża",
+    "marchSize": "Rozmiar marszu",
+    "rallySize": "Rozmiar rajdu",
+    "select": "Wybierz wartość",
+    "allianceManualLabel": "Wpisz sojusz ręcznie",
+    "allianceManualPlaceholder": "Na przykład: ABC"
+  },
+  "readiness": {
+    "title": "Gotowość",
+    "text": "Określ gotowość do udziału w wydarzeniu.",
+    "attack": "Gotowy atakować inny region",
+    "attackText": "Mogę brać udział w atakach na inne regiony.",
+    "captain": "Gotowy być kapitanem",
+    "captainText": "Mogę dowodzić marszem i koordynować działania."
+  },
+  "shifts": {
+    "title": "Dostępność zmiany",
+    "text": "Wybierz zmianę, podczas której jesteś dostępny.",
+    "shift1": "Zmiana 1",
+    "shift2": "Zmiana 2",
+    "shift3": "Zmiana 3",
+    "shift4": "Zmiana 4",
+    "flexible": "Dowolna zmiana",
+    "flexibleText": "Można przydzielić do jednej lub kilku zmian"
+  },
+  "extra": {
+    "title": "Dodatkowe oddziały",
+    "text": "Podaj dodatkowe pełne oddziały innych typów wojsk.",
+    "hasExtra": "Mam dodatkowe pełne oddziały innych typów",
+    "enable": "Włącz",
+    "tier": "Dodatkowy tier"
+  },
+  "template": {
+    "title": "Szablon gracza",
+    "text": "Szybko wypełnij formularz przy użyciu zapisanego szablonu.",
+    "select": "Wybierz gracza",
+    "apply": "Wypełnij formularz",
+    "empty": "Nie ma jeszcze zapisanych szablonów. Możesz je utworzyć w ustawieniach.",
+    "lair": "Legowisko",
+    "saveCurrent": "Zapisz bieżące dane jako szablon",
+    "saved": "Szablon zapisany.",
+    "updated": "Zaktualizowano istniejący szablon."
+  },
+  "success": {
+    "title": "Rejestracja przyjęta",
+    "text": "Twoje zgłoszenie zostało pomyślnie wysłane."
+  },
+  "submitting": "Wysyłanie...",
+  "errorTitle": "Błąd",
+  "unavailable": {
+    "title": "Rejestracja niedostępna",
+    "disabled": "Rejestracja jest obecnie niedostępna.",
+    "closed": "Rejestracja jest obecnie zamknięta. Sprawdź datę otwarcia i spróbuj ponownie później.",
+    "notOpenYet": "Rejestracja nie została jeszcze otwarta.",
+    "opensAt": "Otwarcie: {{date}}.",
+    "disabledTitle": "Rejestracja wyłączona",
+    "closedTitle": "Rejestracja zamknięta",
+    "notOpenYetTitle": "Rejestracja nie została jeszcze otwarta"
+  },
+  "errors": {
+    "alreadyRegistered": "Gracz o tym nicku jest już zarejestrowany w tym cyklu.",
+    "closed": "Rejestracja jest obecnie zamknięta.",
+    "disabled": "Rejestracja jest obecnie niedostępna.",
+    "invalidData": "Sprawdź dane w formularzu.",
+    "submit": "Nie udało się wysłać zgłoszenia. Spróbuj ponownie.",
+    "requiredFields": "Wypełnij wszystkie wymagane pola. Pierwsze brakujące pole zostało wyróżnione.",
+    "requiredFieldsTitle": "Wypełnij wymagane pola",
+    "challenge": "Przejdź weryfikację bezpieczeństwa przed wysłaniem.",
+    "challengeUnavailable": "Weryfikacja bezpieczeństwa jest tymczasowo niedostępna. Spróbuj później.",
+    "rateLimited": "Zbyt wiele prób rejestracji. Zaczekaj minutę i spróbuj ponownie."
+  },
+  "customFields": {
+    "title": "Dodatkowe pola",
+    "text": "Wypełnij dodatkowe informacje wymagane przez administratora."
+  },
+  "loading": "Wczytywanie rejestracji...",
+  "loadError": "Nie udało się wczytać rejestracji."
+}

@@ -1,0 +1,39 @@
+{
+  "title": "접근 권한 요청",
+  "description": "요청을 검토하고 역할을 조정하며 관리자 영역의 접근 권한을 부여합니다.",
+  "loading": "요청 로딩 중...",
+  "empty": "현재 요청이 없습니다.",
+  "columns": {
+    "user": "사용자",
+    "email": "이메일",
+    "role": "역할",
+    "comment": "댓글",
+    "status": "상태",
+    "actions": "작업"
+  },
+  "roles": {
+    "admin": "관리자",
+    "consul": "영사"
+  },
+  "status": {
+    "pending": "대기 중",
+    "approved": "승인됨",
+    "rejected": "거절됨"
+  },
+  "actions": {
+    "approve": "승인",
+    "reject": "거절",
+    "delete": "삭제",
+    "notAllowed": "이 역할에는 권한이 부족합니다"
+  },
+  "errors": {
+    "load": "요청을 불러오지 못했습니다.",
+    "approve": "요청을 승인하지 못했습니다.",
+    "reject": "요청을 거절하지 못했습니다.",
+    "delete": "요청을 삭제하지 못했습니다.",
+    "onlyOwnerAdmin": "소유자만 관리자 역할을 부여할 수 있습니다."
+  },
+  "confirm": {
+    "delete": "{{name}}님의 요청을 삭제하시겠습니까?"
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "title": "荒野登记",
+  "text": "填写信息以参加区域活动。",
+  "select": "请选择",
+  "comment": "备注",
+  "commentPlaceholder": "可填写可参加时间、限制或备注",
+  "submit": "提交申请",
+  "reset": "清空表单",
+  "troops": {
+    "fighter": "战士",
+    "rider": "骑兵",
+    "shooter": "射手"
+  },
+  "player": {
+    "title": "玩家信息",
+    "text": "账号的基本信息",
+    "nickname": "昵称",
+    "nicknamePlaceholder": "输入昵称",
+    "alliance": "联盟",
+    "alliancePlaceholder": "选择联盟",
+    "otherAlliance": "其他",
+    "troopType": "主兵种",
+    "tier": "等级",
+    "lairLevel": "巢穴等级",
+    "marchSize": "行军规模",
+    "rallySize": "集结规模",
+    "select": "请选择",
+    "allianceManualLabel": "手动填写联盟",
+    "allianceManualPlaceholder": "例如：ABC"
+  },
+  "readiness": {
+    "title": "准备状态",
+    "text": "请选择是否已准备好参加活动。",
+    "attack": "准备攻击其他地区",
+    "attackText": "我可以参加对其他区域的攻击。",
+    "captain": "愿意担任队长",
+    "captainText": "我可以率领行军并协调行动。"
+  },
+  "shifts": {
+    "title": "班次可用性",
+    "text": "请选择您可以参加的班次。",
+    "shift1": "班次 1",
+    "shift2": "班次 2",
+    "shift3": "班次 3",
+    "shift4": "班次 4",
+    "flexible": "任意班次",
+    "flexibleText": "可以安排到一个或多个班次"
+  },
+  "extra": {
+    "title": "额外部队",
+    "text": "请填写其他兵种的额外完整部队。",
+    "hasExtra": "我有其他兵种的额外满编队伍",
+    "enable": "启用",
+    "tier": "额外等级"
+  },
+  "template": {
+    "title": "玩家模板",
+    "text": "使用已保存的玩家模板快速填写表单。",
+    "select": "选择玩家",
+    "apply": "填写表单",
+    "empty": "尚无保存的模板。可在设置中创建。",
+    "lair": "巢穴",
+    "saveCurrent": "将当前数据保存为模板",
+    "saved": "模板已保存。",
+    "updated": "现有模板已更新。"
+  },
+  "success": {
+    "title": "报名成功",
+    "text": "您的报名已成功提交。"
+  },
+  "submitting": "正在提交…",
+  "errorTitle": "错误",
+  "unavailable": {
+    "title": "无法报名",
+    "disabled": "报名目前不可用。",
+    "closed": "报名目前已关闭。请查看开放日期并稍后重试。",
+    "notOpenYet": "报名尚未开放。",
+    "opensAt": "开放时间：{{date}}。",
+    "disabledTitle": "报名已停用",
+    "closedTitle": "注册已关闭",
+    "notOpenYetTitle": "报名尚未开放"
+  },
+  "errors": {
+    "alreadyRegistered": "本周期已有相同昵称的玩家报名。",
+    "closed": "报名目前已关闭。",
+    "disabled": "报名目前不可用。",
+    "invalidData": "请检查表单数据。",
+    "submit": "提交报名失败，请重试。",
+    "requiredFields": "请填写所有必填项。我们已标出第一个缺失的字段。",
+    "requiredFieldsTitle": "请填写必填项",
+    "challenge": "提交前请完成安全验证。",
+    "challengeUnavailable": "安全验证暂时不可用，请稍后重试。",
+    "rateLimited": "报名尝试次数过多。请等待一分钟后重试。"
+  },
+  "customFields": {
+    "title": "附加字段",
+    "text": "请填写管理员要求的其他信息。"
+  },
+  "loading": "正在加载报名表…",
+  "loadError": "加载报名表失败。"
+}

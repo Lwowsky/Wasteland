@@ -1,0 +1,101 @@
+{
+  "title": "Đăng ký Wasteland",
+  "text": "Điền thông tin để tham gia sự kiện khu vực.",
+  "select": "Chọn một giá trị",
+  "comment": "Bình luận",
+  "commentPlaceholder": "Có thể ghi thời gian rảnh, giới hạn hoặc ghi chú",
+  "submit": "Gửi yêu cầu",
+  "reset": "Xóa biểu mẫu",
+  "troops": {
+    "fighter": "Đấu sĩ",
+    "rider": "Kỵ sĩ",
+    "shooter": "Xạ thủ"
+  },
+  "player": {
+    "title": "Thông tin người chơi",
+    "text": "Thông tin chính về tài khoản",
+    "nickname": "Biệt danh",
+    "nicknamePlaceholder": "Nhập tên người chơi",
+    "alliance": "Liên minh",
+    "alliancePlaceholder": "Chọn liên minh",
+    "otherAlliance": "Khác",
+    "troopType": "Loại quân chính",
+    "tier": "Cấp",
+    "lairLevel": "Cấp hang",
+    "marchSize": "Quy mô hành quân",
+    "rallySize": "Quy mô rally",
+    "select": "Chọn một giá trị",
+    "allianceManualLabel": "Nhập liên minh thủ công",
+    "allianceManualPlaceholder": "Ví dụ: ABC"
+  },
+  "readiness": {
+    "title": "Sẵn sàng",
+    "text": "Chọn mức độ sẵn sàng tham gia sự kiện.",
+    "attack": "Sẵn sàng tấn công khu vực khác",
+    "attackText": "Tôi có thể tham gia tấn công các khu vực khác.",
+    "captain": "Sẵn sàng làm đội trưởng",
+    "captainText": "Tôi có thể dẫn đầu đội quân và phối hợp hành động."
+  },
+  "shifts": {
+    "title": "Khả dụng theo ca",
+    "text": "Chọn ca mà bạn có thể tham gia.",
+    "shift1": "Ca 1",
+    "shift2": "Ca 2",
+    "shift3": "Ca 3",
+    "shift4": "Ca 4",
+    "flexible": "Bất kỳ ca nào",
+    "flexibleText": "Có thể được xếp vào một hoặc nhiều ca"
+  },
+  "extra": {
+    "title": "Đội bổ sung",
+    "text": "Chỉ định đội hình đầy đủ bổ sung của loại quân khác.",
+    "hasExtra": "Tôi có thêm đội đầy đủ thuộc loại quân khác",
+    "enable": "Bật",
+    "tier": "Tier bổ sung"
+  },
+  "template": {
+    "title": "Mẫu người chơi",
+    "text": "Điền nhanh biểu mẫu bằng mẫu người chơi đã lưu.",
+    "select": "Chọn người chơi",
+    "apply": "Điền biểu mẫu",
+    "empty": "Chưa có mẫu nào được lưu. Bạn có thể tạo trong Cài đặt.",
+    "lair": "Hang ổ",
+    "saveCurrent": "Lưu dữ liệu hiện tại thành mẫu",
+    "saved": "Đã lưu mẫu.",
+    "updated": "Đã cập nhật mẫu hiện có."
+  },
+  "success": {
+    "title": "Đăng ký thành công",
+    "text": "Đã gửi đăng ký thành công."
+  },
+  "submitting": "Đang gửi...",
+  "errorTitle": "Lỗi",
+  "unavailable": {
+    "title": "Không thể đăng ký",
+    "disabled": "Hiện không thể đăng ký.",
+    "closed": "Đăng ký hiện đã đóng. Kiểm tra ngày mở và thử lại sau.",
+    "notOpenYet": "Đăng ký chưa mở.",
+    "opensAt": "Mở vào {{date}}.",
+    "disabledTitle": "Đăng ký bị tắt",
+    "closedTitle": "Đăng ký đã đóng",
+    "notOpenYetTitle": "Đăng ký chưa mở"
+  },
+  "errors": {
+    "alreadyRegistered": "Người chơi có tên này đã đăng ký trong chu kỳ hiện tại.",
+    "closed": "Đăng ký hiện đã đóng.",
+    "disabled": "Hiện không thể đăng ký.",
+    "invalidData": "Vui lòng kiểm tra thông tin trong biểu mẫu.",
+    "submit": "Không thể gửi đăng ký. Vui lòng thử lại.",
+    "requiredFields": "Vui lòng điền đủ các trường bắt buộc. Trường đầu tiên còn thiếu đã được đánh dấu.",
+    "requiredFieldsTitle": "Vui lòng điền các trường bắt buộc",
+    "challenge": "Hoàn tất kiểm tra bảo mật trước khi gửi.",
+    "challengeUnavailable": "Kiểm tra bảo mật tạm thời không khả dụng. Vui lòng thử lại sau.",
+    "rateLimited": "Có quá nhiều lần thử đăng ký. Hãy đợi một phút rồi thử lại."
+  },
+  "customFields": {
+    "title": "Trường bổ sung",
+    "text": "Điền thông tin bổ sung theo yêu cầu của quản trị viên."
+  },
+  "loading": "Đang tải biểu mẫu đăng ký...",
+  "loadError": "Không thể tải biểu mẫu đăng ký."
+}

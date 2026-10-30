@@ -1,0 +1,18 @@
+{
+  "home": {
+    "title": "الرئيسية",
+    "description": "الصفحة الرئيسية للموقع."
+  },
+  "about": {
+    "title": "حول",
+    "description": "معلومات عن الموقع."
+  },
+  "contact": {
+    "title": "تواصل",
+    "description": "معلومات الاتصال."
+  },
+  "notFound": {
+    "title": "404",
+    "description": "الصفحة غير موجودة."
+  }
+}

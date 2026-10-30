@@ -1,0 +1,275 @@
+{
+  "title": "Bảng người chơi đầy đủ",
+  "description": "Dữ liệu đầy đủ của người chơi để quản lý khu vực.",
+  "actions": {
+    "add": "Thêm người chơi",
+    "edit": "Sửa",
+    "delete": "Xóa",
+    "save": "Lưu",
+    "saving": "Đang lưu...",
+    "cancel": "Hủy",
+    "reset": "Đặt lại"
+  },
+  "filters": {
+    "search": "Tên người chơi hoặc liên minh",
+    "allAlliance": "Liên minh: Tất cả",
+    "allTroops": "Loại quân: Tất cả",
+    "allShifts": "Ca: Tất cả",
+    "captain": "Đội trưởng",
+    "captainAll": "Đội trưởng: Tất cả",
+    "captainYes": "Đội trưởng: Có",
+    "captainNo": "Đội trưởng: Không",
+    "ruleStatus": "Trạng thái quy tắc",
+    "ruleStatusAll": "Trạng thái: Tất cả",
+    "ruleStatusAttention": "Cần chú ý",
+    "ruleStatusOk": "Không có vấn đề",
+    "perPage": "Số người chơi mỗi trang",
+    "perPageAll": "Tất cả",
+    "perPageCount": "{{count}} mỗi trang"
+  },
+  "table": {
+    "nickname": "Biệt danh",
+    "alliance": "Liên minh",
+    "troops": "Quân đội",
+    "tier": "Cấp",
+    "lair": "Hang ổ",
+    "march": "Hành quân",
+    "rally": "Tập kích",
+    "shift": "Ca",
+    "captain": "Đội trưởng",
+    "ready": "Sẵn sàng",
+    "submitted": "Đã gửi",
+    "comment": "Bình luận",
+    "actions": "Thao tác"
+  },
+  "empty": "Không tìm thấy người chơi.",
+  "loading": "Đang tải...",
+  "yes": "Có",
+  "no": "Không",
+  "troops": {
+    "fighter": "Bộ binh",
+    "rider": "Kỵ binh",
+    "shooter": "Xạ thủ"
+  },
+  "shifts": {
+    "shift1": "Ca 1",
+    "shift2": "Ca 2",
+    "shift3": "Ca 3",
+    "shift4": "Ca 4",
+    "flexible": "Bất kỳ ca nào"
+  },
+  "editor": {
+    "createTitle": "Người chơi mới",
+    "editTitle": "Sửa người chơi",
+    "createSubtitle": "Thêm người chơi mới vào kỳ đăng ký hiện tại.",
+    "editSubtitle": "Chỉnh sửa đăng ký của {{name}}.",
+    "participation": {
+      "title": "Tham gia Wasteland",
+      "description": "Các thông số chính để phân bổ người chơi.",
+      "shift": "Ca",
+      "ready": "Sẵn sàng tấn công",
+      "captain": "Đội trưởng",
+      "selectShift": "Chọn ca"
+    },
+    "playerData": {
+      "title": "Dữ liệu người chơi",
+      "description": "Thông tin từ đơn đăng ký của người chơi.",
+      "nickname": "Biệt danh",
+      "alliance": "Liên minh",
+      "tier": "Cấp",
+      "troopType": "Loại quân",
+      "lairLevel": "Cấp hang",
+      "marchSize": "Quy mô hành quân",
+      "rallySize": "Quy mô rally"
+    },
+    "extraSquads": {
+      "title": "Đội bổ sung",
+      "description": "Không bắt buộc. Có thể chọn tối đa hai loại quân bổ sung.",
+      "main": "Chính",
+      "comment": "Bình luận",
+      "commentPlaceholder": "Thông tin bổ sung về người chơi..."
+    },
+    "validation": {
+      "nickname": "Nhập biệt danh.",
+      "alliance": "Nhập liên minh.",
+      "troopType": "Chọn loại quân.",
+      "tier": "Hãy chọn bậc.",
+      "lair": "Cấp căn cứ không thể nhỏ hơn 0.",
+      "march": "Quy mô hành quân không thể nhỏ hơn 0.",
+      "rally": "Quy mô tập kết không thể nhỏ hơn 0.",
+      "shift": "Chọn ca."
+    },
+    "confirmDelete": "Xóa người chơi «{{name}}»?",
+    "ruleWarnings": {
+      "tier": "Bậc {{tier}} hiện không khả dụng cho đăng ký mới. Người chơi có thể giữ bậc này.",
+      "shift": "Ca {{shift}} hiện không khả dụng cho đăng ký mới. Người chơi có thể ở lại ca này."
+    }
+  },
+  "regionEditor": {
+    "action": "Trình chỉnh sửa khu vực",
+    "title": "Trình chỉnh sửa khu vực",
+    "description": "Xem người chơi, liên minh, quy mô hành quân và tập kết.",
+    "common": {
+      "close": "Đóng",
+      "save": "Lưu",
+      "saving": "Đang lưu..."
+    },
+    "tabs": {
+      "players": "Người chơi",
+      "alliances": "Liên minh",
+      "combat": "Hành quân & Tập kết"
+    },
+    "sidebar": {
+      "title": "Người chơi",
+      "description": "Chọn người chơi từ danh sách.",
+      "search": "Tìm theo biệt danh hoặc liên minh",
+      "empty": "Không tìm thấy người chơi."
+    },
+    "players": {
+      "empty": "Chọn người chơi từ danh sách.",
+      "player": "Người chơi",
+      "tier": "Cấp",
+      "captain": "Đội trưởng",
+      "troopType": "Loại quân",
+      "march": "Quy mô hành quân",
+      "rally": "Quy mô rally",
+      "shift": "Ca",
+      "lair": "Cấp hang",
+      "ready": "Sẵn sàng tấn công",
+      "comment": "Bình luận"
+    },
+    "alliances": {
+      "empty": "Không tìm thấy liên minh nào.",
+      "alliance": "Liên minh",
+      "registered": "Ngày đăng ký",
+      "captains": "Đội trưởng",
+      "tiers": "Bậc"
+    },
+    "combat": {
+      "title": "Hành quân & Tập kết",
+      "description": "Sắp xếp và chỉnh sửa quy mô hành quân và tập kết.",
+      "sortLabel": "Sắp xếp hành quân và tập kết",
+      "tableLabel": "Bảng hành quân và tập kết",
+      "player": "Người chơi",
+      "allianceTier": "Liên minh / Bậc",
+      "march": "Hành quân",
+      "rally": "Tập kích",
+      "actions": "Thao tác",
+      "sort": {
+        "marchDesc": "Hành quân: từ cao xuống thấp",
+        "marchAsc": "Hành quân: từ thấp lên cao",
+        "rallyDesc": "Tập kết: từ cao xuống thấp",
+        "rallyAsc": "Tập kết: từ thấp lên cao"
+      }
+    },
+    "sort": {},
+    "march": {
+      "title": "Quy mô hành quân",
+      "description": "Sắp xếp và chỉnh sửa quy mô hành quân của người chơi.",
+      "current": "Hành quân hiện tại"
+    },
+    "rally": {
+      "title": "Quy mô rally",
+      "description": "Sắp xếp và chỉnh sửa quy mô tập kết của người chơi.",
+      "current": "Tập kết hiện tại"
+    }
+  },
+  "errors": {
+    "load": "Không thể tải danh sách người chơi.",
+    "save": "Không thể lưu người chơi.",
+    "delete": "Không thể xóa người chơi."
+  },
+  "stats": {
+    "total": "Tổng",
+    "players": "Người chơi",
+    "captains": "Đội trưởng",
+    "inTurrets": "Trong tháp",
+    "reserve": "Dự bị"
+  },
+  "ruleStatus": {
+    "attentionSummary": "Cần chú ý: {{count}} người chơi",
+    "tierUnavailable": "Bậc {{tier}} không còn khả dụng trong chu kỳ hiện tại.",
+    "shiftUnavailable": "Ca {{shift}} không còn hoạt động trong chu kỳ hiện tại."
+  },
+  "localImport": {
+    "tabsLabel": "Nguồn bảng người chơi",
+    "databaseTab": "Cơ sở dữ liệu ({{count}})",
+    "localTab": "Bảng cục bộ ({{count}})",
+    "title": "Bảng nhập cục bộ",
+    "fileSummary": "{{file}} · {{count}} người chơi",
+    "ready": "Sẵn sàng",
+    "problems": "Vấn đề",
+    "imported": "Đã nhập",
+    "status": "Trạng thái",
+    "selectReady": "Chọn tất cả mục khả dụng",
+    "transferSelected": "Chuyển các mục đã chọn ({{count}})",
+    "transferAll": "Chuyển ({{count}})",
+    "transferring": "Đang chuyển...",
+    "transferSuccess": "Đã thêm {{count}} người chơi mới. Bỏ qua trùng lặp: {{skipped}}.",
+    "transferError": "Không thể chuyển người chơi: {{code}}",
+    "clearImported": "Xóa dữ liệu đã nhập",
+    "clearAll": "Xóa bảng cục bộ",
+    "clearConfirm": "Xóa toàn bộ bảng nhập cục bộ?",
+    "ownerAdminOnly": "Chỉ Owner hoặc Admin mới có thể chuyển người chơi cục bộ vào cơ sở dữ liệu.",
+    "duplicateD1": "Biệt danh đã tồn tại trong cơ sở dữ liệu",
+    "duplicateLocal": "Trùng lặp trong bảng cục bộ",
+    "issueLabels": {
+      "nickname": "Thiếu biệt danh",
+      "alliance": "Thiếu liên minh",
+      "troopType": "Loại quân không xác định",
+      "tier": "Bậc không xác định",
+      "shift": "Ca không xác định",
+      "captain": "Giá trị đội trưởng chưa được ánh xạ",
+      "readyAttack": "Trạng thái sẵn sàng chưa được ánh xạ"
+    },
+    "replaceSuccess": "Đã thay thế bảng cơ sở dữ liệu. Đã chuyển {{count}} người chơi. Đăng ký vẫn mở.",
+    "transferModal": {
+      "title": "Chuyển người chơi vào cơ sở dữ liệu",
+      "subtitle": "Chọn cách chuyển bảng cục bộ vào cơ sở dữ liệu.",
+      "selected": "Đã chọn",
+      "newPlayers": "Mới",
+      "duplicates": "Đã có trong cơ sở dữ liệu",
+      "databaseNow": "Hiện có trong cơ sở dữ liệu",
+      "addMissing": {
+        "title": "Chỉ thêm người chơi còn thiếu",
+        "description": "Người chơi mới sẽ được thêm vào. Biệt danh hiện có sẽ không thay đổi."
+      },
+      "replaceAll": {
+        "title": "Thay thế bảng và giữ đăng ký mở",
+        "description": "Bảng người chơi hiện tại sẽ được thay bằng bảng cục bộ. Trang web vẫn tiếp nhận đăng ký mới.",
+        "onlyAllRows": "Tùy chọn này chỉ có khi chuyển toàn bộ bảng cục bộ."
+      },
+      "replaceWarning": "Bảng người chơi của chu kỳ hiện tại sẽ được thay thế trong một giao dịch an toàn. Bản nháp phân bổ tháp pháo đã lưu và kế hoạch cuối cùng đã công bố của chu kỳ này sẽ bị xóa và cần tạo lại. Đăng ký vẫn mở.",
+      "cancel": "Hủy",
+      "processing": "Đang chuyển...",
+      "addButton": "Thêm mới ({{count}})",
+      "replaceButton": "Thay thế bảng",
+      "replaceAndClose": {
+        "title": "Thay thế bảng và đóng đăng ký",
+        "description": "Bảng người chơi hiện tại sẽ được thay bằng bảng cục bộ, sau đó trang web sẽ ngừng tiếp nhận đăng ký mới."
+      },
+      "replaceAndCloseWarning": "Bảng người chơi sẽ được thay thế, bản nháp phân bổ tháp pháo và kế hoạch cuối cùng đã công bố của chu kỳ hiện tại sẽ bị xóa. Đăng ký sẽ đóng sớm. Hãy tạo lại kế hoạch sau khi nhập.",
+      "replaceAndCloseButton": "Thay thế và đóng đăng ký"
+    },
+    "clearTitle": "Xóa bảng cục bộ",
+    "guideTitle": "Tôi nên làm gì với bảng cục bộ?",
+    "guideText": "Đây là bản nháp nhập dữ liệu. Người chơi chưa được chuyển vào cơ sở dữ liệu. Hãy kiểm tra dữ liệu, sửa các vấn đề rồi nhấn «Chuyển» và chọn cách ghi dữ liệu.",
+    "replaceAndCloseSuccess": "Đã thay thế bảng cơ sở dữ liệu. Đã chuyển {{count}} người chơi. Đăng ký đã đóng."
+  },
+  "pagination": {
+    "label": "Các trang bảng người chơi",
+    "previous": "Trang trước",
+    "next": "Trang tiếp",
+    "pageOf": "Trang {{page}} / {{pages}}"
+  },
+  "confirm": {
+    "deletePlayerTitle": "Xóa người chơi"
+  },
+  "databaseTable": {
+    "clear": "Xóa dữ liệu bảng trong cơ sở dữ liệu",
+    "clearTitle": "Xóa dữ liệu bảng trong cơ sở dữ liệu?",
+    "clearConfirm": "Tất cả người chơi của chu kỳ hiện tại sẽ bị xóa khỏi cơ sở dữ liệu và bảng công khai. Chu kỳ và các cài đặt vẫn được giữ nguyên.",
+    "clearSuccess": "Đã xóa {{count}} người chơi khỏi bảng cơ sở dữ liệu.",
+    "error": "Không thể xóa dữ liệu bảng: {{code}}"
+  }
+}

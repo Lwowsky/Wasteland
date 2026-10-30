@@ -1,0 +1,39 @@
+{
+  "title": "Yêu cầu truy cập",
+  "description": "Xem xét yêu cầu, điều chỉnh vai trò và cấp quyền vào khu vực quản trị trang web.",
+  "loading": "Đang tải yêu cầu...",
+  "empty": "Chưa có yêu cầu nào.",
+  "columns": {
+    "user": "Người dùng",
+    "email": "Địa chỉ email",
+    "role": "Vai trò",
+    "comment": "Bình luận",
+    "status": "Trạng thái",
+    "actions": "Thao tác"
+  },
+  "roles": {
+    "admin": "Quản trị",
+    "consul": "Lãnh sự"
+  },
+  "status": {
+    "pending": "Đang chờ",
+    "approved": "Đã duyệt",
+    "rejected": "Đã từ chối"
+  },
+  "actions": {
+    "approve": "Duyệt",
+    "reject": "Từ chối",
+    "delete": "Xóa",
+    "notAllowed": "Không đủ quyền hạn cho vai trò này"
+  },
+  "errors": {
+    "load": "Không thể tải yêu cầu.",
+    "approve": "Không thể duyệt yêu cầu.",
+    "reject": "Không thể từ chối yêu cầu.",
+    "delete": "Không thể xóa yêu cầu.",
+    "onlyOwnerAdmin": "Chỉ Owner mới có thể cấp vai trò Admin."
+  },
+  "confirm": {
+    "delete": "Xóa yêu cầu {{name}}?"
+  }
+}

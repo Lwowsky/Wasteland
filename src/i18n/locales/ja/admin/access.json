@@ -1,0 +1,163 @@
+{
+  "title": "ユーザーとアクセス",
+  "description": "ユーザー、役割、個別の権限を管理します。",
+  "tabs": {
+    "users": "ユーザー",
+    "requests": "申請",
+    "limits": "制限"
+  },
+  "cards": {
+    "owner": {
+      "title": "オーナー",
+      "description": "すべての権限があります。役割と権限はFirebaseでのみ手動変更できます。"
+    },
+    "admin": {
+      "title": "管理画面",
+      "description": "地域データのリセットを除くすべてのオーナー権限。"
+    },
+    "consul": {
+      "title": "領事",
+      "description": "プレイヤー、タワー、登録、運用設定の全ツール。役割管理、サイトの外観、地域リセットは不可。"
+    },
+    "requests": {
+      "title": "申請",
+      "description": "新しい管理者アクセス申請が審査待ちです。"
+    }
+  },
+  "roles": {
+    "owner": {
+      "title": "オーナー",
+      "description": "すべての権限があります。役割と権限はFirebaseでのみ手動変更できます。"
+    },
+    "admin": {
+      "title": "管理画面",
+      "description": "地域データのリセットを除くすべてのオーナー権限。"
+    },
+    "consul": {
+      "title": "領事",
+      "description": "プレイヤー、タワー、登録、運用設定の全ツール。役割管理、サイトの外観、地域リセットは不可。"
+    }
+  },
+  "usersCount": "ユーザー",
+  "pendingCount": "保留中",
+  "columns": {
+    "user": "ユーザー",
+    "role": "役割",
+    "permissions": "権限",
+    "status": "状態",
+    "actions": "操作"
+  },
+  "permissions": {
+    "owner": "全権限"
+  },
+  "actions": {
+    "removeAccess": "アクセスを削除",
+    "ownerLocked": "オーナーはFirebaseでのみ変更できます",
+    "notAllowed": "権限が不足しています",
+    "openUser": "ユーザーを開く"
+  },
+  "modal": {
+    "role": "役割",
+    "status": "状態",
+    "createdAt": "作成",
+    "updatedAt": "更新済み",
+    "permissions": "権限",
+    "permissionsCount": "権限",
+    "permissionsText": "個々のユーザーの権限は、役割の範囲内で制限できます。",
+    "ownerPermissions": "オーナーは常に全権限を持ちます。サイト内でオーナー権限を変更できません。",
+    "technicalInfo": "技術情報",
+    "uid": "UID",
+    "saving": "保存中…",
+    "restoreDefaults": "役割の標準権限に戻す",
+    "disableRolePermissions": "すべての権限を無効化"
+  },
+  "permissionGroups": {
+    "access": {
+      "title": "ユーザーとアクセス",
+      "description": "役割と管理者アクセスを管理します。"
+    },
+    "players": {
+      "title": "プレイヤー表",
+      "description": "プレイヤーデータを閲覧・管理します。"
+    },
+    "distribution": {
+      "title": "配置と最終プラン",
+      "description": "タワーと最終プランを管理します。"
+    },
+    "registration": {
+      "title": "登録",
+      "description": "登録設定を管理します。"
+    },
+    "requests": {
+      "title": "申請",
+      "description": "アクセス申請を閲覧・処理します。"
+    },
+    "settings": {
+      "title": "設定",
+      "description": "インポート、エクスポート、システムツールにアクセスします。"
+    }
+  },
+  "permissionLabels": {
+    "view_access": "ユーザーと役割を表示",
+    "manage_access": "アクセス権を編集",
+    "manage_consuls": "Consulユーザーを管理",
+    "grant_admin": "管理者権限を付与",
+    "view_players": "プレイヤー表を表示",
+    "edit_players": "プレイヤーを編集",
+    "delete_players": "プレイヤーを削除",
+    "view_distribution": "配置を表示",
+    "edit_distribution": "配置を編集",
+    "view_registration_settings": "登録設定を表示",
+    "edit_registration_settings": "登録設定を編集",
+    "view_requests": "申請を表示",
+    "manage_requests": "申請を承認・却下",
+    "view_settings": "設定へのアクセス",
+    "import_players": "プレイヤー表をインポート",
+    "clear_players": "プレイヤー表を全消去",
+    "publish_final_plan": "最終プランを公開・復元",
+    "manage_content_access": "公開コンテンツのアクセス管理",
+    "manage_site_appearance": "サイトの外観",
+    "manage_region_backup": "地域データのバックアップと復元",
+    "reset_region": "地域データをリセット"
+  },
+  "loading": "ユーザーを読み込み中…",
+  "errors": {
+    "load": "ユーザーを読み込めませんでした。",
+    "save": "ユーザー権限を保存できませんでした。",
+    "delete": "アクセス権を削除できませんでした。"
+  },
+  "confirm": {
+    "removeAccess": "{{name}}のアクセス権を削除しますか？"
+  },
+  "cloudflareLimits": {
+    "title": "Cloudflare — 上限と使用状況",
+    "description": "アカウント全体のWorkersとD1の現在の使用状況。",
+    "metricWorkers": "Workers — リクエスト",
+    "metricD1Reads": "D1 — 読み取り行数",
+    "metricD1Writes": "D1 — 書き込み行数",
+    "note": "利用上限はCloudflareのプランによって異なります。",
+    "open": "Cloudflareダッシュボード",
+    "docs": "公式の上限",
+    "loadingMetrics": "読み込み中...",
+    "refreshMetrics": "更新",
+    "analyticsError": "分析データを読み込めませんでした",
+    "updated": "更新済み",
+    "compactTitle": "Cloudflare使用状況",
+    "left": "残り",
+    "noData": "データなし",
+    "dailyLimit": "日次上限",
+    "showDetails": "詳細を表示",
+    "hideDetails": "詳細を非表示",
+    "perDatabase": "データベースごと",
+    "perRequest": "リクエストごと",
+    "detailWorkersCount": "Workersの最大数",
+    "detailCron": "Cronトリガー",
+    "detailCpu": "リクエストあたりのCPU",
+    "detailMemory": "Workerのメモリ",
+    "detailD1Databases": "D1データベース",
+    "detailD1Storage": "D1ストレージ",
+    "detailD1DatabaseSize": "データベースの最大サイズ",
+    "detailD1Queries": "呼び出しごとのD1クエリ",
+    "utcLabel": "UTC"
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "title": "Użytkownicy i dostęp",
+  "description": "Zarządzaj użytkownikami, rolami i indywidualnymi uprawnieniami.",
+  "tabs": {
+    "users": "Użytkownicy",
+    "requests": "Zgłoszenia",
+    "limits": "Limity"
+  },
+  "cards": {
+    "owner": {
+      "title": "Właściciel",
+      "description": "Pełny dostęp. Rolę i uprawnienia można zmienić tylko ręcznie przez Firebase."
+    },
+    "admin": {
+      "title": "Administrator",
+      "description": "Wszystkie uprawnienia właściciela z wyjątkiem resetowania regionu."
+    },
+    "consul": {
+      "title": "Konsul",
+      "description": "Wszystkie narzędzia graczy, wież, rejestracji i ustawień roboczych. Bez zarządzania rolami, wyglądem strony i resetowaniem regionu."
+    },
+    "requests": {
+      "title": "Zgłoszenia",
+      "description": "Nowe wnioski o dostęp administracyjny oczekują na rozpatrzenie."
+    }
+  },
+  "roles": {
+    "owner": {
+      "title": "Właściciel",
+      "description": "Pełny dostęp. Rolę i uprawnienia można zmienić tylko ręcznie przez Firebase."
+    },
+    "admin": {
+      "title": "Administrator",
+      "description": "Wszystkie uprawnienia właściciela z wyjątkiem resetowania regionu."
+    },
+    "consul": {
+      "title": "Konsul",
+      "description": "Wszystkie narzędzia graczy, wież, rejestracji i ustawień roboczych. Bez zarządzania rolami, wyglądem strony i resetowaniem regionu."
+    }
+  },
+  "usersCount": "Użytkownicy",
+  "pendingCount": "Oczekujące",
+  "columns": {
+    "user": "Użytkownik",
+    "role": "Rola",
+    "permissions": "Uprawnienia",
+    "status": "Status",
+    "actions": "Akcje"
+  },
+  "permissions": {
+    "owner": "Pełny dostęp"
+  },
+  "actions": {
+    "removeAccess": "Usuń dostęp",
+    "ownerLocked": "Właściciela można zmienić tylko przez Firebase",
+    "notAllowed": "Niewystarczające uprawnienia",
+    "openUser": "Otwórz użytkownika"
+  },
+  "modal": {
+    "role": "Rola",
+    "status": "Status",
+    "createdAt": "Utworzono",
+    "updatedAt": "Zaktualizowano",
+    "permissions": "Uprawnienia",
+    "permissionsCount": "Uprawnienia",
+    "permissionsText": "Uprawnienia użytkownika można ograniczyć w granicach jego roli.",
+    "ownerPermissions": "Właściciel zawsze ma pełny dostęp. Jego uprawnień nie można edytować przez stronę.",
+    "technicalInfo": "Informacje techniczne",
+    "uid": "UID",
+    "saving": "Zapisywanie...",
+    "restoreDefaults": "Przywróć domyślne uprawnienia roli",
+    "disableRolePermissions": "Wyłącz wszystkie uprawnienia"
+  },
+  "permissionGroups": {
+    "access": {
+      "title": "Użytkownicy i dostęp",
+      "description": "Zarządzaj rolami i dostępem administracyjnym."
+    },
+    "players": {
+      "title": "Tabela graczy",
+      "description": "Przeglądanie i zarządzanie danymi graczy."
+    },
+    "distribution": {
+      "title": "Rozstawienie i plan końcowy",
+      "description": "Zarządzanie wieżami i planem końcowym."
+    },
+    "registration": {
+      "title": "Rejestracja",
+      "description": "Zarządzanie ustawieniami rejestracji."
+    },
+    "requests": {
+      "title": "Zgłoszenia",
+      "description": "Przeglądanie i obsługa wniosków o dostęp."
+    },
+    "settings": {
+      "title": "Ustawienia",
+      "description": "Dostęp do importu, eksportu i narzędzi systemowych."
+    }
+  },
+  "permissionLabels": {
+    "view_access": "Przeglądaj użytkowników i role",
+    "manage_access": "Edytuj dostęp",
+    "manage_consuls": "Zarządzaj użytkownikami konsula",
+    "grant_admin": "Nadaj rolę administratora",
+    "view_players": "Przeglądaj tabelę graczy",
+    "edit_players": "Edytuj graczy",
+    "delete_players": "Usuwaj graczy",
+    "view_distribution": "Przeglądaj rozstawienie",
+    "edit_distribution": "Edytuj rozstawienie",
+    "view_registration_settings": "Przeglądaj ustawienia rejestracji",
+    "edit_registration_settings": "Edytuj ustawienia rejestracji",
+    "view_requests": "Przeglądaj wnioski",
+    "manage_requests": "Zatwierdzaj i odrzucaj wnioski",
+    "view_settings": "Ustawienia dostępu",
+    "import_players": "Importuj tabelę graczy",
+    "clear_players": "Wyczyść całą tabelę graczy",
+    "publish_final_plan": "Publikuj i przywracaj plan końcowy",
+    "manage_content_access": "Zarządzaj publicznym dostępem do treści",
+    "manage_site_appearance": "Wygląd strony",
+    "manage_region_backup": "Kopia zapasowa i przywracanie regionu",
+    "reset_region": "Zresetuj dane regionu"
+  },
+  "loading": "Wczytywanie użytkowników...",
+  "errors": {
+    "load": "Nie udało się wczytać użytkowników.",
+    "save": "Nie udało się zapisać uprawnień użytkownika.",
+    "delete": "Nie udało się usunąć dostępu."
+  },
+  "confirm": {
+    "removeAccess": "Usunąć dostęp dla {{name}}?"
+  },
+  "cloudflareLimits": {
+    "title": "Cloudflare — limity i wykorzystanie",
+    "description": "Bieżące wykorzystanie Workers i D1 na całym koncie.",
+    "metricWorkers": "Workers — żądania",
+    "metricD1Reads": "D1 — odczytane wiersze",
+    "metricD1Writes": "D1 — zapisane wiersze",
+    "note": "Limity zależą od planu Cloudflare.",
+    "open": "Panel Cloudflare",
+    "docs": "Oficjalne limity",
+    "loadingMetrics": "Ładowanie...",
+    "refreshMetrics": "Odśwież",
+    "analyticsError": "Nie udało się wczytać analityki",
+    "updated": "Zaktualizowano",
+    "compactTitle": "Wykorzystanie Cloudflare",
+    "left": "remaining",
+    "noData": "Brak danych",
+    "dailyLimit": "limit dzienny",
+    "showDetails": "Pokaż szczegóły",
+    "hideDetails": "Ukryj szczegóły",
+    "perDatabase": "Na bazę danych",
+    "perRequest": "Na żądanie",
+    "detailWorkersCount": "Maksymalna liczba Workers",
+    "detailCron": "Wyzwalacze Cron",
+    "detailCpu": "Czas CPU na żądanie",
+    "detailMemory": "Pamięć Worker",
+    "detailD1Databases": "Bazy danych D1",
+    "detailD1Storage": "Pamięć D1",
+    "detailD1DatabaseSize": "Maksymalny rozmiar bazy danych",
+    "detailD1Queries": "Zapytania D1 na wywołanie",
+    "utcLabel": "UTC"
+  }
+}

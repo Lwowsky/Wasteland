@@ -1,0 +1,41 @@
+{
+  "loading": "正在检查访问权限…",
+  "resources": {
+    "players": "玩家列表",
+    "final_plan": "最终方案状态"
+  },
+  "modes": {
+    "public": {
+      "title": "公开访问",
+      "text": "此区域对所有人开放，正在加载页面。"
+    },
+    "private": {
+      "title": "访问已关闭",
+      "text": "管理员已暂时关闭此区域的公开访问。"
+    },
+    "link": {
+      "title": "需要私人链接",
+      "text": "请打开管理员提供的链接。若链接已撤销或过期，请申请新链接。"
+    }
+  },
+  "errors": {
+    "NO_CURRENT_PERIOD": "当前没有可签发私人访问权限的有效周期。",
+    "CONTENT_PRIVATE": "公开访问已关闭。",
+    "default": "无法验证权限，请刷新页面并重试。",
+    "RATE_LIMITED": "尝试次数过多，请一分钟后重试。"
+  },
+  "cycleClosed": {
+    "title": "荒野活动周期已结束",
+    "players": "本周期玩家列表已关闭。下次报名于 {{date}} 开始。",
+    "playersUnknown": "本周期玩家列表已关闭。下次报名日期将另行公布。",
+    "finalPlan": "本周期最终方案已关闭。下个周期管理员发布后才会显示新方案。",
+    "opensIn": "距离报名开放 {{days}}天 {{hours}}小时 {{minutes}}分钟"
+  },
+  "cycleUnavailable": "无法验证访问时间表，请稍后重试。",
+  "cycleUpdating": {
+    "title": "等待更新的周期数据",
+    "text": "新周期已开始，但公开数据仍在更新，请稍后重试。",
+    "players": "新周期的玩家列表仍在更新，请稍后重试。",
+    "final_plan": "新周期的最终方案仍在更新，请稍后重试。"
+  }
+}

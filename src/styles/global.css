@@ -63,3 +63,19 @@ button {
     padding: 24px 0 40px;
   }
 }
+
+
+/* Stage 062: Arabic uses native bidi layout. Latin identifiers, codes and
+   e-mail addresses stay readable in their original direction. */
+:root[dir="rtl"] body { text-align: start; }
+:root[dir="rtl"] input[type="number"],
+:root[dir="rtl"] input[type="email"],
+:root[dir="rtl"] input[type="url"],
+:root[dir="rtl"] input[type="datetime-local"],
+:root[dir="rtl"] input[type="date"],
+:root[dir="rtl"] input[type="time"] {
+  direction: ltr;
+  text-align: start;
+}
+:root[dir="rtl"] code,
+:root[dir="rtl"] pre { direction: ltr; unicode-bidi: isolate; }

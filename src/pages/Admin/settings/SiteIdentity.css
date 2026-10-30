@@ -112,7 +112,7 @@
   max-width: 220px;
   color: #768ba1;
   font-size: 10px;
-  text-align: right;
+  text-align: end;
 }
 
 .settings-site-card__actions small.is-success {
@@ -308,7 +308,7 @@
 
 .site-identity-field__with-icon :is(svg, .site-identity-field__icon-image) {
   position: absolute;
-  left: 10px;
+  inset-inline-start: 10px;
   top: 50%;
   z-index: 1;
   transform: translateY(-50%);
@@ -317,37 +317,9 @@
 
 
 .site-identity-field__with-icon input {
-  padding-left: 38px;
+  padding-inline-start: 38px;
 }
 
-.site-identity-language-tabs {
-  display: flex;
-  gap: 5px;
-  padding: 4px;
-  background: #eef5fc;
-  border: 1px solid #d5e3f0;
-  border-radius: 10px;
-}
-
-.site-identity-language-tabs button {
-  min-width: 48px;
-  min-height: 32px;
-  padding: 0 10px;
-  color: #5f7690;
-  background: transparent;
-  border: 0;
-  border-radius: 8px;
-  font: inherit;
-  font-size: 11px;
-  font-weight: 900;
-  cursor: pointer;
-}
-
-.site-identity-language-tabs button.is-active {
-  color: #ffffff;
-  background: linear-gradient(135deg, #347fff, #6559ec);
-  box-shadow: 0 5px 12px rgba(70, 91, 203, 0.18);
-}
 
 .site-identity-form__error {
   padding: 10px 12px;
@@ -412,7 +384,7 @@
 
   .settings-site-card__actions small {
     max-width: none;
-    text-align: left;
+    text-align: start;
   }
 
   .settings-site-card__actions .admin-primary-button {
@@ -440,13 +412,16 @@
   }
 
   .site-identity-restore-defaults,
-  .site-identity-language-tabs,
+  .site-identity-language-picker,
   .site-identity-modal__footer > div,
   .site-identity-modal__footer button {
     width: 100%;
   }
 
-  .site-identity-language-tabs button,
+  .site-identity-language-picker {
+    flex: 1 1 auto;
+  }
+
   .site-identity-modal__footer button {
     flex: 1;
   }

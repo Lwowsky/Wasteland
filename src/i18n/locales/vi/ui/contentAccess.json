@@ -1,0 +1,41 @@
+{
+  "loading": "Đang kiểm tra quyền truy cập…",
+  "resources": {
+    "players": "Bảng người chơi",
+    "final_plan": "Kế hoạch cuối cùng"
+  },
+  "modes": {
+    "public": {
+      "title": "Truy cập công khai",
+      "text": "Mục này mở cho tất cả mọi người. Trang đang tải."
+    },
+    "private": {
+      "title": "Đã đóng quyền truy cập",
+      "text": "Quản trị viên đã tạm đóng quyền truy cập công khai vào mục này."
+    },
+    "link": {
+      "title": "Cần liên kết riêng tư",
+      "text": "Mở liên kết do quản trị viên cung cấp. Nếu liên kết đã bị thu hồi hoặc hết hạn, hãy yêu cầu liên kết mới."
+    }
+  },
+  "errors": {
+    "NO_CURRENT_PERIOD": "Không có chu kỳ đang hoạt động để cấp quyền riêng tư.",
+    "CONTENT_PRIVATE": "Quyền truy cập công khai đã đóng.",
+    "default": "Không thể kiểm tra quyền truy cập. Tải lại trang rồi thử lại.",
+    "RATE_LIMITED": "Quá nhiều lần thử. Hãy thử lại sau một phút."
+  },
+  "cycleClosed": {
+    "title": "Chu kỳ Wasteland đã kết thúc",
+    "players": "Bảng người chơi của chu kỳ này đã đóng. Đăng ký tiếp theo mở vào {{date}}.",
+    "playersUnknown": "Bảng người chơi của chu kỳ này đã đóng. Ngày đăng ký tiếp theo sẽ được thông báo riêng.",
+    "finalPlan": "Kế hoạch cuối cùng của chu kỳ này đã đóng. Kế hoạch mới chỉ xuất hiện sau khi quản trị viên công bố trong chu kỳ tiếp theo.",
+    "opensIn": "Đăng ký mở sau {{days}} ngày {{hours}} giờ {{minutes}} phút"
+  },
+  "cycleUnavailable": "Không thể xác minh lịch truy cập. Vui lòng thử lại sau.",
+  "cycleUpdating": {
+    "title": "Đang chờ dữ liệu chu kỳ mới",
+    "text": "Chu kỳ mới đã bắt đầu, nhưng dữ liệu công khai vẫn đang cập nhật. Vui lòng thử lại sau ít phút.",
+    "players": "Bảng người chơi của chu kỳ mới đang cập nhật. Vui lòng thử lại sau ít phút.",
+    "final_plan": "Kế hoạch cuối cùng của chu kỳ mới đang cập nhật. Vui lòng thử lại sau ít phút."
+  }
+}

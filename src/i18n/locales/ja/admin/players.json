@@ -1,0 +1,275 @@
+{
+  "title": "完全なプレイヤー表",
+  "description": "地域管理のための全プレイヤーデータ。",
+  "actions": {
+    "add": "プレイヤーを追加",
+    "edit": "編集",
+    "delete": "削除",
+    "save": "保存",
+    "saving": "保存中…",
+    "cancel": "キャンセル",
+    "reset": "リセット"
+  },
+  "filters": {
+    "search": "ニックネームまたは同盟",
+    "allAlliance": "同盟: すべて",
+    "allTroops": "兵種: すべて",
+    "allShifts": "シフト: すべて",
+    "captain": "キャプテン",
+    "captainAll": "隊長: すべて",
+    "captainYes": "隊長: はい",
+    "captainNo": "隊長: いいえ",
+    "ruleStatus": "ルールの状態",
+    "ruleStatusAll": "状態: すべて",
+    "ruleStatusAttention": "要確認",
+    "ruleStatusOk": "問題なし",
+    "perPage": "1ページのプレイヤー数",
+    "perPageAll": "すべて",
+    "perPageCount": "1ページ{{count}}件"
+  },
+  "table": {
+    "nickname": "ニックネーム",
+    "alliance": "同盟",
+    "troops": "部隊",
+    "tier": "ティア",
+    "lair": "シェルター",
+    "march": "行軍",
+    "rally": "ラリー",
+    "shift": "シフト",
+    "captain": "キャプテン",
+    "ready": "準備完了",
+    "submitted": "送信日時",
+    "comment": "コメント",
+    "actions": "操作"
+  },
+  "empty": "プレイヤーが見つかりません。",
+  "loading": "読み込み中...",
+  "yes": "はい",
+  "no": "いいえ",
+  "troops": {
+    "fighter": "ファイター",
+    "rider": "ライダー",
+    "shooter": "シューター"
+  },
+  "shifts": {
+    "shift1": "シフト 1",
+    "shift2": "シフト 2",
+    "shift3": "シフト3",
+    "shift4": "シフト4",
+    "flexible": "任意のシフト"
+  },
+  "editor": {
+    "createTitle": "新しいプレイヤー",
+    "editTitle": "プレイヤーを編集",
+    "createSubtitle": "現在の登録期間に新しいプレイヤーを追加します。",
+    "editSubtitle": "{{name}}の登録を編集します。",
+    "participation": {
+      "title": "Wastelandへの参加",
+      "description": "プレイヤー配置に使用する主な項目。",
+      "shift": "シフト",
+      "ready": "攻撃可能",
+      "captain": "キャプテン",
+      "selectShift": "シフトを選択"
+    },
+    "playerData": {
+      "title": "プレイヤーデータ",
+      "description": "プレイヤー登録の情報。",
+      "nickname": "ニックネーム",
+      "alliance": "同盟",
+      "tier": "ティア",
+      "troopType": "兵種",
+      "lairLevel": "巣窟レベル",
+      "marchSize": "行軍規模",
+      "rallySize": "ラリー規模"
+    },
+    "extraSquads": {
+      "title": "追加部隊",
+      "description": "任意です。他の兵種を最大2つまで選択できます。",
+      "main": "メイン",
+      "comment": "コメント",
+      "commentPlaceholder": "プレイヤーの追加情報…"
+    },
+    "validation": {
+      "nickname": "ニックネームを入力してください。",
+      "alliance": "同盟名を入力してください。",
+      "troopType": "兵種を選択してください。",
+      "tier": "ティアを選択してください。",
+      "lair": "シェルターレベルは0未満にできません。",
+      "march": "行軍兵力は0未満にできません。",
+      "rally": "集結容量は0未満にできません。",
+      "shift": "シフトを選択してください。"
+    },
+    "confirmDelete": "プレイヤー「{{name}}」を削除しますか？",
+    "ruleWarnings": {
+      "tier": "ティア{{tier}}は現在、新規登録には利用できません。既存のプレイヤーは維持できます。",
+      "shift": "{{shift}}は現在、新規登録には利用できません。既存のプレイヤーはそのシフトに留まれます。"
+    }
+  },
+  "regionEditor": {
+    "action": "地域エディター",
+    "title": "地域エディター",
+    "description": "プレイヤー、同盟、行軍兵力、集結容量を表示します。",
+    "common": {
+      "close": "閉じる",
+      "save": "保存",
+      "saving": "保存中…"
+    },
+    "tabs": {
+      "players": "プレイヤー",
+      "alliances": "同盟",
+      "combat": "行軍兵力と集結容量"
+    },
+    "sidebar": {
+      "title": "プレイヤー",
+      "description": "一覧からプレイヤーを選択してください。",
+      "search": "ニックネームまたは同盟で検索",
+      "empty": "プレイヤーが見つかりません。"
+    },
+    "players": {
+      "empty": "一覧からプレイヤーを選択してください。",
+      "player": "プレイヤー",
+      "tier": "ティア",
+      "captain": "キャプテン",
+      "troopType": "兵種",
+      "march": "行軍規模",
+      "rally": "ラリー規模",
+      "shift": "シフト",
+      "lair": "巣窟レベル",
+      "ready": "攻撃可能",
+      "comment": "コメント"
+    },
+    "alliances": {
+      "empty": "同盟が見つかりませんでした。",
+      "alliance": "同盟",
+      "registered": "登録日",
+      "captains": "キャプテン",
+      "tiers": "ティア"
+    },
+    "combat": {
+      "title": "行軍兵力と集結容量",
+      "description": "行軍兵力と集結容量の並べ替え・編集。",
+      "sortLabel": "行軍兵力と集結容量を並べ替え",
+      "tableLabel": "行軍兵力・集結容量の表",
+      "player": "プレイヤー",
+      "allianceTier": "同盟／ティア",
+      "march": "行軍",
+      "rally": "ラリー",
+      "actions": "操作",
+      "sort": {
+        "marchDesc": "行軍兵力: 降順",
+        "marchAsc": "行軍兵力: 昇順",
+        "rallyDesc": "集結容量: 降順",
+        "rallyAsc": "集結容量: 昇順"
+      }
+    },
+    "sort": {},
+    "march": {
+      "title": "行軍規模",
+      "description": "プレイヤーの行軍兵力を並べ替え・編集します。",
+      "current": "現在の行軍兵力"
+    },
+    "rally": {
+      "title": "ラリー規模",
+      "description": "プレイヤーの集結容量を並べ替え・編集します。",
+      "current": "現在の集結容量"
+    }
+  },
+  "errors": {
+    "load": "プレイヤーを読み込めませんでした。",
+    "save": "プレイヤーを保存できませんでした。",
+    "delete": "プレイヤーを削除できませんでした。"
+  },
+  "stats": {
+    "total": "合計",
+    "players": "プレイヤー",
+    "captains": "キャプテン",
+    "inTurrets": "タレット内",
+    "reserve": "予備"
+  },
+  "ruleStatus": {
+    "attentionSummary": "要確認: {{count}}人",
+    "tierUnavailable": "ティア{{tier}}は現在のサイクルでは利用できません。",
+    "shiftUnavailable": "{{shift}}は現在のサイクルでは無効です。"
+  },
+  "localImport": {
+    "tabsLabel": "プレイヤー表のデータ元",
+    "databaseTab": "データベース（{{count}}）",
+    "localTab": "ローカル表（{{count}}）",
+    "title": "ローカルインポート表",
+    "fileSummary": "{{file}}・{{count}}人",
+    "ready": "準備完了",
+    "problems": "問題",
+    "imported": "インポート済み",
+    "status": "状態",
+    "selectReady": "選択可能なすべてを選択",
+    "transferSelected": "選択分を移動（{{count}}）",
+    "transferAll": "移動（{{count}}）",
+    "transferring": "移動中…",
+    "transferSuccess": "新規プレイヤー{{count}}人を追加しました。重複スキップ: {{skipped}}件。",
+    "transferError": "プレイヤーを移動できませんでした: {{code}}",
+    "clearImported": "インポート済みを消去",
+    "clearAll": "ローカル表を削除",
+    "clearConfirm": "ローカルインポート表をすべて削除しますか？",
+    "ownerAdminOnly": "ローカルのプレイヤーをデータベースに移動できるのはオーナーと管理者だけです。",
+    "duplicateD1": "このニックネームはデータベースに存在します",
+    "duplicateLocal": "ローカル表内の重複",
+    "issueLabels": {
+      "nickname": "ニックネームがありません",
+      "alliance": "同盟がありません",
+      "troopType": "不明な兵種",
+      "tier": "不明なティア",
+      "shift": "不明なシフト",
+      "captain": "隊長の値が対応付けられていません",
+      "readyAttack": "参加状態の値が対応付けられていません"
+    },
+    "replaceSuccess": "データベースの表を置き換え、{{count}}人を移動しました。登録は引き続き受け付けます。",
+    "transferModal": {
+      "title": "プレイヤーをデータベースへ移動",
+      "subtitle": "ローカル表をデータベースへ移動する方法を選択してください。",
+      "selected": "選択済み",
+      "newPlayers": "新規",
+      "duplicates": "データベースに登録済み",
+      "databaseNow": "現在データベース内",
+      "addMissing": {
+        "title": "未登録のプレイヤーのみ追加",
+        "description": "新しいプレイヤーを追加します。既存のニックネームは変更されません。"
+      },
+      "replaceAll": {
+        "title": "表を置き換え、登録は継続",
+        "description": "現在のプレイヤー表をローカル表で置き換えます。サイトからの新規登録は引き続き可能です。",
+        "onlyAllRows": "この操作はローカル表全体を移動する場合にのみ利用できます。"
+      },
+      "replaceWarning": "現在のサイクルのプレイヤー表を1つの安全なトランザクションで置き換えます。このサイクルの保存済みタワー下書きと公開済み最終プランは削除されるため、再作成が必要です。登録は継続されます。",
+      "cancel": "キャンセル",
+      "processing": "移動中…",
+      "addButton": "新規追加（{{count}}）",
+      "replaceButton": "表を置換",
+      "replaceAndClose": {
+        "title": "表を置き換えて登録を締め切る",
+        "description": "現在のプレイヤー表をローカル表で置き換えます。その後サイトからの新規登録を停止します。"
+      },
+      "replaceAndCloseWarning": "プレイヤー表を置き換え、現在のサイクルのタワー下書きと公開済み最終プランを削除します。登録は予定より早く締め切られます。インポート後にプランを再作成してください。",
+      "replaceAndCloseButton": "置き換えて登録を締め切る"
+    },
+    "clearTitle": "ローカル表を削除",
+    "guideTitle": "ローカル表をどう処理しますか？",
+    "guideText": "これはインポート下書きです。プレイヤーはまだデータベースに移動されていません。内容を確認して問題を修正し、「移動」を押して保存方法を選択してください。",
+    "replaceAndCloseSuccess": "データベースの表を置き換え、{{count}}人を移動しました。登録を締め切りました。"
+  },
+  "pagination": {
+    "label": "プレイヤー表のページ",
+    "previous": "前のページ",
+    "next": "次のページ",
+    "pageOf": "{{page}} / {{pages}}"
+  },
+  "confirm": {
+    "deletePlayerTitle": "プレイヤーを削除"
+  },
+  "databaseTable": {
+    "clear": "データベースの表を消去",
+    "clearTitle": "データベースの表を消去しますか？",
+    "clearConfirm": "現在のサイクルの全プレイヤーをデータベースと公開表から削除します。サイクルと設定は維持されます。",
+    "clearSuccess": "データベースの表から{{count}}人を削除しました。",
+    "error": "データベースの表を消去できませんでした: {{code}}"
+  }
+}

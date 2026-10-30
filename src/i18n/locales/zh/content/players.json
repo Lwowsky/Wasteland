@@ -1,0 +1,66 @@
+{
+  "title": "玩家列表",
+  "text": "公开显示的简化报名列表。",
+  "empty": "目前还没有申请。",
+  "stats": {
+    "total": "总玩家",
+    "captains": "已就绪队长"
+  },
+  "troops": {
+    "fighter": "战士",
+    "rider": "骑兵",
+    "shooter": "射手"
+  },
+  "shifts": {
+    "shift1": "班次 1",
+    "shift2": "班次 2",
+    "shift3": "班次 3",
+    "shift4": "班次 4",
+    "flexible": "任意班次"
+  },
+  "filters": {
+    "title": "筛选",
+    "search": "搜索",
+    "searchPlaceholder": "昵称或联盟",
+    "alliance": "联盟",
+    "troopType": "兵种类型",
+    "shift": "班次",
+    "captain": "队长",
+    "readyCaptain": "愿意担任队长",
+    "notCaptain": "非队长",
+    "all": "全部",
+    "reset": "重置筛选",
+    "perPage": "每页玩家数",
+    "perPage10": "每页 10 条",
+    "perPage20": "每页 20 条",
+    "perPage50": "每页 50 条",
+    "perPageAll": "全部"
+  },
+  "table": {
+    "nickname": "昵称",
+    "alliance": "联盟",
+    "troops": "部队",
+    "tier": "等级",
+    "shift": "班次",
+    "captain": "队长",
+    "when": "时间",
+    "yes": "是",
+    "no": "否"
+  },
+  "loading": "加载中...",
+  "errors": {
+    "load": "加载玩家失败。"
+  },
+  "time": {
+    "justNow": "刚刚",
+    "minutesAgo": "{{count}} 分钟前",
+    "hoursAgo": "{{count}} 小时前",
+    "daysAgo": "{{count}} 天前"
+  },
+  "pagination": {
+    "label": "玩家列表分页",
+    "previous": "上一页",
+    "next": "下一页",
+    "pageOf": "{{page}} / {{pages}}"
+  }
+}

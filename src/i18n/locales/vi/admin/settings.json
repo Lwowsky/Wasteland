@@ -1,0 +1,480 @@
+{
+  "title": "Cài đặt",
+  "description": "Quản lý giao diện trang, nhập/xuất người chơi, sao lưu, quyền truy cập và công cụ hệ thống.",
+  "sections": {
+    "import": "Nhập",
+    "export": "Xuất dữ liệu",
+    "backup": "Sao lưu",
+    "system": "Hệ thống",
+    "access": "Truy cập"
+  },
+  "siteIdentity": {
+    "eyebrow": "Giao diện trang web",
+    "title": "Tên, khu vực và chân trang",
+    "description": "Thay đổi tên trang, chữ thương hiệu, số và tên khu vực, nội dung chân trang.",
+    "edit": "Cấu hình trang web",
+    "ownerOnly": "Chỉ Owner được chỉnh sửa.",
+    "saved": "Đã lưu cài đặt trang web.",
+    "summary": {
+      "siteName": "Tên trang web",
+      "region": "Khu vực",
+      "brand": "Chữ trên logo"
+    },
+    "identity": {
+      "title": "Thông tin chính của trang web",
+      "description": "Các giá trị này dùng trong đầu trang, tiêu đề tab trình duyệt và thông tin khu vực."
+    },
+    "footer": {
+      "title": "Nội dung chân trang",
+      "description": "Cấu hình chân trang riêng cho từng ngôn ngữ được hỗ trợ.",
+      "languageLabel": "Ngôn ngữ chân trang",
+      "languageHelp": "Mặc định hiển thị bản dịch JSON. Chỉ trường đã thay đổi mới được lưu ghi đè trong D1. Trường trống sẽ trở về mặc định sau khi lưu. Hãy sửa từng ngôn ngữ riêng.",
+      "restoreDefaults": "Khôi phục văn bản mặc định",
+      "restoreHelp": "Khôi phục ngôn ngữ đã chọn từ bản dịch JSON. Lưu để áp dụng.",
+      "restoreNotice": "Đã khôi phục văn bản mặc định trong bản nháp. Nhấn «Lưu thay đổi» để áp dụng."
+    },
+    "fields": {
+      "siteName": "Tên trang web",
+      "brandText": "Logo / chữ thương hiệu",
+      "regionNumber": "Số khu vực",
+      "regionName": "Tên khu vực",
+      "footerDescription": "Mô tả trang ở chân trang",
+      "authorLabel": "Nhãn khối tác giả",
+      "author": "Tên tác giả",
+      "authorDescription": "Mô tả tác giả",
+      "projectDescription": "Mô tả dự án",
+      "copyright": "Văn bản bản quyền"
+    },
+    "help": {
+      "siteName": "Dùng trong tiêu đề tab trình duyệt và tiêu đề SEO.",
+      "brandText": "Hiển thị ở đầu và chân trang."
+    },
+    "modal": {
+      "title": "Cài đặt trang web",
+      "subtitle": "Thay đổi tên chính, khu vực và chân trang mà không cần sửa mã.",
+      "footerHint": "Thay đổi có hiệu lực ngay sau khi lưu.",
+      "unsaved": "Thay đổi chưa lưu"
+    },
+    "actions": {
+      "close": "Đóng",
+      "cancel": "Hủy",
+      "save": "Lưu thay đổi",
+      "saving": "Đang lưu…"
+    },
+    "errors": {
+      "load": "Không thể tải cài đặt trang web.",
+      "save": "Không thể lưu cài đặt trang web."
+    },
+    "unsaved": {
+      "title": "Bỏ thay đổi chưa lưu?",
+      "message": "Bạn đã thay đổi cài đặt trang hoặc chân trang. Đóng cửa sổ lúc này sẽ mất các thay đổi.",
+      "discard": "Bỏ thay đổi",
+      "keepEditing": "Tiếp tục chỉnh sửa"
+    }
+  },
+  "import": {
+    "title": "Nhập người chơi",
+    "description": "Chỉ nhập vào bảng người chơi của chu kỳ hiện tại từ XLSX, XLS hoặc CSV.",
+    "chooseFile": "Chọn tệp người chơi",
+    "reading": "Đang đọc tệp…",
+    "formats": "XLSX · XLS · CSV",
+    "cancel": "Hủy",
+    "importing": "Đang nhập…",
+    "success": "Đã nhập thành công {{count}} người chơi.",
+    "fixBeforeImport": "Sửa lỗi tệp và dữ liệu trùng trước khi nhập.",
+    "preview": {
+      "title": "Kiểm tra bản xem trước",
+      "total": " hàng",
+      "valid": " sẵn sàng",
+      "invalid": " lỗi",
+      "duplicates": " trùng lặp",
+      "problems": "Những gì cần sửa",
+      "row": "Hàng {{row}}",
+      "rowShort": "Hàng",
+      "showing": "Đang hiển thị {{from}}–{{to}} / {{total}}",
+      "perPage": "Mỗi trang",
+      "all": "Tất cả",
+      "page": "Trang {{page}} / {{pages}}",
+      "previous": "Trang trước",
+      "next": "Trang tiếp"
+    },
+    "errors": {
+      "readFile": "Không đọc được tệp. Kiểm tra định dạng XLSX/XLS/CSV.",
+      "emptyFile": "Tệp không chứa hàng người chơi nào.",
+      "importFailed": "Nhập thất bại. Đừng cho rằng dữ liệu đã được nhập; hãy kiểm tra Worker và tệp.",
+      "duplicateExisting": "biệt danh này đã có trong chu kỳ hiện tại",
+      "duplicateFile": "biệt danh này bị trùng trong tệp",
+      "invalidField": {
+        "nickname": "thiếu biệt danh",
+        "alliance": "thiếu liên minh",
+        "troopType": "loại quân không xác định",
+        "tier": "bậc phải từ T1–T14",
+        "shift": "ca không xác định",
+        "captain": "giá trị đội trưởng không xác định — chọn Có/Không thủ công",
+        "readyAttack": "giá trị sẵn sàng không xác định — chọn Có/Không thủ công"
+      },
+      "saveDraftFailed": "Không thể lưu bản nháp nhập cục bộ."
+    },
+    "close": "Đóng",
+    "fields": {
+      "nickname": "Biệt danh",
+      "alliance": "Liên minh",
+      "troopType": "Loại quân",
+      "tier": "Cấp",
+      "lairLevel": "Cấp hang",
+      "marchSize": "Quy mô hành quân",
+      "rallySize": "Quy mô rally",
+      "shift": "Ca",
+      "readyAttack": "Sẵn sàng tấn công",
+      "captain": "Đội trưởng",
+      "comment": "Bình luận",
+      "extraFighterTier": "Đội bổ sung — Đấu sĩ",
+      "extraRiderTier": "Đội bổ sung — Kỵ binh",
+      "extraShooterTier": "Đội bổ sung — Xạ thủ"
+    },
+    "mapping": {
+      "cardHint": "Sau khi chọn tệp, cửa sổ ánh xạ mở ra để ghép từng cột Excel với trường người chơi.",
+      "title": "Cài đặt nhập người chơi",
+      "subtitle": "Tệp: {{file}}. Chọn các cột phù hợp với trường của trang web.",
+      "fileSummary": "Cột: {{columns}} · hàng: {{rows}}",
+      "fieldsTitle": "Ánh xạ cột",
+      "fieldsText": "Trường của trang web nằm bên trái, cột tệp tải lên nằm bên phải. Cột chưa dùng có thể thêm thành trường phụ.",
+      "required": "bắt buộc khi nhập",
+      "custom": "trường bổ sung",
+      "customName": "Tên trường bổ sung",
+      "skip": "— Không nhập —",
+      "unknownTitle": "Cột tệp không nhận diện được",
+      "unknownText": "Nếu tệp có thông tin chưa tồn tại trên trang, hãy thêm cột đó làm trường bổ sung.",
+      "addCustom": "Thêm thành trường",
+      "removeCustom": "Xóa trường bổ sung",
+      "previewText": "Các giá trị được chuẩn hóa trước khi nhập: Tier 10 → T10, первая половина / 1st shift → shift1, вторая половина / 2nd shift → shift2, оба подходят / both are suitable → Any shift.",
+      "status": "Trạng thái",
+      "ok": "Sẵn sàng",
+      "ready": "Có {{count}} người chơi sẵn sàng nhập.",
+      "importCount": "Nhập {{count}}",
+      "saveMapping": "Lưu ánh xạ cột",
+      "saved": "Đã lưu ánh xạ",
+      "continueMapping": "Tiếp tục thiết lập tệp"
+    },
+    "destination": {
+      "title": "Nơi chuẩn bị người chơi",
+      "text": "Nên lưu tệp thành bản nháp cục bộ trước, kiểm tra dữ liệu rồi mới chuyển người chơi vào chu kỳ hiện tại.",
+      "staging": "Bản nháp cục bộ",
+      "stagingText": "Không ghi gì vào cơ sở dữ liệu. Có thể sửa ánh xạ và tiếp tục sau.",
+      "current": "Chu kỳ hiện tại",
+      "currentText": "Ghi người chơi trực tiếp vào chu kỳ đang hoạt động. Chỉ khả dụng khi không có lỗi hay trùng lặp.",
+      "saveDraft": "Lưu {{count}} vào bản nháp",
+      "draftWithErrors": "Có thể lưu bản nháp dù còn lỗi. Các hàng này sẽ không được ghi vào cơ sở dữ liệu."
+    },
+    "draft": {
+      "title": "Bản nháp nhập cục bộ",
+      "summary": "{{file}} · {{count}} hàng",
+      "open": "Mở bản nháp",
+      "clear": "Xóa bản nháp",
+      "saved": "Đã lưu {{count}} hàng vào bản nháp cục bộ.",
+      "help": "Bản nháp chỉ lưu trong trình duyệt này. Để thêm người chơi vào cơ sở dữ liệu và bảng trên trang, mở «Bảng người chơi» → «Bảng cục bộ» rồi nhấn «Chuyển»."
+    },
+    "valueMapping": {
+      "title": "Ánh xạ giá trị",
+      "text": "Nếu trang web không nhận diện loại quân, bậc, ca, giá trị đội trưởng hoặc sẵn sàng, hãy chọn thủ công. Giá trị không xác định không còn tự đổi thành «Không».",
+      "choose": "— Chọn thủ công —",
+      "troops": {
+        "fighter": "Đấu sĩ",
+        "rider": "Kỵ sĩ",
+        "shooter": "Xạ thủ"
+      },
+      "shifts": {
+        "shift1": "Ca 1",
+        "shift2": "Ca 2",
+        "shift3": "Ca 3",
+        "shift4": "Ca 4",
+        "flexible": "Bất kỳ ca nào"
+      },
+      "yes": "Có",
+      "no": "Không"
+    }
+  },
+  "export": {
+    "title": "Xuất người chơi",
+    "description": "Chỉ xuất dữ liệu bảng người chơi.",
+    "excel": "Xuất Excel",
+    "fileName": "Tên tệp",
+    "download": "Tải Excel",
+    "options": {
+      "players": "Thông tin cơ bản của người chơi",
+      "readiness": "Sẵn sàng và đội trưởng",
+      "extraSquads": "Đội hình bổ sung",
+      "comments": "Ghi chú"
+    },
+    "excelLabels": {
+      "sheets": {
+        "players": "Người chơi"
+      },
+      "columns": {
+        "nickname": "Biệt danh",
+        "alliance": "Liên minh",
+        "troop": "Quân đội",
+        "tier": "Cấp",
+        "lair": "Hang ổ",
+        "march": "Hành quân",
+        "rally": "Tập kích",
+        "shift": "Ca",
+        "submitted": "Đã gửi",
+        "captain": "Đội trưởng",
+        "readyAttack": "Sẵn sàng tấn công",
+        "comment": "Bình luận",
+        "setting": "Thiết lập",
+        "value": "Giá trị",
+        "role": "Vai trò",
+        "permissions": "Quyền hạn",
+        "active": "Đang hoạt động",
+        "extraFighterTier": "Đội bổ sung — Đấu sĩ",
+        "extraRiderTier": "Đội bổ sung — Kỵ binh",
+        "extraShooterTier": "Đội bổ sung — Xạ thủ"
+      }
+    },
+    "settingsButton": "Cài đặt",
+    "selectedSummary": "Các cột đã chọn: {{count}}",
+    "modal": {
+      "title": "Cài đặt xuất",
+      "subtitle": "Chọn các trường bảng người chơi sẽ có trong Excel.",
+      "close": "Đóng",
+      "selectAll": "Chọn tất cả",
+      "clearAll": "Bỏ chọn tất cả",
+      "selected": "Đã chọn: {{count}}",
+      "customField": "Trường bổ sung",
+      "done": "Xong"
+    }
+  },
+  "backup": {
+    "title": "Sao lưu",
+    "description": "Tải bản sao lưu toàn bộ khu vực về máy hoặc khôi phục trang từ tệp JSON.",
+    "ownerOnly": "Chỉ Owner có thể tạo và khôi phục bản sao lưu đầy đủ.",
+    "create": "Tạo và tải về",
+    "creating": "Đang tạo sao lưu…",
+    "restore": "Khôi phục từ tệp",
+    "created": "Đã tạo và tải bản sao lưu.",
+    "restored": "Đã khôi phục bản sao lưu.",
+    "note": "Bản sao lưu không lưu trong cơ sở dữ liệu; đây là tệp JSON cục bộ. Không bao gồm người dùng và vai trò.",
+    "errors": {
+      "create": "Không thể tạo bản sao lưu.",
+      "invalidFile": "Đây không phải tệp sao lưu Wasteland được hỗ trợ.",
+      "restore": "Không thể khôi phục bản sao lưu. Đừng giả định dữ liệu hiện tại đã được khôi phục đầy đủ."
+    },
+    "restoreModal": {
+      "title": "Khôi phục sao lưu",
+      "subtitle": "Dữ liệu khu vực hiện tại sẽ bị thay bằng dữ liệu trong tệp đã chọn.",
+      "warningTitle": "Dữ liệu hiện tại sẽ bị ghi đè",
+      "warningText": "Trước khi khôi phục, hệ thống tự động tải bản sao lưu khẩn cấp của trạng thái hiện tại. Firebase Auth và adminUsers không thay đổi. Mọi liên kết bí mật tới bảng người chơi và kế hoạch cuối cùng đã tạo trước đó sẽ bị thu hồi. Hãy tạo liên kết mới sau khôi phục.",
+      "createdAt": "Đã tạo sao lưu",
+      "players": "Người chơi",
+      "periods": "Chu kỳ",
+      "alliances": "Các hàng thứ tự luân phiên liên minh",
+      "requests": "Yêu cầu truy cập",
+      "phraseLabel": "Để xác nhận, nhập chính xác cụm từ:",
+      "help": "Nút khôi phục cũng được mở khóa sau 10 giây.",
+      "cancel": "Hủy",
+      "confirm": "Khôi phục dữ liệu",
+      "restoring": "Đang khôi phục…",
+      "phrase": "RESTORE REGION DATA"
+    }
+  },
+  "factoryReset": {
+    "eyebrow": "Vùng nguy hiểm",
+    "title": "Đặt lại dữ liệu khu vực",
+    "description": "Xóa hoàn toàn dữ liệu khu vực đã chọn và khôi phục cài đặt mặc định.",
+    "preserved": {
+      "title": "Người dùng và vai trò được bảo vệ",
+      "text": "Firebase Auth và bộ sưu tập adminUsers được giữ lại. Owner, Admin, Consul và quyền truy cập đã cấp vẫn còn."
+    },
+    "open": "Đặt lại dữ liệu khu vực",
+    "modal": {
+      "title": "Đặt lại dữ liệu khu vực",
+      "subtitle": "Chọn chính xác dữ liệu cần xóa. Thao tác này xóa dữ liệu khỏi cơ sở dữ liệu."
+    },
+    "warning": {
+      "title": "Đây là thao tác phá hủy dữ liệu",
+      "text": "Dữ liệu đã chọn bị xóa thực sự khỏi cơ sở dữ liệu của trang. Không thể khôi phục nếu không có sao lưu."
+    },
+    "deleteAll": {
+      "title": "Xóa toàn bộ dữ liệu khu vực",
+      "description": "Chọn mọi danh mục dưới đây để chuẩn bị trang như một khu vực mới sạch dữ liệu."
+    },
+    "options": {
+      "players": {
+        "title": "Người chơi và đăng ký",
+        "description": "Xóa đăng ký, public_players và thống kê người chơi."
+      },
+      "cycles": {
+        "title": "Chu kỳ đăng ký",
+        "description": "Xóa toàn bộ lịch sử chu kỳ. Người chơi cũng bị xóa vì thuộc các chu kỳ."
+      },
+      "alliances": {
+        "title": "Liên minh và luân phiên",
+        "description": "Xóa liên minh, thứ tự luân phiên, liên minh chủ nhà và thống đốc."
+      },
+      "registrationSettings": {
+        "title": "Cài đặt đăng ký",
+        "description": "Khôi phục chu kỳ, T9–T14, Ca 1/2/Bất kỳ, các trường biểu mẫu và quyền truy cập công khai về mặc định gốc."
+      },
+      "accessRequests": {
+        "title": "Yêu cầu truy cập",
+        "description": "Xóa accessRequests cũ/đang chờ khỏi Firestore mà không đụng đến adminUsers."
+      },
+      "browserData": {
+        "title": "Dữ liệu cục bộ trong trình duyệt này",
+        "description": "Xóa mẫu người chơi, tùy chọn Kế hoạch cuối cùng và cài đặt giờ địa phương trên thiết bị này."
+      }
+    },
+    "preview": {
+      "title": "Dữ liệu hiện đang lưu",
+      "loading": "Đang kiểm tra cơ sở dữ liệu…",
+      "players": "Đăng ký người chơi",
+      "periods": "Chu kỳ",
+      "stats": "Thống kê chu kỳ",
+      "alliances": "Bản ghi luân phiên",
+      "requests": "Yêu cầu truy cập"
+    },
+    "confirmation": {
+      "label": "Nhập chính xác cụm từ để xác nhận:",
+      "help": "Nút xóa cũng bị khóa trong 10 giây.",
+      "phrase": "DELETE REGION DATA"
+    },
+    "actions": {
+      "cancel": "Hủy",
+      "delete": "Xóa dữ liệu đã chọn",
+      "deleting": "Đang xóa…"
+    },
+    "errors": {
+      "preview": "Không thể tải bản xem trước dữ liệu.",
+      "reset": "Đặt lại thất bại. Đừng cho rằng mọi thứ đã được xóa; kiểm tra Worker rồi thử lại.",
+      "backup": "Không thể tải bản sao lưu nên đã dừng đặt lại. Chỉ tắt tùy chọn này nếu bạn thật sự muốn tiếp tục mà không sao lưu."
+    },
+    "preservedSummary": "Tài khoản người dùng, Owner/Admin/Consul và vai trò của họ không bao giờ bị xóa.",
+    "backupBeforeReset": {
+      "title": "Tải bản sao lưu trước khi đặt lại",
+      "description": "Trước khi xóa, hệ thống thu thập dữ liệu hiện tại và tải một tệp JSON về thiết bị này. Không còn bản sao lưu trong cơ sở dữ liệu."
+    }
+  },
+  "access": {
+    "title": "Truy cập",
+    "description": "Kiểm soát ai có thể mở bảng người chơi và kế hoạch cuối cùng.",
+    "resourceLabel": "Tài nguyên cần cấu hình",
+    "resources": {
+      "players": "Bảng người chơi",
+      "final_plan": "Kế hoạch cuối cùng"
+    },
+    "loading": "Đang tải cài đặt truy cập…",
+    "cycle": "Chu kỳ #{{cycle}}",
+    "cycleNote": "Liên kết chia sẻ tĩnh có thể tồn tại qua nhiều chu kỳ nhưng chỉ hiển thị dữ liệu đã công bố của chu kỳ hiện tại.",
+    "modeLabel": "Chế độ truy cập",
+    "publicWarning": "Chế độ công khai cho phép mọi người xem dữ liệu chu kỳ hiện tại không cần mật khẩu sau lần xuất bản JSON thành công tiếp theo. Đổi chế độ sẽ thu hồi liên kết riêng trước đó. Quy tắc đóng chu kỳ theo lịch vẫn hoạt động.",
+    "modes": {
+      "public": "Công khai — mọi người đều xem được",
+      "private": "Đã đóng — trang công khai không khả dụng",
+      "link": "Liên kết riêng"
+    },
+    "status": {
+      "public": "Truy cập công khai",
+      "private": "Đã đóng quyền truy cập",
+      "active": "Truy cập riêng đang hoạt động",
+      "needsToken": "Tạo liên kết chia sẻ riêng"
+    },
+    "tokenLifetime": {
+      "label": "Thời hạn liên kết"
+    },
+    "duration": {
+      "hours24": "24 giờ",
+      "cycle": "Đến hết chu kỳ hiện tại",
+      "hours1": "1 giờ",
+      "hours6": "6 giờ",
+      "hours12": "12 giờ",
+      "days7": "7 ngày",
+      "forever": "Không hết hạn"
+    },
+    "generated": {
+      "title": "Đã tạo quyền truy cập mới",
+      "once": "Sao chép liên kết này ngay. Liên kết hoạt động sau lần xuất bản JSON tiếp theo; mã đầy đủ không được lưu trên GitHub công khai."
+    },
+    "actions": {
+      "save": "Lưu",
+      "generateLink": "Tạo liên kết mới",
+      "copy": "Sao chép",
+      "revoke": "Thu hồi"
+    },
+    "messages": {
+      "saved": "Đã lưu cài đặt truy cập.",
+      "generated": "Đã tạo liên kết. Nó hoạt động sau khi xuất bản bản chụp dữ liệu tiếp theo; liên kết cũ vẫn hoạt động.",
+      "revoked": "Đã thu hồi liên kết. Quyền truy cập tĩnh sẽ dừng sau lần xuất bản dữ liệu tiếp theo.",
+      "copied": "Đã sao chép.",
+      "historyDeleted": "Đã xóa bản ghi liên kết lưu trữ."
+    },
+    "errors": {
+      "load": "Không thể tải cài đặt truy cập.",
+      "save": "Không thể lưu cài đặt truy cập.",
+      "generate": "Không thể tạo liên kết riêng.",
+      "revoke": "Không thể thu hồi quyền truy cập.",
+      "copy": "Không thể sao chép.",
+      "noPeriod": "Không có chu kỳ hiện tại để truy cập riêng.",
+      "deleteLink": "Không thể xóa liên kết đã lưu trữ."
+    },
+    "staticLinks": {
+      "title": "Liên kết đã tạo (Owner và Admin có thể sao chép liên kết đã lưu)",
+      "active": "Đang hoạt động",
+      "inactive": "Đã hết hạn hoặc bị thu hồi",
+      "history": "Lịch sử — đã hết hạn và bị thu hồi",
+      "delete": "Xóa bản ghi",
+      "confirmDelete": "Xóa vĩnh viễn bản ghi liên kết không hoạt động này?",
+      "deleteTitle": "Xóa liên kết lưu trữ?",
+      "cancel": "Hủy"
+    }
+  },
+  "sharedConsul": {
+    "title": "Mật khẩu dùng chung của Consul",
+    "description": "Tạo mật khẩu mới. Mật khẩu trước và mọi phiên đăng nhập sẽ bị thu hồi ngay lập tức.",
+    "duration": "Hết hạn",
+    "day": "Một ngày",
+    "wasteland": "Đến khi Wasteland kết thúc",
+    "forever": "Khóa không hết hạn",
+    "generate": "Tạo mật khẩu mới",
+    "revoke": "Thu hồi quyền truy cập",
+    "active": "Truy cập đang hoạt động",
+    "failed": "Không thể tải cài đặt truy cập.",
+    "noWasteland": "Không có ngày kết thúc Wasteland hiện tại.",
+    "copy": "Sao chép",
+    "cancel": "Hủy",
+    "close": "Đóng",
+    "ok": "Đã hiểu",
+    "copySuccessTitle": "Đã sao chép mật khẩu",
+    "copySuccess": "Mật khẩu truy cập Consul đã được sao chép vào bộ nhớ tạm. Chỉ chia sẻ với người đáng tin cậy.",
+    "copyExpires": "Mật khẩu hết hạn:",
+    "copyForeverWarning": "Mật khẩu này không hết hạn. Để an toàn, hãy tạo mật khẩu mới sau mỗi Wasteland hoặc chọn quyền truy cập một ngày / đến khi Wasteland kết thúc.",
+    "multipleDescription": "Tối đa 5 mật khẩu đang hoạt động. Tạo mật khẩu khác không thu hồi quyền truy cập hiện có. Chỉ Owner điều khiển.",
+    "legacyKey": "Mật khẩu Stage 042 trước đây",
+    "keyName": "Tên mật khẩu",
+    "keyPlaceholder": "Ví dụ: Các consul tháng Mười",
+    "limitReached": "Đã có 5 mật khẩu đang hoạt động. Hãy thu hồi một mật khẩu hoặc chờ hết hạn.",
+    "showPassword": "Hiển thị mật khẩu",
+    "passwordPrivacy": "Không chia sẻ mật khẩu này với người không đáng tin. Đóng cửa sổ sau khi sao chép.",
+    "confirmSingleRevoke": "Chỉ thu hồi mật khẩu này? Người dùng mật khẩu đó sẽ mất quyền truy cập. Mật khẩu khác vẫn hợp lệ.",
+    "confirmChangeDuration": "Đổi hạn sử dụng của mật khẩu này? Mật khẩu khác không đổi.",
+    "confirmUpdate": "Đổi ngày hết hạn",
+    "confirmAdd": "Tạo mật khẩu khác? Mật khẩu hiện có vẫn hoạt động.",
+    "tabsActive": "Đang hoạt động",
+    "tabsHistory": "Lịch sử",
+    "tabsCreate": "Tạo",
+    "emptyActive": "Chưa có mật khẩu đang hoạt động.",
+    "emptyHistory": "Không có mật khẩu hết hạn hoặc bị thu hồi.",
+    "historyHint": "Mật khẩu hết hạn và bị thu hồi xuất hiện ở đây. Bạn có thể xóa vĩnh viễn bản ghi của chúng.",
+    "deleteHistory": "Xóa bản ghi",
+    "confirmDeleteHistory": "Xóa vĩnh viễn bản ghi này khỏi lịch sử? Mật khẩu khác không bị ảnh hưởng.",
+    "expired": "Đã hết hạn",
+    "revoked": "Đã thu hồi",
+    "copyPassword": "Sao chép mật khẩu",
+    "hidePassword": "Ẩn",
+    "createdAt": "Đã tạo:",
+    "historyLegacy": "Không thể hiển thị mật khẩu cũ. Thu hồi để ngừng truy cập.",
+    "createHint": "Có thể có tối đa 5 mật khẩu cùng hoạt động. Mật khẩu hiện có vẫn hợp lệ.",
+    "deleteBlocked": "Thu hồi mật khẩu đang hoạt động trước khi xóa."
+  }
+}

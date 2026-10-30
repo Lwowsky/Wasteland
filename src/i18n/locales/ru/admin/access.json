@@ -1,0 +1,163 @@
+{
+  "title": "Пользователи и доступ",
+  "description": "Управляйте пользователями, ролями и индивидуальными разрешениями.",
+  "tabs": {
+    "users": "Пользователи",
+    "requests": "Заявки",
+    "limits": "Лимиты"
+  },
+  "cards": {
+    "owner": {
+      "title": "Владелец",
+      "description": "Полный доступ. Роль и разрешения можно изменить только вручную через Firebase."
+    },
+    "admin": {
+      "title": "Админка",
+      "description": "Все права владельца, кроме сброса региона."
+    },
+    "consul": {
+      "title": "Консул",
+      "description": "Все инструменты игроков, турелей, регистрации и рабочих настроек. Без управления ролями, оформления сайта и сброса региона."
+    },
+    "requests": {
+      "title": "Заявки",
+      "description": "Новые заявки на доступ администратора ожидают рассмотрения."
+    }
+  },
+  "roles": {
+    "owner": {
+      "title": "Владелец",
+      "description": "Полный доступ. Роль и разрешения можно изменить только вручную через Firebase."
+    },
+    "admin": {
+      "title": "Админка",
+      "description": "Все права владельца, кроме сброса региона."
+    },
+    "consul": {
+      "title": "Консул",
+      "description": "Все инструменты игроков, турелей, регистрации и рабочих настроек. Без управления ролями, оформления сайта и сброса региона."
+    }
+  },
+  "usersCount": "Пользователи",
+  "pendingCount": "Ожидает",
+  "columns": {
+    "user": "Пользователь",
+    "role": "Роль",
+    "permissions": "Разрешения",
+    "status": "Статус",
+    "actions": "Действия"
+  },
+  "permissions": {
+    "owner": "Полный доступ"
+  },
+  "actions": {
+    "removeAccess": "Удалить доступ",
+    "ownerLocked": "Владельца можно изменить только через Firebase",
+    "notAllowed": "Недостаточно прав",
+    "openUser": "Открыть пользователя"
+  },
+  "modal": {
+    "role": "Роль",
+    "status": "Статус",
+    "createdAt": "Создано",
+    "updatedAt": "Обновлено",
+    "permissions": "Разрешения",
+    "permissionsCount": "Разрешения",
+    "permissionsText": "Разрешения отдельного пользователя можно ограничить в пределах его роли.",
+    "ownerPermissions": "Владелец всегда имеет полный доступ. Его разрешения нельзя изменить через сайт.",
+    "technicalInfo": "Техническая информация",
+    "uid": "UID",
+    "saving": "Сохранение...",
+    "restoreDefaults": "Восстановить права роли",
+    "disableRolePermissions": "Отключить все разрешения"
+  },
+  "permissionGroups": {
+    "access": {
+      "title": "Пользователи и доступ",
+      "description": "Управление ролями и административным доступом."
+    },
+    "players": {
+      "title": "Таблица игроков",
+      "description": "Просмотр и управление данными игроков."
+    },
+    "distribution": {
+      "title": "Распределение и финальный план",
+      "description": "Управление турелями и финальным планом."
+    },
+    "registration": {
+      "title": "Регистрация",
+      "description": "Управление настройками регистрации."
+    },
+    "requests": {
+      "title": "Заявки",
+      "description": "Просмотр и обработка заявок на доступ."
+    },
+    "settings": {
+      "title": "Настройки",
+      "description": "Доступ к импорту, экспорту и системным инструментам."
+    }
+  },
+  "permissionLabels": {
+    "view_access": "Просматривать пользователей и роли",
+    "manage_access": "Изменять доступ",
+    "manage_consuls": "Управлять консулами",
+    "grant_admin": "Назначать администратора",
+    "view_players": "Просматривать таблицу игроков",
+    "edit_players": "Редактировать игроков",
+    "delete_players": "Удалять игроков",
+    "view_distribution": "Просматривать распределение",
+    "edit_distribution": "Редактировать распределение",
+    "view_registration_settings": "Просматривать настройки регистрации",
+    "edit_registration_settings": "Изменять настройки регистрации",
+    "view_requests": "Просматривать заявки",
+    "manage_requests": "Одобрять и отклонять заявки",
+    "view_settings": "Настройки доступа",
+    "import_players": "Импортировать таблицу игроков",
+    "clear_players": "Очистить всю таблицу игроков",
+    "publish_final_plan": "Публиковать и восстанавливать финальный план",
+    "manage_content_access": "Управлять публичным доступом к содержимому",
+    "manage_site_appearance": "Оформление сайта",
+    "manage_region_backup": "Резервное копирование и восстановление региона",
+    "reset_region": "Сбросить данные региона"
+  },
+  "loading": "Загрузка пользователей...",
+  "errors": {
+    "load": "Не удалось загрузить пользователей.",
+    "save": "Не удалось сохранить разрешения пользователя.",
+    "delete": "Не удалось удалить доступ."
+  },
+  "confirm": {
+    "removeAccess": "Удалить доступ для {{name}}?"
+  },
+  "cloudflareLimits": {
+    "title": "Cloudflare — лимиты и использование",
+    "description": "Текущее использование Workers и D1 для всего аккаунта.",
+    "metricWorkers": "Workers — запросы",
+    "metricD1Reads": "D1 — прочитанные строки",
+    "metricD1Writes": "D1 — записанные строки",
+    "note": "Квоты зависят от вашего тарифа Cloudflare.",
+    "open": "Панель Cloudflare",
+    "docs": "Официальные лимиты",
+    "loadingMetrics": "Загрузка...",
+    "refreshMetrics": "Обновить",
+    "analyticsError": "Не удалось загрузить аналитику",
+    "updated": "Обновлено",
+    "compactTitle": "Использование Cloudflare",
+    "left": "remaining",
+    "noData": "Нет данных",
+    "dailyLimit": "суточный лимит",
+    "showDetails": "Показать подробности",
+    "hideDetails": "Скрыть подробности",
+    "perDatabase": "На базу данных",
+    "perRequest": "На запрос",
+    "detailWorkersCount": "Максимум Workers",
+    "detailCron": "Триггеры Cron",
+    "detailCpu": "Время CPU на запрос",
+    "detailMemory": "Память Worker",
+    "detailD1Databases": "Базы данных D1",
+    "detailD1Storage": "Хранилище D1",
+    "detailD1DatabaseSize": "Максимальный размер базы данных",
+    "detailD1Queries": "D1 запросов за вызов",
+    "utcLabel": "UTC"
+  }
+}

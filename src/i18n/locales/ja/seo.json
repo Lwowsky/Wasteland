@@ -1,0 +1,18 @@
+{
+  "home": {
+    "title": "ホーム",
+    "description": "サイトのホームページ。"
+  },
+  "about": {
+    "title": "概要",
+    "description": "サイトについての情報。"
+  },
+  "contact": {
+    "title": "連絡先",
+    "description": "連絡先情報。"
+  },
+  "notFound": {
+    "title": "404",
+    "description": "ページが見つかりません。"
+  }
+}

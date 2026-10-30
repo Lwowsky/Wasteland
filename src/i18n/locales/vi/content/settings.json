@@ -1,0 +1,55 @@
+{
+  "title": "Cài đặt",
+  "text": "Cài đặt trang web trên trình duyệt này.",
+  "tabs": {
+    "settings": "Cài đặt",
+    "templates": "Mẫu của tôi"
+  },
+  "language": {
+    "title": "Ngôn ngữ",
+    "text": "Chọn ngôn ngữ giao diện trang web."
+  },
+  "time": {
+    "title": "Hiển thị thời gian",
+    "text": "Chọn cách hiển thị thời gian sự kiện và ca.",
+    "local": "Giờ địa phương",
+    "utc": "UTC"
+  },
+  "timeZone": {
+    "title": "Múi giờ",
+    "text": "Chọn múi giờ để hiển thị ngày và giờ.",
+    "options": {
+      "local": "Giờ địa phương của thiết bị"
+    }
+  },
+  "reset": {
+    "title": "Đặt lại cài đặt",
+    "text": "Khôi phục cài đặt mặc định trên thiết bị. Các mẫu người chơi sẽ không bị xóa.",
+    "button": "Đặt lại"
+  },
+  "templates": {
+    "title": "Mẫu người chơi của tôi",
+    "text": "Các mẫu đã lưu giúp điền nhanh biểu mẫu đăng ký.",
+    "add": "Thêm mẫu",
+    "edit": "Sửa",
+    "delete": "Xóa",
+    "nickname": "Biệt danh",
+    "alliance": "Liên minh",
+    "troopType": "Loại quân",
+    "tier": "Cấp",
+    "lairLevel": "Cấp hang",
+    "marchSize": "Quy mô hành quân",
+    "rallySize": "Quy mô rally",
+    "shift": "Ca",
+    "shift1": "Ca 1",
+    "shift2": "Ca 2",
+    "save": "Lưu",
+    "cancel": "Hủy",
+    "empty": "Bạn chưa lưu mẫu nào.",
+    "shift3": "Ca 3",
+    "shift4": "Ca 4",
+    "flexible": "Bất kỳ ca nào",
+    "extraSquads": "Đội hình bổ sung",
+    "extraSquadsText": "Thêm các đội phụ tùy chọn vào mẫu người chơi."
+  }
+}

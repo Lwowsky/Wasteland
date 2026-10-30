@@ -1,0 +1,63 @@
+/* One accessible language selector scales from two locales to all ten. */
+.site-identity-language-picker {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex: 0 1 230px;
+  min-width: 0;
+  height: 39px;
+  padding: 0 11px;
+  gap: 9px;
+  border: 1px solid #c4d8f1;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #ffffff, #edf5ff);
+  box-shadow: 0 3px 10px rgba(38, 96, 177, 0.06);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.site-identity-language-picker:focus-within {
+  border-color: #4a8df5;
+  box-shadow: 0 0 0 3px rgba(55, 133, 250, 0.14);
+}
+
+.site-identity-language-picker__flag {
+  width: 25px;
+  height: 21px;
+  flex: 0 0 25px;
+  object-fit: contain;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.site-identity-language-picker__select {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  padding-inline: 0 15px;
+  border: 0;
+  outline: 0;
+  appearance: none;
+  color: #214f8e;
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.site-identity-language-picker__select:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.site-identity-language-picker__chevron {
+  position: absolute;
+  inset-inline-end: 13px;
+  top: 15px;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid #5984bb;
+  border-bottom: 2px solid #5984bb;
+  transform: rotate(45deg);
+  pointer-events: none;
+}

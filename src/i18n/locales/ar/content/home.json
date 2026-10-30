@@ -1,0 +1,74 @@
+{
+  "dashboard": {
+    "registered": "اللاعبون المسجلون",
+    "allianceCount": "التحالفات",
+    "captains": "الكباتن",
+    "finalPlanPlayers": "ضمن الخطة النهائية",
+    "registrationCountdown": {
+      "title": "يغلق التسجيل خلال",
+      "subtitle": "تم فتح التسجيل",
+      "open": "فتح",
+      "closedTitle": "تم إغلاق التسجيل",
+      "closedSubtitle": "يفتح التسجيل القادم خلال",
+      "closed": "مغلق",
+      "disabledSubtitle": "التسجيل غير متاح مؤقتًا",
+      "disabledCountdown": "العد التنازلي غير متاح أثناء تعطيل التسجيل"
+    },
+    "eventCountdown": {
+      "title": "يبدأ Wasteland خلال",
+      "subtitle": "حدث المنطقة القادم",
+      "activeTitle": "حدث Wasteland جارٍ",
+      "activeSubtitle": "الوقت المتبقي لنهاية Wasteland",
+      "active": "جارٍ"
+    },
+    "time": {
+      "days": "أيام",
+      "hours": "ساعات",
+      "minutes": "دقائق",
+      "seconds": "ثوانٍ",
+      "unscheduled": "لم يُحدد موعد الفتح التالي بعد"
+    },
+    "recent": {
+      "title": "التسجيلات الأخيرة",
+      "text": "آخر 5 لاعبين قدموا طلبات التسجيل.",
+      "nickname": "اسم اللاعب",
+      "alliance": "التحالف",
+      "troop": "القوات",
+      "tier": "الرتبة",
+      "time": "الوقت",
+      "timeAgo": {
+        "justNow": "الآن",
+        "minutes": "قبل {{count}} دقيقة",
+        "hours": "قبل {{count}} ساعة",
+        "days": "قبل {{count}} يوم"
+      }
+    },
+    "allianceStats": {
+      "title": "إحصاءات التحالفات",
+      "text": "توزيع اللاعبين المسجلين.",
+      "players": "اللاعبون",
+      "other": "أخرى",
+      "showAll": "عرض جميع التحالفات",
+      "showLess": "عرض أقل"
+    },
+    "navigation": {
+      "registration": {
+        "title": "التسجيل",
+        "text": "أدخل بياناتك أو حدّثها للمشاركة في حدث Wasteland."
+      },
+      "players": {
+        "title": "جدول اللاعبين",
+        "text": "عرض جميع طلبات اللاعبين في المنطقة."
+      },
+      "finalPlan": {
+        "title": "الخطة النهائية",
+        "text": "الفرق والقادة وتوزيع المناوبات."
+      },
+      "settings": {
+        "title": "الإعدادات",
+        "text": "اللغة والوقت وتفضيلات المتصفح المحلية."
+      }
+    },
+    "loading": "جارٍ تحميل البيانات..."
+  }
+}

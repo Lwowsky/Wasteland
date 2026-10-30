@@ -1,7 +1,8 @@
+import { getIntlLocale } from "../../../utils/intlLocale.js";
 import LoginIcon from "./LoginIcon.jsx";
 
 function formatLoginDate(timestamp, language) {
-  return new Intl.DateTimeFormat(language === "uk" ? "uk-UA" : "en-GB", {
+  return new Intl.DateTimeFormat(getIntlLocale(language), {
     dateStyle: "long",
     timeStyle: "short",
   }).format(new Date(timestamp * 1000));

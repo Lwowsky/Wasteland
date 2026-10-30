@@ -1,0 +1,18 @@
+{
+  "home": {
+    "title": "Heimat",
+    "description": "Startseite der Website."
+  },
+  "about": {
+    "title": "Über uns",
+    "description": "Informationen über die Website."
+  },
+  "contact": {
+    "title": "Kontakt",
+    "description": "Kontaktinformationen."
+  },
+  "notFound": {
+    "title": "404",
+    "description": "Seite nicht gefunden."
+  }
+}

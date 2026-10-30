@@ -1,0 +1,480 @@
+{
+  "title": "設定",
+  "description": "サイトの外観、プレイヤーのインポート・エクスポート、バックアップ、アクセス、システムツールを管理します。",
+  "sections": {
+    "import": "インポート",
+    "export": "エクスポート",
+    "backup": "バックアップ",
+    "system": "システム",
+    "access": "アクセス"
+  },
+  "siteIdentity": {
+    "eyebrow": "サイトの外観",
+    "title": "名前、地域、フッター",
+    "description": "サイト名、ブランド名、地域番号・名称、フッター内容を変更します。",
+    "edit": "サイトを設定",
+    "ownerOnly": "編集できるのはオーナーだけです。",
+    "saved": "サイト設定を保存しました。",
+    "summary": {
+      "siteName": "サイト名",
+      "region": "地域",
+      "brand": "ロゴのテキスト"
+    },
+    "identity": {
+      "title": "サイトの基本情報",
+      "description": "これらの値はサイトのヘッダー、ブラウザーのタブ名、地域情報に使用されます。"
+    },
+    "footer": {
+      "title": "フッターの内容",
+      "description": "対応する各言語のフッターテキストを個別に設定します。",
+      "languageLabel": "フッターの言語",
+      "languageHelp": "初期状態ではJSON翻訳が表示されます。変更した項目だけがD1に上書き保存されます。空欄で保存すると初期値に戻ります。言語ごとに編集してください。",
+      "restoreDefaults": "初期テキストに戻す",
+      "restoreHelp": "選択した言語のJSON翻訳を復元します。適用するには保存してください。",
+      "restoreNotice": "下書きの初期テキストを復元しました。「変更を保存」を押して適用してください。"
+    },
+    "fields": {
+      "siteName": "サイト名",
+      "brandText": "ロゴ／ブランド名",
+      "regionNumber": "地域番号",
+      "regionName": "地域名",
+      "footerDescription": "フッターのサイト説明",
+      "authorLabel": "作者欄の見出し",
+      "author": "作者名",
+      "authorDescription": "作者の説明",
+      "projectDescription": "プロジェクトの説明",
+      "copyright": "著作権表示"
+    },
+    "help": {
+      "siteName": "ブラウザーのタブ名とSEOタイトルに使用されます。",
+      "brandText": "サイトのヘッダーとフッターに表示されます。"
+    },
+    "modal": {
+      "title": "サイト設定",
+      "subtitle": "コードを変更せずにサイト名、地域、フッターを編集できます。",
+      "footerHint": "変更は保存後すぐに適用されます。",
+      "unsaved": "未保存の変更"
+    },
+    "actions": {
+      "close": "閉じる",
+      "cancel": "キャンセル",
+      "save": "変更を保存",
+      "saving": "保存中…"
+    },
+    "errors": {
+      "load": "サイト設定を読み込めませんでした。",
+      "save": "サイト設定を保存できませんでした。"
+    },
+    "unsaved": {
+      "title": "未保存の変更を破棄しますか？",
+      "message": "サイト設定またはフッターテキストが変更されています。今閉じると変更は失われます。",
+      "discard": "変更を破棄",
+      "keepEditing": "編集を続ける"
+    }
+  },
+  "import": {
+    "title": "プレイヤーをインポート",
+    "description": "現在のサイクルのプレイヤー表にのみインポートします（XLSX、XLS、CSV）。",
+    "chooseFile": "プレイヤーファイルを選択",
+    "reading": "ファイルを読み込み中…",
+    "formats": "XLSX · XLS · CSV",
+    "cancel": "キャンセル",
+    "importing": "インポート中…",
+    "success": "インポート成功: {{count}}人。",
+    "fixBeforeImport": "インポート前にファイルのエラーと重複を修正してください。",
+    "preview": {
+      "title": "プレビューの検証",
+      "total": "行数",
+      "valid": "準備完了",
+      "invalid": "件のエラー",
+      "duplicates": "件の重複",
+      "problems": "修正が必要な項目",
+      "row": "{{row}}行目",
+      "rowShort": "行",
+      "showing": "全{{total}}件中 {{from}}～{{to}}件を表示",
+      "perPage": "1ページあたり",
+      "all": "すべて",
+      "page": "{{page}} / {{pages}}",
+      "previous": "前のページ",
+      "next": "次のページ"
+    },
+    "errors": {
+      "readFile": "ファイルを読み込めませんでした。XLSX／XLS／CSV形式を確認してください。",
+      "emptyFile": "ファイルにプレイヤーデータの行がありません。",
+      "importFailed": "インポートに失敗しました。データは取り込まれていないものとして、Workerとファイルを確認してください。",
+      "duplicateExisting": "このニックネームは現在のサイクルにすでに存在します",
+      "duplicateFile": "このニックネームはファイル内で重複しています",
+      "invalidField": {
+        "nickname": "ニックネームがありません",
+        "alliance": "同盟がありません",
+        "troopType": "不明な兵種",
+        "tier": "ティアはT1～T14で指定してください",
+        "shift": "不明なシフト",
+        "captain": "不明な隊長の値 — はい／いいえを手動選択してください",
+        "readyAttack": "不明な参加状態の値 — はい／いいえを手動選択してください"
+      },
+      "saveDraftFailed": "ローカルのインポート下書きを保存できませんでした。"
+    },
+    "close": "閉じる",
+    "fields": {
+      "nickname": "ニックネーム",
+      "alliance": "同盟",
+      "troopType": "兵種",
+      "tier": "ティア",
+      "lairLevel": "巣窟レベル",
+      "marchSize": "行軍規模",
+      "rallySize": "ラリー規模",
+      "shift": "シフト",
+      "readyAttack": "攻撃可能",
+      "captain": "キャプテン",
+      "comment": "コメント",
+      "extraFighterTier": "追加部隊 — ファイター",
+      "extraRiderTier": "追加部隊 — ライダー",
+      "extraShooterTier": "追加部隊 — シューター"
+    },
+    "mapping": {
+      "cardHint": "ファイルを選択するとマッピング画面が開き、Excelの各列をプレイヤー項目に対応付けできます。",
+      "title": "プレイヤーのインポート設定",
+      "subtitle": "ファイル: {{file}}。サイト項目に対応する列を選択してください。",
+      "fileSummary": "列数: {{columns}}・行数: {{rows}}",
+      "fieldsTitle": "列のマッピング",
+      "fieldsText": "左にサイトの項目、右にアップロードした列が表示されます。未使用の列は追加のプレイヤー項目として登録できます。",
+      "required": "インポート必須",
+      "custom": "追加項目",
+      "customName": "追加項目の名前",
+      "skip": "— インポートしない —",
+      "unknownTitle": "認識されない列",
+      "unknownText": "ファイルにサイトにない情報が含まれる場合は、その列を追加プレイヤー項目として登録してください。",
+      "addCustom": "項目として追加",
+      "removeCustom": "追加項目を削除",
+      "previewText": "インポート前に値を正規化します: Tier 10 → T10、первая половина / 1st shift → shift1、вторая половина / 2nd shift → shift2、оба подходят / both are suitable → Any shift。",
+      "status": "状態",
+      "ok": "準備完了",
+      "ready": "{{count}}人をインポートできます。",
+      "importCount": "{{count}}人をインポート",
+      "saveMapping": "列のマッピングを保存",
+      "saved": "マッピングを保存しました",
+      "continueMapping": "ファイル設定を続ける"
+    },
+    "destination": {
+      "title": "どこでプレイヤーを準備しますか？",
+      "text": "まずファイルをローカルの下書きに保存し、値を確認してから現在のサイクルに移動することをおすすめします。",
+      "staging": "ローカル下書き",
+      "stagingText": "データベースへの書き込みは行いません。対応付けを修正し、後で続けられます。",
+      "current": "現在のサイクル",
+      "currentText": "プレイヤーを有効なサイクルに直接登録します。エラーや重複がない場合のみ利用できます。",
+      "saveDraft": "{{count}}件を下書きに保存",
+      "draftWithErrors": "エラーがあっても下書きに保存できます。これらの行はデータベースには書き込まれません。"
+    },
+    "draft": {
+      "title": "ローカルインポート下書き",
+      "summary": "{{file}}・{{count}}行",
+      "open": "下書きを開く",
+      "clear": "下書きを削除",
+      "saved": "{{count}}行をローカル下書きに保存しました。",
+      "help": "下書きはこのブラウザー内にのみ保存されます。データベースとプレイヤー表に追加するには「プレイヤー表」→「ローカル表」を開き、「移動」を押してください。"
+    },
+    "valueMapping": {
+      "title": "値のマッピング",
+      "text": "サイトが兵種、ティア、シフト、隊長、参加状態の値を認識できない場合は、正しい値を手動で選択してください。不明な値が自動的に「いいえ」に変更されることはありません。",
+      "choose": "— 手動で選択 —",
+      "troops": {
+        "fighter": "ファイター",
+        "rider": "ライダー",
+        "shooter": "シューター"
+      },
+      "shifts": {
+        "shift1": "シフト 1",
+        "shift2": "シフト 2",
+        "shift3": "シフト3",
+        "shift4": "シフト4",
+        "flexible": "任意のシフト"
+      },
+      "yes": "はい",
+      "no": "いいえ"
+    }
+  },
+  "export": {
+    "title": "プレイヤーをエクスポート",
+    "description": "プレイヤー表のデータのみをエクスポートします。",
+    "excel": "Excelエクスポート",
+    "fileName": "ファイル名",
+    "download": "Excelをダウンロード",
+    "options": {
+      "players": "プレイヤーの基本情報",
+      "readiness": "参加状態と隊長",
+      "extraSquads": "追加部隊",
+      "comments": "コメント"
+    },
+    "excelLabels": {
+      "sheets": {
+        "players": "プレイヤー"
+      },
+      "columns": {
+        "nickname": "ニックネーム",
+        "alliance": "同盟",
+        "troop": "部隊",
+        "tier": "ティア",
+        "lair": "シェルター",
+        "march": "行軍",
+        "rally": "ラリー",
+        "shift": "シフト",
+        "submitted": "送信日時",
+        "captain": "キャプテン",
+        "readyAttack": "攻撃可能",
+        "comment": "コメント",
+        "setting": "設定",
+        "value": "値",
+        "role": "役割",
+        "permissions": "権限",
+        "active": "有効",
+        "extraFighterTier": "追加部隊 — ファイター",
+        "extraRiderTier": "追加部隊 — ライダー",
+        "extraShooterTier": "追加部隊 — シューター"
+      }
+    },
+    "settingsButton": "設定",
+    "selectedSummary": "選択した列: {{count}}",
+    "modal": {
+      "title": "エクスポート設定",
+      "subtitle": "Excelに含めるプレイヤー表の項目を選択してください。",
+      "close": "閉じる",
+      "selectAll": "すべて選択",
+      "clearAll": "すべて解除",
+      "selected": "選択済み: {{count}}",
+      "customField": "追加項目",
+      "done": "完了"
+    }
+  },
+  "backup": {
+    "title": "バックアップ",
+    "description": "地域全体のバックアップをダウンロードするか、JSONファイルからサイトを復元します。",
+    "ownerOnly": "完全なバックアップの作成と復元はオーナーだけが実行できます。",
+    "create": "作成してダウンロード",
+    "creating": "バックアップを作成中…",
+    "restore": "ファイルから復元",
+    "created": "バックアップを作成し、ダウンロードしました。",
+    "restored": "バックアップを復元しました。",
+    "note": "バックアップはデータベースに保存されず、ローカルのJSONファイルとして保存されます。ユーザーと役割は含まれません。",
+    "errors": {
+      "create": "バックアップを作成できませんでした。",
+      "invalidFile": "このファイルは対応するWastelandバックアップではありません。",
+      "restore": "バックアップを復元できませんでした。現在のデータが完全に復元されたとは判断せず、確認してください。"
+    },
+    "restoreModal": {
+      "title": "バックアップを復元",
+      "subtitle": "現在の地域データは選択したファイルのデータで置き換えられます。",
+      "warningTitle": "現在のデータが上書きされます",
+      "warningText": "復元前に、現在の状態の緊急バックアップを自動ダウンロードします。Firebase AuthとadminUsersは変更されません。以前に作成したプレイヤー表と最終プランの限定公開リンクはすべて無効になります。復元後に新しいリンクを作成してください。",
+      "createdAt": "バックアップを作成しました",
+      "players": "プレイヤー",
+      "periods": "サイクル",
+      "alliances": "同盟ローテーションの行",
+      "requests": "アクセス申請",
+      "phraseLabel": "確認のため、次のフレーズを正確に入力してください:",
+      "help": "復元ボタンは10秒後にも有効になります。",
+      "cancel": "キャンセル",
+      "confirm": "データを復元",
+      "restoring": "復元中…",
+      "phrase": "RESTORE REGION DATA"
+    }
+  },
+  "factoryReset": {
+    "eyebrow": "危険な操作",
+    "title": "地域データをリセット",
+    "description": "選択した地域データを完全に消去し、初期設定に戻します。",
+    "preserved": {
+      "title": "ユーザーと役割は保護されます",
+      "text": "Firebase AuthとadminUsersコレクションは維持されます。オーナー、管理者、Consulと付与済みのアクセス権は残ります。"
+    },
+    "open": "地域データをリセット",
+    "modal": {
+      "title": "地域データをリセット",
+      "subtitle": "削除する対象を正確に選択してください。この操作はデータベースからデータを削除します。"
+    },
+    "warning": {
+      "title": "この操作は取り消せません",
+      "text": "選択したデータはサイトのデータベースから完全に削除されます。バックアップがなければ復元できません。"
+    },
+    "deleteAll": {
+      "title": "地域データをすべて削除",
+      "description": "下のすべてのカテゴリを選択し、サイトを新しい空の地域として準備します。"
+    },
+    "options": {
+      "players": {
+        "title": "プレイヤーと登録情報",
+        "description": "登録情報、public_players、プレイヤー統計を削除します。"
+      },
+      "cycles": {
+        "title": "登録サイクル",
+        "description": "すべてのサイクル履歴を削除します。所属プレイヤーも削除されます。"
+      },
+      "alliances": {
+        "title": "同盟とローテーション",
+        "description": "同盟、ローテーション、主催同盟、知事を消去します。"
+      },
+      "registrationSettings": {
+        "title": "登録設定",
+        "description": "サイクル、T9～T14、シフト1・2・任意、フォーム項目、公開アクセスを初期設定に戻します。"
+      },
+      "accessRequests": {
+        "title": "アクセス申請",
+        "description": "adminUsersを変更せず、Firestoreの古い／保留中のaccessRequestsを削除します。"
+      },
+      "browserData": {
+        "title": "このブラウザーのローカルデータ",
+        "description": "この端末のプレイヤーテンプレート、最終プランの設定、ローカル時刻設定を削除します。"
+      }
+    },
+    "preview": {
+      "title": "現在保存されているデータ",
+      "loading": "データベースを確認中…",
+      "players": "プレイヤー登録",
+      "periods": "サイクル",
+      "stats": "サイクル統計",
+      "alliances": "ローテーションの記録",
+      "requests": "アクセス申請"
+    },
+    "confirmation": {
+      "label": "確認のため、次のフレーズを正確に入力してください:",
+      "help": "削除ボタンは10秒間、無効のままです。",
+      "phrase": "DELETE REGION DATA"
+    },
+    "actions": {
+      "cancel": "キャンセル",
+      "delete": "選択したデータを削除",
+      "deleting": "削除中…"
+    },
+    "errors": {
+      "preview": "データのプレビューを読み込めませんでした。",
+      "reset": "リセットに失敗しました。すべて削除されたと判断せず、Workerを確認して再試行してください。",
+      "backup": "バックアップをダウンロードできなかったためリセットを中止しました。バックアップなしで続行する意思がある場合にのみ、この設定を無効にしてください。"
+    },
+    "preservedSummary": "ユーザーアカウント、オーナー／管理者／Consulとその役割は削除されません。",
+    "backupBeforeReset": {
+      "title": "リセット前にバックアップをダウンロード",
+      "description": "削除前にシステムは現在のサイトデータを収集し、この端末へJSONファイルをダウンロードします。データベース内にはバックアップは残りません。"
+    }
+  },
+  "access": {
+    "title": "アクセス",
+    "description": "プレイヤー表と最終プランを閲覧できるユーザーを管理します。",
+    "resourceLabel": "設定するコンテンツ",
+    "resources": {
+      "players": "プレイヤー表",
+      "final_plan": "最終プラン"
+    },
+    "loading": "アクセス設定を読み込み中…",
+    "cycle": "サイクル #{{cycle}}",
+    "cycleNote": "静的な共有リンクは複数のサイクルにわたり残せますが、現在のサイクルの公開済みデータだけが表示されます。",
+    "modeLabel": "アクセスモード",
+    "publicWarning": "公開モードでは、次のJSON公開が成功すると現在のサイクルのデータを誰でもパスワードなしで閲覧できます。モードを変更すると以前の限定公開リンクは無効になります。カレンダーによるサイクル終了処理は引き続き有効です。",
+    "modes": {
+      "public": "公開 — 誰でも閲覧可能",
+      "private": "非公開 — 公開ページは閲覧不可",
+      "link": "限定公開リンク"
+    },
+    "status": {
+      "public": "公開アクセス",
+      "private": "アクセス停止",
+      "active": "限定公開アクセス有効",
+      "needsToken": "限定公開リンクを作成"
+    },
+    "tokenLifetime": {
+      "label": "リンクの有効期間"
+    },
+    "duration": {
+      "hours24": "24時間",
+      "cycle": "現在のサイクル終了まで",
+      "hours1": "1時間",
+      "hours6": "6時間",
+      "hours12": "12時間",
+      "days7": "7日間",
+      "forever": "無期限"
+    },
+    "generated": {
+      "title": "新しいアクセスを作成しました",
+      "once": "このリンクを今コピーしてください。次のJSON公開後に有効になります。完全なコードは公開GitHubには保存されません。"
+    },
+    "actions": {
+      "save": "保存",
+      "generateLink": "新しいリンクを作成",
+      "copy": "コピー",
+      "revoke": "取り消す"
+    },
+    "messages": {
+      "saved": "アクセス設定を保存しました。",
+      "generated": "リンクを作成しました。次のスナップショット公開後に有効になります。以前のリンクは引き続き有効です。",
+      "revoked": "リンクを取り消しました。静的アクセスは次のスナップショット公開後に停止します。",
+      "copied": "コピーしました。",
+      "historyDeleted": "アーカイブ済みリンクの記録を削除しました。"
+    },
+    "errors": {
+      "load": "アクセス設定を読み込めませんでした。",
+      "save": "アクセス設定を保存できませんでした。",
+      "generate": "限定公開リンクを作成できませんでした。",
+      "revoke": "アクセスを取り消せませんでした。",
+      "copy": "コピーできませんでした。",
+      "noPeriod": "限定公開アクセスに使用できる現在のサイクルがありません。",
+      "deleteLink": "アーカイブ済みリンクを削除できませんでした。"
+    },
+    "staticLinks": {
+      "title": "作成済みリンク（オーナーと管理者は保存済みリンクをコピー可能）",
+      "active": "有効",
+      "inactive": "期限切れ／取り消し済み",
+      "history": "履歴 — 期限切れと取り消し済み",
+      "delete": "記録を削除",
+      "confirmDelete": "この無効なリンク記録を完全に削除しますか？",
+      "deleteTitle": "アーカイブ済みリンクを削除しますか？",
+      "cancel": "キャンセル"
+    }
+  },
+  "sharedConsul": {
+    "title": "共有Consulパスワード",
+    "description": "新しいパスワードを生成します。以前のパスワードとそのすべてのセッションが直ちに無効になります。",
+    "duration": "有効期限",
+    "day": "1日",
+    "wasteland": "Wasteland終了まで",
+    "forever": "キーの有効期限なし",
+    "generate": "新しいパスワードを生成",
+    "revoke": "アクセスを取り消す",
+    "active": "アクセス有効",
+    "failed": "アクセス設定を読み込めませんでした。",
+    "noWasteland": "現在のWasteland終了日時がありません。",
+    "copy": "コピー",
+    "cancel": "キャンセル",
+    "close": "閉じる",
+    "ok": "了解",
+    "copySuccessTitle": "パスワードをコピーしました",
+    "copySuccess": "Consulのアクセスパスワードをクリップボードにコピーしました。信頼できる人にのみ共有してください。",
+    "copyExpires": "パスワードの有効期限:",
+    "copyForeverWarning": "このパスワードは無期限です。セキュリティのためWastelandごとに再生成するか、「1日」または「Wasteland終了まで」を選択してください。",
+    "multipleDescription": "有効なパスワードは最大5つです。新しいパスワードを作成しても既存のアクセスは取り消されません。操作できるのはオーナーだけです。",
+    "legacyKey": "旧Stage 042のパスワード",
+    "keyName": "パスワード名",
+    "keyPlaceholder": "例: 10月のConsul",
+    "limitReached": "すでに5つのパスワードが有効です。1つ取り消すか、有効期限が切れるまでお待ちください。",
+    "showPassword": "パスワードを表示",
+    "passwordPrivacy": "このパスワードを信頼できない人に教えないでください。コピー後にこの画面を閉じてください。",
+    "confirmSingleRevoke": "このパスワードだけを取り消しますか？利用者はアクセスできなくなりますが、他のパスワードは有効なままです。",
+    "confirmChangeDuration": "このパスワードの有効期限を変更しますか？他のパスワードは変更されません。",
+    "confirmUpdate": "有効期限を変更",
+    "confirmAdd": "新しいパスワードを追加しますか？既存のパスワードは引き続き有効です。",
+    "tabsActive": "有効",
+    "tabsHistory": "履歴",
+    "tabsCreate": "作成",
+    "emptyActive": "有効なパスワードはまだありません。",
+    "emptyHistory": "期限切れまたは取り消し済みのパスワードはありません。",
+    "historyHint": "期限切れと取り消し済みのパスワードがここに表示されます。記録は完全に削除できます。",
+    "deleteHistory": "記録を削除",
+    "confirmDeleteHistory": "この履歴を完全に削除しますか？他のパスワードには影響しません。",
+    "expired": "期限切れ",
+    "revoked": "取り消し済み",
+    "copyPassword": "パスワードをコピー",
+    "hidePassword": "非表示",
+    "createdAt": "作成日時:",
+    "historyLegacy": "古いパスワードは表示できません。アクセスを停止するには取り消してください。",
+    "createHint": "同時に最大5つのパスワードを有効にできます。既存のパスワードは有効なままです。",
+    "deleteBlocked": "有効なパスワードは削除する前に取り消してください。"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "title": "Einstellungen",
+  "text": "Lokale Website-Einstellungen für diesen Browser.",
+  "tabs": {
+    "settings": "Einstellungen",
+    "templates": "Meine Vorlagen"
+  },
+  "language": {
+    "title": "Sprache",
+    "text": "Wähle die Sprache der Website-Oberfläche."
+  },
+  "time": {
+    "title": "Zeitanzeige",
+    "text": "Wähle aus, wie Ereignis- und Schichtzeiten angezeigt werden.",
+    "local": "Ortszeit",
+    "utc": "UTC"
+  },
+  "timeZone": {
+    "title": "Zeitzone",
+    "text": "Wähle die Zeitzone für Datum und Uhrzeit.",
+    "options": {
+      "local": "Gerätezeit"
+    }
+  },
+  "reset": {
+    "title": "Einstellungen zurücksetzen",
+    "text": "Lokale Einstellungen auf Standardwerte zurücksetzen. Spielervorlagen bleiben erhalten.",
+    "button": "Zurücksetzen"
+  },
+  "templates": {
+    "title": "Meine Spielervorlagen",
+    "text": "Gespeicherte Vorlagen zum schnellen Ausfüllen des Anmeldeformulars.",
+    "add": "Vorlage hinzufügen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "nickname": "Nickname",
+    "alliance": "Allianz",
+    "troopType": "Truppentyp",
+    "tier": "Tier",
+    "lairLevel": "Höhlenlevel",
+    "marchSize": "Marschgröße",
+    "rallySize": "Rallyegröße",
+    "shift": "Schicht",
+    "shift1": "Schicht 1",
+    "shift2": "Schicht 2",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "empty": "Du hast noch keine Vorlagen gespeichert.",
+    "shift3": "Schicht 3",
+    "shift4": "Schicht 4",
+    "flexible": "Beliebige Schicht",
+    "extraSquads": "Zusätzliche Truppen",
+    "extraSquadsText": "Füge deiner Spielervorlage optionale zusätzliche Trupps hinzu."
+  }
+}

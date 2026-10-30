@@ -1,0 +1,74 @@
+{
+  "dashboard": {
+    "registered": "Zarejestrowani gracze",
+    "allianceCount": "Sojusze",
+    "captains": "Kapitanowie",
+    "finalPlanPlayers": "W planie końcowym",
+    "registrationCountdown": {
+      "title": "Do końca rejestracji",
+      "subtitle": "Rejestracja jest otwarta",
+      "open": "Otwarte",
+      "closedTitle": "Rejestracja jest zamknięta",
+      "closedSubtitle": "Do następnej rejestracji",
+      "closed": "Zamknięte",
+      "disabledSubtitle": "Rejestracja jest tymczasowo niedostępna",
+      "disabledCountdown": "Odliczanie jest niedostępne, gdy rejestracja jest wyłączona"
+    },
+    "eventCountdown": {
+      "title": "Do rozpoczęcia Pustkowia",
+      "subtitle": "Następne wydarzenie regionalne",
+      "activeTitle": "Pustkowie trwa",
+      "activeSubtitle": "Do końca Pustkowia",
+      "active": "W toku"
+    },
+    "time": {
+      "days": "dni",
+      "hours": "godzin",
+      "minutes": "minut",
+      "seconds": "sekund",
+      "unscheduled": "Nie wyznaczono jeszcze daty następnego otwarcia"
+    },
+    "recent": {
+      "title": "Ostatnie rejestracje",
+      "text": "5 ostatnich graczy, którzy wysłali zgłoszenie.",
+      "nickname": "Nick",
+      "alliance": "Sojusz",
+      "troop": "Wojska",
+      "tier": "Poziom jednostek",
+      "time": "Kiedy",
+      "timeAgo": {
+        "justNow": "przed chwilą",
+        "minutes": "{{count}} min temu",
+        "hours": "{{count}} godz. temu",
+        "days": "{{count}} dni temu"
+      }
+    },
+    "allianceStats": {
+      "title": "Statystyki sojuszy",
+      "text": "Rozkład zarejestrowanych graczy.",
+      "players": "graczy",
+      "other": "Inne",
+      "showAll": "Pokaż wszystkie sojusze",
+      "showLess": "Pokaż mniej"
+    },
+    "navigation": {
+      "registration": {
+        "title": "Rejestracja",
+        "text": "Wypełnij lub zaktualizuj dane na wydarzenie Pustkowie."
+      },
+      "players": {
+        "title": "Tabela graczy",
+        "text": "Zobacz wszystkie zgłoszenia graczy w regionie."
+      },
+      "finalPlan": {
+        "title": "Plan końcowy",
+        "text": "Drużyny, kapitanowie i przydziały do zmian."
+      },
+      "settings": {
+        "title": "Ustawienia",
+        "text": "Język, czas i lokalne ustawienia przeglądarki."
+      }
+    },
+    "loading": "Ładowanie danych..."
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "loading": "Zugriff wird geprüft…",
+  "resources": {
+    "players": "Spielertabelle",
+    "final_plan": "Endplan"
+  },
+  "modes": {
+    "public": {
+      "title": "Öffentlicher Zugriff",
+      "text": "Dieser Bereich ist für alle zugänglich. Die Seite wird geladen."
+    },
+    "private": {
+      "title": "Zugriff geschlossen",
+      "text": "Der Administrator hat den öffentlichen Zugriff auf diesen Bereich vorübergehend geschlossen."
+    },
+    "link": {
+      "title": "Privater Link erforderlich",
+      "text": "Öffne den vom Administrator bereitgestellten Link. Falls er widerrufen wurde oder abgelaufen ist, fordere einen neuen an."
+    }
+  },
+  "errors": {
+    "NO_CURRENT_PERIOD": "Es gibt keinen aktiven Zyklus für die Ausgabe eines privaten Zugangs.",
+    "CONTENT_PRIVATE": "Öffentlicher Zugriff ist geschlossen.",
+    "default": "Zugriff konnte nicht geprüft werden. Lade die Seite neu und versuche es erneut.",
+    "RATE_LIMITED": "Zu viele Versuche. Versuche es in einer Minute erneut."
+  },
+  "cycleClosed": {
+    "title": "Wasteland-Zyklus beendet",
+    "players": "Die Spielertabelle für diesen Zyklus ist geschlossen. Die nächste Anmeldung beginnt am {{date}}.",
+    "playersUnknown": "Die Spielertabelle für diesen Zyklus ist geschlossen. Der Termin für die nächste Anmeldung wird separat bekannt gegeben.",
+    "finalPlan": "Der endgültige Plan für diesen Zyklus ist geschlossen. Ein neuer Plan erscheint erst nach seiner Veröffentlichung durch einen Administrator im nächsten Zyklus.",
+    "opensIn": "Anmeldung öffnet in {{days}} T. {{hours}} Std. {{minutes}} Min."
+  },
+  "cycleUnavailable": "Zugriffszeitplan konnte nicht überprüft werden. Bitte später erneut versuchen.",
+  "cycleUpdating": {
+    "title": "Warten auf aktualisierte Zyklusdaten",
+    "text": "Der neue Zyklus hat bereits begonnen, aber die öffentlichen Daten werden noch aktualisiert. Bitte versuche es in Kürze erneut.",
+    "players": "Die Spielertabelle für den neuen Zyklus wird noch aktualisiert. Bitte versuche es in Kürze erneut.",
+    "final_plan": "Der endgültige Plan für den neuen Zyklus wird noch aktualisiert. Bitte versuche es in Kürze erneut."
+  }
+}

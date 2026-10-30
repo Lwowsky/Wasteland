@@ -1,0 +1,275 @@
+{
+  "title": "完整玩家列表",
+  "description": "区域管理使用的完整玩家数据。",
+  "actions": {
+    "add": "添加玩家",
+    "edit": "编辑",
+    "delete": "删除",
+    "save": "保存",
+    "saving": "保存中…",
+    "cancel": "取消",
+    "reset": "重置"
+  },
+  "filters": {
+    "search": "昵称或联盟",
+    "allAlliance": "联盟：全部",
+    "allTroops": "兵种：全部",
+    "allShifts": "班次：全部",
+    "captain": "队长",
+    "captainAll": "队长：全部",
+    "captainYes": "队长：是",
+    "captainNo": "队长：否",
+    "ruleStatus": "规则状态",
+    "ruleStatusAll": "状态：全部",
+    "ruleStatusAttention": "需要注意",
+    "ruleStatusOk": "没有问题",
+    "perPage": "每页玩家数",
+    "perPageAll": "全部",
+    "perPageCount": "每页 {{count}} 人"
+  },
+  "table": {
+    "nickname": "昵称",
+    "alliance": "联盟",
+    "troops": "部队",
+    "tier": "等级",
+    "lair": "巢穴",
+    "march": "行军值",
+    "rally": "集结",
+    "shift": "班次",
+    "captain": "队长",
+    "ready": "准备好",
+    "submitted": "已提交",
+    "comment": "备注",
+    "actions": "操作"
+  },
+  "empty": "未找到玩家。",
+  "loading": "加载中...",
+  "yes": "是",
+  "no": "否",
+  "troops": {
+    "fighter": "战士",
+    "rider": "骑兵",
+    "shooter": "射手"
+  },
+  "shifts": {
+    "shift1": "班次 1",
+    "shift2": "班次 2",
+    "shift3": "班次 3",
+    "shift4": "班次 4",
+    "flexible": "任意班次"
+  },
+  "editor": {
+    "createTitle": "新玩家",
+    "editTitle": "编辑玩家",
+    "createSubtitle": "在当前报名周期添加新玩家。",
+    "editSubtitle": "正在编辑 {{name}} 的报名信息。",
+    "participation": {
+      "title": "荒野活动参与信息",
+      "description": "用于玩家分配的主要参数。",
+      "shift": "班次",
+      "ready": "准备攻击",
+      "captain": "队长",
+      "selectShift": "选择班次"
+    },
+    "playerData": {
+      "title": "玩家数据",
+      "description": "玩家报名时提交的信息。",
+      "nickname": "昵称",
+      "alliance": "联盟",
+      "tier": "等级",
+      "troopType": "兵种类型",
+      "lairLevel": "巢穴等级",
+      "marchSize": "行军规模",
+      "rallySize": "集结规模"
+    },
+    "extraSquads": {
+      "title": "额外部队",
+      "description": "可选。最多可选择另外两种兵种。",
+      "main": "主要",
+      "comment": "备注",
+      "commentPlaceholder": "其他玩家信息…"
+    },
+    "validation": {
+      "nickname": "请输入昵称。",
+      "alliance": "请输入联盟。",
+      "troopType": "请选择兵种。",
+      "tier": "请选择等级。",
+      "lair": "巢穴等级不能小于 0。",
+      "march": "行军量不能小于 0。",
+      "rally": "集结容量不能小于 0。",
+      "shift": "请选择班次。"
+    },
+    "confirmDelete": "删除玩家“{{name}}”？",
+    "ruleWarnings": {
+      "tier": "等级 {{tier}} 目前不可用于新报名，但此玩家可以保留该等级。",
+      "shift": "{{shift}} 当前不可用于新报名，但此玩家可以留在该班次。"
+    }
+  },
+  "regionEditor": {
+    "action": "区域编辑器",
+    "title": "区域编辑器",
+    "description": "查看玩家、联盟、行军量和集结容量。",
+    "common": {
+      "close": "关闭",
+      "save": "保存",
+      "saving": "保存中…"
+    },
+    "tabs": {
+      "players": "— 选择玩家 —",
+      "alliances": "联盟",
+      "combat": "行军与集结"
+    },
+    "sidebar": {
+      "title": "— 选择玩家 —",
+      "description": "从列表中选择玩家。",
+      "search": "按昵称或联盟搜索",
+      "empty": "未找到玩家。"
+    },
+    "players": {
+      "empty": "从列表中选择玩家。",
+      "player": "玩家",
+      "tier": "等级",
+      "captain": "队长",
+      "troopType": "兵种类型",
+      "march": "行军规模",
+      "rally": "集结规模",
+      "shift": "班次",
+      "lair": "巢穴等级",
+      "ready": "准备攻击",
+      "comment": "备注"
+    },
+    "alliances": {
+      "empty": "未找到联盟。",
+      "alliance": "联盟",
+      "registered": "注册时间",
+      "captains": "队长",
+      "tiers": "等级"
+    },
+    "combat": {
+      "title": "行军与集结",
+      "description": "排序并编辑行军和集结容量。",
+      "sortLabel": "行军与集结排序",
+      "tableLabel": "行军与集结表",
+      "player": "玩家",
+      "allianceTier": "联盟 / 等级",
+      "march": "行军值",
+      "rally": "集结",
+      "actions": "操作",
+      "sort": {
+        "marchDesc": "行军：从高到低",
+        "marchAsc": "行军：从低到高",
+        "rallyDesc": "集结：从高到低",
+        "rallyAsc": "集结：从低到高"
+      }
+    },
+    "sort": {},
+    "march": {
+      "title": "行军规模",
+      "description": "排序并编辑玩家行军量。",
+      "current": "当前行军量"
+    },
+    "rally": {
+      "title": "集结规模",
+      "description": "排序并编辑玩家集结容量。",
+      "current": "当前集结容量"
+    }
+  },
+  "errors": {
+    "load": "加载玩家失败。",
+    "save": "保存玩家失败。",
+    "delete": "删除玩家失败。"
+  },
+  "stats": {
+    "total": "合计",
+    "players": "— 选择玩家 —",
+    "captains": "队长",
+    "inTurrets": "在炮塔中",
+    "reserve": "进入预备队"
+  },
+  "ruleStatus": {
+    "attentionSummary": "需要注意：{{count}} 位玩家",
+    "tierUnavailable": "等级 {{tier}} 在当前周期已不可用。",
+    "shiftUnavailable": "{{shift}} 在当前周期已停用。"
+  },
+  "localImport": {
+    "tabsLabel": "玩家列表来源",
+    "databaseTab": "数据库（{{count}}）",
+    "localTab": "本地列表（{{count}}）",
+    "title": "本地导入列表",
+    "fileSummary": "{{file}} · {{count}} 位玩家",
+    "ready": "准备好",
+    "problems": "问题",
+    "imported": "已导入",
+    "status": "状态",
+    "selectReady": "选择所有可用项",
+    "transferSelected": "转移所选项（{{count}}）",
+    "transferAll": "转移（{{count}}）",
+    "transferring": "正在转移…",
+    "transferSuccess": "已添加 {{count}} 位新玩家，跳过重复项：{{skipped}}。",
+    "transferError": "无法转移玩家：{{code}}",
+    "clearImported": "清除已导入项",
+    "clearAll": "删除本地列表",
+    "clearConfirm": "删除整个本地导入列表？",
+    "ownerAdminOnly": "只有所有者或管理员可将本地玩家转入数据库。",
+    "duplicateD1": "数据库中已存在该昵称",
+    "duplicateLocal": "本地列表中存在重复项",
+    "issueLabels": {
+      "nickname": "缺少昵称",
+      "alliance": "缺少联盟",
+      "troopType": "未知兵种",
+      "tier": "未知等级",
+      "shift": "未知班次",
+      "captain": "队长字段尚未映射",
+      "readyAttack": "准备状态尚未映射"
+    },
+    "replaceSuccess": "数据库列表已被替换。已转移 {{count}} 位玩家。报名仍开放。",
+    "transferModal": {
+      "title": "将玩家转入数据库",
+      "subtitle": "选择如何将本地列表导入数据库。",
+      "selected": "已选择",
+      "newPlayers": "新建",
+      "duplicates": "数据库中已有",
+      "databaseNow": "数据库现有人数",
+      "addMissing": {
+        "title": "仅添加缺失的玩家",
+        "description": "将添加新玩家，现有昵称的数据不变。"
+      },
+      "replaceAll": {
+        "title": "替换列表并保持报名开放",
+        "description": "当前玩家列表将由本地列表替换，网站仍接受新报名。",
+        "onlyAllRows": "仅在转移整个本地列表时可使用此选项。"
+      },
+      "replaceWarning": "当前周期玩家列表将在一个安全事务中替换。本周期已保存的炮塔草稿及已发布最终方案将被删除，必须重新制作。报名保持开放。",
+      "cancel": "取消",
+      "processing": "正在转移…",
+      "addButton": "添加新玩家（{{count}}）",
+      "replaceButton": "替换表格",
+      "replaceAndClose": {
+        "title": "替换列表并关闭报名",
+        "description": "用本地列表替换当前玩家列表，然后网站将停止接受新报名。"
+      },
+      "replaceAndCloseWarning": "玩家列表将被替换，本周期炮塔草稿和已发布最终方案将被删除。报名将提前关闭。导入后请重建方案。",
+      "replaceAndCloseButton": "替换并关闭报名"
+    },
+    "clearTitle": "删除本地列表",
+    "guideTitle": "如何处理本地列表？",
+    "guideText": "这是导入草稿，玩家尚未转入数据库。请先检查数据并修正问题，然后点击“转移”并选择写入方式。",
+    "replaceAndCloseSuccess": "数据库列表已替换。转移 {{count}} 位玩家，报名已关闭。"
+  },
+  "pagination": {
+    "label": "玩家列表分页",
+    "previous": "上一页",
+    "next": "下一页",
+    "pageOf": "{{page}} / {{pages}}"
+  },
+  "confirm": {
+    "deletePlayerTitle": "删除玩家"
+  },
+  "databaseTable": {
+    "clear": "清空数据库列表",
+    "clearTitle": "清空数据库列表？",
+    "clearConfirm": "当前周期的所有玩家都将从数据库及公开列表中删除，周期和设置保留。",
+    "clearSuccess": "已从数据库列表移除 {{count}} 位玩家。",
+    "error": "无法清空数据库列表：{{code}}"
+  }
+}

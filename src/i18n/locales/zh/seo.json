@@ -1,0 +1,18 @@
+{
+  "home": {
+    "title": "家园",
+    "description": "网站主页。"
+  },
+  "about": {
+    "title": "关于",
+    "description": "网站相关信息。"
+  },
+  "contact": {
+    "title": "联系",
+    "description": "联系信息。"
+  },
+  "notFound": {
+    "title": "404",
+    "description": "找不到页面。"
+  }
+}

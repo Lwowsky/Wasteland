@@ -1,0 +1,39 @@
+{
+  "title": "访问权限申请",
+  "description": "审核申请、调整角色并授予管理区域访问权限。",
+  "loading": "正在加载申请...",
+  "empty": "目前没有申请。",
+  "columns": {
+    "user": "用户",
+    "email": "邮箱",
+    "role": "角色",
+    "comment": "备注",
+    "status": "状态",
+    "actions": "操作"
+  },
+  "roles": {
+    "admin": "管理后台",
+    "consul": "执政官"
+  },
+  "status": {
+    "pending": "待处理",
+    "approved": "已批准",
+    "rejected": "已拒绝"
+  },
+  "actions": {
+    "approve": "批准",
+    "reject": "拒绝",
+    "delete": "删除",
+    "notAllowed": "此角色权限不足"
+  },
+  "errors": {
+    "load": "加载申请失败。",
+    "approve": "批准申请失败。",
+    "reject": "拒绝申请失败。",
+    "delete": "删除申请失败。",
+    "onlyOwnerAdmin": "只有所有者可授予管理员角色。"
+  },
+  "confirm": {
+    "delete": "删除 {{name}} 的申请？"
+  }
+}

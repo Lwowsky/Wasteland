@@ -1,0 +1,163 @@
+{
+  "title": "Người dùng và truy cập",
+  "description": "Quản lý người dùng, vai trò và quyền riêng lẻ.",
+  "tabs": {
+    "users": "Người dùng",
+    "requests": "Yêu cầu",
+    "limits": "Giới hạn"
+  },
+  "cards": {
+    "owner": {
+      "title": "Chủ sở hữu",
+      "description": "Toàn quyền truy cập. Vai trò và quyền hạn chỉ có thể đổi thủ công qua Firebase."
+    },
+    "admin": {
+      "title": "Quản trị",
+      "description": "Mọi quyền của Owner ngoại trừ đặt lại khu vực."
+    },
+    "consul": {
+      "title": "Lãnh sự",
+      "description": "Mọi công cụ người chơi, tháp pháo, đăng ký và cài đặt làm việc. Không được quản lý vai trò, giao diện trang hoặc đặt lại khu vực."
+    },
+    "requests": {
+      "title": "Yêu cầu",
+      "description": "Yêu cầu truy cập quản trị mới chờ xét duyệt."
+    }
+  },
+  "roles": {
+    "owner": {
+      "title": "Chủ sở hữu",
+      "description": "Toàn quyền truy cập. Vai trò và quyền hạn chỉ có thể đổi thủ công qua Firebase."
+    },
+    "admin": {
+      "title": "Quản trị",
+      "description": "Mọi quyền của Owner ngoại trừ đặt lại khu vực."
+    },
+    "consul": {
+      "title": "Lãnh sự",
+      "description": "Mọi công cụ người chơi, tháp pháo, đăng ký và cài đặt làm việc. Không được quản lý vai trò, giao diện trang hoặc đặt lại khu vực."
+    }
+  },
+  "usersCount": "người dùng",
+  "pendingCount": "đang chờ",
+  "columns": {
+    "user": "Người dùng",
+    "role": "Vai trò",
+    "permissions": "Quyền hạn",
+    "status": "Trạng thái",
+    "actions": "Thao tác"
+  },
+  "permissions": {
+    "owner": "Toàn quyền truy cập"
+  },
+  "actions": {
+    "removeAccess": "Xóa quyền truy cập",
+    "ownerLocked": "Owner chỉ có thể thay đổi qua Firebase",
+    "notAllowed": "Không đủ quyền hạn",
+    "openUser": "Mở người dùng"
+  },
+  "modal": {
+    "role": "Vai trò",
+    "status": "Trạng thái",
+    "createdAt": "Tạo lúc",
+    "updatedAt": "Đã cập nhật",
+    "permissions": "Quyền hạn",
+    "permissionsCount": "quyền hạn",
+    "permissionsText": "Quyền có thể được giới hạn riêng cho từng người dùng trong phạm vi vai trò của họ.",
+    "ownerPermissions": "Owner luôn có toàn quyền. Không thể sửa quyền Owner qua trang web.",
+    "technicalInfo": "Thông tin kỹ thuật",
+    "uid": "UID",
+    "saving": "Đang lưu...",
+    "restoreDefaults": "Khôi phục mặc định theo vai trò",
+    "disableRolePermissions": "Tắt tất cả quyền hạn"
+  },
+  "permissionGroups": {
+    "access": {
+      "title": "Người dùng và truy cập",
+      "description": "Quản lý vai trò và quyền quản trị."
+    },
+    "players": {
+      "title": "Bảng người chơi",
+      "description": "Xem và quản lý dữ liệu người chơi."
+    },
+    "distribution": {
+      "title": "Phân bổ và kế hoạch cuối cùng",
+      "description": "Quản lý tháp pháo và kế hoạch cuối cùng."
+    },
+    "registration": {
+      "title": "Đăng ký",
+      "description": "Quản lý cài đặt đăng ký."
+    },
+    "requests": {
+      "title": "Yêu cầu",
+      "description": "Xem và xử lý yêu cầu truy cập."
+    },
+    "settings": {
+      "title": "Cài đặt",
+      "description": "Truy cập công cụ nhập, xuất và hệ thống."
+    }
+  },
+  "permissionLabels": {
+    "view_access": "Xem người dùng và vai trò",
+    "manage_access": "Chỉnh sửa quyền truy cập",
+    "manage_consuls": "Quản lý người dùng Consul",
+    "grant_admin": "Cấp vai trò Admin",
+    "view_players": "Xem bảng người chơi",
+    "edit_players": "Chỉnh sửa người chơi",
+    "delete_players": "Xóa người chơi",
+    "view_distribution": "Xem phân bổ",
+    "edit_distribution": "Chỉnh sửa phân bổ",
+    "view_registration_settings": "Xem cài đặt đăng ký",
+    "edit_registration_settings": "Chỉnh sửa cài đặt đăng ký",
+    "view_requests": "Xem yêu cầu",
+    "manage_requests": "Duyệt và từ chối yêu cầu",
+    "view_settings": "Cài đặt truy cập",
+    "import_players": "Nhập bảng người chơi",
+    "clear_players": "Xóa toàn bộ bảng người chơi",
+    "publish_final_plan": "Công bố và khôi phục kế hoạch cuối cùng",
+    "manage_content_access": "Quản lý quyền truy cập nội dung công khai",
+    "manage_site_appearance": "Giao diện trang web",
+    "manage_region_backup": "Sao lưu và khôi phục khu vực",
+    "reset_region": "Đặt lại dữ liệu khu vực"
+  },
+  "loading": "Đang tải người dùng...",
+  "errors": {
+    "load": "Không thể tải người dùng.",
+    "save": "Không thể lưu quyền người dùng.",
+    "delete": "Không thể xóa quyền truy cập."
+  },
+  "confirm": {
+    "removeAccess": "Xóa quyền truy cập của {{name}}?"
+  },
+  "cloudflareLimits": {
+    "title": "Cloudflare — giới hạn và mức sử dụng",
+    "description": "Mức sử dụng Workers và D1 hiện tại của toàn bộ tài khoản.",
+    "metricWorkers": "Workers — số yêu cầu",
+    "metricD1Reads": "D1 — số hàng đọc",
+    "metricD1Writes": "D1 — số hàng ghi",
+    "note": "Hạn mức phụ thuộc gói Cloudflare của bạn.",
+    "open": "Bảng điều khiển Cloudflare",
+    "docs": "Giới hạn chính thức",
+    "loadingMetrics": "Đang tải…",
+    "refreshMetrics": "Làm mới",
+    "analyticsError": "Không thể tải số liệu phân tích",
+    "updated": "Đã cập nhật",
+    "compactTitle": "Mức sử dụng Cloudflare",
+    "left": "Còn lại",
+    "noData": "Không có dữ liệu",
+    "dailyLimit": "giới hạn hằng ngày",
+    "showDetails": "Hiện chi tiết",
+    "hideDetails": "Ẩn chi tiết",
+    "perDatabase": "Theo cơ sở dữ liệu",
+    "perRequest": "Theo yêu cầu",
+    "detailWorkersCount": "Số Workers tối đa",
+    "detailCron": "Tác vụ Cron",
+    "detailCpu": "CPU mỗi yêu cầu",
+    "detailMemory": "Bộ nhớ Worker",
+    "detailD1Databases": "Cơ sở dữ liệu D1",
+    "detailD1Storage": "Lưu trữ D1",
+    "detailD1DatabaseSize": "Kích thước cơ sở dữ liệu tối đa",
+    "detailD1Queries": "Truy vấn D1 mỗi lần gọi",
+    "utcLabel": "UTC"
+  }
+}

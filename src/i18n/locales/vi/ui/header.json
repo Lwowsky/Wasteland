@@ -1,0 +1,79 @@
+{
+  "home": "Trang chủ",
+  "registration": "Đăng ký",
+  "players": "Bảng người chơi",
+  "finalPlan": "Kế hoạch cuối cùng",
+  "settings": "Cài đặt",
+  "language": "Ngôn ngữ",
+  "region": "Khu vực",
+  "nextWasteland": "Wasteland tiếp theo",
+  "wastelandDate": "Ngày diễn ra Wasteland",
+  "registrationNotScheduled": "Chưa lên lịch đăng ký tiếp theo",
+  "registrationOpens": "Mở đăng ký",
+  "registrationDeadline": "Hạn đăng ký",
+  "organizerAlliance": "Liên minh tổ chức",
+  "governor": "Thống đốc",
+  "localTime": "Giờ địa phương",
+  "loading": "Đang tải...",
+  "loadError": "Không thể tải dữ liệu.",
+  "brand": "Wasteland King",
+  "utc": "UTC",
+  "admin": "Quản trị",
+  "openNavigation": "Mở menu điều hướng",
+  "closeNavigation": "Đóng menu điều hướng",
+  "toggleTimeZone": "Đổi múi giờ",
+  "languageOptions": {
+    "en": {
+      "badge": "EN",
+      "label": "English",
+      "description": "English"
+    },
+    "uk": {
+      "badge": "UA",
+      "label": "Українська",
+      "description": "Українська"
+    },
+    "ru": {
+      "badge": "RU",
+      "label": "Русский",
+      "description": "Русский"
+    },
+    "pl": {
+      "badge": "PL",
+      "label": "Polski",
+      "description": "Polski"
+    },
+    "de": {
+      "badge": "DE",
+      "label": "Deutsch",
+      "description": "Deutsch"
+    },
+    "ja": {
+      "badge": "JA",
+      "label": "日本語",
+      "description": "日本語"
+    },
+    "zh": {
+      "badge": "ZH",
+      "label": "中文",
+      "description": "中文"
+    },
+    "ko": {
+      "badge": "KO",
+      "label": "한국어",
+      "description": "한국어"
+    },
+    "vi": {
+      "badge": "VI",
+      "label": "Tiếng Việt",
+      "description": "Tiếng Việt"
+    },
+    "ar": {
+      "badge": "AR",
+      "label": "العربية",
+      "description": "العربية"
+    }
+  },
+  "languagesAvailable": "đang hoạt động",
+  "languageSelected": "Ngôn ngữ đã chọn"
+}

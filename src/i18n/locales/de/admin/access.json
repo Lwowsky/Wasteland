@@ -1,0 +1,163 @@
+{
+  "title": "Benutzer & Zugriff",
+  "description": "Benutzer, Rollen und individuelle Berechtigungen verwalten.",
+  "tabs": {
+    "users": "Benutzer",
+    "requests": "Anfragen",
+    "limits": "Grenzen"
+  },
+  "cards": {
+    "owner": {
+      "title": "Owner",
+      "description": "Vollzugriff. Rolle und Berechtigungen können nur manuell über Firebase geändert werden."
+    },
+    "admin": {
+      "title": "Adminbereich",
+      "description": "Alle Owner-Berechtigungen außer dem Zurücksetzen der Region."
+    },
+    "consul": {
+      "title": "Konsul",
+      "description": "Alle Werkzeuge für Spieler, Türme, Anmeldung und Arbeitseinstellungen. Keine Rollenverwaltung, Website-Gestaltung oder Regionszurücksetzung."
+    },
+    "requests": {
+      "title": "Anfragen",
+      "description": "Neue Admin-Zugriffsanträge warten auf Prüfung."
+    }
+  },
+  "roles": {
+    "owner": {
+      "title": "Owner",
+      "description": "Vollzugriff. Rolle und Berechtigungen können nur manuell über Firebase geändert werden."
+    },
+    "admin": {
+      "title": "Adminbereich",
+      "description": "Alle Owner-Berechtigungen außer dem Zurücksetzen der Region."
+    },
+    "consul": {
+      "title": "Konsul",
+      "description": "Alle Werkzeuge für Spieler, Türme, Anmeldung und Arbeitseinstellungen. Keine Rollenverwaltung, Website-Gestaltung oder Regionszurücksetzung."
+    }
+  },
+  "usersCount": "Benutzer",
+  "pendingCount": "ausstehend",
+  "columns": {
+    "user": "Benutzer",
+    "role": "Rolle",
+    "permissions": "Berechtigungen",
+    "status": "Status",
+    "actions": "Aktionen"
+  },
+  "permissions": {
+    "owner": "Vollzugriff"
+  },
+  "actions": {
+    "removeAccess": "Zugriff entfernen",
+    "ownerLocked": "Owner kann nur über Firebase geändert werden",
+    "notAllowed": "Unzureichende Berechtigungen",
+    "openUser": "Benutzer öffnen"
+  },
+  "modal": {
+    "role": "Rolle",
+    "status": "Status",
+    "createdAt": "Erstellt",
+    "updatedAt": "Aktualisiert",
+    "permissions": "Berechtigungen",
+    "permissionsCount": "Berechtigungen",
+    "permissionsText": "Die Berechtigungen eines Benutzers können innerhalb seiner Rolle eingeschränkt werden.",
+    "ownerPermissions": "Owner hat immer Vollzugriff. Die Owner-Berechtigungen können auf der Website nicht bearbeitet werden.",
+    "technicalInfo": "Technische Informationen",
+    "uid": "UID",
+    "saving": "Wird gespeichert…",
+    "restoreDefaults": "Rollenstandards wiederherstellen",
+    "disableRolePermissions": "Alle Berechtigungen deaktivieren"
+  },
+  "permissionGroups": {
+    "access": {
+      "title": "Benutzer & Zugriff",
+      "description": "Rollen und administrativen Zugriff verwalten."
+    },
+    "players": {
+      "title": "Spielertabelle",
+      "description": "Spielerdaten ansehen und verwalten."
+    },
+    "distribution": {
+      "title": "Verteilung & endgültiger Plan",
+      "description": "Türme und endgültigen Plan verwalten."
+    },
+    "registration": {
+      "title": "Anmeldung",
+      "description": "Anmeldeeinstellungen verwalten."
+    },
+    "requests": {
+      "title": "Anfragen",
+      "description": "Zugriffsanträge ansehen und bearbeiten."
+    },
+    "settings": {
+      "title": "Einstellungen",
+      "description": "Import-, Export- und Systemwerkzeuge verwenden."
+    }
+  },
+  "permissionLabels": {
+    "view_access": "Benutzer und Rollen ansehen",
+    "manage_access": "Zugriff bearbeiten",
+    "manage_consuls": "Consul-Benutzer verwalten",
+    "grant_admin": "Admin-Rolle vergeben",
+    "view_players": "Spielertabelle ansehen",
+    "edit_players": "Spieler bearbeiten",
+    "delete_players": "Spieler löschen",
+    "view_distribution": "Verteilung ansehen",
+    "edit_distribution": "Verteilung bearbeiten",
+    "view_registration_settings": "Anmeldeeinstellungen ansehen",
+    "edit_registration_settings": "Anmeldeeinstellungen bearbeiten",
+    "view_requests": "Anträge ansehen",
+    "manage_requests": "Anträge annehmen und ablehnen",
+    "view_settings": "Auf Einstellungen zugreifen",
+    "import_players": "Spielertabelle importieren",
+    "clear_players": "Gesamte Spielertabelle leeren",
+    "publish_final_plan": "Endgültigen Plan veröffentlichen und wiederherstellen",
+    "manage_content_access": "Öffentlichen Inhaltszugriff verwalten",
+    "manage_site_appearance": "Website-Gestaltung",
+    "manage_region_backup": "Regionssicherung und Wiederherstellung",
+    "reset_region": "Regionsdaten zurücksetzen"
+  },
+  "loading": "Benutzer werden geladen…",
+  "errors": {
+    "load": "Benutzer konnten nicht geladen werden.",
+    "save": "Benutzerberechtigungen konnten nicht gespeichert werden.",
+    "delete": "Zugriff konnte nicht gelöscht werden."
+  },
+  "confirm": {
+    "removeAccess": "Zugriff für {{name}} entfernen?"
+  },
+  "cloudflareLimits": {
+    "title": "Cloudflare — Limits und Nutzung",
+    "description": "Aktuelle Workers- und D1-Nutzung für das gesamte Konto.",
+    "metricWorkers": "Workers — Anfragen",
+    "metricD1Reads": "D1 — gelesene Zeilen",
+    "metricD1Writes": "D1 — geschriebene Zeilen",
+    "note": "Kontingente hängen vom Cloudflare-Tarif ab.",
+    "open": "Cloudflare-Dashboard",
+    "docs": "Offizielle Limits",
+    "loadingMetrics": "Wird geladen...",
+    "refreshMetrics": "Aktualisieren",
+    "analyticsError": "Analysedaten konnten nicht geladen werden",
+    "updated": "Aktualisiert",
+    "compactTitle": "Cloudflare-Nutzung",
+    "left": "übrig",
+    "noData": "Keine Daten",
+    "dailyLimit": "Tageslimit",
+    "showDetails": "Details anzeigen",
+    "hideDetails": "Details ausblenden",
+    "perDatabase": "Pro Datenbank",
+    "perRequest": "Pro Anfrage",
+    "detailWorkersCount": "Maximale Workers",
+    "detailCron": "Cron-Auslöser",
+    "detailCpu": "CPU pro Anfrage",
+    "detailMemory": "Worker-Arbeitsspeicher",
+    "detailD1Databases": "D1-Datenbanken",
+    "detailD1Storage": "D1-Speicher",
+    "detailD1DatabaseSize": "Maximale Datenbankgröße",
+    "detailD1Queries": "D1-Abfragen pro Aufruf",
+    "utcLabel": "UTC"
+  }
+}

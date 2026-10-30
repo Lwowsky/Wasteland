@@ -6,6 +6,7 @@ import { clearSiteSettingsCache, getSiteSettings } from "../../../features/site/
 import { saveAdminSiteSettings } from "../services/systemSettingsApi.js";
 import SiteIdentityModal from "./SiteIdentityModal.jsx";
 
+import "./SiteLanguagePicker.css";
 import "./SiteIdentity.css";
 
 const SITE_APPEARANCE_ICON = publicAsset("/images/admin/icons/settings/site-appearance.webp");

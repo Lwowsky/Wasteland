@@ -28,7 +28,7 @@
       "title": "Footer content",
       "description": "Configure separate footer text for each supported site language.",
       "languageLabel": "Footer language",
-      "languageHelp": "JSON translations are shown by default. Only changed fields are saved as overrides in D1. An empty field falls back to its default text after saving. Ukrainian and English are edited separately.",
+      "languageHelp": "JSON translations are shown by default. Only changed fields are saved as overrides in D1. An empty field returns to the default after saving. Edit each language separately.",
       "restoreDefaults": "Restore default text",
       "restoreHelp": "Restore the selected language from the JSON translations. Save to apply the change.",
       "restoreNotice": "Default text restored in the draft. Click “Save changes” to apply."

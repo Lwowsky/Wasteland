@@ -1,12 +1,11 @@
 import { publicAsset } from "../../../utils/publicAsset.js";
-import uk from "../../../i18n/locales/uk/content/finalPlan.json" with { type: "json" };
-import en from "../../../i18n/locales/en/content/finalPlan.json" with { type: "json" };
+import translations from "../../../i18n/index.js";
 import Modal from "../../../components/Modal/Modal.jsx";
 import { PLAN_LANGUAGE_CHOICES, normalizePlanLanguages } from "../data/finalPlanLanguages.js";
 import "./FinalPlanLanguageModal.css";
 
 export default function FinalPlanLanguageModal({ open, onClose, languages, onChange, language = "uk" }) {
-  const copy = (language === "en" ? en : uk).languageModal;
+  const copy = (translations[language]?.finalPlan || translations.en.finalPlan).languageModal;
   function toggle(code, checked) {
     const next = new Set(languages);
     if (checked) next.add(code); else next.delete(code);

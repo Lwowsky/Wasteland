@@ -22,10 +22,31 @@ export const LANGUAGES = {
     englishLabel: "English",
     badge: "EN",
   },
+  ru: {
+    code: "ru", label: "RU", nativeLabel: "Русский", englishLabel: "Russian", badge: "RU",
+  },
+  pl: {
+    code: "pl", label: "PL", nativeLabel: "Polski", englishLabel: "Polish", badge: "PL",
+  },
+  de: {
+    code: "de", label: "DE", nativeLabel: "Deutsch", englishLabel: "German", badge: "DE",
+  },
+  ja: {
+    code: "ja", label: "JA", nativeLabel: "日本語", englishLabel: "Japanese", badge: "JA",
+  },
+  zh: {
+    code: "zh", label: "ZH", nativeLabel: "中文", englishLabel: "Chinese (Simplified)", badge: "ZH",
+  },
+  ko: {
+    code: "ko", label: "KO", nativeLabel: "한국어", englishLabel: "Korean", badge: "KO",
+  },
+  vi: {
+    code: "vi", label: "VI", nativeLabel: "Tiếng Việt", englishLabel: "Vietnamese", badge: "VI",
+  },
+  ar: {
+    code: "ar", label: "AR", nativeLabel: "العربية", englishLabel: "Arabic", badge: "AR",
+  },
 };
 
 export const SUPPORTED_LANGUAGES = Object.keys(LANGUAGES);
 
-// Languages from the legacy website are listed for future localization work.
-// They are intentionally NOT supported routes until every JSON catalog is ready.
-export const PLANNED_LANGUAGES = Object.freeze(["ru", "pl", "de", "ja", "zh", "ko", "vi", "ar"]);

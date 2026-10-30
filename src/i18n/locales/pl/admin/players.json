@@ -1,0 +1,275 @@
+{
+  "title": "Pełna tabela graczy",
+  "description": "Pełne dane graczy do zarządzania regionem.",
+  "actions": {
+    "add": "Dodaj gracza",
+    "edit": "Edytuj",
+    "delete": "Usuń",
+    "save": "Zapisz",
+    "saving": "Zapisywanie...",
+    "cancel": "Anuluj",
+    "reset": "Resetuj"
+  },
+  "filters": {
+    "search": "Nick lub sojusz",
+    "allAlliance": "Sojusz: wszystkie",
+    "allTroops": "Typ wojska: wszystkie",
+    "allShifts": "Zmiana: wszystkie",
+    "captain": "Kapitan",
+    "captainAll": "Kapitan: wszyscy",
+    "captainYes": "Kapitan: tak",
+    "captainNo": "Kapitan: nie",
+    "ruleStatus": "Stan zasad",
+    "ruleStatusAll": "Status: wszystkie",
+    "ruleStatusAttention": "Wymaga uwagi",
+    "ruleStatusOk": "Bez problemów",
+    "perPage": "Graczy na stronie",
+    "perPageAll": "Wszystkie",
+    "perPageCount": "{{count}} na stronę"
+  },
+  "table": {
+    "nickname": "Nick",
+    "alliance": "Sojusz",
+    "troops": "Wojska",
+    "tier": "Poziom jednostek",
+    "lair": "Legowisko",
+    "march": "Marsz",
+    "rally": "Rajd",
+    "shift": "Zmiana",
+    "captain": "Kapitan",
+    "ready": "Gotowy",
+    "submitted": "Wysłano",
+    "comment": "Komentarz",
+    "actions": "Akcje"
+  },
+  "empty": "Nie znaleziono graczy.",
+  "loading": "Ładowanie...",
+  "yes": "Tak",
+  "no": "Nie",
+  "troops": {
+    "fighter": "Wojownik",
+    "rider": "Jeździec",
+    "shooter": "Strzelec"
+  },
+  "shifts": {
+    "shift1": "Zmiana 1",
+    "shift2": "Zmiana 2",
+    "shift3": "Zmiana 3",
+    "shift4": "Zmiana 4",
+    "flexible": "Dowolna zmiana"
+  },
+  "editor": {
+    "createTitle": "Nowy gracz",
+    "editTitle": "Edytuj gracza",
+    "createSubtitle": "Dodaj nowego gracza do bieżącego cyklu rejestracji.",
+    "editSubtitle": "Edycja rejestracji gracza {{name}}.",
+    "participation": {
+      "title": "Udział w Pustkowiu",
+      "description": "Główne parametry używane do rozstawiania graczy.",
+      "shift": "Zmiana",
+      "ready": "Gotowy do ataku",
+      "captain": "Kapitan",
+      "selectShift": "Wybierz zmianę"
+    },
+    "playerData": {
+      "title": "Dane gracza",
+      "description": "Informacje z rejestracji gracza.",
+      "nickname": "Nick",
+      "alliance": "Sojusz",
+      "tier": "Poziom jednostek",
+      "troopType": "Typ wojsk",
+      "lairLevel": "Poziom leża",
+      "marchSize": "Rozmiar marszu",
+      "rallySize": "Rozmiar rajdu"
+    },
+    "extraSquads": {
+      "title": "Dodatkowe oddziały",
+      "description": "Opcjonalne. Można wybrać maksymalnie dwa dodatkowe typy wojsk.",
+      "main": "Główny",
+      "comment": "Komentarz",
+      "commentPlaceholder": "Dodatkowe informacje o graczu..."
+    },
+    "validation": {
+      "nickname": "Wpisz nick.",
+      "alliance": "Wpisz sojusz.",
+      "troopType": "Wybierz typ wojska.",
+      "tier": "Wybierz tier.",
+      "lair": "Poziom legowiska nie może być mniejszy niż 0.",
+      "march": "Rozmiar marszu nie może być mniejszy niż 0.",
+      "rally": "Rozmiar rajdu nie może być mniejszy niż 0.",
+      "shift": "Wybierz zmianę."
+    },
+    "confirmDelete": "Usunąć gracza „{{name}}”?",
+    "ruleWarnings": {
+      "tier": "Poziom {{tier}} jest obecnie niedostępny dla nowych rejestracji. Gracz może go zachować.",
+      "shift": "{{shift}} jest obecnie niedostępna dla nowych rejestracji. Gracz może pozostać w tej zmianie."
+    }
+  },
+  "regionEditor": {
+    "action": "Edytor regionu",
+    "title": "Edytor regionu",
+    "description": "Przeglądaj graczy, sojusze oraz wielkość marszu i rajdu.",
+    "common": {
+      "close": "Zamknij",
+      "save": "Zapisz",
+      "saving": "Zapisywanie..."
+    },
+    "tabs": {
+      "players": "graczy",
+      "alliances": "Sojusze",
+      "combat": "Marsz i rajd"
+    },
+    "sidebar": {
+      "title": "graczy",
+      "description": "Wybierz gracza z listy.",
+      "search": "Szukaj po nicku lub sojuszu",
+      "empty": "Nie znaleziono graczy."
+    },
+    "players": {
+      "empty": "Wybierz gracza z listy.",
+      "player": "Gracz",
+      "tier": "Poziom jednostek",
+      "captain": "Kapitan",
+      "troopType": "Typ wojsk",
+      "march": "Rozmiar marszu",
+      "rally": "Rozmiar rajdu",
+      "shift": "Zmiana",
+      "lair": "Poziom leża",
+      "ready": "Gotowy do ataku",
+      "comment": "Komentarz"
+    },
+    "alliances": {
+      "empty": "Nie znaleziono sojuszy.",
+      "alliance": "Sojusz",
+      "registered": "Data rejestracji",
+      "captains": "Kapitanowie",
+      "tiers": "Poziomy jednostek"
+    },
+    "combat": {
+      "title": "Marsz i rajd",
+      "description": "Sortuj i edytuj rozmiary marszu i rajdu.",
+      "sortLabel": "Sortuj marsz i rajd",
+      "tableLabel": "Tabela marszu i rajdu",
+      "player": "Gracz",
+      "allianceTier": "Sojusz / poziom",
+      "march": "Marsz",
+      "rally": "Rajd",
+      "actions": "Akcje",
+      "sort": {
+        "marchDesc": "Marsz: od największego",
+        "marchAsc": "Marsz: od najmniejszego",
+        "rallyDesc": "Rajd: od największego",
+        "rallyAsc": "Rajd: od najmniejszego"
+      }
+    },
+    "sort": {},
+    "march": {
+      "title": "Rozmiar marszu",
+      "description": "Sortuj i edytuj wielkość marszu gracza.",
+      "current": "Bieżący marsz"
+    },
+    "rally": {
+      "title": "Rozmiar rajdu",
+      "description": "Sortuj i edytuj wielkość rajdu gracza.",
+      "current": "Bieżący rajd"
+    }
+  },
+  "errors": {
+    "load": "Nie udało się wczytać graczy.",
+    "save": "Nie udało się zapisać gracza.",
+    "delete": "Nie udało się usunąć gracza."
+  },
+  "stats": {
+    "total": "Razem",
+    "players": "graczy",
+    "captains": "Kapitanowie",
+    "inTurrets": "W wieżach",
+    "reserve": "Rezerwa"
+  },
+  "ruleStatus": {
+    "attentionSummary": "Wymagają uwagi: {{count}} graczy",
+    "tierUnavailable": "Poziom {{tier}} nie jest już dostępny w bieżącym cyklu.",
+    "shiftUnavailable": "{{shift}} nie jest już aktywna w bieżącym cyklu."
+  },
+  "localImport": {
+    "tabsLabel": "Źródło tabeli graczy",
+    "databaseTab": "Baza danych ({{count}})",
+    "localTab": "Tabela lokalna ({{count}})",
+    "title": "Lokalna tabela importu",
+    "fileSummary": "{{file}} · {{count}} graczy",
+    "ready": "Gotowy",
+    "problems": "Problemy",
+    "imported": "Zaimportowano",
+    "status": "Status",
+    "selectReady": "Zaznacz wszystkich dostępnych",
+    "transferSelected": "Przenieś zaznaczonych ({{count}})",
+    "transferAll": "Przenieś ({{count}})",
+    "transferring": "Przenoszenie...",
+    "transferSuccess": "Dodano {{count}} nowych graczy. Pominięto duplikatów: {{skipped}}.",
+    "transferError": "Nie udało się przenieść graczy: {{code}}",
+    "clearImported": "Wyczyść zaimportowanych",
+    "clearAll": "Usuń tabelę lokalną",
+    "clearConfirm": "Usunąć całą lokalną tabelę importu?",
+    "ownerAdminOnly": "Tylko właściciel lub administrator może przenieść lokalnych graczy do bazy danych.",
+    "duplicateD1": "Nick już istnieje w bazie danych",
+    "duplicateLocal": "Duplikat w tabeli lokalnej",
+    "issueLabels": {
+      "nickname": "Brak nicku",
+      "alliance": "Brak sojuszu",
+      "troopType": "Nieznany typ wojska",
+      "tier": "Nieznany poziom jednostek",
+      "shift": "Nieznana zmiana",
+      "captain": "Nie zmapowano wartości „kapitan”",
+      "readyAttack": "Nie zmapowano statusu gotowości"
+    },
+    "replaceSuccess": "Tabela bazy danych została zastąpiona. Przeniesiono graczy: {{count}}. Rejestracja pozostaje otwarta.",
+    "transferModal": {
+      "title": "Przenieś graczy do bazy danych",
+      "subtitle": "Wybierz sposób przeniesienia tabeli lokalnej do bazy danych.",
+      "selected": "Zaznaczone",
+      "newPlayers": "Nowy",
+      "duplicates": "Już w bazie danych",
+      "databaseNow": "Obecnie w bazie danych",
+      "addMissing": {
+        "title": "Dodaj tylko brakujących graczy",
+        "description": "Nowi gracze zostaną dodani. Istniejące nicki pozostaną bez zmian."
+      },
+      "replaceAll": {
+        "title": "Zastąp tabelę i pozostaw rejestrację otwartą",
+        "description": "Bieżąca tabela graczy zostanie zastąpiona tabelą lokalną. Nowe zgłoszenia przez stronę nadal będą przyjmowane.",
+        "onlyAllRows": "Ta opcja jest dostępna tylko przy przenoszeniu całej tabeli lokalnej."
+      },
+      "replaceWarning": "Tabela graczy bieżącego cyklu zostanie zastąpiona w jednej bezpiecznej transakcji. Zapisany szkic wież oraz opublikowany plan końcowy tego cyklu zostaną usunięte i trzeba będzie utworzyć je ponownie. Rejestracja pozostanie otwarta.",
+      "cancel": "Anuluj",
+      "processing": "Przenoszenie...",
+      "addButton": "Dodaj nowych ({{count}})",
+      "replaceButton": "Zamień tabelę",
+      "replaceAndClose": {
+        "title": "Zastąp tabelę i zamknij rejestrację",
+        "description": "Bieżąca tabela graczy zostanie zastąpiona tabelą lokalną, a następnie nowe rejestracje przez stronę zostaną zatrzymane."
+      },
+      "replaceAndCloseWarning": "Tabela graczy zostanie zastąpiona, a szkic wież i opublikowany plan bieżącego cyklu zostaną usunięte. Rejestracja zakończy się wcześniej. Po imporcie utwórz plan ponownie.",
+      "replaceAndCloseButton": "Zastąp i zamknij rejestrację"
+    },
+    "clearTitle": "Usuń tabelę lokalną",
+    "guideTitle": "Co zrobić z tabelą lokalną?",
+    "guideText": "To szkic importu. Gracze nie zostali jeszcze przeniesieni do bazy danych. Sprawdź dane, popraw błędy, a następnie kliknij „Przenieś” i wybierz sposób zapisu.",
+    "replaceAndCloseSuccess": "Tabela bazy danych została zastąpiona. Przeniesiono {{count}} graczy. Rejestracja została zamknięta."
+  },
+  "pagination": {
+    "label": "Strony tabeli graczy",
+    "previous": "Poprzednia strona",
+    "next": "Następna strona",
+    "pageOf": "{{page}} / {{pages}}"
+  },
+  "confirm": {
+    "deletePlayerTitle": "Usuń gracza"
+  },
+  "databaseTable": {
+    "clear": "Wyczyść tabelę bazy danych",
+    "clearTitle": "Wyczyścić tabelę bazy danych?",
+    "clearConfirm": "Wszyscy gracze bieżącego cyklu zostaną usunięci z bazy danych i tabeli publicznej. Sam cykl i jego ustawienia pozostaną.",
+    "clearSuccess": "Usunięto {{count}} graczy z tabeli bazy danych.",
+    "error": "Nie udało się wyczyścić tabeli bazy danych: {{code}}"
+  }
+}

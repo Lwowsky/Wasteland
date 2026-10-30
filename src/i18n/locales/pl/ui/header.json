@@ -1,0 +1,79 @@
+{
+  "home": "Strona główna",
+  "registration": "Rejestracja",
+  "players": "Tabela graczy",
+  "finalPlan": "Plan końcowy",
+  "settings": "Ustawienia",
+  "language": "Język",
+  "region": "Region",
+  "nextWasteland": "Następne Pustkowie",
+  "wastelandDate": "Data Pustkowia",
+  "registrationNotScheduled": "Nie wyznaczono daty następnej rejestracji",
+  "registrationOpens": "Otwarcie rejestracji",
+  "registrationDeadline": "Termin zakończenia rejestracji",
+  "organizerAlliance": "Sojusz organizatora",
+  "governor": "Gubernator",
+  "localTime": "Czas lokalny",
+  "loading": "Ładowanie...",
+  "loadError": "Nie udało się wczytać danych.",
+  "brand": "Wasteland King",
+  "utc": "UTC",
+  "admin": "Administrator",
+  "openNavigation": "Otwórz menu",
+  "closeNavigation": "Zamknij menu",
+  "toggleTimeZone": "Przełącz strefę czasową",
+  "languageOptions": {
+    "en": {
+      "badge": "EN",
+      "label": "English",
+      "description": "Angielski"
+    },
+    "uk": {
+      "badge": "UA",
+      "label": "Українська",
+      "description": "Ukraiński"
+    },
+    "ru": {
+      "badge": "RU",
+      "label": "Русский",
+      "description": "Rosyjski"
+    },
+    "pl": {
+      "badge": "PL",
+      "label": "Polski",
+      "description": "Polski"
+    },
+    "de": {
+      "badge": "DE",
+      "label": "Deutsch",
+      "description": "Niemiecki"
+    },
+    "ja": {
+      "badge": "JA",
+      "label": "日本語",
+      "description": "Japoński"
+    },
+    "zh": {
+      "badge": "ZH",
+      "label": "中文",
+      "description": "Chiński"
+    },
+    "ko": {
+      "badge": "KO",
+      "label": "한국어",
+      "description": "Koreański"
+    },
+    "vi": {
+      "badge": "VI",
+      "label": "Tiếng Việt",
+      "description": "Wietnamski"
+    },
+    "ar": {
+      "badge": "AR",
+      "label": "العربية",
+      "description": "Arabski"
+    }
+  },
+  "languagesAvailable": "aktywne",
+  "languageSelected": "Wybrany język"
+}

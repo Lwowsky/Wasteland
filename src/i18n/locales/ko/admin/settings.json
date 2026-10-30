@@ -1,0 +1,480 @@
+{
+  "title": "설정",
+  "description": "사이트 외관, 플레이어 가져오기/내보내기, 백업, 접근 권한 및 시스템 도구를 관리합니다.",
+  "sections": {
+    "import": "가져오기",
+    "export": "내보내기",
+    "backup": "백업",
+    "system": "시스템",
+    "access": "접근 권한"
+  },
+  "siteIdentity": {
+    "eyebrow": "사이트 외관",
+    "title": "이름, 지역 및 바닥글",
+    "description": "사이트 이름, 브랜드 문구, 지역 번호와 이름, 바닥글 내용을 변경합니다.",
+    "edit": "사이트 설정",
+    "ownerOnly": "소유자만 편집할 수 있습니다.",
+    "saved": "사이트 설정을 저장했습니다.",
+    "summary": {
+      "siteName": "사이트 이름",
+      "region": "지역",
+      "brand": "로고 문구"
+    },
+    "identity": {
+      "title": "사이트 기본 정보",
+      "description": "이 값은 사이트 머리글, 브라우저 탭 제목 및 지역 정보에 사용됩니다."
+    },
+    "footer": {
+      "title": "바닥글 내용",
+      "description": "지원되는 각 언어별로 바닥글 문구를 설정합니다.",
+      "languageLabel": "바닥글 언어",
+      "languageHelp": "기본적으로 JSON 번역을 표시합니다. 변경된 항목만 D1에 재정의 값으로 저장됩니다. 빈 항목은 저장 시 기본값으로 되돌아갑니다. 언어별로 따로 편집하세요.",
+      "restoreDefaults": "기본 문구 복원",
+      "restoreHelp": "JSON 번역에서 선택한 언어의 문구를 복원합니다. 저장하면 적용됩니다.",
+      "restoreNotice": "초안의 기본 문구를 복원했습니다. '변경 사항 저장'을 눌러 적용하세요."
+    },
+    "fields": {
+      "siteName": "사이트 이름",
+      "brandText": "로고 / 브랜드 문구",
+      "regionNumber": "지역 번호",
+      "regionName": "지역 이름",
+      "footerDescription": "바닥글 사이트 설명",
+      "authorLabel": "제작자 영역 레이블",
+      "author": "제작자 이름",
+      "authorDescription": "제작자 소개",
+      "projectDescription": "프로젝트 설명",
+      "copyright": "저작권 문구"
+    },
+    "help": {
+      "siteName": "브라우저 탭 제목과 SEO 제목에 사용됩니다.",
+      "brandText": "사이트 머리글과 바닥글에 표시됩니다."
+    },
+    "modal": {
+      "title": "사이트 설정",
+      "subtitle": "코드를 수정하지 않고도 사이트 이름, 지역 및 바닥글 내용을 변경할 수 있습니다.",
+      "footerHint": "저장하면 변경 사항이 즉시 적용됩니다.",
+      "unsaved": "저장하지 않은 변경 사항"
+    },
+    "actions": {
+      "close": "닫기",
+      "cancel": "취소",
+      "save": "변경 사항 저장",
+      "saving": "저장 중…"
+    },
+    "errors": {
+      "load": "사이트 설정을 불러오지 못했습니다.",
+      "save": "사이트 설정을 저장하지 못했습니다."
+    },
+    "unsaved": {
+      "title": "저장하지 않은 변경 사항을 버리시겠습니까?",
+      "message": "사이트 설정이나 바닥글 문구를 변경했습니다. 지금 창을 닫으면 변경 사항이 사라집니다.",
+      "discard": "변경 사항 버리기",
+      "keepEditing": "계속 편집"
+    }
+  },
+  "import": {
+    "title": "플레이어 가져오기",
+    "description": "XLSX, XLS 또는 CSV 파일을 현재 주기의 플레이어 목록으로만 가져옵니다.",
+    "chooseFile": "플레이어 파일 선택",
+    "reading": "파일 읽는 중…",
+    "formats": "XLSX · XLS · CSV",
+    "cancel": "취소",
+    "importing": "가져오는 중…",
+    "success": "가져오기 성공: 플레이어 {{count}}명.",
+    "fixBeforeImport": "가져오기 전에 파일 오류와 중복 항목을 해결하세요.",
+    "preview": {
+      "title": "검증 미리보기",
+      "total": "행",
+      "valid": "준비됨",
+      "invalid": "개 오류",
+      "duplicates": "개 중복",
+      "problems": "수정이 필요한 항목",
+      "row": "{{row}}행",
+      "rowShort": "행",
+      "showing": "총 {{total}}개 중 {{from}}–{{to}} 표시",
+      "perPage": "페이지당",
+      "all": "전체",
+      "page": "{{page}} / {{pages}}",
+      "previous": "이전 페이지",
+      "next": "다음 페이지"
+    },
+    "errors": {
+      "readFile": "파일을 읽지 못했습니다. XLSX/XLS/CSV 형식을 확인하세요.",
+      "emptyFile": "파일에 플레이어 행이 없습니다.",
+      "importFailed": "가져오기에 실패했습니다. 데이터가 들어갔다고 가정하지 말고 Worker와 파일을 확인하세요.",
+      "duplicateExisting": "이 닉네임은 현재 주기에 이미 존재합니다",
+      "duplicateFile": "이 닉네임은 파일에 중복되어 있습니다",
+      "invalidField": {
+        "nickname": "닉네임 누락",
+        "alliance": "동맹 누락",
+        "troopType": "알 수 없는 병종",
+        "tier": "티어는 T1–T14여야 합니다",
+        "shift": "알 수 없는 교대",
+        "captain": "알 수 없는 대장 값 — 예/아니요를 직접 선택하세요",
+        "readyAttack": "알 수 없는 준비 상태 — 예/아니요를 직접 선택하세요"
+      },
+      "saveDraftFailed": "로컬 가져오기 초안을 저장하지 못했습니다."
+    },
+    "close": "닫기",
+    "fields": {
+      "nickname": "닉네임",
+      "alliance": "동맹",
+      "troopType": "병종",
+      "tier": "티어",
+      "lairLevel": "소굴 레벨",
+      "marchSize": "행군 규모",
+      "rallySize": "랠리 규모",
+      "shift": "교대",
+      "readyAttack": "공격 가능",
+      "captain": "캡틴",
+      "comment": "댓글",
+      "extraFighterTier": "추가 부대 — 파이터",
+      "extraRiderTier": "추가 부대 — 라이더",
+      "extraShooterTier": "추가 부대 — 슈터"
+    },
+    "mapping": {
+      "cardHint": "파일을 선택하면 Excel의 각 열을 플레이어 항목과 연결하는 매핑 창이 열립니다.",
+      "title": "플레이어 가져오기 설정",
+      "subtitle": "파일: {{file}}. 사이트 항목에 맞는 열을 선택하세요.",
+      "fileSummary": "열: {{columns}} · 행: {{rows}}",
+      "fieldsTitle": "열 매핑",
+      "fieldsText": "왼쪽은 사이트 항목이고 오른쪽은 업로드한 열입니다. 사용하지 않는 열은 추가 플레이어 항목으로 넣을 수 있습니다.",
+      "required": "가져오기 필수",
+      "custom": "추가 항목",
+      "customName": "추가 항목 이름",
+      "skip": "— 가져오지 않음 —",
+      "unknownTitle": "인식되지 않은 파일 열",
+      "unknownText": "파일에 사이트에 없는 정보가 있다면 해당 열을 추가 플레이어 항목으로 넣으세요.",
+      "addCustom": "항목으로 추가",
+      "removeCustom": "추가 항목 제거",
+      "previewText": "가져오기 전에 값을 표준화합니다: Tier 10 → T10, первая половина / 1st shift → 1교대, вторая половина / 2nd shift → 2교대, оба подходят / both are suitable → 유연 교대.",
+      "status": "상태",
+      "ok": "준비됨",
+      "ready": "플레이어 {{count}}명이 가져올 준비가 되었습니다.",
+      "importCount": "{{count}}명 가져오기",
+      "saveMapping": "열 매핑 저장",
+      "saved": "매핑 저장됨",
+      "continueMapping": "파일 설정 계속"
+    },
+    "destination": {
+      "title": "플레이어 준비 위치",
+      "text": "먼저 파일을 로컬 초안으로 저장하고 값을 확인한 뒤 현재 주기로 옮기는 것을 권장합니다.",
+      "staging": "로컬 초안",
+      "stagingText": "데이터베이스에는 기록하지 않습니다. 매핑을 수정한 뒤 나중에 계속할 수 있습니다.",
+      "current": "현재 주기",
+      "currentText": "플레이어를 현재 주기에 직접 기록합니다. 오류나 중복이 없을 때만 가능합니다.",
+      "saveDraft": "{{count}}개를 초안으로 저장",
+      "draftWithErrors": "오류가 있어도 초안은 저장할 수 있습니다. 해당 행은 데이터베이스에 기록되지 않습니다."
+    },
+    "draft": {
+      "title": "로컬 가져오기 초안",
+      "summary": "{{file}} · {{count}}행",
+      "open": "초안 열기",
+      "clear": "초안 삭제",
+      "saved": "{{count}}행을 로컬 초안에 저장했습니다.",
+      "help": "초안은 이 브라우저에만 저장됩니다. 데이터베이스와 사이트 목록에 플레이어를 추가하려면 '플레이어 목록' → '로컬 목록'에서 '이동'을 누르세요."
+    },
+    "valueMapping": {
+      "title": "값 매핑",
+      "text": "사이트가 병종, 티어, 교대, 대장 또는 준비 상태 값을 인식하지 못하면 올바른 값을 직접 선택하세요. 알 수 없는 값은 더 이상 자동으로 '아니요'로 변환되지 않습니다.",
+      "choose": "— 직접 선택 —",
+      "troops": {
+        "fighter": "전사",
+        "rider": "기병",
+        "shooter": "사수"
+      },
+      "shifts": {
+        "shift1": "교대 1",
+        "shift2": "교대 2",
+        "shift3": "교대 3",
+        "shift4": "교대 4",
+        "flexible": "모든 교대 가능"
+      },
+      "yes": "예",
+      "no": "아니요"
+    }
+  },
+  "export": {
+    "title": "플레이어 내보내기",
+    "description": "플레이어 목록 데이터만 내보냅니다.",
+    "excel": "Excel 내보내기",
+    "fileName": "파일 이름",
+    "download": "Excel 다운로드",
+    "options": {
+      "players": "플레이어 기본 정보",
+      "readiness": "준비 상태 및 대장",
+      "extraSquads": "추가 부대",
+      "comments": "메모"
+    },
+    "excelLabels": {
+      "sheets": {
+        "players": "플레이어"
+      },
+      "columns": {
+        "nickname": "닉네임",
+        "alliance": "동맹",
+        "troop": "병종",
+        "tier": "티어",
+        "lair": "은신처",
+        "march": "행군력",
+        "rally": "랠리",
+        "shift": "교대",
+        "submitted": "제출됨",
+        "captain": "캡틴",
+        "readyAttack": "공격 가능",
+        "comment": "댓글",
+        "setting": "설정",
+        "value": "값",
+        "role": "역할",
+        "permissions": "권한",
+        "active": "활성",
+        "extraFighterTier": "추가 부대 — 파이터",
+        "extraRiderTier": "추가 부대 — 라이더",
+        "extraShooterTier": "추가 부대 — 슈터"
+      }
+    },
+    "settingsButton": "설정",
+    "selectedSummary": "선택한 열: {{count}}개",
+    "modal": {
+      "title": "내보내기 설정",
+      "subtitle": "Excel에 포함할 플레이어 목록 항목을 선택하세요.",
+      "close": "닫기",
+      "selectAll": "모두 선택",
+      "clearAll": "모두 지우기",
+      "selected": "선택됨: {{count}}",
+      "customField": "추가 항목",
+      "done": "완료"
+    }
+  },
+  "backup": {
+    "title": "백업",
+    "description": "전체 지역 백업을 컴퓨터에 다운로드하거나 JSON 파일로 사이트를 복원합니다.",
+    "ownerOnly": "소유자만 전체 백업을 만들거나 복원할 수 있습니다.",
+    "create": "생성 및 다운로드",
+    "creating": "백업 생성 중…",
+    "restore": "파일에서 복원",
+    "created": "백업을 생성하고 다운로드했습니다.",
+    "restored": "백업을 복원했습니다.",
+    "note": "백업은 데이터베이스에 저장되지 않고 로컬 JSON 파일로 보관됩니다. 사용자와 역할은 포함되지 않습니다.",
+    "errors": {
+      "create": "백업을 만들지 못했습니다.",
+      "invalidFile": "지원되는 Wasteland 백업 파일이 아닙니다.",
+      "restore": "백업을 복원하지 못했습니다. 현재 데이터가 완전히 복원되었다고 가정하지 마세요."
+    },
+    "restoreModal": {
+      "title": "백업 복원",
+      "subtitle": "현재 지역 데이터가 선택한 파일의 데이터로 교체됩니다.",
+      "warningTitle": "현재 데이터를 덮어씁니다",
+      "warningText": "복원하기 전에 시스템이 현재 상태의 긴급 백업을 자동으로 다운로드합니다. Firebase Auth와 adminUsers는 변경되지 않습니다. 이전에 만든 플레이어 목록 및 최종 계획의 비공개 링크는 모두 철회됩니다. 복원 후 새 링크를 만드세요.",
+      "createdAt": "백업 생성일",
+      "players": "플레이어",
+      "periods": "주기",
+      "alliances": "동맹 순환 기록",
+      "requests": "접근 권한 요청",
+      "phraseLabel": "확인하려면 정확한 문구를 입력하세요:",
+      "help": "복원 버튼은 10초 후에도 활성화됩니다.",
+      "cancel": "취소",
+      "confirm": "데이터 복원",
+      "restoring": "복원 중…",
+      "phrase": "RESTORE REGION DATA"
+    }
+  },
+  "factoryReset": {
+    "eyebrow": "위험 구역",
+    "title": "지역 데이터 초기화",
+    "description": "선택한 지역의 데이터를 완전히 지우고 기본 설정을 복원합니다.",
+    "preserved": {
+      "title": "사용자와 역할은 보호됩니다",
+      "text": "Firebase Auth와 adminUsers 컬렉션은 유지됩니다. 소유자, 관리자, 영사 및 할당된 접근 권한은 그대로 유지됩니다."
+    },
+    "open": "지역 데이터 초기화",
+    "modal": {
+      "title": "지역 데이터 초기화",
+      "subtitle": "지울 항목을 정확히 선택하세요. 이 작업은 데이터베이스에서 데이터를 삭제합니다."
+    },
+    "warning": {
+      "title": "이 작업은 데이터를 파괴합니다",
+      "text": "선택한 데이터가 사이트 데이터베이스에서 실제로 삭제됩니다. 백업 없이는 복원할 수 없습니다."
+    },
+    "deleteAll": {
+      "title": "모든 지역 데이터 삭제",
+      "description": "아래 모든 범주를 선택해 사이트를 새로운 빈 지역으로 초기화합니다."
+    },
+    "options": {
+      "players": {
+        "title": "플레이어 및 등록",
+        "description": "등록, public_players 및 플레이어 통계를 삭제합니다."
+      },
+      "cycles": {
+        "title": "등록 주기",
+        "description": "모든 주기 기록을 삭제합니다. 플레이어도 각 주기에 속하므로 함께 삭제됩니다."
+      },
+      "alliances": {
+        "title": "동맹 및 순환",
+        "description": "동맹, 순환, 주최 동맹 및 총독을 지웁니다."
+      },
+      "registrationSettings": {
+        "title": "등록 설정",
+        "description": "주기, T9–T14, 1교대/2교대/유연 교대, 양식 항목 및 공개 접근을 출고 기본값으로 복원합니다."
+      },
+      "accessRequests": {
+        "title": "접근 권한 요청",
+        "description": "Firestore에서 이전/대기 중인 accessRequests를 삭제하며 adminUsers에는 영향을 주지 않습니다."
+      },
+      "browserData": {
+        "title": "이 브라우저의 로컬 데이터",
+        "description": "이 기기의 플레이어 템플릿, 최종 계획 설정 및 현지 시간 설정을 지웁니다."
+      }
+    },
+    "preview": {
+      "title": "현재 저장된 데이터",
+      "loading": "데이터베이스 확인 중…",
+      "players": "플레이어 등록",
+      "periods": "주기",
+      "stats": "주기 통계",
+      "alliances": "순환 기록",
+      "requests": "접근 권한 요청"
+    },
+    "confirmation": {
+      "label": "확인하려면 정확한 문구를 입력하세요:",
+      "help": "삭제 버튼은 10초 동안 비활성화됩니다.",
+      "phrase": "DELETE REGION DATA"
+    },
+    "actions": {
+      "cancel": "취소",
+      "delete": "선택한 데이터 삭제",
+      "deleting": "삭제 중…"
+    },
+    "errors": {
+      "preview": "데이터 미리보기를 불러오지 못했습니다.",
+      "reset": "초기화에 실패했습니다. 모든 데이터가 지워졌다고 가정하지 말고 Worker를 확인한 후 다시 시도하세요.",
+      "backup": "백업을 다운로드하지 못하여 초기화가 중단되었습니다. 백업 없이 진행하려는 경우에만 이 옵션을 끄세요."
+    },
+    "preservedSummary": "사용자 계정과 소유자/관리자/영사 역할은 절대 삭제되지 않습니다.",
+    "backupBeforeReset": {
+      "title": "초기화 전에 백업 다운로드",
+      "description": "삭제하기 전에 시스템이 현재 사이트 데이터를 수집하고 JSON 파일을 이 기기에 다운로드합니다. 데이터베이스에는 백업을 남기지 않습니다."
+    }
+  },
+  "access": {
+    "title": "접근 권한",
+    "description": "플레이어 목록과 최종 계획을 열 수 있는 대상을 제어합니다.",
+    "resourceLabel": "설정할 리소스",
+    "resources": {
+      "players": "플레이어 목록",
+      "final_plan": "최종 배치"
+    },
+    "loading": "접근 설정 불러오는 중…",
+    "cycle": "주기 #{{cycle}}",
+    "cycleNote": "정적 공유 링크는 주기를 넘어 유지될 수 있지만 현재 주기에 게시된 데이터만 표시합니다.",
+    "modeLabel": "접근 모드",
+    "publicWarning": "공개 모드에서는 다음 JSON 게시가 성공한 후 누구나 비밀번호 없이 현재 주기 데이터를 볼 수 있습니다. 모드 전환 시 이전 비공개 링크가 철회됩니다. 달력 기반 주기 종료 규칙은 계속 적용됩니다.",
+    "modes": {
+      "public": "공개 — 누구나 볼 수 있음",
+      "private": "닫힘 — 공개 페이지 이용 불가",
+      "link": "비공개 링크"
+    },
+    "status": {
+      "public": "공개 접근",
+      "private": "접근 닫힘",
+      "active": "비공개 접근 활성",
+      "needsToken": "비공개 공유 링크 만들기"
+    },
+    "tokenLifetime": {
+      "label": "링크 유효 기간"
+    },
+    "duration": {
+      "hours24": "24시간",
+      "cycle": "현재 주기 종료까지",
+      "hours1": "1시간",
+      "hours6": "6시간",
+      "hours12": "12시간",
+      "days7": "7일",
+      "forever": "만료 없음"
+    },
+    "generated": {
+      "title": "새 접근 권한 생성됨",
+      "once": "이 링크를 지금 복사하세요. 다음 JSON 게시 후 활성화되며 전체 코드는 공개 GitHub에 저장되지 않습니다."
+    },
+    "actions": {
+      "save": "저장",
+      "generateLink": "새 링크 만들기",
+      "copy": "복사",
+      "revoke": "철회"
+    },
+    "messages": {
+      "saved": "접근 설정이 저장되었습니다.",
+      "generated": "링크가 생성되었습니다. 다음 스냅샷 게시 후 사용할 수 있습니다. 이전 링크도 계속 유효합니다.",
+      "revoked": "링크가 철회되었습니다. 다음 스냅샷 게시 후 정적 접근이 중단됩니다.",
+      "copied": "복사되었습니다.",
+      "historyDeleted": "보관된 링크 기록이 삭제되었습니다."
+    },
+    "errors": {
+      "load": "접근 설정을 불러오지 못했습니다.",
+      "save": "접근 설정을 저장하지 못했습니다.",
+      "generate": "비공개 링크를 만들지 못했습니다.",
+      "revoke": "접근 권한을 철회하지 못했습니다.",
+      "copy": "복사하지 못했습니다.",
+      "noPeriod": "현재 비공개 접근에 사용할 주기가 없습니다.",
+      "deleteLink": "보관된 링크를 삭제하지 못했습니다."
+    },
+    "staticLinks": {
+      "title": "생성된 링크 (소유자와 관리자가 저장된 링크를 복사할 수 있음)",
+      "active": "활성",
+      "inactive": "만료 또는 철회됨",
+      "history": "기록 — 만료 및 철회됨",
+      "delete": "기록 삭제",
+      "confirmDelete": "비활성 링크 기록을 영구적으로 삭제하시겠습니까?",
+      "deleteTitle": "보관된 링크를 삭제하시겠습니까?",
+      "cancel": "취소"
+    }
+  },
+  "sharedConsul": {
+    "title": "공유 영사 비밀번호",
+    "description": "새 비밀번호를 생성합니다. 이전 비밀번호와 모든 세션이 즉시 철회됩니다.",
+    "duration": "만료 기간",
+    "day": "하루",
+    "wasteland": "황무지 이벤트 종료까지",
+    "forever": "키 만료 없음",
+    "generate": "새 비밀번호 생성",
+    "revoke": "접근 권한 철회",
+    "active": "접근 활성",
+    "failed": "접근 설정을 불러오지 못했습니다.",
+    "noWasteland": "현재 황무지 이벤트 종료 날짜를 확인할 수 없습니다.",
+    "copy": "복사",
+    "cancel": "취소",
+    "close": "닫기",
+    "ok": "확인",
+    "copySuccessTitle": "비밀번호 복사됨",
+    "copySuccess": "영사 접근 비밀번호를 클립보드에 복사했습니다. 신뢰할 수 있는 사람에게만 공유하세요.",
+    "copyExpires": "비밀번호 만료일:",
+    "copyForeverWarning": "이 비밀번호는 만료되지 않습니다. 보안을 위해 각 황무지 이벤트 후 새 비밀번호를 만들거나 하루 또는 이벤트 종료까지의 접근을 선택하세요.",
+    "multipleDescription": "최대 5개의 비밀번호를 동시에 활성화할 수 있습니다. 새 비밀번호를 만들어도 기존 접근 권한은 철회되지 않습니다. 소유자만 제어할 수 있습니다.",
+    "legacyKey": "이전 Stage 042 비밀번호",
+    "keyName": "비밀번호 이름",
+    "keyPlaceholder": "예: 10월 영사",
+    "limitReached": "활성 비밀번호가 이미 5개 있습니다. 하나를 철회하거나 만료될 때까지 기다리세요.",
+    "showPassword": "비밀번호 표시",
+    "passwordPrivacy": "이 비밀번호를 신뢰할 수 없는 사람에게 공유하지 마세요. 복사한 뒤 창을 닫으세요.",
+    "confirmSingleRevoke": "이 비밀번호만 철회하시겠습니까? 해당 비밀번호 사용자는 접근 권한을 잃지만 다른 비밀번호는 유효합니다.",
+    "confirmChangeDuration": "이 비밀번호의 만료 기간을 변경하시겠습니까? 다른 비밀번호는 그대로 유지됩니다.",
+    "confirmUpdate": "만료 기간 변경",
+    "confirmAdd": "비밀번호를 하나 더 만들까요? 기존 비밀번호는 계속 유효합니다.",
+    "tabsActive": "활성",
+    "tabsHistory": "기록",
+    "tabsCreate": "생성",
+    "emptyActive": "활성 비밀번호가 없습니다.",
+    "emptyHistory": "만료되거나 철회된 비밀번호가 없습니다.",
+    "historyHint": "만료되거나 철회된 비밀번호가 여기에 표시됩니다. 기록을 영구 삭제할 수 있습니다.",
+    "deleteHistory": "기록 삭제",
+    "confirmDeleteHistory": "이 기록을 영구 삭제하시겠습니까? 다른 비밀번호에는 영향이 없습니다.",
+    "expired": "만료됨",
+    "revoked": "취소됨",
+    "copyPassword": "비밀번호 복사",
+    "hidePassword": "숨기기",
+    "createdAt": "생성일:",
+    "historyLegacy": "이전 비밀번호는 표시할 수 없습니다. 철회하면 접근이 중단됩니다.",
+    "createHint": "비밀번호는 최대 5개까지 동시에 활성화할 수 있습니다. 기존 비밀번호도 유효합니다.",
+    "deleteBlocked": "삭제하기 전에 활성 비밀번호를 철회하세요."
+  }
+}

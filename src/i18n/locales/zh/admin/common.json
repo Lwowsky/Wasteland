@@ -1,0 +1,40 @@
+{
+  "title": "区域管理",
+  "subtitle": "管理权限、玩家、炮塔及报名。",
+  "checkingAccess": "正在检查权限…",
+  "navigationLabel": "管理导航",
+  "tabs": {
+    "access": "角色与权限",
+    "players": "玩家列表",
+    "distribution": "炮塔分配",
+    "registration": "报名设置",
+    "settings": "设置"
+  },
+  "actions": {
+    "save": "保存",
+    "cancel": "取消",
+    "edit": "编辑",
+    "delete": "删除",
+    "close": "关闭",
+    "logout": "退出登录",
+    "reset": "重置",
+    "add": "添加",
+    "removeAccess": "删除权限"
+  },
+  "status": {
+    "active": "启用",
+    "blocked": "已封禁",
+    "pending": "待处理",
+    "approved": "已批准",
+    "rejected": "已拒绝"
+  },
+  "yes": "是",
+  "no": "否",
+  "roles": {
+    "owner": "所有者",
+    "admin": "管理后台",
+    "consul": "执政官"
+  },
+  "loading": "加载中...",
+  "unknown": "未知"
+}

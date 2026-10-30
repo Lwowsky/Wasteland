@@ -1,0 +1,67 @@
+{
+  "title": "最终方案状态",
+  "regionSelector": {
+    "label": "选择区域",
+    "home": "主区域",
+    "captureRegion1": "占领区域 1",
+    "captureRegion2": "占领区域 2"
+  },
+  "shift1": "班次 1",
+  "shift2": "班次 2",
+  "share": "分享",
+  "typeByCaptain": "由队长选择兵种",
+  "noPlayers": "没有分配玩家",
+  "towers": {
+    "hub": "技术中心",
+    "north": "北炮塔",
+    "west": "西炮塔",
+    "east": "东炮塔",
+    "south": "南炮塔"
+  },
+  "troops": {
+    "fighter": "战士",
+    "rider": "骑兵",
+    "shooter": "射手"
+  },
+  "signatureAlt": "由 Lwowsky 开发",
+  "textExport": {
+    "signature": "由 Lwowsky 开发"
+  },
+  "loadingPlan": "正在加载已发布的方案…",
+  "loadFailed": "无法加载方案，请刷新页面。",
+  "unpublishedTitle": "等待发布",
+  "notPublished": "本周期尚未发布最终方案。",
+  "lastPublished": "发布时间：{{date}}",
+  "shift3": "班次 3",
+  "shift4": "班次 4",
+  "metrics": {
+    "legend": "行军总量",
+    "capacity": "队长行军量 + 集结容量",
+    "used": "炮塔内行军量",
+    "remaining": "剩余集结空间",
+    "unavailable": "请重新发布以包含集结容量"
+  },
+  "labels": {
+    "captain": "队长",
+    "players": "— 选择玩家 —"
+  },
+  "languageModal": {
+    "title": "最终方案语言",
+    "subtitle": "选择方案语言。英语始终启用。",
+    "close": "关闭",
+    "done": "完成",
+    "alwaysOn": "始终启用",
+    "help": "英语始终启用，乌克兰语可选。",
+    "choices": {
+      "uk": "Українська",
+      "en": "English"
+    }
+  },
+  "toolbar": {
+    "language": "方案语言",
+    "png": "下载 PNG",
+    "txt": "下载 TXT（所有班次）",
+    "exportFailed": "无法保存图片，请重试。"
+  },
+  "refreshPlan": "刷新方案"
+}

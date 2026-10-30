@@ -1,0 +1,40 @@
+{
+  "title": "إدارة المنطقة",
+  "subtitle": "إدارة الوصول واللاعبين والأبراج والتسجيل.",
+  "checkingAccess": "جارٍ التحقق من الوصول...",
+  "navigationLabel": "التنقل الإداري",
+  "tabs": {
+    "access": "الأدوار والوصول",
+    "players": "جدول اللاعبين",
+    "distribution": "توزيع الأبراج",
+    "registration": "إعدادات التسجيل",
+    "settings": "الإعدادات"
+  },
+  "actions": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "close": "إغلاق",
+    "logout": "تسجيل الخروج",
+    "reset": "إعادة تعيين",
+    "add": "إضافة",
+    "removeAccess": "حذف الوصول"
+  },
+  "status": {
+    "active": "نشطة",
+    "blocked": "محظور",
+    "pending": "معلق",
+    "approved": "تمت الموافقة",
+    "rejected": "مرفوض"
+  },
+  "yes": "نعم",
+  "no": "لا",
+  "roles": {
+    "owner": "المالك",
+    "admin": "مسؤول",
+    "consul": "القنصل"
+  },
+  "loading": "جارٍ التحميل...",
+  "unknown": "غير معروف"
+}

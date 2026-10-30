@@ -1,0 +1,18 @@
+{
+  "home": {
+    "title": "홈",
+    "description": "웹사이트 메인 페이지입니다."
+  },
+  "about": {
+    "title": "소개",
+    "description": "웹사이트 정보입니다."
+  },
+  "contact": {
+    "title": "문의",
+    "description": "연락처 정보입니다."
+  },
+  "notFound": {
+    "title": "404",
+    "description": "페이지를 찾을 수 없습니다."
+  }
+}

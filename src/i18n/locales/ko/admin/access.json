@@ -1,0 +1,163 @@
+{
+  "title": "사용자 및 권한",
+  "description": "사용자, 역할 및 개별 권한을 관리합니다.",
+  "tabs": {
+    "users": "사용자",
+    "requests": "요청",
+    "limits": "한도"
+  },
+  "cards": {
+    "owner": {
+      "title": "소유자",
+      "description": "모든 권한을 가집니다. 역할과 권한은 Firebase에서만 수동으로 변경할 수 있습니다."
+    },
+    "admin": {
+      "title": "관리자",
+      "description": "지역 초기화를 제외한 모든 소유자 권한을 가집니다."
+    },
+    "consul": {
+      "title": "영사",
+      "description": "플레이어, 포탑, 등록 및 작업 설정 도구를 모두 사용할 수 있지만 역할 관리, 사이트 모양 변경, 지역 초기화는 할 수 없습니다."
+    },
+    "requests": {
+      "title": "요청",
+      "description": "검토 대기 중인 새 관리자 권한 요청입니다."
+    }
+  },
+  "roles": {
+    "owner": {
+      "title": "소유자",
+      "description": "모든 권한을 가집니다. 역할과 권한은 Firebase에서만 수동으로 변경할 수 있습니다."
+    },
+    "admin": {
+      "title": "관리자",
+      "description": "지역 초기화를 제외한 모든 소유자 권한을 가집니다."
+    },
+    "consul": {
+      "title": "영사",
+      "description": "플레이어, 포탑, 등록 및 작업 설정 도구를 모두 사용할 수 있지만 역할 관리, 사이트 모양 변경, 지역 초기화는 할 수 없습니다."
+    }
+  },
+  "usersCount": "사용자",
+  "pendingCount": "대기 중",
+  "columns": {
+    "user": "사용자",
+    "role": "역할",
+    "permissions": "권한",
+    "status": "상태",
+    "actions": "작업"
+  },
+  "permissions": {
+    "owner": "모든 권한"
+  },
+  "actions": {
+    "removeAccess": "접근 권한 삭제",
+    "ownerLocked": "소유자는 Firebase에서만 변경할 수 있습니다",
+    "notAllowed": "권한이 부족합니다",
+    "openUser": "사용자 열기"
+  },
+  "modal": {
+    "role": "역할",
+    "status": "상태",
+    "createdAt": "생성됨",
+    "updatedAt": "업데이트됨",
+    "permissions": "권한",
+    "permissionsCount": "개 권한",
+    "permissionsText": "역할에서 허용하는 범위 내에서 개별 사용자의 권한을 제한할 수 있습니다.",
+    "ownerPermissions": "소유자는 항상 모든 권한을 가지며 사이트에서 편집할 수 없습니다.",
+    "technicalInfo": "기술 정보",
+    "uid": "UID",
+    "saving": "저장 중…",
+    "restoreDefaults": "역할 기본값 복원",
+    "disableRolePermissions": "모든 권한 비활성화"
+  },
+  "permissionGroups": {
+    "access": {
+      "title": "사용자 및 권한",
+      "description": "역할과 관리자 접근 권한을 관리합니다."
+    },
+    "players": {
+      "title": "플레이어 목록",
+      "description": "플레이어 데이터를 조회하고 관리합니다."
+    },
+    "distribution": {
+      "title": "배치 및 최종 계획",
+      "description": "포탑과 최종 계획을 관리합니다."
+    },
+    "registration": {
+      "title": "등록",
+      "description": "등록 설정을 관리합니다."
+    },
+    "requests": {
+      "title": "요청",
+      "description": "접근 요청을 조회하고 처리합니다."
+    },
+    "settings": {
+      "title": "설정",
+      "description": "가져오기, 내보내기 및 시스템 도구를 이용합니다."
+    }
+  },
+  "permissionLabels": {
+    "view_access": "사용자 및 역할 보기",
+    "manage_access": "접근 권한 편집",
+    "manage_consuls": "영사 사용자 관리",
+    "grant_admin": "관리자 역할 부여",
+    "view_players": "플레이어 목록 보기",
+    "edit_players": "플레이어 편집",
+    "delete_players": "플레이어 삭제",
+    "view_distribution": "배치 보기",
+    "edit_distribution": "배치 편집",
+    "view_registration_settings": "등록 설정 보기",
+    "edit_registration_settings": "등록 설정 편집",
+    "view_requests": "요청 보기",
+    "manage_requests": "요청 승인 및 거절",
+    "view_settings": "접근 설정",
+    "import_players": "플레이어 목록 가져오기",
+    "clear_players": "전체 플레이어 목록 비우기",
+    "publish_final_plan": "최종 계획 게시 및 복원",
+    "manage_content_access": "공개 콘텐츠 접근 권한 관리",
+    "manage_site_appearance": "사이트 외관",
+    "manage_region_backup": "지역 백업 및 복원",
+    "reset_region": "지역 데이터 초기화"
+  },
+  "loading": "사용자 불러오는 중…",
+  "errors": {
+    "load": "사용자를 불러오지 못했습니다.",
+    "save": "사용자 권한을 저장하지 못했습니다.",
+    "delete": "접근 권한 삭제에 실패했습니다."
+  },
+  "confirm": {
+    "removeAccess": "{{name}}님의 접근 권한을 삭제하시겠습니까?"
+  },
+  "cloudflareLimits": {
+    "title": "Cloudflare — 한도 및 사용량",
+    "description": "계정 전체의 현재 Workers 및 D1 사용량입니다.",
+    "metricWorkers": "Workers — 요청 수",
+    "metricD1Reads": "D1 — 읽은 행 수",
+    "metricD1Writes": "D1 — 기록한 행 수",
+    "note": "할당량은 Cloudflare 요금제에 따라 다릅니다.",
+    "open": "Cloudflare 대시보드",
+    "docs": "공식 한도",
+    "loadingMetrics": "로딩 중...",
+    "refreshMetrics": "새로고침",
+    "analyticsError": "분석 데이터를 불러올 수 없습니다",
+    "updated": "업데이트됨",
+    "compactTitle": "Cloudflare 사용량",
+    "left": "남음",
+    "noData": "데이터 없음",
+    "dailyLimit": "일일 한도",
+    "showDetails": "상세 정보 표시",
+    "hideDetails": "상세 정보 숨기기",
+    "perDatabase": "데이터베이스별",
+    "perRequest": "요청당",
+    "detailWorkersCount": "최대 Workers 수",
+    "detailCron": "Cron 트리거",
+    "detailCpu": "요청당 CPU",
+    "detailMemory": "Worker 메모리",
+    "detailD1Databases": "D1 데이터베이스",
+    "detailD1Storage": "D1 저장소",
+    "detailD1DatabaseSize": "최대 데이터베이스 크기",
+    "detailD1Queries": "호출당 D1 쿼리",
+    "utcLabel": "UTC"
+  }
+}

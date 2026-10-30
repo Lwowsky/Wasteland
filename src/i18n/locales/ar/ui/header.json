@@ -1,0 +1,79 @@
+{
+  "home": "الرئيسية",
+  "registration": "التسجيل",
+  "players": "جدول اللاعبين",
+  "finalPlan": "الخطة النهائية",
+  "settings": "الإعدادات",
+  "language": "اللغة",
+  "region": "المنطقة",
+  "nextWasteland": "حدث Wasteland القادم",
+  "wastelandDate": "تاريخ Wasteland",
+  "registrationNotScheduled": "لم يُحدد موعد التسجيل القادم",
+  "registrationOpens": "يبدأ التسجيل",
+  "registrationDeadline": "الموعد النهائي للتسجيل",
+  "organizerAlliance": "التحالف المنظم",
+  "governor": "الحاكم",
+  "localTime": "الوقت المحلي",
+  "loading": "جارٍ التحميل...",
+  "loadError": "تعذر تحميل البيانات.",
+  "brand": "Wasteland King",
+  "utc": "UTC",
+  "admin": "مسؤول",
+  "openNavigation": "فتح قائمة التنقل",
+  "closeNavigation": "إغلاق قائمة التنقل",
+  "toggleTimeZone": "تبديل المنطقة الزمنية",
+  "languageOptions": {
+    "en": {
+      "badge": "EN",
+      "label": "English",
+      "description": "English"
+    },
+    "uk": {
+      "badge": "UA",
+      "label": "Українська",
+      "description": "Українська"
+    },
+    "ru": {
+      "badge": "RU",
+      "label": "Русский",
+      "description": "Русский"
+    },
+    "pl": {
+      "badge": "PL",
+      "label": "Polski",
+      "description": "Polski"
+    },
+    "de": {
+      "badge": "DE",
+      "label": "Deutsch",
+      "description": "Deutsch"
+    },
+    "ja": {
+      "badge": "JA",
+      "label": "日本語",
+      "description": "日本語"
+    },
+    "zh": {
+      "badge": "ZH",
+      "label": "中文",
+      "description": "中文"
+    },
+    "ko": {
+      "badge": "KO",
+      "label": "한국어",
+      "description": "한국어"
+    },
+    "vi": {
+      "badge": "VI",
+      "label": "Tiếng Việt",
+      "description": "Tiếng Việt"
+    },
+    "ar": {
+      "badge": "AR",
+      "label": "العربية",
+      "description": "العربية"
+    }
+  },
+  "languagesAvailable": "نشط",
+  "languageSelected": "اللغة المحددة"
+}

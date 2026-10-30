@@ -1,0 +1,163 @@
+{
+  "title": "用户与权限",
+  "description": "管理用户、角色及个人权限。",
+  "tabs": {
+    "users": "用户",
+    "requests": "申请",
+    "limits": "限制"
+  },
+  "cards": {
+    "owner": {
+      "title": "所有者",
+      "description": "拥有全部权限。角色和权限只能通过 Firebase 手动修改。"
+    },
+    "admin": {
+      "title": "管理后台",
+      "description": "拥有除重置区域外的所有所有者权限。"
+    },
+    "consul": {
+      "title": "执政官",
+      "description": "可使用所有玩家、炮塔、报名及工作设置工具，但不能管理角色、站点外观或重置区域。"
+    },
+    "requests": {
+      "title": "申请",
+      "description": "等待审核的新管理员权限申请。"
+    }
+  },
+  "roles": {
+    "owner": {
+      "title": "所有者",
+      "description": "拥有全部权限。角色和权限只能通过 Firebase 手动修改。"
+    },
+    "admin": {
+      "title": "管理后台",
+      "description": "拥有除重置区域外的所有所有者权限。"
+    },
+    "consul": {
+      "title": "执政官",
+      "description": "可使用所有玩家、炮塔、报名及工作设置工具，但不能管理角色、站点外观或重置区域。"
+    }
+  },
+  "usersCount": "用户",
+  "pendingCount": "待处理",
+  "columns": {
+    "user": "用户",
+    "role": "角色",
+    "permissions": "权限",
+    "status": "状态",
+    "actions": "操作"
+  },
+  "permissions": {
+    "owner": "全部权限"
+  },
+  "actions": {
+    "removeAccess": "删除权限",
+    "ownerLocked": "所有者只能通过 Firebase 修改",
+    "notAllowed": "权限不足",
+    "openUser": "打开用户"
+  },
+  "modal": {
+    "role": "角色",
+    "status": "状态",
+    "createdAt": "创建",
+    "updatedAt": "已更新",
+    "permissions": "权限",
+    "permissionsCount": "项权限",
+    "permissionsText": "可在所属角色允许的范围内限制单个用户的权限。",
+    "ownerPermissions": "所有者始终拥有全部权限，无法通过网站编辑。",
+    "technicalInfo": "技术信息",
+    "uid": "UID",
+    "saving": "保存中…",
+    "restoreDefaults": "恢复角色默认设置",
+    "disableRolePermissions": "禁用所有权限"
+  },
+  "permissionGroups": {
+    "access": {
+      "title": "用户与权限",
+      "description": "管理角色和管理员访问权限。"
+    },
+    "players": {
+      "title": "玩家列表",
+      "description": "查看和管理玩家数据。"
+    },
+    "distribution": {
+      "title": "分配与最终方案",
+      "description": "管理炮塔及最终方案。"
+    },
+    "registration": {
+      "title": "报名",
+      "description": "管理报名设置。"
+    },
+    "requests": {
+      "title": "申请",
+      "description": "查看并处理权限申请。"
+    },
+    "settings": {
+      "title": "设置",
+      "description": "访问导入、导出和系统工具。"
+    }
+  },
+  "permissionLabels": {
+    "view_access": "查看用户和角色",
+    "manage_access": "编辑权限",
+    "manage_consuls": "管理领事用户",
+    "grant_admin": "授予管理员角色",
+    "view_players": "查看玩家列表",
+    "edit_players": "编辑玩家",
+    "delete_players": "删除玩家",
+    "view_distribution": "查看分配",
+    "edit_distribution": "编辑分配",
+    "view_registration_settings": "查看报名设置",
+    "edit_registration_settings": "编辑报名设置",
+    "view_requests": "查看申请",
+    "manage_requests": "批准或拒绝申请",
+    "view_settings": "访问设置",
+    "import_players": "导入玩家列表",
+    "clear_players": "清空整个玩家列表",
+    "publish_final_plan": "发布及恢复最终方案",
+    "manage_content_access": "管理公开内容访问权限",
+    "manage_site_appearance": "站点外观",
+    "manage_region_backup": "区域备份与恢复",
+    "reset_region": "重置区域数据"
+  },
+  "loading": "正在加载用户…",
+  "errors": {
+    "load": "加载用户失败。",
+    "save": "保存用户权限失败。",
+    "delete": "删除权限失败。"
+  },
+  "confirm": {
+    "removeAccess": "删除 {{name}} 的访问权限？"
+  },
+  "cloudflareLimits": {
+    "title": "Cloudflare — 限额与用量",
+    "description": "整个账户的 Workers 和 D1 当前用量。",
+    "metricWorkers": "Workers — 请求数",
+    "metricD1Reads": "D1 — 读取行数",
+    "metricD1Writes": "D1 — 写入行数",
+    "note": "配额取决于您的 Cloudflare 套餐。",
+    "open": "Cloudflare 控制台",
+    "docs": "官方限额",
+    "loadingMetrics": "加载中...",
+    "refreshMetrics": "刷新",
+    "analyticsError": "无法加载统计数据",
+    "updated": "已更新",
+    "compactTitle": "Cloudflare 用量",
+    "left": "剩余",
+    "noData": "无数据",
+    "dailyLimit": "每日限额",
+    "showDetails": "显示详细信息",
+    "hideDetails": "隐藏详细信息",
+    "perDatabase": "每个数据库",
+    "perRequest": "每次请求",
+    "detailWorkersCount": "Workers 数量上限",
+    "detailCron": "Cron 触发器",
+    "detailCpu": "每次请求的 CPU",
+    "detailMemory": "Worker 内存",
+    "detailD1Databases": "D1 数据库",
+    "detailD1Storage": "D1 存储",
+    "detailD1DatabaseSize": "数据库大小上限",
+    "detailD1Queries": "每次调用 D1 查询",
+    "utcLabel": "UTC"
+  }
+}

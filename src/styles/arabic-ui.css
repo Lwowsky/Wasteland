@@ -1,0 +1,74 @@
+/* Stage 065: Arabic copy, stable visual layout.
+ * The HTML document uses dir=rtl for Arabic language semantics, but the UI
+ * was originally designed with an LTR grid, card and control order.
+ * Keep component geometry LTR (including body-level React portals); apply
+ * RTL direction only to text-only leaves, never to flex/grid containers.
+ * This avoids reversing icons, table columns, navigation arrows and buttons.
+ */
+:root[lang="ar"] :is(.app, .site-modal-backdrop) {
+  direction: ltr;
+  font-family: Tahoma, "Segoe UI", "Noto Sans Arabic", Arial, sans-serif;
+}
+
+/* Do not alter containers with child controls or icons: their row order is
+   significant. Preserve any explicit dir=auto/ltr/rtl, e.g. footer editors. */
+:root[lang="ar"] :is(.app, .site-modal-backdrop)
+  :is(div, h1, h2, h3, h4, h5, h6, p, span, strong, b, em, small,
+      a, button, label, legend, summary, li, dt, dd, th, td, option, blockquote):not(:has(> *)):not([dir]) {
+  direction: rtl;
+  unicode-bidi: isolate;
+}
+
+/* Paragraphs/headings with inline markup also follow Arabic reading order.
+   unicode-bidi: plaintext avoids affecting surrounding flex/grid geometry. */
+:root[lang="ar"] :is(.app, .site-modal-backdrop)
+  :is(h1, h2, h3, h4, h5, h6, p, blockquote) {
+  unicode-bidi: plaintext;
+}
+
+/* Natural RTL entry for Arabic prose; structured identifiers, dates, phone
+   numbers and e-mail addresses remain LTR and are never mirrored. */
+:root[lang="ar"] :is(.app, .site-modal-backdrop)
+  :is(textarea:not([dir]), input[type="text"]:not([dir]), input:not([type]):not([dir])) {
+  direction: rtl;
+  text-align: right;
+}
+:root[lang="ar"] :is(.app, .site-modal-backdrop)
+  :is(input[type="number"], input[type="email"], input[type="url"],
+      input[type="tel"], input[type="date"], input[type="datetime-local"],
+      input[type="time"], input[type="password"], code, pre, kbd, samp) {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* Dashboard: keep the original card/icon/column sequence while aligning the
+   Arabic copy away from the decorative image and the navigation arrow. */
+:root[lang="ar"] .home-stat-card__content,
+:root[lang="ar"] .home-section-title > div,
+:root[lang="ar"] .home-nav-card__content {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: right;
+}
+:root[lang="ar"] .home-nav-card__content {
+  padding-right: 48px;
+}
+:root[lang="ar"] .home-recent-head > *,
+:root[lang="ar"] .home-recent-row > * {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Keep Arabic prose legible within compact headers and forms. */
+:root[lang="ar"] .home-stat-card span,
+:root[lang="ar"] .home-countdown-card p,
+:root[lang="ar"] .home-nav-card p,
+:root[lang="ar"] .home-section-title p {
+  line-height: 1.65;
+}
+
+@media (max-width: 600px) {
+  :root[lang="ar"] .home-nav-card__content {
+    padding-right: 34px;
+  }
+}

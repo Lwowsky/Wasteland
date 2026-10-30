@@ -1,0 +1,39 @@
+{
+  "title": "Wnioski o dostęp",
+  "description": "Przeglądaj wnioski, zmieniaj role i przyznawaj dostęp do panelu administracyjnego.",
+  "loading": "Ładowanie zgłoszeń...",
+  "empty": "Nie ma jeszcze wniosków.",
+  "columns": {
+    "user": "Użytkownik",
+    "email": "E-mail",
+    "role": "Rola",
+    "comment": "Komentarz",
+    "status": "Status",
+    "actions": "Akcje"
+  },
+  "roles": {
+    "admin": "Administrator",
+    "consul": "Konsul"
+  },
+  "status": {
+    "pending": "Oczekujące",
+    "approved": "Zatwierdzono",
+    "rejected": "Odrzucone"
+  },
+  "actions": {
+    "approve": "Zatwierdź",
+    "reject": "Odrzuć",
+    "delete": "Usuń",
+    "notAllowed": "Brak wystarczających uprawnień do tej roli"
+  },
+  "errors": {
+    "load": "Nie udało się wczytać wniosków.",
+    "approve": "Nie udało się zatwierdzić wniosku.",
+    "reject": "Nie udało się odrzucić wniosku.",
+    "delete": "Nie udało się usunąć wniosku.",
+    "onlyOwnerAdmin": "Tylko właściciel może nadawać rolę administratora."
+  },
+  "confirm": {
+    "delete": "Usunąć wniosek {{name}}?"
+  }
+}

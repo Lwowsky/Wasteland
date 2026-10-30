@@ -1,0 +1,66 @@
+{
+  "title": "Spielertabelle",
+  "text": "Übermittelte Anmeldungen in einer vereinfachten öffentlichen Ansicht.",
+  "empty": "Noch keine Anmeldungen vorhanden.",
+  "stats": {
+    "total": "Gesamtspieler",
+    "captains": "Kapitän bereit"
+  },
+  "troops": {
+    "fighter": "Kämpfer",
+    "rider": "Reiter",
+    "shooter": "Schützen"
+  },
+  "shifts": {
+    "shift1": "Schicht 1",
+    "shift2": "Schicht 2",
+    "shift3": "Schicht 3",
+    "shift4": "Schicht 4",
+    "flexible": "Beliebige Schicht"
+  },
+  "filters": {
+    "title": "Filter",
+    "search": "Suche",
+    "searchPlaceholder": "Nickname oder Allianz",
+    "alliance": "Allianz",
+    "troopType": "Truppentyp",
+    "shift": "Schicht",
+    "captain": "Kapitän",
+    "readyCaptain": "Bereit, Kapitän zu sein",
+    "notCaptain": "Kein Kapitän",
+    "all": "Alle",
+    "reset": "Filter zurücksetzen",
+    "perPage": "Spieler pro Seite",
+    "perPage10": "10 pro Seite",
+    "perPage20": "20 pro Seite",
+    "perPage50": "50 pro Seite",
+    "perPageAll": "Alle"
+  },
+  "table": {
+    "nickname": "Nickname",
+    "alliance": "Allianz",
+    "troops": "Truppen",
+    "tier": "Tier",
+    "shift": "Schicht",
+    "captain": "Kapitän",
+    "when": "Zeitpunkt",
+    "yes": "Ja",
+    "no": "Nein"
+  },
+  "loading": "Wird geladen...",
+  "errors": {
+    "load": "Spieler konnten nicht geladen werden."
+  },
+  "time": {
+    "justNow": "gerade eben",
+    "minutesAgo": "vor {{count}} Min.",
+    "hoursAgo": "vor {{count}} Std.",
+    "daysAgo": "vor {{count}} Tagen"
+  },
+  "pagination": {
+    "label": "Seiten der Spielertabelle",
+    "previous": "Vorherige Seite",
+    "next": "Nächste Seite",
+    "pageOf": "{{page}} / {{pages}}"
+  }
+}

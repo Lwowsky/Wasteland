@@ -1,0 +1,18 @@
+{
+  "home": {
+    "title": "Strona główna",
+    "description": "Strona główna witryny."
+  },
+  "about": {
+    "title": "O projekcie",
+    "description": "Informacje o witrynie."
+  },
+  "contact": {
+    "title": "Kontakt",
+    "description": "Informacje kontaktowe."
+  },
+  "notFound": {
+    "title": "404",
+    "description": "Nie znaleziono strony."
+  }
+}

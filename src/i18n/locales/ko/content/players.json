@@ -1,0 +1,66 @@
+{
+  "title": "플레이어 목록",
+  "text": "제출된 등록을 간략하게 보여주는 공개 목록입니다.",
+  "empty": "아직 신청이 없습니다.",
+  "stats": {
+    "total": "총 플레이어",
+    "captains": "준비된 캡틴"
+  },
+  "troops": {
+    "fighter": "전사",
+    "rider": "기병",
+    "shooter": "사수"
+  },
+  "shifts": {
+    "shift1": "교대 1",
+    "shift2": "교대 2",
+    "shift3": "교대 3",
+    "shift4": "교대 4",
+    "flexible": "모든 교대 가능"
+  },
+  "filters": {
+    "title": "필터",
+    "search": "검색",
+    "searchPlaceholder": "닉네임 또는 동맹",
+    "alliance": "동맹",
+    "troopType": "병종",
+    "shift": "교대",
+    "captain": "캡틴",
+    "readyCaptain": "캡틴 가능",
+    "notCaptain": "대장 아님",
+    "all": "전체",
+    "reset": "필터 초기화",
+    "perPage": "페이지당 플레이어 수",
+    "perPage10": "페이지당 10명",
+    "perPage20": "페이지당 20명",
+    "perPage50": "페이지당 50명",
+    "perPageAll": "전체"
+  },
+  "table": {
+    "nickname": "닉네임",
+    "alliance": "동맹",
+    "troops": "부대",
+    "tier": "티어",
+    "shift": "교대",
+    "captain": "캡틴",
+    "when": "시각",
+    "yes": "예",
+    "no": "아니요"
+  },
+  "loading": "로딩 중...",
+  "errors": {
+    "load": "플레이어를 불러오지 못했습니다."
+  },
+  "time": {
+    "justNow": "방금",
+    "minutesAgo": "{{count}}분 전",
+    "hoursAgo": "{{count}}시간 전",
+    "daysAgo": "{{count}}일 전"
+  },
+  "pagination": {
+    "label": "플레이어 목록 페이지",
+    "previous": "이전 페이지",
+    "next": "다음 페이지",
+    "pageOf": "{{page}} / {{pages}}"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "title": "Regionsadministrator",
+  "subtitle": "Zugriff, Spieler, Türme und Anmeldung verwalten.",
+  "checkingAccess": "Zugriff wird geprüft…",
+  "navigationLabel": "Admin-Navigation",
+  "tabs": {
+    "access": "Rollen & Zugriff",
+    "players": "Spielertabelle",
+    "distribution": "Turmverteilung",
+    "registration": "Anmeldeeinstellungen",
+    "settings": "Einstellungen"
+  },
+  "actions": {
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "close": "Schließen",
+    "logout": "Abmelden",
+    "reset": "Zurücksetzen",
+    "add": "Hinzufügen",
+    "removeAccess": "Zugriff entfernen"
+  },
+  "status": {
+    "active": "Aktiv",
+    "blocked": "Gesperrt",
+    "pending": "Ausstehend",
+    "approved": "Genehmigt",
+    "rejected": "Abgelehnt"
+  },
+  "yes": "Ja",
+  "no": "Nein",
+  "roles": {
+    "owner": "Owner",
+    "admin": "Adminbereich",
+    "consul": "Konsul"
+  },
+  "loading": "Wird geladen...",
+  "unknown": "unbekannt"
+}

@@ -11,9 +11,7 @@ function normalizeDate(value) {
   return date instanceof Date && !Number.isNaN(date.getTime()) ? date : null;
 }
 
-function getLocale(language) {
-  return language === "uk" ? "uk-UA" : "en-GB";
-}
+import { getIntlLocale } from "./intlLocale.js";
 
 export function formatDate(value, language, timeZone, includeTime = false) {
   const date = normalizeDate(value);
@@ -35,7 +33,7 @@ export function formatDate(value, language, timeZone, includeTime = false) {
     options.hourCycle = "h23";
   }
 
-  return new Intl.DateTimeFormat(getLocale(language), options).format(date);
+  return new Intl.DateTimeFormat(getIntlLocale(language), options).format(date);
 }
 
 export function formatNumericDateTime(value, language, timeZone) {
@@ -45,7 +43,7 @@ export function formatNumericDateTime(value, language, timeZone) {
     return "—";
   }
 
-  return new Intl.DateTimeFormat(getLocale(language), {
+  return new Intl.DateTimeFormat(getIntlLocale(language), {
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
@@ -63,7 +61,7 @@ export function formatMediumDateTime(value, language, timeZone) {
     return "—";
   }
 
-  return new Intl.DateTimeFormat(getLocale(language), {
+  return new Intl.DateTimeFormat(getIntlLocale(language), {
     dateStyle: "medium",
     timeStyle: "short",
     ...(timeZone ? { timeZone } : {}),
@@ -108,7 +106,7 @@ export function formatShiftTime(
     endDate.setUTCDate(endDate.getUTCDate() + 1);
   }
 
-  const formatter = new Intl.DateTimeFormat(getLocale(language), {
+  const formatter = new Intl.DateTimeFormat(getIntlLocale(language), {
     hour: "2-digit",
     minute: "2-digit",
     hourCycle: "h23",

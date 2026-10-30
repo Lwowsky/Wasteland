@@ -1,0 +1,66 @@
+{
+  "title": "جدول اللاعبين",
+  "text": "التسجيلات المقدمة في عرض عام مبسط.",
+  "empty": "لا توجد طلبات تسجيل بعد.",
+  "stats": {
+    "total": "إجمالي اللاعبين",
+    "captains": "الكباتن الجاهزون"
+  },
+  "troops": {
+    "fighter": "مقاتلون",
+    "rider": "فرسان",
+    "shooter": "رماة"
+  },
+  "shifts": {
+    "shift1": "الوردية 1",
+    "shift2": "الوردية 2",
+    "shift3": "النوبة 3",
+    "shift4": "النوبة 4",
+    "flexible": "أي مناوبة"
+  },
+  "filters": {
+    "title": "عوامل التصفية",
+    "search": "بحث",
+    "searchPlaceholder": "اسم اللاعب أو التحالف",
+    "alliance": "التحالف",
+    "troopType": "نوع القوات",
+    "shift": "نوبة",
+    "captain": "القائد",
+    "readyCaptain": "جاهز ليكون قائدًا",
+    "notCaptain": "ليس قائدًا",
+    "all": "الكل",
+    "reset": "إعادة ضبط الفلاتر",
+    "perPage": "عدد اللاعبين في الصفحة",
+    "perPage10": "10 في الصفحة",
+    "perPage20": "20 في الصفحة",
+    "perPage50": "50 في الصفحة",
+    "perPageAll": "الكل"
+  },
+  "table": {
+    "nickname": "اسم اللاعب",
+    "alliance": "التحالف",
+    "troops": "القوات",
+    "tier": "الرتبة",
+    "shift": "نوبة",
+    "captain": "القائد",
+    "when": "الوقت",
+    "yes": "نعم",
+    "no": "لا"
+  },
+  "loading": "جارٍ التحميل...",
+  "errors": {
+    "load": "تعذر تحميل اللاعبين."
+  },
+  "time": {
+    "justNow": "الآن",
+    "minutesAgo": "قبل {{count}} دقيقة",
+    "hoursAgo": "قبل {{count}} ساعة",
+    "daysAgo": "قبل {{count}} يوم"
+  },
+  "pagination": {
+    "label": "صفحات جدول اللاعبين",
+    "previous": "الصفحة السابقة",
+    "next": "الصفحة التالية",
+    "pageOf": "الصفحة {{page}} / {{pages}}"
+  }
+}

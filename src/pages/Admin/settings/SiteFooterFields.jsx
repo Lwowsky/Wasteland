@@ -15,24 +15,28 @@ export default function SiteFooterFields({ copy, activeLanguage, setActiveLangua
         </div>
 
         <div className="site-identity-form__footer-tools">
-          <div
-            className="site-identity-language-tabs"
-            role="tablist"
-            aria-label={copy.footer.languageLabel}
-          >
-            {SUPPORTED_LANGUAGES.map((language) => (
-              <button
-                key={language}
-                type="button"
-                role="tab"
-                aria-selected={activeLanguage === language}
-                className={activeLanguage === language ? "is-active" : ""}
-                onClick={() => setActiveLanguage(language)}
-              >
-                {LANGUAGES[language]?.label || language.toUpperCase()}
-              </button>
-            ))}
-          </div>
+          <label className="site-identity-language-picker">
+            <img
+              className="site-identity-language-picker__flag"
+              src={publicAsset(`/images/final-plan/lang/${activeLanguage}.svg`)}
+              alt=""
+              aria-hidden="true"
+            />
+            <select
+              className="site-identity-language-picker__select"
+              value={activeLanguage}
+              aria-label={copy.footer.languageLabel}
+              onChange={(event) => setActiveLanguage(event.target.value)}
+              disabled={saving}
+            >
+              {SUPPORTED_LANGUAGES.map((language) => (
+                <option key={language} value={language}>
+                  {LANGUAGES[language]?.label || language.toUpperCase()} · {LANGUAGES[language]?.nativeLabel || language}
+                </option>
+              ))}
+            </select>
+            <span className="site-identity-language-picker__chevron" aria-hidden="true" />
+          </label>
 
           <button
             type="button"
@@ -53,6 +57,8 @@ export default function SiteFooterFields({ copy, activeLanguage, setActiveLangua
         <label className="site-identity-field site-identity-field--wide">
           <span>{copy.fields.footerDescription}</span>
           <textarea
+            lang={activeLanguage}
+            dir="auto"
             rows="2"
             maxLength={SITE_FOOTER_LIMITS.description}
             value={footerDraft.description || ""}
@@ -65,6 +71,8 @@ export default function SiteFooterFields({ copy, activeLanguage, setActiveLangua
         <label className="site-identity-field">
           <span>{copy.fields.authorLabel}</span>
           <input
+            lang={activeLanguage}
+            dir="auto"
             maxLength={SITE_FOOTER_LIMITS.authorLabel}
             value={footerDraft.authorLabel || ""}
             onChange={(event) =>
@@ -76,6 +84,8 @@ export default function SiteFooterFields({ copy, activeLanguage, setActiveLangua
         <label className="site-identity-field">
           <span>{copy.fields.author}</span>
           <input
+            lang={activeLanguage}
+            dir="auto"
             maxLength={SITE_FOOTER_LIMITS.author}
             value={footerDraft.author || ""}
             onChange={(event) => updateFooter("author", event.target.value)}
@@ -85,6 +95,8 @@ export default function SiteFooterFields({ copy, activeLanguage, setActiveLangua
         <label className="site-identity-field site-identity-field--wide">
           <span>{copy.fields.authorDescription}</span>
           <input
+            lang={activeLanguage}
+            dir="auto"
             maxLength={SITE_FOOTER_LIMITS.authorDescription}
             value={footerDraft.authorDescription || ""}
             onChange={(event) =>
@@ -96,6 +108,8 @@ export default function SiteFooterFields({ copy, activeLanguage, setActiveLangua
         <label className="site-identity-field site-identity-field--wide">
           <span>{copy.fields.projectDescription}</span>
           <textarea
+            lang={activeLanguage}
+            dir="auto"
             rows="2"
             maxLength={SITE_FOOTER_LIMITS.projectDescription}
             value={footerDraft.projectDescription || ""}
@@ -108,6 +122,8 @@ export default function SiteFooterFields({ copy, activeLanguage, setActiveLangua
         <label className="site-identity-field site-identity-field--wide">
           <span>{copy.fields.copyright}</span>
           <input
+            lang={activeLanguage}
+            dir="auto"
             maxLength={SITE_FOOTER_LIMITS.copyright}
             value={footerDraft.copyright || ""}
             onChange={(event) =>

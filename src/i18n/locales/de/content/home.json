@@ -1,0 +1,74 @@
+{
+  "dashboard": {
+    "registered": "Registrierte Spieler",
+    "allianceCount": "Allianzen",
+    "captains": "Kapitäne",
+    "finalPlanPlayers": "Im endgültigen Plan",
+    "registrationCountdown": {
+      "title": "Anmeldung schließt in",
+      "subtitle": "Registrierung geöffnet",
+      "open": "Öffnen",
+      "closedTitle": "Registrierung geschlossen",
+      "closedSubtitle": "Nächste Anmeldung öffnet in",
+      "closed": "Geschlossen",
+      "disabledSubtitle": "Anmeldung ist vorübergehend nicht verfügbar",
+      "disabledCountdown": "Kein Countdown verfügbar, solange die Anmeldung deaktiviert ist"
+    },
+    "eventCountdown": {
+      "title": "Wasteland beginnt in",
+      "subtitle": "Nächstes regionales Ereignis",
+      "activeTitle": "Wasteland läuft",
+      "activeSubtitle": "Zeit bis zum Ende von Wasteland",
+      "active": "Läuft"
+    },
+    "time": {
+      "days": "Tage",
+      "hours": "Stunden",
+      "minutes": "Minuten",
+      "seconds": "Sekunden",
+      "unscheduled": "Der nächste Starttermin steht noch nicht fest"
+    },
+    "recent": {
+      "title": "Letzte Anmeldungen",
+      "text": "Die 5 zuletzt angemeldeten Spieler.",
+      "nickname": "Nickname",
+      "alliance": "Allianz",
+      "troop": "Truppen",
+      "tier": "Tier",
+      "time": "Zeitpunkt",
+      "timeAgo": {
+        "justNow": "gerade eben",
+        "minutes": "vor {{count}} Min.",
+        "hours": "vor {{count}} Std.",
+        "days": "vor {{count}} Tagen"
+      }
+    },
+    "allianceStats": {
+      "title": "Allianzstatistik",
+      "text": "Verteilung der angemeldeten Spieler.",
+      "players": "Spieler",
+      "other": "Sonstige",
+      "showAll": "Alle Allianzen anzeigen",
+      "showLess": "Weniger anzeigen"
+    },
+    "navigation": {
+      "registration": {
+        "title": "Anmeldung",
+        "text": "Gib deine Daten für das Wasteland-Ereignis ein oder aktualisiere sie."
+      },
+      "players": {
+        "title": "Spielertabelle",
+        "text": "Alle Spieleranmeldungen der Region ansehen."
+      },
+      "finalPlan": {
+        "title": "Endplan",
+        "text": "Teams, Kapitäne und Schichtzuweisungen."
+      },
+      "settings": {
+        "title": "Einstellungen",
+        "text": "Sprache, Uhrzeit und lokale Browsereinstellungen."
+      }
+    },
+    "loading": "Daten werden geladen..."
+  }
+}

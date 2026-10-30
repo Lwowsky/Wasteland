@@ -1,0 +1,67 @@
+{
+  "title": "最終プラン",
+  "regionSelector": {
+    "label": "地域を選択",
+    "home": "ホーム地域",
+    "captureRegion1": "地域占領1",
+    "captureRegion2": "地域占領2"
+  },
+  "shift1": "シフト 1",
+  "shift2": "シフト 2",
+  "share": "共有",
+  "typeByCaptain": "隊長が選んだ兵種",
+  "noPlayers": "割り当てプレイヤーなし",
+  "towers": {
+    "hub": "テックハブ",
+    "north": "北タレット",
+    "west": "西タレット",
+    "east": "東タレット",
+    "south": "南タレット"
+  },
+  "troops": {
+    "fighter": "ファイター",
+    "rider": "ライダー",
+    "shooter": "シューター"
+  },
+  "signatureAlt": "Lwowskyが開発",
+  "textExport": {
+    "signature": "Lwowskyが開発"
+  },
+  "loadingPlan": "公開済みプランを読み込み中…",
+  "loadFailed": "プランを読み込めませんでした。ページを再読み込みしてください。",
+  "unpublishedTitle": "公開待ち",
+  "notPublished": "このサイクルでは最終プランがまだ公開されていません。",
+  "lastPublished": "公開日時: {{date}}",
+  "shift3": "シフト3",
+  "shift4": "シフト4",
+  "metrics": {
+    "legend": "行軍合計",
+    "capacity": "隊長の行軍兵力＋集結容量",
+    "used": "タワー内の行軍兵力",
+    "remaining": "集結の空き容量",
+    "unavailable": "集結容量を含めるには再公開してください"
+  },
+  "labels": {
+    "captain": "キャプテン",
+    "players": "プレイヤー"
+  },
+  "languageModal": {
+    "title": "最終プランの言語",
+    "subtitle": "プランの言語を選択してください。英語は常に有効です。",
+    "close": "閉じる",
+    "done": "完了",
+    "alwaysOn": "常に有効",
+    "help": "英語は常に有効です。ウクライナ語は任意です。",
+    "choices": {
+      "uk": "Українська",
+      "en": "英語"
+    }
+  },
+  "toolbar": {
+    "language": "プランの言語",
+    "png": "PNGをダウンロード",
+    "txt": "TXTをダウンロード（全シフト）",
+    "exportFailed": "画像を保存できませんでした。もう一度お試しください。"
+  },
+  "refreshPlan": "プランを更新"
+}

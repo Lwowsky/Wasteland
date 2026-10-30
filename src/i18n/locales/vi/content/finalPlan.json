@@ -1,0 +1,67 @@
+{
+  "title": "Kế hoạch cuối cùng",
+  "regionSelector": {
+    "label": "Chọn khu vực",
+    "home": "Khu vực chính",
+    "captureRegion1": "Khu vực chiếm đóng 1",
+    "captureRegion2": "Khu vực chiếm đóng 2"
+  },
+  "shift1": "Ca 1",
+  "shift2": "Ca 2",
+  "share": "Chia sẻ",
+  "typeByCaptain": "Loại quân do đội trưởng chọn",
+  "noPlayers": "Chưa có người chơi",
+  "towers": {
+    "hub": "Trung tâm kỹ thuật",
+    "north": "Tháp Bắc",
+    "west": "Tháp Tây",
+    "east": "Tháp Đông",
+    "south": "Tháp Nam"
+  },
+  "troops": {
+    "fighter": "Đấu sĩ",
+    "rider": "Kỵ sĩ",
+    "shooter": "Xạ thủ"
+  },
+  "signatureAlt": "Phát triển bởi Lwowsky",
+  "textExport": {
+    "signature": "Phát triển bởi Lwowsky"
+  },
+  "loadingPlan": "Đang tải kế hoạch đã công bố…",
+  "loadFailed": "Không thể tải kế hoạch. Vui lòng tải lại trang.",
+  "unpublishedTitle": "Đang chờ công bố",
+  "notPublished": "Chưa có kế hoạch cuối cùng nào được công bố cho chu kỳ này.",
+  "lastPublished": "Đã công bố: {{date}}",
+  "shift3": "Ca 3",
+  "shift4": "Ca 4",
+  "metrics": {
+    "legend": "Tổng quân hành quân",
+    "capacity": "Quân hành quân + tập kết của đội trưởng",
+    "used": "Quân trong tháp",
+    "remaining": "Chỗ trống tập kết",
+    "unavailable": "Công bố lại để cập nhật sức chứa tập kết"
+  },
+  "labels": {
+    "captain": "Đội trưởng",
+    "players": "Người chơi"
+  },
+  "languageModal": {
+    "title": "Ngôn ngữ của kế hoạch cuối cùng",
+    "subtitle": "Chọn ngôn ngữ của kế hoạch. Tiếng Anh luôn được bật.",
+    "close": "Đóng",
+    "done": "Xong",
+    "alwaysOn": "Luôn bật",
+    "help": "Tiếng Anh luôn được bật. Có thể bật thêm tiếng Ukraina.",
+    "choices": {
+      "uk": "Українська",
+      "en": "English"
+    }
+  },
+  "toolbar": {
+    "language": "Ngôn ngữ kế hoạch",
+    "png": "Tải PNG",
+    "txt": "Tải TXT (tất cả ca)",
+    "exportFailed": "Không thể lưu ảnh. Vui lòng thử lại."
+  },
+  "refreshPlan": "Làm mới kế hoạch"
+}

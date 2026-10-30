@@ -1,0 +1,480 @@
+{
+  "title": "设置",
+  "description": "管理网站外观、玩家导入导出、备份、访问权限及系统工具。",
+  "sections": {
+    "import": "导入",
+    "export": "导出",
+    "backup": "备份",
+    "system": "系统",
+    "access": "访问权限"
+  },
+  "siteIdentity": {
+    "eyebrow": "站点外观",
+    "title": "名称、区域与页脚",
+    "description": "修改网站名称、品牌文字、区域编号和名称及页脚内容。",
+    "edit": "配置网站",
+    "ownerOnly": "仅所有者可以编辑。",
+    "saved": "网站设置已保存。",
+    "summary": {
+      "siteName": "网站名称",
+      "region": "地区",
+      "brand": "徽标文字"
+    },
+    "identity": {
+      "title": "网站基本信息",
+      "description": "这些值用于网站页眉、浏览器标签页标题及区域信息。"
+    },
+    "footer": {
+      "title": "页脚内容",
+      "description": "为每种支持的语言分别设置页脚文字。",
+      "languageLabel": "页脚语言",
+      "languageHelp": "默认显示 JSON 翻译。只有修改过的字段才会作为覆盖项保存到 D1。保存时空字段将恢复默认值。请分别编辑每种语言。",
+      "restoreDefaults": "恢复默认文字",
+      "restoreHelp": "从 JSON 翻译恢复所选语言的文字，保存后生效。",
+      "restoreNotice": "草稿中已恢复默认文字。点击“保存更改”以应用。"
+    },
+    "fields": {
+      "siteName": "网站名称",
+      "brandText": "徽标 / 品牌文字",
+      "regionNumber": "区域编号",
+      "regionName": "区域名称",
+      "footerDescription": "页脚网站说明",
+      "authorLabel": "作者板块标签",
+      "author": "作者姓名",
+      "authorDescription": "作者简介",
+      "projectDescription": "项目说明",
+      "copyright": "版权文字"
+    },
+    "help": {
+      "siteName": "用于浏览器标签页标题及 SEO 标题。",
+      "brandText": "显示在网站页眉和页脚。"
+    },
+    "modal": {
+      "title": "网站设置",
+      "subtitle": "无需修改代码即可更改网站名称、区域和页脚内容。",
+      "footerHint": "保存后立即应用更改。",
+      "unsaved": "尚未保存的更改"
+    },
+    "actions": {
+      "close": "关闭",
+      "cancel": "取消",
+      "save": "保存更改",
+      "saving": "正在保存…"
+    },
+    "errors": {
+      "load": "无法加载网站设置。",
+      "save": "无法保存网站设置。"
+    },
+    "unsaved": {
+      "title": "放弃未保存的更改？",
+      "message": "您修改了网站设置或页脚文字。如果现在关闭窗口，这些更改将丢失。",
+      "discard": "放弃更改",
+      "keepEditing": "继续编辑"
+    }
+  },
+  "import": {
+    "title": "导入玩家",
+    "description": "仅将 XLSX、XLS 或 CSV 文件导入当前周期的玩家列表。",
+    "chooseFile": "选择玩家文件",
+    "reading": "正在读取文件…",
+    "formats": "XLSX · XLS · CSV",
+    "cancel": "取消",
+    "importing": "正在导入…",
+    "success": "导入成功：{{count}} 位玩家。",
+    "fixBeforeImport": "请先修复文件错误与重复项后再导入。",
+    "preview": {
+      "title": "验证预览",
+      "total": "行数",
+      "valid": "准备好",
+      "invalid": " 个错误",
+      "duplicates": " 个重复项",
+      "problems": "需要修复的问题",
+      "row": "第 {{row}} 行",
+      "rowShort": "行",
+      "showing": "显示 {{from}}–{{to}}，共 {{total}} 条",
+      "perPage": "每页",
+      "all": "全部",
+      "page": "{{page}} / {{pages}}",
+      "previous": "上一页",
+      "next": "下一页"
+    },
+    "errors": {
+      "readFile": "无法读取文件，请检查 XLSX/XLS/CSV 格式。",
+      "emptyFile": "文件中没有玩家记录。",
+      "importFailed": "导入失败。请勿假设数据已导入，应检查 Worker 与文件。",
+      "duplicateExisting": "此昵称已在当前周期存在",
+      "duplicateFile": "此昵称在文件内重复",
+      "invalidField": {
+        "nickname": "缺少昵称",
+        "alliance": "缺少联盟",
+        "troopType": "未知兵种",
+        "tier": "等级必须为 T1–T14",
+        "shift": "未知班次",
+        "captain": "未知的队长值 — 请手动选择是/否",
+        "readyAttack": "未知的准备状态 — 请手动选择是/否"
+      },
+      "saveDraftFailed": "无法保存本地导入草稿。"
+    },
+    "close": "关闭",
+    "fields": {
+      "nickname": "昵称",
+      "alliance": "联盟",
+      "troopType": "兵种类型",
+      "tier": "等级",
+      "lairLevel": "巢穴等级",
+      "marchSize": "行军规模",
+      "rallySize": "集结规模",
+      "shift": "班次",
+      "readyAttack": "准备攻击",
+      "captain": "队长",
+      "comment": "备注",
+      "extraFighterTier": "额外部队 — 战士",
+      "extraRiderTier": "额外部队 — 骑兵",
+      "extraShooterTier": "额外部队 — 射手"
+    },
+    "mapping": {
+      "cardHint": "选择文件后会打开映射窗口，以便将 Excel 各列与玩家字段匹配。",
+      "title": "玩家导入设置",
+      "subtitle": "文件：{{file}}。请选择与网站字段对应的列。",
+      "fileSummary": "列：{{columns}} · 行：{{rows}}",
+      "fieldsTitle": "列映射",
+      "fieldsText": "左侧是网站字段，右侧是上传文件中的列。未使用的列可添加为额外玩家字段。",
+      "required": "导入必填",
+      "custom": "额外字段",
+      "customName": "额外字段名称",
+      "skip": "— 不导入 —",
+      "unknownTitle": "未识别的文件列",
+      "unknownText": "若文件包含网站中尚无的信息，可将该列添加为额外玩家字段。",
+      "addCustom": "添加为字段",
+      "removeCustom": "移除额外字段",
+      "previewText": "导入前将自动规范化：Tier 10 → T10，первая половина / 1st shift → 第 1 班，вторая половина / 2nd shift → 第 2 班，оба подходят / both are suitable → 任意班次。",
+      "status": "状态",
+      "ok": "准备好",
+      "ready": "已有 {{count}} 位玩家可以导入。",
+      "importCount": "导入 {{count}} 人",
+      "saveMapping": "保存列映射",
+      "saved": "映射已保存",
+      "continueMapping": "继续设置文件"
+    },
+    "destination": {
+      "title": "在哪里准备玩家",
+      "text": "建议先将文件保存为本地草稿，检查数值后再把玩家转入当前周期。",
+      "staging": "本地草稿",
+      "stagingText": "不会写入数据库，可修正映射并稍后继续。",
+      "current": "当前周期",
+      "currentText": "将玩家直接写入当前周期。仅在没有错误或重复项时可用。",
+      "saveDraft": "保存 {{count}} 条到草稿",
+      "draftWithErrors": "即使有错误也可保存草稿，这些行不会写入数据库。"
+    },
+    "draft": {
+      "title": "本地导入草稿",
+      "summary": "{{file}} · {{count}} 行",
+      "open": "打开草稿",
+      "clear": "删除草稿",
+      "saved": "已将 {{count}} 行保存至本地草稿。",
+      "help": "草稿仅保存在本浏览器。若要把玩家添加到数据库和网站列表，请进入“玩家列表”→“本地列表”，点击“转移”。"
+    },
+    "valueMapping": {
+      "title": "值映射",
+      "text": "如果网站无法识别兵种、等级、班次、队长或准备状态，请手动选择正确值。未知值不再自动转换为“否”。",
+      "choose": "— 手动选择 —",
+      "troops": {
+        "fighter": "战士",
+        "rider": "骑兵",
+        "shooter": "射手"
+      },
+      "shifts": {
+        "shift1": "班次 1",
+        "shift2": "班次 2",
+        "shift3": "班次 3",
+        "shift4": "班次 4",
+        "flexible": "任意班次"
+      },
+      "yes": "是",
+      "no": "否"
+    }
+  },
+  "export": {
+    "title": "导出玩家",
+    "description": "仅导出玩家列表数据。",
+    "excel": "Excel 导出",
+    "fileName": "文件名",
+    "download": "下载 Excel",
+    "options": {
+      "players": "玩家基本信息",
+      "readiness": "准备状态及队长",
+      "extraSquads": "额外队伍",
+      "comments": "备注"
+    },
+    "excelLabels": {
+      "sheets": {
+        "players": "— 选择玩家 —"
+      },
+      "columns": {
+        "nickname": "昵称",
+        "alliance": "联盟",
+        "troop": "兵种",
+        "tier": "等级",
+        "lair": "巢穴",
+        "march": "行军值",
+        "rally": "集结",
+        "shift": "班次",
+        "submitted": "已提交",
+        "captain": "队长",
+        "readyAttack": "准备攻击",
+        "comment": "备注",
+        "setting": "设置",
+        "value": "数值",
+        "role": "角色",
+        "permissions": "权限",
+        "active": "启用",
+        "extraFighterTier": "额外部队 — 战士",
+        "extraRiderTier": "额外部队 — 骑兵",
+        "extraShooterTier": "额外部队 — 射手"
+      }
+    },
+    "settingsButton": "设置",
+    "selectedSummary": "已选列数：{{count}}",
+    "modal": {
+      "title": "导出设置",
+      "subtitle": "选择 Excel 中包含的玩家列表字段。",
+      "close": "关闭",
+      "selectAll": "全选",
+      "clearAll": "全部清除",
+      "selected": "已选择：{{count}}",
+      "customField": "额外字段",
+      "done": "完成"
+    }
+  },
+  "backup": {
+    "title": "备份",
+    "description": "将完整区域备份下载到电脑，或通过 JSON 文件恢复网站。",
+    "ownerOnly": "只有所有者可创建或恢复完整备份。",
+    "create": "创建并下载",
+    "creating": "正在创建备份…",
+    "restore": "从文件恢复",
+    "created": "备份已创建并下载。",
+    "restored": "备份已恢复。",
+    "note": "备份不会存入数据库，而是本地 JSON 文件。用户及角色不包括在内。",
+    "errors": {
+      "create": "无法创建备份。",
+      "invalidFile": "这不是受支持的 Wasteland 备份文件。",
+      "restore": "无法恢复备份。请勿假设当前数据已完全恢复。"
+    },
+    "restoreModal": {
+      "title": "恢复备份",
+      "subtitle": "当前区域数据将替换为所选文件中的数据。",
+      "warningTitle": "当前数据将被覆盖",
+      "warningText": "恢复前系统会自动下载当前状态的紧急备份。Firebase Auth 和 adminUsers 保持不变。此前创建的玩家列表及最终方案私密链接将全部撤销。恢复后请创建新链接。",
+      "createdAt": "备份创建时间",
+      "players": "— 选择玩家 —",
+      "periods": "周期",
+      "alliances": "联盟轮换记录",
+      "requests": "访问权限申请",
+      "phraseLabel": "确认时请输入准确短语：",
+      "help": "恢复按钮也会在 10 秒后解锁。",
+      "cancel": "取消",
+      "confirm": "恢复数据",
+      "restoring": "正在恢复…",
+      "phrase": "RESTORE REGION DATA"
+    }
+  },
+  "factoryReset": {
+    "eyebrow": "危险区域",
+    "title": "重置区域数据",
+    "description": "彻底清除所选区域数据并恢复默认设置。",
+    "preserved": {
+      "title": "用户与角色受到保护",
+      "text": "Firebase Auth 和 adminUsers 集合会保留。所有者、管理员、领事及已分配的权限保持不变。"
+    },
+    "open": "重置区域数据",
+    "modal": {
+      "title": "重置区域数据",
+      "subtitle": "请准确选择要清除的项目。此操作会删除数据库中的数据。"
+    },
+    "warning": {
+      "title": "此操作会销毁数据",
+      "text": "所选数据将从网站数据库中物理删除。没有备份就无法恢复。"
+    },
+    "deleteAll": {
+      "title": "删除所有区域数据",
+      "description": "选择以下全部类别，将网站准备为全新的空白区域。"
+    },
+    "options": {
+      "players": {
+        "title": "玩家与报名",
+        "description": "删除报名、public_players 及玩家统计。"
+      },
+      "cycles": {
+        "title": "报名周期",
+        "description": "删除所有周期历史。玩家属于这些周期，因此也会删除。"
+      },
+      "alliances": {
+        "title": "联盟与轮换",
+        "description": "清除联盟、轮换、主办联盟及总督。"
+      },
+      "registrationSettings": {
+        "title": "报名设置",
+        "description": "将周期、T9–T14、第一班/第二班/任意班次、表单字段及公开访问恢复为出厂默认值。"
+      },
+      "accessRequests": {
+        "title": "访问权限申请",
+        "description": "从 Firestore 删除旧的/待处理的 accessRequests，不影响 adminUsers。"
+      },
+      "browserData": {
+        "title": "本浏览器的本地数据",
+        "description": "清除此设备上的玩家模板、最终方案偏好设置和本地时间设置。"
+      }
+    },
+    "preview": {
+      "title": "当前存储的数据",
+      "loading": "正在检查数据库…",
+      "players": "玩家报名",
+      "periods": "周期",
+      "stats": "周期统计",
+      "alliances": "轮换记录",
+      "requests": "访问权限申请"
+    },
+    "confirmation": {
+      "label": "输入准确短语以确认：",
+      "help": "删除按钮也会禁用 10 秒。",
+      "phrase": "DELETE REGION DATA"
+    },
+    "actions": {
+      "cancel": "取消",
+      "delete": "删除所选数据",
+      "deleting": "正在删除…"
+    },
+    "errors": {
+      "preview": "无法加载数据预览。",
+      "reset": "重置失败。请勿假设所有数据已清除，请检查 Worker 并重试。",
+      "backup": "无法下载备份，因此已停止重置。只有明确希望不备份而继续时才应关闭此选项。"
+    },
+    "preservedSummary": "用户账号、所有者/管理员/领事及其角色永远不会删除。",
+    "backupBeforeReset": {
+      "title": "重置前下载备份",
+      "description": "删除前系统会收集当前网站数据并将 JSON 文件下载到此设备。数据库中不保留备份。"
+    }
+  },
+  "access": {
+    "title": "访问权限",
+    "description": "控制谁可以打开玩家列表和最终方案。",
+    "resourceLabel": "要配置的资源",
+    "resources": {
+      "players": "玩家列表",
+      "final_plan": "最终方案状态"
+    },
+    "loading": "正在加载访问设置…",
+    "cycle": "周期 #{{cycle}}",
+    "cycleNote": "静态分享链接可以跨周期保留，但只能显示当前周期已发布的数据。",
+    "modeLabel": "访问模式",
+    "publicWarning": "公开模式下，下一次 JSON 成功发布后任何人无需密码即可查看本周期数据。切换模式会撤销此前签发的私密链接。基于日历的周期关闭规则仍然有效。",
+    "modes": {
+      "public": "公开 — 所有人可见",
+      "private": "已关闭 — 公开页面不可用",
+      "link": "私密链接"
+    },
+    "status": {
+      "public": "公开访问",
+      "private": "访问已关闭",
+      "active": "私密访问有效",
+      "needsToken": "创建私密分享链接"
+    },
+    "tokenLifetime": {
+      "label": "链接有效期"
+    },
+    "duration": {
+      "hours24": "24 小时",
+      "cycle": "直到当前周期结束",
+      "hours1": "1 小时",
+      "hours6": "6 小时",
+      "hours12": "12 小时",
+      "days7": "7 天",
+      "forever": "永不过期"
+    },
+    "generated": {
+      "title": "已创建新访问权限",
+      "once": "请立即复制此链接。下一次 JSON 发布后生效，完整代码不会存入公开 GitHub。"
+    },
+    "actions": {
+      "save": "保存",
+      "generateLink": "创建新链接",
+      "copy": "复制",
+      "revoke": "撤销"
+    },
+    "messages": {
+      "saved": "访问设置已保存。",
+      "generated": "链接已创建，下次快照发布后即可使用。旧链接仍然有效。",
+      "revoked": "链接已撤销。下一次快照发布后静态访问将停止。",
+      "copied": "已复制。",
+      "historyDeleted": "已删除归档链接记录。"
+    },
+    "errors": {
+      "load": "加载访问设置失败。",
+      "save": "保存访问设置失败。",
+      "generate": "无法创建私密链接。",
+      "revoke": "无法撤销访问权限。",
+      "copy": "复制失败。",
+      "noPeriod": "当前没有可用于私密访问的周期。",
+      "deleteLink": "无法删除归档链接。"
+    },
+    "staticLinks": {
+      "title": "已创建的链接（所有者和管理员可复制保存的链接）",
+      "active": "启用",
+      "inactive": "已过期或撤销",
+      "history": "历史记录 — 已过期和撤销",
+      "delete": "删除记录",
+      "confirmDelete": "永久删除此非活动链接记录？",
+      "deleteTitle": "删除归档链接？",
+      "cancel": "取消"
+    }
+  },
+  "sharedConsul": {
+    "title": "共享领事密码",
+    "description": "生成新密码。此前密码及其所有会话将立即撤销。",
+    "duration": "有效期",
+    "day": "一天",
+    "wasteland": "直到荒野活动结束",
+    "forever": "密钥永不过期",
+    "generate": "生成新密码",
+    "revoke": "撤销访问权限",
+    "active": "访问有效",
+    "failed": "加载访问设置失败。",
+    "noWasteland": "无法获取当前荒野活动结束日期。",
+    "copy": "复制",
+    "cancel": "取消",
+    "close": "关闭",
+    "ok": "知道了",
+    "copySuccessTitle": "密码已复制",
+    "copySuccess": "领事访问密码已复制到剪贴板。只与可信任的人分享。",
+    "copyExpires": "密码到期时间：",
+    "copyForeverWarning": "此密码不会过期。为安全起见，请在每次荒野活动后生成新密码，或选择一天/直到活动结束的权限。",
+    "multipleDescription": "最多可同时启用 5 个密码。创建新密码不会撤销现有权限。仅所有者可管理。",
+    "legacyKey": "旧版 Stage 042 密码",
+    "keyName": "密码名称",
+    "keyPlaceholder": "例如：十月领事",
+    "limitReached": "已有 5 个有效密码，请撤销一个或等待其过期。",
+    "showPassword": "显示密码",
+    "passwordPrivacy": "切勿与不可信任的人分享此密码。复制后请关闭窗口。",
+    "confirmSingleRevoke": "只撤销此密码？使用该密码的人将失去访问权限，其他密码仍然有效。",
+    "confirmChangeDuration": "更改此密码的有效期？其他密码不变。",
+    "confirmUpdate": "更改有效期",
+    "confirmAdd": "再创建一个密码？已有密码将继续有效。",
+    "tabsActive": "启用",
+    "tabsHistory": "历史记录",
+    "tabsCreate": "创建",
+    "emptyActive": "尚无有效密码。",
+    "emptyHistory": "没有已过期或撤销的密码。",
+    "historyHint": "过期和撤销的密码在此显示，可永久删除记录。",
+    "deleteHistory": "删除记录",
+    "confirmDeleteHistory": "从历史记录中永久删除此项？其他密码不受影响。",
+    "expired": "已过期",
+    "revoked": "已撤销",
+    "copyPassword": "复制密码",
+    "hidePassword": "隐藏",
+    "createdAt": "创建时间：",
+    "historyLegacy": "旧密码无法显示。撤销后可停止访问。",
+    "createHint": "最多可同时启用 5 个密码。已有密码仍然有效。",
+    "deleteBlocked": "删除前请先撤销有效密码。"
+  }
+}

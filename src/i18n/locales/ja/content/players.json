@@ -1,0 +1,66 @@
+{
+  "title": "プレイヤー表",
+  "text": "送信された登録を簡略化した公開ビューで表示します。",
+  "empty": "まだ申請がありません。",
+  "stats": {
+    "total": "総プレイヤー数",
+    "captains": "準備完了のキャプテン"
+  },
+  "troops": {
+    "fighter": "ファイター",
+    "rider": "ライダー",
+    "shooter": "シューター"
+  },
+  "shifts": {
+    "shift1": "シフト 1",
+    "shift2": "シフト 2",
+    "shift3": "シフト3",
+    "shift4": "シフト4",
+    "flexible": "任意のシフト"
+  },
+  "filters": {
+    "title": "フィルター",
+    "search": "検索",
+    "searchPlaceholder": "ニックネームまたは同盟",
+    "alliance": "同盟",
+    "troopType": "兵種",
+    "shift": "シフト",
+    "captain": "キャプテン",
+    "readyCaptain": "隊長可能",
+    "notCaptain": "隊長ではない",
+    "all": "すべて",
+    "reset": "フィルターをリセット",
+    "perPage": "1ページのプレイヤー数",
+    "perPage10": "1ページ10件",
+    "perPage20": "1ページ20件",
+    "perPage50": "1ページ50件",
+    "perPageAll": "すべて"
+  },
+  "table": {
+    "nickname": "ニックネーム",
+    "alliance": "同盟",
+    "troops": "部隊",
+    "tier": "ティア",
+    "shift": "シフト",
+    "captain": "キャプテン",
+    "when": "日時",
+    "yes": "はい",
+    "no": "いいえ"
+  },
+  "loading": "読み込み中...",
+  "errors": {
+    "load": "プレイヤーを読み込めませんでした。"
+  },
+  "time": {
+    "justNow": "たった今",
+    "minutesAgo": "{{count}}分前",
+    "hoursAgo": "{{count}}時間前",
+    "daysAgo": "{{count}}日前"
+  },
+  "pagination": {
+    "label": "プレイヤー表のページ",
+    "previous": "前のページ",
+    "next": "次のページ",
+    "pageOf": "{{page}} / {{pages}}"
+  }
+}

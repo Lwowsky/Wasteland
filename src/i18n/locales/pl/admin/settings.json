@@ -1,0 +1,480 @@
+{
+  "title": "Ustawienia",
+  "description": "Zarządzaj wyglądem witryny, importem i eksportem graczy, kopiami zapasowymi, dostępem i narzędziami systemowymi.",
+  "sections": {
+    "import": "Import",
+    "export": "Eksport",
+    "backup": "Kopie zapasowe",
+    "system": "System",
+    "access": "Dostęp"
+  },
+  "siteIdentity": {
+    "eyebrow": "Wygląd strony",
+    "title": "Nazwa, region i stopka",
+    "description": "Zmień nazwę witryny, tekst marki, numer i nazwę regionu oraz treść stopki.",
+    "edit": "Konfiguruj stronę",
+    "ownerOnly": "Edycja jest dostępna tylko dla właściciela.",
+    "saved": "Ustawienia strony zapisane.",
+    "summary": {
+      "siteName": "Nazwa strony",
+      "region": "Region",
+      "brand": "Tekst logo"
+    },
+    "identity": {
+      "title": "Główne informacje o stronie",
+      "description": "Te wartości są używane w nagłówku strony, tytule karty przeglądarki i informacjach o regionie."
+    },
+    "footer": {
+      "title": "Treść stopki",
+      "description": "Skonfiguruj osobny tekst stopki dla każdego obsługiwanego języka.",
+      "languageLabel": "Język stopki",
+      "languageHelp": "Domyślnie wyświetlane są tłumaczenia z JSON. W D1 zapisywane są tylko zmienione pola. Puste pole po zapisaniu wraca do domyślnego tekstu. Każdy język edytuje się osobno.",
+      "restoreDefaults": "Przywróć domyślny tekst",
+      "restoreHelp": "Przywróć tekst wybranego języka z tłumaczeń JSON. Zapisz, aby zastosować zmianę.",
+      "restoreNotice": "Przywrócono domyślny tekst w szkicu. Kliknij „Zapisz zmiany”, aby zastosować."
+    },
+    "fields": {
+      "siteName": "Nazwa strony",
+      "brandText": "Tekst logo / marki",
+      "regionNumber": "Numer regionu",
+      "regionName": "Nazwa regionu",
+      "footerDescription": "Opis strony w stopce",
+      "authorLabel": "Etykieta sekcji autora",
+      "author": "Imię i nazwisko autora",
+      "authorDescription": "Opis autora",
+      "projectDescription": "Opis projektu",
+      "copyright": "Tekst praw autorskich"
+    },
+    "help": {
+      "siteName": "Używane w tytule karty przeglądarki i tytule SEO.",
+      "brandText": "Wyświetlane w nagłówku i stopce strony."
+    },
+    "modal": {
+      "title": "Ustawienia strony",
+      "subtitle": "Zmieniaj główną nazwę, region i treść stopki bez edycji kodu.",
+      "footerHint": "Zmiany są stosowane natychmiast po zapisaniu.",
+      "unsaved": "Niezapisane zmiany"
+    },
+    "actions": {
+      "close": "Zamknij",
+      "cancel": "Anuluj",
+      "save": "Zapisz zmiany",
+      "saving": "Zapisywanie…"
+    },
+    "errors": {
+      "load": "Nie udało się wczytać ustawień strony.",
+      "save": "Nie udało się zapisać ustawień strony."
+    },
+    "unsaved": {
+      "title": "Odrzucić niezapisane zmiany?",
+      "message": "Zmieniono ustawienia strony lub tekst stopki. Zamknięcie okna spowoduje utratę tych zmian.",
+      "discard": "Odrzuć zmiany",
+      "keepEditing": "Kontynuuj edycję"
+    }
+  },
+  "import": {
+    "title": "Importuj graczy",
+    "description": "Importuj z XLSX, XLS lub CSV tylko do tabeli graczy bieżącego cyklu.",
+    "chooseFile": "Wybierz plik graczy",
+    "reading": "Odczytywanie pliku…",
+    "formats": "XLSX · XLS · CSV",
+    "cancel": "Anuluj",
+    "importing": "Importowanie…",
+    "success": "Pomyślnie zaimportowano: {{count}} graczy.",
+    "fixBeforeImport": "Popraw błędy w pliku i duplikaty przed importem.",
+    "preview": {
+      "title": "Weryfikacja podglądu",
+      "total": "Wiersze",
+      "valid": "Gotowy",
+      "invalid": "błędy",
+      "duplicates": "duplikaty",
+      "problems": "Co należy poprawić",
+      "row": "Wiersz {{row}}",
+      "rowShort": "Wiersz",
+      "showing": "Wyświetlono {{from}}–{{to}} z {{total}}",
+      "perPage": "na stronę",
+      "all": "Wszystkie",
+      "page": "{{page}} / {{pages}}",
+      "previous": "Poprzednia strona",
+      "next": "Następna strona"
+    },
+    "errors": {
+      "readFile": "Nie udało się odczytać pliku. Sprawdź format XLSX/XLS/CSV.",
+      "emptyFile": "Plik nie zawiera wierszy z graczami.",
+      "importFailed": "Import nie powiódł się. Nie zakładaj, że dane zostały zaimportowane; sprawdź Worker i plik.",
+      "duplicateExisting": "ten nick już istnieje w bieżącym cyklu",
+      "duplicateFile": "ten nick powtarza się w pliku",
+      "invalidField": {
+        "nickname": "brak nicku",
+        "alliance": "brak sojuszu",
+        "troopType": "Nieznany typ wojska",
+        "tier": "poziom musi być T1–T14",
+        "shift": "Nieznana zmiana",
+        "captain": "nieznana wartość kapitana — wybierz Tak/Nie ręcznie",
+        "readyAttack": "nieznana wartość gotowości — wybierz Tak/Nie ręcznie"
+      },
+      "saveDraftFailed": "Nie udało się zapisać lokalnego szkicu importu."
+    },
+    "close": "Zamknij",
+    "fields": {
+      "nickname": "Nick",
+      "alliance": "Sojusz",
+      "troopType": "Typ wojsk",
+      "tier": "Poziom jednostek",
+      "lairLevel": "Poziom leża",
+      "marchSize": "Rozmiar marszu",
+      "rallySize": "Rozmiar rajdu",
+      "shift": "Zmiana",
+      "readyAttack": "Gotowy do ataku",
+      "captain": "Kapitan",
+      "comment": "Komentarz",
+      "extraFighterTier": "Dodatkowy oddział — wojownicy",
+      "extraRiderTier": "Dodatkowy oddział — jeźdźcy",
+      "extraShooterTier": "Dodatkowy oddział — strzelcy"
+    },
+    "mapping": {
+      "cardHint": "Po wybraniu pliku otworzy się okno mapowania, w którym każdą kolumnę Excela można dopasować do pola gracza.",
+      "title": "Ustawienia importu graczy",
+      "subtitle": "Plik: {{file}}. Wybierz kolumny odpowiadające polom witryny.",
+      "fileSummary": "Kolumny: {{columns}} · wiersze: {{rows}}",
+      "fieldsTitle": "Mapowanie kolumn",
+      "fieldsText": "Po lewej pole witryny, po prawej kolumna przesłanego pliku. Nieużywane kolumny można dodać jako dodatkowe pola gracza.",
+      "required": "wymagane do importu",
+      "custom": "pole dodatkowe",
+      "customName": "Nazwa dodatkowego pola",
+      "skip": "— Nie importuj —",
+      "unknownTitle": "Nierozpoznane kolumny pliku",
+      "unknownText": "Jeśli plik zawiera informacje, dla których nie ma jeszcze pól na stronie, dodaj kolumnę jako dodatkowe pole gracza.",
+      "addCustom": "Dodaj jako pole",
+      "removeCustom": "Usuń dodatkowe pole",
+      "previewText": "Przed importem wartości są normalizowane: Tier 10 → T10, первая половина / 1st shift → shift1, вторая половина / 2nd shift → shift2, оба подходят / both are suitable → Any shift.",
+      "status": "Status",
+      "ok": "Gotowy",
+      "ready": "Gotowych do importu: {{count}} graczy.",
+      "importCount": "Importuj {{count}}",
+      "saveMapping": "Zapisz mapowanie kolumn",
+      "saved": "Mapowanie zapisane",
+      "continueMapping": "Kontynuuj konfigurację pliku"
+    },
+    "destination": {
+      "title": "Gdzie przygotować graczy",
+      "text": "Zaleca się najpierw zapisać plik w lokalnym szkicu, sprawdzić wartości i dopiero potem przenieść graczy do bieżącego cyklu.",
+      "staging": "Szkic lokalny",
+      "stagingText": "Nic nie jest zapisywane w bazie danych. Możesz poprawić mapowanie i kontynuować później.",
+      "current": "Bieżący cykl",
+      "currentText": "Zapisz graczy bezpośrednio do aktywnego cyklu. Dostępne tylko bez błędów i duplikatów.",
+      "saveDraft": "Zapisz {{count}} do szkicu",
+      "draftWithErrors": "Szkic można zapisać nawet z błędami. Te wiersze nie zostaną zapisane w bazie danych."
+    },
+    "draft": {
+      "title": "Lokalny szkic importu",
+      "summary": "{{file}} · {{count}} wierszy",
+      "open": "Otwórz szkic",
+      "clear": "Usuń szkic",
+      "saved": "Zapisano {{count}} wierszy w lokalnym szkicu.",
+      "help": "Szkic jest przechowywany tylko w tej przeglądarce. Aby dodać graczy do bazy i tabel strony, otwórz „Tabela graczy” → „Tabela lokalna” i kliknij „Przenieś”."
+    },
+    "valueMapping": {
+      "title": "Mapowanie wartości",
+      "text": "Jeśli strona nie rozpoznaje typu wojska, poziomu, zmiany, kapitana lub gotowości, wybierz prawidłową wartość ręcznie. Nieznane wartości nie są już po cichu zamieniane na „Nie”.",
+      "choose": "— Wybierz ręcznie —",
+      "troops": {
+        "fighter": "Wojownicy",
+        "rider": "Jeźdźcy",
+        "shooter": "Strzelcy"
+      },
+      "shifts": {
+        "shift1": "Zmiana 1",
+        "shift2": "Zmiana 2",
+        "shift3": "Zmiana 3",
+        "shift4": "Zmiana 4",
+        "flexible": "Dowolna zmiana"
+      },
+      "yes": "Tak",
+      "no": "Nie"
+    }
+  },
+  "export": {
+    "title": "Eksportuj graczy",
+    "description": "Eksportuj tylko dane tabeli graczy.",
+    "excel": "Eksport do Excela",
+    "fileName": "Nazwa pliku",
+    "download": "Pobierz Excel",
+    "options": {
+      "players": "Podstawowe informacje o graczu",
+      "readiness": "Gotowość i kapitan",
+      "extraSquads": "Dodatkowe oddziały",
+      "comments": "Komentarze"
+    },
+    "excelLabels": {
+      "sheets": {
+        "players": "graczy"
+      },
+      "columns": {
+        "nickname": "Nick",
+        "alliance": "Sojusz",
+        "troop": "Wojsko",
+        "tier": "Poziom jednostek",
+        "lair": "Legowisko",
+        "march": "Marsz",
+        "rally": "Rajd",
+        "shift": "Zmiana",
+        "submitted": "Wysłano",
+        "captain": "Kapitan",
+        "readyAttack": "Gotowy do ataku",
+        "comment": "Komentarz",
+        "setting": "Ustawienie",
+        "value": "Wartość",
+        "role": "Rola",
+        "permissions": "Uprawnienia",
+        "active": "aktywne",
+        "extraFighterTier": "Dodatkowy oddział — wojownicy",
+        "extraRiderTier": "Dodatkowy oddział — jeźdźcy",
+        "extraShooterTier": "Dodatkowy oddział — strzelcy"
+      }
+    },
+    "settingsButton": "Ustawienia",
+    "selectedSummary": "Wybrane kolumny: {{count}}",
+    "modal": {
+      "title": "Ustawienia eksportu",
+      "subtitle": "Wybierz pola tabeli graczy, które mają znaleźć się w Excelu.",
+      "close": "Zamknij",
+      "selectAll": "Zaznacz wszystko",
+      "clearAll": "Wyczyść wszystko",
+      "selected": "Zaznaczono: {{count}}",
+      "customField": "pole dodatkowe",
+      "done": "Gotowe"
+    }
+  },
+  "backup": {
+    "title": "Kopie zapasowe",
+    "description": "Pobierz pełną kopię zapasową regionu na komputer lub przywróć stronę z pliku JSON.",
+    "ownerOnly": "Tworzenie i przywracanie pełnych kopii jest dostępne tylko dla właściciela.",
+    "create": "Utwórz i pobierz",
+    "creating": "Tworzenie kopii…",
+    "restore": "Przywróć z pliku",
+    "created": "Kopia zapasowa utworzona i pobrana.",
+    "restored": "Przywrócono kopię zapasową.",
+    "note": "Kopia nie jest przechowywana w bazie danych — to lokalny plik JSON. Użytkownicy i role nie są w niej uwzględnieni.",
+    "errors": {
+      "create": "Nie udało się utworzyć kopii zapasowej.",
+      "invalidFile": "To nieobsługiwany plik kopii zapasowej Wasteland.",
+      "restore": "Nie udało się przywrócić kopii zapasowej. Nie zakładaj, że bieżące dane zostały w pełni przywrócone."
+    },
+    "restoreModal": {
+      "title": "Przywróć kopię",
+      "subtitle": "Bieżące dane regionu zostaną zastąpione danymi z wybranego pliku.",
+      "warningTitle": "Bieżące dane zostaną nadpisane",
+      "warningText": "Przed przywróceniem system automatycznie pobierze awaryjną kopię bieżącego stanu. Firebase Auth i adminUsers pozostaną bez zmian. Wszystkie wcześniej utworzone tajne linki do tabeli graczy i planu końcowego zostaną cofnięte. Po przywróceniu utwórz nowe linki.",
+      "createdAt": "Kopia zapasowa utworzona",
+      "players": "graczy",
+      "periods": "Cykle",
+      "alliances": "Wiersze rotacji sojuszy",
+      "requests": "Wnioski o dostęp",
+      "phraseLabel": "Aby potwierdzić, wpisz dokładną frazę:",
+      "help": "Przycisk przywracania odblokuje się również po 10 sekundach.",
+      "cancel": "Anuluj",
+      "confirm": "Przywróć dane",
+      "restoring": "Przywracanie…",
+      "phrase": "RESTORE REGION DATA"
+    }
+  },
+  "factoryReset": {
+    "eyebrow": "Strefa niebezpieczna",
+    "title": "Zresetuj dane regionu",
+    "description": "Całkowicie usuwa wybrane dane regionu i przywraca ustawienia domyślne.",
+    "preserved": {
+      "title": "Użytkownicy i role są chronieni",
+      "text": "Firebase Auth i kolekcja adminUsers zostaną zachowane. Właściciel, administratorzy, konsulowie i przypisane uprawnienia pozostaną."
+    },
+    "open": "Zresetuj dane regionu",
+    "modal": {
+      "title": "Zresetuj dane regionu",
+      "subtitle": "Wybierz dokładnie, co wyczyścić. Ta operacja usuwa dane z baz danych."
+    },
+    "warning": {
+      "title": "To działanie niszczące dane",
+      "text": "Wybrane dane są fizycznie usuwane z bazy strony. Bez kopii zapasowej nie można ich odzyskać."
+    },
+    "deleteAll": {
+      "title": "Usuń wszystkie dane regionu",
+      "description": "Zaznacz wszystkie poniższe kategorie, aby przygotować stronę jako nowy czysty region."
+    },
+    "options": {
+      "players": {
+        "title": "Gracze i rejestracje",
+        "description": "Usuń rejestracje, public_players i statystyki graczy."
+      },
+      "cycles": {
+        "title": "Cykle rejestracji",
+        "description": "Usuń całą historię cykli. Gracze też zostaną usunięci, ponieważ należą do cykli."
+      },
+      "alliances": {
+        "title": "Sojusze i rotacja",
+        "description": "Wyczyść sojusze, rotację, sojusz gospodarza i gubernatora."
+      },
+      "registrationSettings": {
+        "title": "Ustawienia rejestracji",
+        "description": "Przywróć fabryczne ustawienia cyklu, T9–T14, zmian 1/2/Dowolna, pól formularza i dostępu publicznego."
+      },
+      "accessRequests": {
+        "title": "Wnioski o dostęp",
+        "description": "Usuń stare i oczekujące accessRequests z Firestore bez naruszania adminUsers."
+      },
+      "browserData": {
+        "title": "Dane lokalne w tej przeglądarce",
+        "description": "Wyczyść szablony graczy, preferencje planu końcowego i lokalne ustawienia czasu na tym urządzeniu."
+      }
+    },
+    "preview": {
+      "title": "Aktualnie przechowywane dane",
+      "loading": "Sprawdzanie baz danych…",
+      "players": "Rejestracje graczy",
+      "periods": "Cykle",
+      "stats": "Statystyki cykli",
+      "alliances": "Rekordy rotacji",
+      "requests": "Wnioski o dostęp"
+    },
+    "confirmation": {
+      "label": "Wpisz dokładną frazę, aby potwierdzić:",
+      "help": "Przycisk usuwania również pozostaje nieaktywny przez 10 sekund.",
+      "phrase": "DELETE REGION DATA"
+    },
+    "actions": {
+      "cancel": "Anuluj",
+      "delete": "Usuń wybrane dane",
+      "deleting": "Usuwanie…"
+    },
+    "errors": {
+      "preview": "Nie udało się wczytać podglądu danych.",
+      "reset": "Resetowanie nie powiodło się. Nie zakładaj, że wszystko zostało usunięte; sprawdź Worker i spróbuj ponownie.",
+      "backup": "Nie udało się pobrać kopii zapasowej, więc resetowanie zatrzymano. Wyłącz tę opcję tylko wtedy, gdy świadomie chcesz kontynuować bez kopii."
+    },
+    "preservedSummary": "Konta użytkowników, właściciel, administratorzy, konsulowie i ich role nigdy nie są usuwane.",
+    "backupBeforeReset": {
+      "title": "Pobierz kopię zapasową przed resetowaniem",
+      "description": "Przed usunięciem system zbierze bieżące dane strony i pobierze plik JSON na urządzenie. Kopia zapasowa nie pozostanie w bazie danych."
+    }
+  },
+  "access": {
+    "title": "Dostęp",
+    "description": "Zarządzaj tym, kto może otwierać tabelę graczy i plan końcowy.",
+    "resourceLabel": "Zasób do skonfigurowania",
+    "resources": {
+      "players": "Tabela graczy",
+      "final_plan": "Plan końcowy"
+    },
+    "loading": "Wczytywanie ustawień dostępu…",
+    "cycle": "Cykl nr {{cycle}}",
+    "cycleNote": "Statyczne linki udostępniania mogą przetrwać kolejne cykle, ale pokazują tylko opublikowane dane bieżącego cyklu.",
+    "modeLabel": "Tryb dostępu",
+    "publicWarning": "Tryb publiczny udostępnia dane bieżącego cyklu wszystkim bez hasła po kolejnej udanej publikacji JSON. Zmiana trybu unieważnia wcześniej wydane prywatne linki. Zamykanie cyklu według kalendarza nadal obowiązuje.",
+    "modes": {
+      "public": "Publiczny — widoczny dla wszystkich",
+      "private": "Zamknięty — strona publiczna niedostępna",
+      "link": "Prywatny link"
+    },
+    "status": {
+      "public": "Dostęp publiczny",
+      "private": "Dostęp zamknięty",
+      "active": "Prywatny dostęp aktywny",
+      "needsToken": "Utwórz prywatny link udostępniania"
+    },
+    "tokenLifetime": {
+      "label": "Czas ważności linku"
+    },
+    "duration": {
+      "hours24": "24 godziny",
+      "cycle": "Do końca bieżącego cyklu",
+      "hours1": "1 godzina",
+      "hours6": "6 godzin",
+      "hours12": "12 godzin",
+      "days7": "7 dni",
+      "forever": "Bez terminu ważności"
+    },
+    "generated": {
+      "title": "Utworzono nowy dostęp",
+      "once": "Skopiuj ten link teraz. Zacznie działać po kolejnej publikacji JSON; pełny kod nie jest przechowywany w publicznym GitHubie."
+    },
+    "actions": {
+      "save": "Zapisz",
+      "generateLink": "Utwórz nowy link",
+      "copy": "Kopiuj",
+      "revoke": "Cofnij"
+    },
+    "messages": {
+      "saved": "Ustawienia dostępu zapisane.",
+      "generated": "Link utworzony. Zadziała po kolejnej publikacji migawki danych; wcześniejsze linki pozostają aktywne.",
+      "revoked": "Link cofnięty. Dostęp statyczny ustanie po kolejnej publikacji migawki danych.",
+      "copied": "Skopiowano.",
+      "historyDeleted": "Usunięto archiwalny wpis linku."
+    },
+    "errors": {
+      "load": "Nie udało się wczytać ustawień dostępu.",
+      "save": "Nie udało się zapisać ustawień dostępu.",
+      "generate": "Nie udało się utworzyć prywatnego linku.",
+      "revoke": "Nie udało się cofnąć dostępu.",
+      "copy": "Nie udało się skopiować.",
+      "noPeriod": "Brak bieżącego cyklu dla prywatnego dostępu.",
+      "deleteLink": "Nie udało się usunąć zarchiwizowanego linku."
+    },
+    "staticLinks": {
+      "title": "Utworzone linki (właściciel i administratorzy mogą kopiować zapisane linki)",
+      "active": "aktywne",
+      "inactive": "Wygasłe lub cofnięte",
+      "history": "Historia — wygasłe i cofnięte",
+      "delete": "Usuń wpis",
+      "confirmDelete": "Trwale usunąć ten wpis nieaktywnego linku?",
+      "deleteTitle": "Usunąć zarchiwizowany link?",
+      "cancel": "Anuluj"
+    }
+  },
+  "sharedConsul": {
+    "title": "Wspólne hasło konsula",
+    "description": "Wygeneruj nowe hasło. Poprzednie hasło i wszystkie jego sesje zostaną natychmiast unieważnione.",
+    "duration": "Termin ważności",
+    "day": "Jeden dzień",
+    "wasteland": "Do końca Pustkowia",
+    "forever": "Klucz bez terminu ważności",
+    "generate": "Wygeneruj nowe hasło",
+    "revoke": "Cofnij dostęp",
+    "active": "Dostęp aktywny",
+    "failed": "Nie udało się wczytać ustawień dostępu.",
+    "noWasteland": "Brak daty zakończenia bieżącego Pustkowia.",
+    "copy": "Kopiuj",
+    "cancel": "Anuluj",
+    "close": "Zamknij",
+    "ok": "Rozumiem",
+    "copySuccessTitle": "Hasło skopiowane",
+    "copySuccess": "Hasło dostępu konsula skopiowano do schowka. Udostępniaj je tylko zaufanym osobom.",
+    "copyExpires": "Hasło wygasa:",
+    "copyForeverWarning": "To hasło nie wygasa. Dla bezpieczeństwa generuj nowe po każdym Pustkowiu albo wybierz ważność jednego dnia lub do końca Pustkowia.",
+    "multipleDescription": "Do 5 aktywnych haseł. Utworzenie kolejnego hasła nie cofa istniejącego dostępu. Funkcje dostępne tylko dla właściciela.",
+    "legacyKey": "Hasło z poprzedniego Stage 042",
+    "keyName": "Nazwa hasła",
+    "keyPlaceholder": "Na przykład konsulowie października",
+    "limitReached": "Istnieje już pięć aktywnych haseł. Cofnij jedno lub poczekaj, aż wygaśnie.",
+    "showPassword": "Pokaż hasło",
+    "passwordPrivacy": "Nie udostępniaj tego hasła nieupoważnionym osobom. Zamknij okno po skopiowaniu.",
+    "confirmSingleRevoke": "Cofnąć tylko to hasło? Osoby z niego korzystające stracą dostęp. Pozostałe hasła pozostaną ważne.",
+    "confirmChangeDuration": "Zmienić termin ważności tego hasła? Pozostałe hasła pozostaną bez zmian.",
+    "confirmUpdate": "Zmień termin ważności",
+    "confirmAdd": "Utworzyć kolejne hasło? Istniejące hasła pozostaną aktywne.",
+    "tabsActive": "aktywne",
+    "tabsHistory": "Historia",
+    "tabsCreate": "Utwórz",
+    "emptyActive": "Nie ma jeszcze aktywnych haseł.",
+    "emptyHistory": "Brak wygasłych lub cofniętych haseł.",
+    "historyHint": "Tutaj pojawiają się wygasłe i cofnięte hasła. Ich wpisy można trwale usunąć.",
+    "deleteHistory": "Usuń wpis",
+    "confirmDeleteHistory": "Trwale usunąć ten wpis z historii? Inne hasła pozostaną bez zmian.",
+    "expired": "wygasły",
+    "revoked": "cofnięty",
+    "copyPassword": "Kopiuj hasło",
+    "hidePassword": "Ukryj",
+    "createdAt": "Utworzono:",
+    "historyLegacy": "Nie można ujawnić starego hasła. Cofnij je, aby zablokować dostęp.",
+    "createHint": "Jednocześnie może być aktywnych do 5 haseł. Istniejące hasła pozostają ważne.",
+    "deleteBlocked": "Cofnij aktywne hasło przed usunięciem."
+  }
+}

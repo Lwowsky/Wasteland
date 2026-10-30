@@ -1,0 +1,101 @@
+{
+  "title": "Wasteland-Registrierung",
+  "text": "Gib deine Daten ein, um am regionalen Ereignis teilzunehmen.",
+  "select": "Wert auswählen",
+  "comment": "Kommentar",
+  "commentPlaceholder": "Du kannst Verfügbarkeit, Einschränkungen oder eine Notiz hinzufügen",
+  "submit": "Anfrage senden",
+  "reset": "Formular leeren",
+  "troops": {
+    "fighter": "Kämpfer",
+    "rider": "Reiter",
+    "shooter": "Schützen"
+  },
+  "player": {
+    "title": "Spielerinformationen",
+    "text": "Grundlegende Angaben zu deinem Konto",
+    "nickname": "Nickname",
+    "nicknamePlaceholder": "Nickname eingeben",
+    "alliance": "Allianz",
+    "alliancePlaceholder": "Allianz auswählen",
+    "otherAlliance": "Sonstige",
+    "troopType": "Haupttruppentyp",
+    "tier": "Tier",
+    "lairLevel": "Höhlenlevel",
+    "marchSize": "Marschgröße",
+    "rallySize": "Rallyegröße",
+    "select": "Wert auswählen",
+    "allianceManualLabel": "Allianz manuell eingeben",
+    "allianceManualPlaceholder": "Zum Beispiel: ABC"
+  },
+  "readiness": {
+    "title": "Bereitschaft",
+    "text": "Gib an, ob du am Ereignis teilnehmen kannst.",
+    "attack": "Bereit, eine andere Region anzugreifen",
+    "attackText": "Ich kann an Angriffen auf andere Regionen teilnehmen.",
+    "captain": "Bereit, Kapitän zu sein",
+    "captainText": "Ich kann einen Marsch anführen und Aktionen koordinieren."
+  },
+  "shifts": {
+    "title": "Schichtverfügbarkeit",
+    "text": "Wähle die Schicht, in der du teilnehmen kannst.",
+    "shift1": "Schicht 1",
+    "shift2": "Schicht 2",
+    "shift3": "Schicht 3",
+    "shift4": "Schicht 4",
+    "flexible": "Beliebige Schicht",
+    "flexibleText": "Kann einer oder mehreren Schichten zugewiesen werden"
+  },
+  "extra": {
+    "title": "Zusätzliche Trupps",
+    "text": "Gib zusätzliche vollständige Trupps anderer Truppentypen an.",
+    "hasExtra": "Ich habe zusätzliche volle Trupps anderer Typen",
+    "enable": "Aktivieren",
+    "tier": "Zusätzliches Tier"
+  },
+  "template": {
+    "title": "Spielervorlage",
+    "text": "Formular schnell mit einer gespeicherten Spielervorlage ausfüllen.",
+    "select": "Spieler auswählen",
+    "apply": "Formular ausfüllen",
+    "empty": "Noch keine Vorlagen gespeichert. Du kannst sie in den Einstellungen erstellen.",
+    "lair": "Versteck",
+    "saveCurrent": "Aktuelle Daten als Vorlage speichern",
+    "saved": "Vorlage gespeichert.",
+    "updated": "Vorhandene Vorlage aktualisiert."
+  },
+  "success": {
+    "title": "Anmeldung angenommen",
+    "text": "Deine Anmeldung wurde erfolgreich übermittelt."
+  },
+  "submitting": "Wird gesendet…",
+  "errorTitle": "Fehler",
+  "unavailable": {
+    "title": "Anmeldung nicht verfügbar",
+    "disabled": "Die Anmeldung ist derzeit nicht verfügbar.",
+    "closed": "Die Anmeldung ist geschlossen. Prüfe den Öffnungstermin und versuche es später erneut.",
+    "notOpenYet": "Die Anmeldung hat noch nicht begonnen.",
+    "opensAt": "Öffnet am {{date}}.",
+    "disabledTitle": "Anmeldung deaktiviert",
+    "closedTitle": "Registrierung geschlossen",
+    "notOpenYetTitle": "Anmeldung hat noch nicht begonnen"
+  },
+  "errors": {
+    "alreadyRegistered": "Ein Spieler mit diesem Nickname ist für diesen Zyklus bereits angemeldet.",
+    "closed": "Die Anmeldung ist derzeit geschlossen.",
+    "disabled": "Die Anmeldung ist derzeit nicht verfügbar.",
+    "invalidData": "Bitte überprüfe die Formulardaten.",
+    "submit": "Anmeldung konnte nicht gesendet werden. Bitte erneut versuchen.",
+    "requiredFields": "Fülle alle Pflichtfelder aus. Das erste fehlende Feld wurde markiert.",
+    "requiredFieldsTitle": "Bitte Pflichtfelder ausfüllen",
+    "challenge": "Schließe vor dem Senden die Sicherheitsprüfung ab.",
+    "challengeUnavailable": "Sicherheitsprüfung derzeit nicht verfügbar. Bitte später erneut versuchen.",
+    "rateLimited": "Zu viele Anmeldeversuche. Warte eine Minute und versuche es erneut."
+  },
+  "customFields": {
+    "title": "Zusätzliche Felder",
+    "text": "Fülle die zusätzlichen Angaben aus, die der Administrator angefordert hat."
+  },
+  "loading": "Anmeldung wird geladen…",
+  "loadError": "Anmeldung konnte nicht geladen werden."
+}

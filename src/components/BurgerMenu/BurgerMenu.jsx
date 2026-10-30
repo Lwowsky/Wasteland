@@ -4,11 +4,12 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   Globe2,
   ChevronRight,
+  ChevronDown,
   Check,
   X,
 } from "lucide-react";
 
-import { LANGUAGES, PLANNED_LANGUAGES, SUPPORTED_LANGUAGES } from "../../config/site.js";
+import { LANGUAGES, SUPPORTED_LANGUAGES } from "../../config/site.js";
 import { ROUTES, getRoute } from "../../config/routes.js";
 
 const AdminMenuLink = lazy(() => import("./AdminMenuLink.jsx"));
@@ -34,7 +35,7 @@ function BurgerMenu({
       if (event.key === "Tab") {
         const items = [...(panelRef.current?.querySelectorAll(
           'button:not([disabled]), a[href], summary, input:not([disabled])',
-        ) || [])];
+        ) || [])].filter((item) => item.getClientRects().length > 0);
         const first = items[0];
         const last = items[items.length - 1];
         if (first && last && event.shiftKey && document.activeElement === first) {
@@ -210,40 +211,37 @@ function BurgerMenu({
                   {SUPPORTED_LANGUAGES.length} {t.header.languagesAvailable}
                 </span>
               </div>
-              <div className="burger-menu__language-list" role="group" aria-label={t.header.language}>
-                {SUPPORTED_LANGUAGES.map((languageCode) => {
-                  const option = t.header.languageOptions?.[languageCode] || {};
-                  const active = language === languageCode;
-                  return (
-                    <button key={languageCode} type="button"
-                      className={`burger-menu__language${active ? " burger-menu__language--active" : ""}`}
-                      aria-pressed={active}
-                      onClick={() => changeLanguage(languageCode)}
-                    >
-                      <img className="burger-menu__language-flag"
-                        src={publicAsset(`/images/final-plan/lang/${languageCode}.svg`)}
-                        width="36" height="36" alt="" aria-hidden="true" />
-                      <span className="burger-menu__language-copy">
-                        <strong>{option.label || LANGUAGES[languageCode]?.nativeLabel || languageCode}</strong>
-                        <small>{option.description || LANGUAGES[languageCode]?.englishLabel || languageCode}</small>
-                      </span>
-                      {active ? <Check className="burger-menu__language-check" size={18}
-                        aria-label={t.header.languageSelected} /> : null}
-                    </button>
-                  );
-                })}
-              </div>
-              <details className="burger-menu__languages-future">
-                <summary>{t.header.languagesPlanned} ({PLANNED_LANGUAGES.length})</summary>
-                <p>{t.header.languagesPlannedNote}</p>
-                <div className="burger-menu__planned-grid">
-                  {PLANNED_LANGUAGES.map((code) => (
-                    <span className="burger-menu__planned-language" key={code}>
-                      <img src={publicAsset(`/images/final-plan/lang/${code}.svg`)}
-                        width="24" height="24" alt="" aria-hidden="true" />
-                      {t.header.languageOptions?.[code]?.label || code.toUpperCase()}
-                    </span>
-                  ))}
+
+              <details className="burger-menu__language-picker">
+                <summary className="burger-menu__language-current">
+                  <img
+                    src={publicAsset(`/images/final-plan/lang/${language}.svg`)}
+                    width="27" height="27" alt="" aria-hidden="true"
+                  />
+                  <strong lang={language}>{LANGUAGES[language]?.nativeLabel || language}</strong>
+                  <ChevronDown className="burger-menu__picker-chevron" size={18} aria-hidden="true" />
+                </summary>
+
+                <div className="burger-menu__language-list" role="group" aria-label={t.header.language}>
+                  {SUPPORTED_LANGUAGES.map((languageCode) => {
+                    const active = language === languageCode;
+                    return (
+                      <button key={languageCode} type="button"
+                        className={`burger-menu__language${active ? " burger-menu__language--active" : ""}`}
+                        aria-pressed={active}
+                        onClick={() => changeLanguage(languageCode)}
+                      >
+                        <img className="burger-menu__language-flag"
+                          src={publicAsset(`/images/final-plan/lang/${languageCode}.svg`)}
+                          width="24" height="24" alt="" aria-hidden="true" />
+                        <span className="burger-menu__language-copy" lang={languageCode}>
+                          <strong>{LANGUAGES[languageCode]?.nativeLabel || languageCode}</strong>
+                        </span>
+                        {active ? <Check className="burger-menu__language-check" size={15}
+                          aria-label={t.header.languageSelected} /> : null}
+                      </button>
+                    );
+                  })}
                 </div>
               </details>
             </section>

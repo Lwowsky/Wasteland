@@ -75,7 +75,5 @@
     }
   },
   "languagesAvailable": "активні",
-  "languageSelected": "Вибрана мова",
-  "languagesPlanned": "Інші мови зі старого сайту",
-  "languagesPlannedNote": "Ці мови поки в підготовці. Вони стануть доступними після повного перекладу й тестування нових сторінок та адмінки."
+  "languageSelected": "Вибрана мова"
 }

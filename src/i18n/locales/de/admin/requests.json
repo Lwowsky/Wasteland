@@ -1,0 +1,39 @@
+{
+  "title": "Zugriffsanträge",
+  "description": "Anträge prüfen, Rollen anpassen und Zugriff auf den administrativen Bereich gewähren.",
+  "loading": "Anfragen werden geladen...",
+  "empty": "Noch keine Anträge vorhanden.",
+  "columns": {
+    "user": "Benutzer",
+    "email": "E-Mail",
+    "role": "Rolle",
+    "comment": "Kommentar",
+    "status": "Status",
+    "actions": "Aktionen"
+  },
+  "roles": {
+    "admin": "Adminbereich",
+    "consul": "Konsul"
+  },
+  "status": {
+    "pending": "Ausstehend",
+    "approved": "Genehmigt",
+    "rejected": "Abgelehnt"
+  },
+  "actions": {
+    "approve": "Bestätigen",
+    "reject": "Ablehnen",
+    "delete": "Löschen",
+    "notAllowed": "Unzureichende Berechtigungen für diese Rolle"
+  },
+  "errors": {
+    "load": "Anträge konnten nicht geladen werden.",
+    "approve": "Antrag konnte nicht genehmigt werden.",
+    "reject": "Antrag konnte nicht abgelehnt werden.",
+    "delete": "Antrag konnte nicht gelöscht werden.",
+    "onlyOwnerAdmin": "Nur der Owner kann die Admin-Rolle vergeben."
+  },
+  "confirm": {
+    "delete": "Antrag {{name}} löschen?"
+  }
+}

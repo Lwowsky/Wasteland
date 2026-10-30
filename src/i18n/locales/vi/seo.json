@@ -1,0 +1,18 @@
+{
+  "home": {
+    "title": "Trang chủ",
+    "description": "Trang chính của trang web."
+  },
+  "about": {
+    "title": "Giới thiệu",
+    "description": "Thông tin về trang web."
+  },
+  "contact": {
+    "title": "Liên hệ",
+    "description": "Thông tin liên hệ."
+  },
+  "notFound": {
+    "title": "404",
+    "description": "Không tìm thấy trang."
+  }
+}

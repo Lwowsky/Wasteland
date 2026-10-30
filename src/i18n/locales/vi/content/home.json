@@ -1,0 +1,74 @@
+{
+  "dashboard": {
+    "registered": "Người chơi đã đăng ký",
+    "allianceCount": "Liên minh",
+    "captains": "Đội trưởng",
+    "finalPlanPlayers": "Trong kế hoạch cuối cùng",
+    "registrationCountdown": {
+      "title": "Đăng ký sẽ đóng sau",
+      "subtitle": "Đã mở đăng ký",
+      "open": "Mở",
+      "closedTitle": "Đã đóng đăng ký",
+      "closedSubtitle": "Mở đăng ký tiếp theo sau",
+      "closed": "Đã đóng",
+      "disabledSubtitle": "Đăng ký tạm thời không khả dụng",
+      "disabledCountdown": "Không thể đếm ngược khi đăng ký bị tắt"
+    },
+    "eventCountdown": {
+      "title": "Wasteland bắt đầu sau",
+      "subtitle": "Sự kiện khu vực tiếp theo",
+      "activeTitle": "Wasteland đang diễn ra",
+      "activeSubtitle": "Thời gian còn lại đến khi Wasteland kết thúc",
+      "active": "Đang diễn ra"
+    },
+    "time": {
+      "days": "ngày",
+      "hours": "giờ",
+      "minutes": "phút",
+      "seconds": "giây",
+      "unscheduled": "Chưa xác định ngày mở đăng ký tiếp theo"
+    },
+    "recent": {
+      "title": "Đăng ký gần đây",
+      "text": "5 người chơi gần nhất đã gửi đơn đăng ký.",
+      "nickname": "Biệt danh",
+      "alliance": "Liên minh",
+      "troop": "Quân đội",
+      "tier": "Cấp",
+      "time": "Thời điểm",
+      "timeAgo": {
+        "justNow": "vừa xong",
+        "minutes": "{{count}} phút trước",
+        "hours": "{{count}} giờ trước",
+        "days": "{{count}} ngày trước"
+      }
+    },
+    "allianceStats": {
+      "title": "Thống kê liên minh",
+      "text": "Phân bố người chơi đã đăng ký.",
+      "players": "người chơi",
+      "other": "Khác",
+      "showAll": "Hiện tất cả liên minh",
+      "showLess": "Thu gọn"
+    },
+    "navigation": {
+      "registration": {
+        "title": "Đăng ký",
+        "text": "Điền hoặc cập nhật thông tin để tham gia sự kiện Wasteland."
+      },
+      "players": {
+        "title": "Bảng người chơi",
+        "text": "Xem tất cả đơn đăng ký của người chơi trong khu vực."
+      },
+      "finalPlan": {
+        "title": "Kế hoạch cuối cùng",
+        "text": "Đội hình, đội trưởng và phân công ca."
+      },
+      "settings": {
+        "title": "Cài đặt",
+        "text": "Ngôn ngữ, thời gian và tùy chọn trình duyệt."
+      }
+    },
+    "loading": "Đang tải dữ liệu..."
+  }
+}

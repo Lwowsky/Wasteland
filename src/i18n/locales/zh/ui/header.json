@@ -1,0 +1,79 @@
+{
+  "home": "家园",
+  "registration": "报名",
+  "players": "玩家列表",
+  "finalPlan": "最终方案状态",
+  "settings": "设置",
+  "language": "语言",
+  "region": "地区",
+  "nextWasteland": "下一次荒野活动",
+  "wastelandDate": "荒野活动日期",
+  "registrationNotScheduled": "下次报名尚未安排",
+  "registrationOpens": "报名开放",
+  "registrationDeadline": "报名截止时间",
+  "organizerAlliance": "主办联盟",
+  "governor": "州长",
+  "localTime": "本地时间",
+  "loading": "加载中...",
+  "loadError": "加载数据失败。",
+  "brand": "Wasteland King",
+  "utc": "UTC",
+  "admin": "管理后台",
+  "openNavigation": "打开导航",
+  "closeNavigation": "关闭导航",
+  "toggleTimeZone": "切换时区",
+  "languageOptions": {
+    "en": {
+      "badge": "EN",
+      "label": "English",
+      "description": "英语"
+    },
+    "uk": {
+      "badge": "UA",
+      "label": "Українська",
+      "description": "乌克兰语"
+    },
+    "ru": {
+      "badge": "RU",
+      "label": "Русский",
+      "description": "俄语"
+    },
+    "pl": {
+      "badge": "PL",
+      "label": "Polski",
+      "description": "波兰语"
+    },
+    "de": {
+      "badge": "DE",
+      "label": "Deutsch",
+      "description": "德语"
+    },
+    "ja": {
+      "badge": "JA",
+      "label": "日本語",
+      "description": "日语"
+    },
+    "zh": {
+      "badge": "ZH",
+      "label": "中文",
+      "description": "中文"
+    },
+    "ko": {
+      "badge": "KO",
+      "label": "한국어",
+      "description": "韩语"
+    },
+    "vi": {
+      "badge": "VI",
+      "label": "Tiếng Việt",
+      "description": "越南语"
+    },
+    "ar": {
+      "badge": "AR",
+      "label": "العربية",
+      "description": "阿拉伯语"
+    }
+  },
+  "languagesAvailable": "启用",
+  "languageSelected": "已选择的语言"
+}

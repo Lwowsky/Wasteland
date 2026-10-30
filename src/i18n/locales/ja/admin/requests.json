@@ -1,0 +1,39 @@
+{
+  "title": "アクセス申請",
+  "description": "申請を確認し、役割を調整して管理画面へのアクセス権を付与します。",
+  "loading": "申請読み込み中...",
+  "empty": "申請はまだありません。",
+  "columns": {
+    "user": "ユーザー",
+    "email": "メール",
+    "role": "役割",
+    "comment": "コメント",
+    "status": "状態",
+    "actions": "操作"
+  },
+  "roles": {
+    "admin": "管理画面",
+    "consul": "領事"
+  },
+  "status": {
+    "pending": "保留中",
+    "approved": "承認済み",
+    "rejected": "却下済み"
+  },
+  "actions": {
+    "approve": "承認",
+    "reject": "却下",
+    "delete": "削除",
+    "notAllowed": "この役割に必要な権限がありません"
+  },
+  "errors": {
+    "load": "申請を読み込めませんでした。",
+    "approve": "申請を承認できませんでした。",
+    "reject": "申請を却下できませんでした。",
+    "delete": "申請を削除できませんでした。",
+    "onlyOwnerAdmin": "管理者権限を付与できるのはオーナーだけです。"
+  },
+  "confirm": {
+    "delete": "{{name}}の申請を削除しますか？"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "title": "Tabela graczy",
+  "text": "Zgłoszenia w uproszczonym widoku publicznym.",
+  "empty": "Nie ma jeszcze zgłoszeń.",
+  "stats": {
+    "total": "Łącznie graczy",
+    "captains": "Gotowi kapitanowie"
+  },
+  "troops": {
+    "fighter": "Wojownicy",
+    "rider": "Jeźdźcy",
+    "shooter": "Strzelcy"
+  },
+  "shifts": {
+    "shift1": "Zmiana 1",
+    "shift2": "Zmiana 2",
+    "shift3": "Zmiana 3",
+    "shift4": "Zmiana 4",
+    "flexible": "Dowolna zmiana"
+  },
+  "filters": {
+    "title": "Filtry",
+    "search": "Szukaj",
+    "searchPlaceholder": "Nick lub sojusz",
+    "alliance": "Sojusz",
+    "troopType": "Typ wojsk",
+    "shift": "Zmiana",
+    "captain": "Kapitan",
+    "readyCaptain": "Gotowy być kapitanem",
+    "notCaptain": "Nie jest kapitanem",
+    "all": "Wszystkie",
+    "reset": "Resetuj filtry",
+    "perPage": "Graczy na stronie",
+    "perPage10": "10 na stronę",
+    "perPage20": "20 na stronę",
+    "perPage50": "50 na stronę",
+    "perPageAll": "Wszystkie"
+  },
+  "table": {
+    "nickname": "Nick",
+    "alliance": "Sojusz",
+    "troops": "Wojska",
+    "tier": "Poziom jednostek",
+    "shift": "Zmiana",
+    "captain": "Kapitan",
+    "when": "Kiedy",
+    "yes": "Tak",
+    "no": "Nie"
+  },
+  "loading": "Ładowanie...",
+  "errors": {
+    "load": "Nie udało się wczytać graczy."
+  },
+  "time": {
+    "justNow": "przed chwilą",
+    "minutesAgo": "{{count}} min temu",
+    "hoursAgo": "{{count}} godz. temu",
+    "daysAgo": "{{count}} dni temu"
+  },
+  "pagination": {
+    "label": "Strony tabeli graczy",
+    "previous": "Poprzednia strona",
+    "next": "Następna strona",
+    "pageOf": "{{page}} / {{pages}}"
+  }
+}

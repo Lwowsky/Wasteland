@@ -1,0 +1,275 @@
+{
+  "title": "Vollständige Spielertabelle",
+  "description": "Vollständige Spielerdaten für die Regionsverwaltung.",
+  "actions": {
+    "add": "Spieler hinzufügen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "save": "Speichern",
+    "saving": "Wird gespeichert…",
+    "cancel": "Abbrechen",
+    "reset": "Zurücksetzen"
+  },
+  "filters": {
+    "search": "Nickname oder Allianz",
+    "allAlliance": "Allianz: Alle",
+    "allTroops": "Truppentyp: Alle",
+    "allShifts": "Schicht: Alle",
+    "captain": "Kapitän",
+    "captainAll": "Kapitän: Alle",
+    "captainYes": "Kapitän: Ja",
+    "captainNo": "Kapitän: Nein",
+    "ruleStatus": "Regelstatus",
+    "ruleStatusAll": "Status: Alle",
+    "ruleStatusAttention": "Überprüfung erforderlich",
+    "ruleStatusOk": "Keine Probleme",
+    "perPage": "Spieler pro Seite",
+    "perPageAll": "Alle",
+    "perPageCount": "{{count}} pro Seite"
+  },
+  "table": {
+    "nickname": "Nickname",
+    "alliance": "Allianz",
+    "troops": "Truppen",
+    "tier": "Tier",
+    "lair": "Versteck",
+    "march": "Marsch",
+    "rally": "Rallye",
+    "shift": "Schicht",
+    "captain": "Kapitän",
+    "ready": "Bereit",
+    "submitted": "Gesendet",
+    "comment": "Kommentar",
+    "actions": "Aktionen"
+  },
+  "empty": "Keine Spieler gefunden.",
+  "loading": "Wird geladen...",
+  "yes": "Ja",
+  "no": "Nein",
+  "troops": {
+    "fighter": "Kämpfer",
+    "rider": "Reiter",
+    "shooter": "Schütze"
+  },
+  "shifts": {
+    "shift1": "Schicht 1",
+    "shift2": "Schicht 2",
+    "shift3": "Schicht 3",
+    "shift4": "Schicht 4",
+    "flexible": "Beliebige Schicht"
+  },
+  "editor": {
+    "createTitle": "Neuer Spieler",
+    "editTitle": "Spieler bearbeiten",
+    "createSubtitle": "Neuen Spieler zum aktuellen Anmeldezeitraum hinzufügen.",
+    "editSubtitle": "Anmeldung von {{name}} bearbeiten.",
+    "participation": {
+      "title": "Wasteland-Teilnahme",
+      "description": "Wichtige Parameter für die Spielerverteilung.",
+      "shift": "Schicht",
+      "ready": "Bereit zum Angriff",
+      "captain": "Kapitän",
+      "selectShift": "Schicht auswählen"
+    },
+    "playerData": {
+      "title": "Spielerdaten",
+      "description": "Angaben aus der Spieleranmeldung.",
+      "nickname": "Nickname",
+      "alliance": "Allianz",
+      "tier": "Tier",
+      "troopType": "Truppentyp",
+      "lairLevel": "Höhlenlevel",
+      "marchSize": "Marschgröße",
+      "rallySize": "Rallyegröße"
+    },
+    "extraSquads": {
+      "title": "Zusätzliche Trupps",
+      "description": "Optional. Bis zu zwei weitere Truppentypen können ausgewählt werden.",
+      "main": "Haupttrupp",
+      "comment": "Kommentar",
+      "commentPlaceholder": "Zusätzliche Spielerinformationen…"
+    },
+    "validation": {
+      "nickname": "Nickname eingeben.",
+      "alliance": "Allianz eingeben.",
+      "troopType": "Truppentyp auswählen.",
+      "tier": "Wähle eine Stufe aus.",
+      "lair": "Versteckstufe darf nicht unter 0 liegen.",
+      "march": "Marschgröße darf nicht unter 0 liegen.",
+      "rally": "Sammelgröße darf nicht unter 0 liegen.",
+      "shift": "Schicht auswählen."
+    },
+    "confirmDelete": "Spieler „{{name}}“ löschen?",
+    "ruleWarnings": {
+      "tier": "Tier {{tier}} ist für neue Anmeldungen derzeit nicht verfügbar. Der Spieler kann dieses Tier behalten.",
+      "shift": "{{shift}} ist für neue Anmeldungen derzeit nicht verfügbar. Der Spieler kann in dieser Schicht bleiben."
+    }
+  },
+  "regionEditor": {
+    "action": "Regionseditor",
+    "title": "Regionseditor",
+    "description": "Spieler, Allianzen, Marschgröße und Sammelgröße ansehen.",
+    "common": {
+      "close": "Schließen",
+      "save": "Speichern",
+      "saving": "Wird gespeichert…"
+    },
+    "tabs": {
+      "players": "Spieler",
+      "alliances": "Allianzen",
+      "combat": "Marsch & Sammelgröße"
+    },
+    "sidebar": {
+      "title": "Spieler",
+      "description": "Wähle einen Spieler aus der Liste.",
+      "search": "Nach Nickname oder Allianz suchen",
+      "empty": "Keine Spieler gefunden."
+    },
+    "players": {
+      "empty": "Wähle einen Spieler aus der Liste.",
+      "player": "Spieler",
+      "tier": "Tier",
+      "captain": "Kapitän",
+      "troopType": "Truppentyp",
+      "march": "Marschgröße",
+      "rally": "Rallyegröße",
+      "shift": "Schicht",
+      "lair": "Höhlenlevel",
+      "ready": "Bereit zum Angriff",
+      "comment": "Kommentar"
+    },
+    "alliances": {
+      "empty": "Keine Allianzen gefunden.",
+      "alliance": "Allianz",
+      "registered": "Registriert",
+      "captains": "Kapitäne",
+      "tiers": "Tiers"
+    },
+    "combat": {
+      "title": "Marsch & Sammelgröße",
+      "description": "Marsch- und Sammelgröße sortieren und bearbeiten.",
+      "sortLabel": "Marsch und Sammelgröße sortieren",
+      "tableLabel": "Tabelle der Marsch- und Sammelgrößen",
+      "player": "Spieler",
+      "allianceTier": "Allianz / Tier",
+      "march": "Marsch",
+      "rally": "Rallye",
+      "actions": "Aktionen",
+      "sort": {
+        "marchDesc": "Marsch: absteigend",
+        "marchAsc": "Marsch: aufsteigend",
+        "rallyDesc": "Sammelgröße: absteigend",
+        "rallyAsc": "Sammelgröße: aufsteigend"
+      }
+    },
+    "sort": {},
+    "march": {
+      "title": "Marschgröße",
+      "description": "Marschgröße der Spieler sortieren und bearbeiten.",
+      "current": "Aktueller Marsch"
+    },
+    "rally": {
+      "title": "Rallyegröße",
+      "description": "Sammelgröße der Spieler sortieren und bearbeiten.",
+      "current": "Aktuelle Sammelgröße"
+    }
+  },
+  "errors": {
+    "load": "Spieler konnten nicht geladen werden.",
+    "save": "Spieler konnte nicht gespeichert werden.",
+    "delete": "Spieler konnte nicht gelöscht werden."
+  },
+  "stats": {
+    "total": "Summe",
+    "players": "Spieler",
+    "captains": "Kapitäne",
+    "inTurrets": "In Türmen",
+    "reserve": "Reserve"
+  },
+  "ruleStatus": {
+    "attentionSummary": "Überprüfung erforderlich: {{count}} Spieler",
+    "tierUnavailable": "Tier {{tier}} ist im aktuellen Zyklus nicht mehr verfügbar.",
+    "shiftUnavailable": "{{shift}} ist im aktuellen Zyklus nicht mehr aktiv."
+  },
+  "localImport": {
+    "tabsLabel": "Quelle der Spielertabelle",
+    "databaseTab": "Datenbank ({{count}})",
+    "localTab": "Lokale Tabelle ({{count}})",
+    "title": "Lokale Importtabelle",
+    "fileSummary": "{{file}} · {{count}} Spieler",
+    "ready": "Bereit",
+    "problems": "Probleme",
+    "imported": "Importiert",
+    "status": "Status",
+    "selectReady": "Alle verfügbaren auswählen",
+    "transferSelected": "Ausgewählte verschieben ({{count}})",
+    "transferAll": "Verschieben ({{count}})",
+    "transferring": "Wird verschoben…",
+    "transferSuccess": "{{count}} neue Spieler hinzugefügt. Übersprungene Duplikate: {{skipped}}.",
+    "transferError": "Spieler konnten nicht verschoben werden: {{code}}",
+    "clearImported": "Importierte leeren",
+    "clearAll": "Lokale Tabelle löschen",
+    "clearConfirm": "Gesamte lokale Importtabelle löschen?",
+    "ownerAdminOnly": "Nur Owner oder Admin dürfen lokale Spieler in die Datenbank verschieben.",
+    "duplicateD1": "Nickname existiert bereits in der Datenbank",
+    "duplicateLocal": "Duplikat in der lokalen Tabelle",
+    "issueLabels": {
+      "nickname": "Nickname fehlt",
+      "alliance": "Allianz fehlt",
+      "troopType": "Unbekannter Truppentyp",
+      "tier": "Unbekanntes Tier",
+      "shift": "Unbekannte Schicht",
+      "captain": "Kapitänswert ist nicht zugeordnet",
+      "readyAttack": "Bereitschaftsstatus ist nicht zugeordnet"
+    },
+    "replaceSuccess": "Datenbanktabelle ersetzt. {{count}} Spieler verschoben. Die Anmeldung bleibt offen.",
+    "transferModal": {
+      "title": "Spieler in Datenbank verschieben",
+      "subtitle": "Wähle, wie die lokale Tabelle in die Datenbank übertragen werden soll.",
+      "selected": "Ausgewählt",
+      "newPlayers": "Neu",
+      "duplicates": "Bereits in Datenbank",
+      "databaseNow": "Aktuell in Datenbank",
+      "addMissing": {
+        "title": "Nur fehlende Spieler hinzufügen",
+        "description": "Neue Spieler werden hinzugefügt. Bestehende Nicknames bleiben unverändert."
+      },
+      "replaceAll": {
+        "title": "Tabelle ersetzen und Anmeldung offen lassen",
+        "description": "Die aktuelle Spielertabelle wird durch die lokale Tabelle ersetzt. Neue Anmeldungen über die Website bleiben möglich.",
+        "onlyAllRows": "Diese Option ist nur beim Verschieben der gesamten lokalen Tabelle verfügbar."
+      },
+      "replaceWarning": "Die Spielertabelle des aktuellen Zyklus wird in einer sicheren Transaktion ersetzt. Der gespeicherte Turmentwurf und der veröffentlichte endgültige Plan dieses Zyklus werden gelöscht und müssen neu erstellt werden. Die Anmeldung bleibt offen.",
+      "cancel": "Abbrechen",
+      "processing": "Wird verschoben…",
+      "addButton": "Neue hinzufügen ({{count}})",
+      "replaceButton": "Tabelle ersetzen",
+      "replaceAndClose": {
+        "title": "Tabelle ersetzen und Anmeldung schließen",
+        "description": "Die aktuelle Spielertabelle wird durch die lokale Tabelle ersetzt. Danach werden keine neuen Anmeldungen über die Website angenommen."
+      },
+      "replaceAndCloseWarning": "Die Spielertabelle wird ersetzt. Turmentwurf und veröffentlichter endgültiger Plan des aktuellen Zyklus werden gelöscht. Die Anmeldung wird vorzeitig geschlossen. Erstelle den Plan nach dem Import neu.",
+      "replaceAndCloseButton": "Ersetzen und Anmeldung schließen"
+    },
+    "clearTitle": "Lokale Tabelle löschen",
+    "guideTitle": "Was soll mit der lokalen Tabelle geschehen?",
+    "guideText": "Dies ist ein Importentwurf. Die Spieler wurden noch nicht in die Datenbank verschoben. Prüfe die Daten, behebe Probleme und klicke dann auf „Verschieben“, um die Speichermethode zu wählen.",
+    "replaceAndCloseSuccess": "Datenbanktabelle ersetzt. {{count}} Spieler verschoben. Anmeldung geschlossen."
+  },
+  "pagination": {
+    "label": "Seiten der Spielertabelle",
+    "previous": "Vorherige Seite",
+    "next": "Nächste Seite",
+    "pageOf": "{{page}} / {{pages}}"
+  },
+  "confirm": {
+    "deletePlayerTitle": "Spieler löschen"
+  },
+  "databaseTable": {
+    "clear": "Datenbanktabelle leeren",
+    "clearTitle": "Datenbanktabelle wirklich leeren?",
+    "clearConfirm": "Alle Spieler des aktuellen Zyklus werden aus der Datenbank und der öffentlichen Tabelle gelöscht. Zyklus und Einstellungen bleiben erhalten.",
+    "clearSuccess": "{{count}} Spieler aus der Datenbanktabelle entfernt.",
+    "error": "Datenbanktabelle konnte nicht geleert werden: {{code}}"
+  }
+}

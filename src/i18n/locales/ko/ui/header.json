@@ -1,0 +1,79 @@
+{
+  "home": "홈",
+  "registration": "등록",
+  "players": "플레이어 목록",
+  "finalPlan": "최종 배치",
+  "settings": "설정",
+  "language": "언어",
+  "region": "지역",
+  "nextWasteland": "다음 황무지 이벤트",
+  "wastelandDate": "황무지 이벤트 날짜",
+  "registrationNotScheduled": "다음 등록 일정 미정",
+  "registrationOpens": "등록 시작",
+  "registrationDeadline": "등록 마감일",
+  "organizerAlliance": "주최 동맹",
+  "governor": "총독",
+  "localTime": "현지 시간",
+  "loading": "로딩 중...",
+  "loadError": "데이터를 불러오지 못했습니다.",
+  "brand": "Wasteland King",
+  "utc": "UTC",
+  "admin": "관리자",
+  "openNavigation": "탐색 메뉴 열기",
+  "closeNavigation": "탐색 메뉴 닫기",
+  "toggleTimeZone": "시간대 전환",
+  "languageOptions": {
+    "en": {
+      "badge": "EN",
+      "label": "English",
+      "description": "영어"
+    },
+    "uk": {
+      "badge": "UA",
+      "label": "Українська",
+      "description": "우크라이나어"
+    },
+    "ru": {
+      "badge": "RU",
+      "label": "Русский",
+      "description": "러시아어"
+    },
+    "pl": {
+      "badge": "PL",
+      "label": "Polski",
+      "description": "폴란드어"
+    },
+    "de": {
+      "badge": "DE",
+      "label": "Deutsch",
+      "description": "독일어"
+    },
+    "ja": {
+      "badge": "JA",
+      "label": "日本語",
+      "description": "일본어"
+    },
+    "zh": {
+      "badge": "ZH",
+      "label": "中文",
+      "description": "중국어"
+    },
+    "ko": {
+      "badge": "KO",
+      "label": "한국어",
+      "description": "한국어"
+    },
+    "vi": {
+      "badge": "VI",
+      "label": "Tiếng Việt",
+      "description": "베트남어"
+    },
+    "ar": {
+      "badge": "AR",
+      "label": "العربية",
+      "description": "아랍어"
+    }
+  },
+  "languagesAvailable": "활성",
+  "languageSelected": "선택한 언어"
+}

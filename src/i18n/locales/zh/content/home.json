@@ -1,0 +1,74 @@
+{
+  "dashboard": {
+    "registered": "已注册玩家",
+    "allianceCount": "联盟",
+    "captains": "队长",
+    "finalPlanPlayers": "最终方案中的玩家",
+    "registrationCountdown": {
+      "title": "距离报名截止",
+      "subtitle": "报名已开启",
+      "open": "打开",
+      "closedTitle": "报名已关闭",
+      "closedSubtitle": "距离下次报名开启",
+      "closed": "已关闭",
+      "disabledSubtitle": "报名暂时不可用",
+      "disabledCountdown": "报名停用时无法显示倒计时"
+    },
+    "eventCountdown": {
+      "title": "距离荒野活动开始",
+      "subtitle": "下一次区域活动",
+      "activeTitle": "荒野活动进行中",
+      "activeSubtitle": "距离荒野活动结束",
+      "active": "进行中"
+    },
+    "time": {
+      "days": "天",
+      "hours": "小时",
+      "minutes": "分钟",
+      "seconds": "秒",
+      "unscheduled": "下次开启日期尚未安排"
+    },
+    "recent": {
+      "title": "最近报名",
+      "text": "最近提交申请的 5 位玩家。",
+      "nickname": "昵称",
+      "alliance": "联盟",
+      "troop": "部队",
+      "tier": "等级",
+      "time": "时间",
+      "timeAgo": {
+        "justNow": "刚刚",
+        "minutes": "{{count}} 分钟前",
+        "hours": "{{count}} 小时前",
+        "days": "{{count}} 天前"
+      }
+    },
+    "allianceStats": {
+      "title": "联盟统计",
+      "text": "已报名玩家的分布情况。",
+      "players": "— 选择玩家 —",
+      "other": "其他",
+      "showAll": "显示所有联盟",
+      "showLess": "收起"
+    },
+    "navigation": {
+      "registration": {
+        "title": "报名",
+        "text": "填写或更新您参加荒野活动的信息。"
+      },
+      "players": {
+        "title": "玩家列表",
+        "text": "查看区域内所有玩家的申请。"
+      },
+      "finalPlan": {
+        "title": "最终方案状态",
+        "text": "队伍、队长和班次分配。"
+      },
+      "settings": {
+        "title": "设置",
+        "text": "语言、时间和本地浏览器偏好设置。"
+      }
+    },
+    "loading": "正在加载数据..."
+  }
+}

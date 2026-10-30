@@ -1,0 +1,275 @@
+{
+  "title": "전체 플레이어 목록",
+  "description": "지역 관리에 사용되는 전체 플레이어 데이터입니다.",
+  "actions": {
+    "add": "플레이어 추가",
+    "edit": "편집",
+    "delete": "삭제",
+    "save": "저장",
+    "saving": "저장 중…",
+    "cancel": "취소",
+    "reset": "초기화"
+  },
+  "filters": {
+    "search": "닉네임 또는 동맹",
+    "allAlliance": "동맹: 전체",
+    "allTroops": "병종: 전체",
+    "allShifts": "교대: 전체",
+    "captain": "캡틴",
+    "captainAll": "대장: 전체",
+    "captainYes": "대장: 예",
+    "captainNo": "대장: 아니요",
+    "ruleStatus": "규칙 상태",
+    "ruleStatusAll": "상태: 전체",
+    "ruleStatusAttention": "검토 필요",
+    "ruleStatusOk": "문제 없음",
+    "perPage": "페이지당 플레이어 수",
+    "perPageAll": "전체",
+    "perPageCount": "페이지당 {{count}}명"
+  },
+  "table": {
+    "nickname": "닉네임",
+    "alliance": "동맹",
+    "troops": "부대",
+    "tier": "티어",
+    "lair": "은신처",
+    "march": "행군력",
+    "rally": "랠리",
+    "shift": "교대",
+    "captain": "캡틴",
+    "ready": "준비됨",
+    "submitted": "제출됨",
+    "comment": "댓글",
+    "actions": "작업"
+  },
+  "empty": "플레이어를 찾을 수 없습니다.",
+  "loading": "로딩 중...",
+  "yes": "예",
+  "no": "아니요",
+  "troops": {
+    "fighter": "전사",
+    "rider": "기병",
+    "shooter": "사수"
+  },
+  "shifts": {
+    "shift1": "교대 1",
+    "shift2": "교대 2",
+    "shift3": "교대 3",
+    "shift4": "교대 4",
+    "flexible": "모든 교대 가능"
+  },
+  "editor": {
+    "createTitle": "새 플레이어",
+    "editTitle": "플레이어 수정",
+    "createSubtitle": "현재 등록 주기에 새 플레이어를 추가합니다.",
+    "editSubtitle": "{{name}}의 등록 정보를 편집합니다.",
+    "participation": {
+      "title": "황무지 이벤트 참여 정보",
+      "description": "플레이어 배치에 사용되는 주요 항목입니다.",
+      "shift": "교대",
+      "ready": "공격 가능",
+      "captain": "캡틴",
+      "selectShift": "교대 선택"
+    },
+    "playerData": {
+      "title": "플레이어 데이터",
+      "description": "플레이어가 등록 시 제출한 정보입니다.",
+      "nickname": "닉네임",
+      "alliance": "동맹",
+      "tier": "티어",
+      "troopType": "병종",
+      "lairLevel": "소굴 레벨",
+      "marchSize": "행군 규모",
+      "rallySize": "랠리 규모"
+    },
+    "extraSquads": {
+      "title": "추가 부대",
+      "description": "선택 사항입니다. 다른 병종을 최대 두 개까지 선택할 수 있습니다.",
+      "main": "주력",
+      "comment": "댓글",
+      "commentPlaceholder": "추가 플레이어 정보…"
+    },
+    "validation": {
+      "nickname": "닉네임을 입력하세요.",
+      "alliance": "동맹을 입력하세요.",
+      "troopType": "병종을 선택하세요.",
+      "tier": "티어를 선택하세요.",
+      "lair": "은신처 레벨은 0보다 작을 수 없습니다.",
+      "march": "행군 규모는 0보다 작을 수 없습니다.",
+      "rally": "집결 규모는 0보다 작을 수 없습니다.",
+      "shift": "교대를 선택하세요."
+    },
+    "confirmDelete": "플레이어 “{{name}}”을(를) 삭제하시겠습니까?",
+    "ruleWarnings": {
+      "tier": "티어 {{tier}}은(는) 현재 신규 등록에서 사용할 수 없지만 기존 플레이어는 유지할 수 있습니다.",
+      "shift": "{{shift}}은(는) 현재 신규 등록에서 사용할 수 없지만 기존 플레이어는 이 교대를 유지할 수 있습니다."
+    }
+  },
+  "regionEditor": {
+    "action": "지역 편집기",
+    "title": "지역 편집기",
+    "description": "플레이어, 동맹, 행군 및 집결 규모를 확인하세요.",
+    "common": {
+      "close": "닫기",
+      "save": "저장",
+      "saving": "저장 중…"
+    },
+    "tabs": {
+      "players": "플레이어",
+      "alliances": "동맹",
+      "combat": "행군 및 집결"
+    },
+    "sidebar": {
+      "title": "플레이어",
+      "description": "목록에서 플레이어를 선택하세요.",
+      "search": "닉네임 또는 동맹으로 검색",
+      "empty": "플레이어를 찾을 수 없습니다."
+    },
+    "players": {
+      "empty": "목록에서 플레이어를 선택하세요.",
+      "player": "플레이어",
+      "tier": "티어",
+      "captain": "캡틴",
+      "troopType": "병종",
+      "march": "행군 규모",
+      "rally": "랠리 규모",
+      "shift": "교대",
+      "lair": "소굴 레벨",
+      "ready": "공격 가능",
+      "comment": "댓글"
+    },
+    "alliances": {
+      "empty": "동맹을 찾을 수 없습니다.",
+      "alliance": "동맹",
+      "registered": "등록일",
+      "captains": "캡틴",
+      "tiers": "티어"
+    },
+    "combat": {
+      "title": "행군 및 집결",
+      "description": "행군 및 집결 규모를 정렬하고 편집합니다.",
+      "sortLabel": "행군 및 집결 정렬",
+      "tableLabel": "행군 및 집결 표",
+      "player": "플레이어",
+      "allianceTier": "동맹 / 티어",
+      "march": "행군력",
+      "rally": "랠리",
+      "actions": "작업",
+      "sort": {
+        "marchDesc": "행군: 높은 순",
+        "marchAsc": "행군: 낮은 순",
+        "rallyDesc": "집결: 높은 순",
+        "rallyAsc": "집결: 낮은 순"
+      }
+    },
+    "sort": {},
+    "march": {
+      "title": "행군 규모",
+      "description": "플레이어의 행군 규모를 정렬하고 편집합니다.",
+      "current": "현재 행군 규모"
+    },
+    "rally": {
+      "title": "랠리 규모",
+      "description": "플레이어의 집결 규모를 정렬하고 편집합니다.",
+      "current": "현재 집결 규모"
+    }
+  },
+  "errors": {
+    "load": "플레이어를 불러오지 못했습니다.",
+    "save": "플레이어를 저장하지 못했습니다.",
+    "delete": "플레이어를 삭제하지 못했습니다."
+  },
+  "stats": {
+    "total": "합계",
+    "players": "플레이어",
+    "captains": "캡틴",
+    "inTurrets": "터렛 안",
+    "reserve": "예비"
+  },
+  "ruleStatus": {
+    "attentionSummary": "검토 필요: {{count}}명",
+    "tierUnavailable": "티어 {{tier}}은(는) 현재 주기에서 사용할 수 없습니다.",
+    "shiftUnavailable": "{{shift}}은(는) 현재 주기에서 비활성화되었습니다."
+  },
+  "localImport": {
+    "tabsLabel": "플레이어 목록 출처",
+    "databaseTab": "데이터베이스 ({{count}})",
+    "localTab": "로컬 목록 ({{count}})",
+    "title": "로컬 가져오기 목록",
+    "fileSummary": "{{file}} · 플레이어 {{count}}명",
+    "ready": "준비됨",
+    "problems": "문제",
+    "imported": "가져옴",
+    "status": "상태",
+    "selectReady": "사용 가능한 항목 모두 선택",
+    "transferSelected": "선택 항목 이동 ({{count}})",
+    "transferAll": "이동 ({{count}})",
+    "transferring": "이동 중…",
+    "transferSuccess": "신규 플레이어 {{count}}명을 추가하고 중복 {{skipped}}건을 건너뛰었습니다.",
+    "transferError": "플레이어를 이동하지 못했습니다: {{code}}",
+    "clearImported": "가져온 항목 지우기",
+    "clearAll": "로컬 목록 삭제",
+    "clearConfirm": "전체 로컬 가져오기 목록을 삭제하시겠습니까?",
+    "ownerAdminOnly": "소유자 또는 관리자만 로컬 플레이어를 데이터베이스로 옮길 수 있습니다.",
+    "duplicateD1": "데이터베이스에 이미 같은 닉네임이 있습니다",
+    "duplicateLocal": "로컬 목록에 중복 항목이 있습니다",
+    "issueLabels": {
+      "nickname": "닉네임 누락",
+      "alliance": "동맹 누락",
+      "troopType": "알 수 없는 병종",
+      "tier": "알 수 없는 티어",
+      "shift": "알 수 없는 교대",
+      "captain": "대장 값이 매핑되지 않았습니다",
+      "readyAttack": "준비 상태가 매핑되지 않았습니다"
+    },
+    "replaceSuccess": "데이터베이스 목록이 교체되었습니다. 플레이어 {{count}}명을 옮겼습니다. 등록은 계속 열려 있습니다.",
+    "transferModal": {
+      "title": "플레이어를 데이터베이스로 이동",
+      "subtitle": "로컬 목록을 데이터베이스로 옮기는 방법을 선택하세요.",
+      "selected": "선택됨",
+      "newPlayers": "새로 만들기",
+      "duplicates": "데이터베이스에 이미 있음",
+      "databaseNow": "현재 데이터베이스 인원",
+      "addMissing": {
+        "title": "누락된 플레이어만 추가",
+        "description": "새 플레이어를 추가하고 기존 닉네임의 데이터는 그대로 유지합니다."
+      },
+      "replaceAll": {
+        "title": "목록 교체 후 등록 계속 허용",
+        "description": "현재 플레이어 목록을 로컬 목록으로 교체하며 사이트에서는 새 등록을 계속 받습니다.",
+        "onlyAllRows": "전체 로컬 목록을 이동할 때만 이 옵션을 사용할 수 있습니다."
+      },
+      "replaceWarning": "현재 주기의 플레이어 목록을 하나의 안전한 트랜잭션으로 교체합니다. 저장된 포탑 초안과 게시된 최종 계획이 삭제되므로 다시 만들어야 합니다. 등록은 계속 열려 있습니다.",
+      "cancel": "취소",
+      "processing": "이동 중…",
+      "addButton": "신규 플레이어 추가 ({{count}})",
+      "replaceButton": "테이블 교체",
+      "replaceAndClose": {
+        "title": "목록 교체 후 등록 마감",
+        "description": "현재 플레이어 목록을 로컬 목록으로 교체한 뒤 사이트의 새 등록을 중단합니다."
+      },
+      "replaceAndCloseWarning": "플레이어 목록이 교체되고 이번 주기의 포탑 초안과 게시된 최종 계획이 삭제됩니다. 등록이 조기 마감됩니다. 가져온 후 계획을 다시 만들어 주세요.",
+      "replaceAndCloseButton": "교체 후 등록 마감"
+    },
+    "clearTitle": "로컬 목록 삭제",
+    "guideTitle": "로컬 목록을 어떻게 처리하나요?",
+    "guideText": "이것은 가져오기 초안이며 플레이어가 아직 데이터베이스로 이동되지 않았습니다. 데이터를 확인하고 문제를 수정한 뒤 '이동'을 눌러 기록 방식을 선택하세요.",
+    "replaceAndCloseSuccess": "데이터베이스 목록이 교체되었습니다. 플레이어 {{count}}명을 이동했고 등록이 마감되었습니다."
+  },
+  "pagination": {
+    "label": "플레이어 목록 페이지",
+    "previous": "이전 페이지",
+    "next": "다음 페이지",
+    "pageOf": "{{page}} / {{pages}}"
+  },
+  "confirm": {
+    "deletePlayerTitle": "플레이어 삭제"
+  },
+  "databaseTable": {
+    "clear": "데이터베이스 목록 비우기",
+    "clearTitle": "데이터베이스 목록을 비우시겠습니까?",
+    "clearConfirm": "현재 주기의 모든 플레이어가 데이터베이스와 공개 목록에서 삭제됩니다. 주기와 설정은 유지됩니다.",
+    "clearSuccess": "데이터베이스 목록에서 플레이어 {{count}}명을 제거했습니다.",
+    "error": "데이터베이스 목록을 비울 수 없습니다: {{code}}"
+  }
+}

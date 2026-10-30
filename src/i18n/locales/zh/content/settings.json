@@ -1,0 +1,55 @@
+{
+  "title": "设置",
+  "text": "此浏览器的本地网站设置。",
+  "tabs": {
+    "settings": "设置",
+    "templates": "我的模板"
+  },
+  "language": {
+    "title": "语言",
+    "text": "选择网站界面语言。"
+  },
+  "time": {
+    "title": "时间显示",
+    "text": "选择活动和班次时间的显示方式。",
+    "local": "本地时间",
+    "utc": "UTC"
+  },
+  "timeZone": {
+    "title": "时区",
+    "text": "选择日期和时间使用的时区。",
+    "options": {
+      "local": "设备本地时间"
+    }
+  },
+  "reset": {
+    "title": "重置设置",
+    "text": "将本地设置恢复为默认值。玩家模板不会被删除。",
+    "button": "重置"
+  },
+  "templates": {
+    "title": "我的玩家模板",
+    "text": "用于快速填写报名表的已保存模板。",
+    "add": "添加模板",
+    "edit": "编辑",
+    "delete": "删除",
+    "nickname": "昵称",
+    "alliance": "联盟",
+    "troopType": "兵种类型",
+    "tier": "等级",
+    "lairLevel": "巢穴等级",
+    "marchSize": "行军规模",
+    "rallySize": "集结规模",
+    "shift": "班次",
+    "shift1": "班次 1",
+    "shift2": "班次 2",
+    "save": "保存",
+    "cancel": "取消",
+    "empty": "尚未保存任何模板。",
+    "shift3": "班次 3",
+    "shift4": "班次 4",
+    "flexible": "任意班次",
+    "extraSquads": "额外队伍",
+    "extraSquadsText": "为玩家模板添加可选的额外部队。"
+  }
+}

@@ -1,3 +1,4 @@
+import { getIntlLocale } from "../../../utils/intlLocale.js";
 import { publicAsset } from "../../../utils/publicAsset.js";
 import { AlertTriangle } from "lucide-react";
 
@@ -11,7 +12,7 @@ function formatNumber(value, language) {
     return "—";
   }
 
-  return Number(value).toLocaleString(language === "uk" ? "uk-UA" : "en-GB");
+  return Number(value).toLocaleString(getIntlLocale(language));
 }
 
 function getIssueText(issue, t) {

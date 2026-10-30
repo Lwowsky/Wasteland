@@ -75,7 +75,5 @@
     }
   },
   "languagesAvailable": "active",
-  "languageSelected": "Selected language",
-  "languagesPlanned": "More languages from the old site",
-  "languagesPlannedNote": "These languages are planned. They will become selectable after the new pages and admin functions are fully translated and tested."
+  "languageSelected": "Selected language"
 }

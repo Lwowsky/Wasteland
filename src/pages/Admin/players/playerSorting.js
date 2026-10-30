@@ -41,7 +41,7 @@ export function sortPlayers(players, sort, language) {
         ? first - second
         : String(first).localeCompare(
             String(second),
-            language === "uk" ? "uk" : "en",
+            language || "en",
           );
 
     return sort.direction === "asc" ? result : -result;

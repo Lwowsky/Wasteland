@@ -1,0 +1,67 @@
+{
+  "title": "Endplan",
+  "regionSelector": {
+    "label": "Region auswählen",
+    "home": "Heimatregion",
+    "captureRegion1": "Eroberungsregion 1",
+    "captureRegion2": "Eroberungsregion 2"
+  },
+  "shift1": "Schicht 1",
+  "shift2": "Schicht 2",
+  "share": "Teilen",
+  "typeByCaptain": "Vom Kapitän gewählter Typ",
+  "noPlayers": "Keine Spieler zugewiesen",
+  "towers": {
+    "hub": "Tech-Zentrum",
+    "north": "Nordturm",
+    "west": "Westturm",
+    "east": "Ostturm",
+    "south": "Südturm"
+  },
+  "troops": {
+    "fighter": "Kämpfer",
+    "rider": "Reiter",
+    "shooter": "Schützen"
+  },
+  "signatureAlt": "Entwickelt von Lwowsky",
+  "textExport": {
+    "signature": "Entwickelt von Lwowsky"
+  },
+  "loadingPlan": "Veröffentlichten Plan laden…",
+  "loadFailed": "Plan konnte nicht geladen werden. Bitte lade die Seite neu.",
+  "unpublishedTitle": "Warten auf Veröffentlichung",
+  "notPublished": "Für diesen Zyklus wurde noch kein endgültiger Plan veröffentlicht.",
+  "lastPublished": "Veröffentlicht: {{date}}",
+  "shift3": "Schicht 3",
+  "shift4": "Schicht 4",
+  "metrics": {
+    "legend": "Marschsummen",
+    "capacity": "Kapitänsmarsch + Sammelkapazität",
+    "used": "Marsch im Turm",
+    "remaining": "Freie Sammelkapazität",
+    "unavailable": "Erneut veröffentlichen, um die Sammelkapazität einzubeziehen"
+  },
+  "labels": {
+    "captain": "Kapitän",
+    "players": "Spieler"
+  },
+  "languageModal": {
+    "title": "Sprachen des endgültigen Plans",
+    "subtitle": "Wähle die Sprachen für den Plan. Englisch ist immer aktiviert.",
+    "close": "Schließen",
+    "done": "Fertig",
+    "alwaysOn": "Immer aktiv",
+    "help": "Englisch ist immer aktiviert. Ukrainisch ist optional.",
+    "choices": {
+      "uk": "Українська",
+      "en": "Englisch"
+    }
+  },
+  "toolbar": {
+    "language": "Plansprachen",
+    "png": "PNG herunterladen",
+    "txt": "TXT herunterladen (alle Schichten)",
+    "exportFailed": "Bild konnte nicht gespeichert werden. Bitte erneut versuchen."
+  },
+  "refreshPlan": "Plan aktualisieren"
+}

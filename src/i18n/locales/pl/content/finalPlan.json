@@ -1,0 +1,67 @@
+{
+  "title": "Plan końcowy",
+  "regionSelector": {
+    "label": "Wybierz region",
+    "home": "Region macierzysty",
+    "captureRegion1": "Region przejęcia 1",
+    "captureRegion2": "Region przejęcia 2"
+  },
+  "shift1": "Zmiana 1",
+  "shift2": "Zmiana 2",
+  "share": "Udostępnij",
+  "typeByCaptain": "Typ wybrany przez kapitana",
+  "noPlayers": "Brak przypisanych graczy",
+  "towers": {
+    "hub": "Centrum techniczne",
+    "north": "Północna wieża",
+    "west": "Zachodnia wieża",
+    "east": "Wschodnia wieża",
+    "south": "Południowa wieża"
+  },
+  "troops": {
+    "fighter": "Wojownicy",
+    "rider": "Jeźdźcy",
+    "shooter": "Strzelcy"
+  },
+  "signatureAlt": "Opracował Lwowsky",
+  "textExport": {
+    "signature": "Opracował Lwowsky"
+  },
+  "loadingPlan": "Wczytywanie opublikowanego planu…",
+  "loadFailed": "Nie udało się wczytać planu. Odśwież stronę.",
+  "unpublishedTitle": "Oczekiwanie na publikację",
+  "notPublished": "Nie opublikowano jeszcze planu końcowego dla tego cyklu.",
+  "lastPublished": "Opublikowano: {{date}}",
+  "shift3": "Zmiana 3",
+  "shift4": "Zmiana 4",
+  "metrics": {
+    "legend": "Suma marszów",
+    "capacity": "Marsz kapitana + rajd",
+    "used": "Marsz w wieży",
+    "remaining": "Wolne miejsce w rajdzie",
+    "unavailable": "Opublikuj ponownie, aby uwzględnić pojemność rajdu"
+  },
+  "labels": {
+    "captain": "Kapitan",
+    "players": "graczy"
+  },
+  "languageModal": {
+    "title": "Języki planu końcowego",
+    "subtitle": "Wybierz języki planu. Angielski jest zawsze włączony.",
+    "close": "Zamknij",
+    "done": "Gotowe",
+    "alwaysOn": "Zawsze włączone",
+    "help": "Angielski jest zawsze włączony. Ukraiński jest opcjonalny.",
+    "choices": {
+      "uk": "Українська",
+      "en": "Angielski"
+    }
+  },
+  "toolbar": {
+    "language": "Języki planu",
+    "png": "Pobierz PNG",
+    "txt": "Pobierz TXT (wszystkie zmiany)",
+    "exportFailed": "Nie udało się zapisać obrazu. Spróbuj ponownie."
+  },
+  "refreshPlan": "Odśwież plan"
+}

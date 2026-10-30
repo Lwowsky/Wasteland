@@ -1,0 +1,40 @@
+{
+  "title": "Administrator regionu",
+  "subtitle": "Zarządzanie dostępem, graczami, wieżami i rejestracją.",
+  "checkingAccess": "Sprawdzanie dostępu...",
+  "navigationLabel": "Nawigacja administratora",
+  "tabs": {
+    "access": "Role i dostęp",
+    "players": "Tabela graczy",
+    "distribution": "Przydział do wieżyczek",
+    "registration": "Ustawienia rejestracji",
+    "settings": "Ustawienia"
+  },
+  "actions": {
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "edit": "Edytuj",
+    "delete": "Usuń",
+    "close": "Zamknij",
+    "logout": "Wyloguj",
+    "reset": "Resetuj",
+    "add": "Dodaj",
+    "removeAccess": "Usuń dostęp"
+  },
+  "status": {
+    "active": "aktywne",
+    "blocked": "Zablokowane",
+    "pending": "Oczekujące",
+    "approved": "Zatwierdzono",
+    "rejected": "Odrzucone"
+  },
+  "yes": "Tak",
+  "no": "Nie",
+  "roles": {
+    "owner": "Właściciel",
+    "admin": "Administrator",
+    "consul": "Konsul"
+  },
+  "loading": "Ładowanie...",
+  "unknown": "nieznany"
+}

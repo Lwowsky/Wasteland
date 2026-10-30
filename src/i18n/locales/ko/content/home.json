@@ -1,0 +1,74 @@
+{
+  "dashboard": {
+    "registered": "등록된 플레이어",
+    "allianceCount": "동맹",
+    "captains": "캡틴",
+    "finalPlanPlayers": "최종 계획의 플레이어",
+    "registrationCountdown": {
+      "title": "등록 마감까지",
+      "subtitle": "등록이 열렸습니다",
+      "open": "열기",
+      "closedTitle": "등록이 닫혔습니다",
+      "closedSubtitle": "다음 등록 시작까지",
+      "closed": "닫힘",
+      "disabledSubtitle": "등록을 일시적으로 이용할 수 없습니다",
+      "disabledCountdown": "등록이 비활성화되어 카운트다운을 표시할 수 없습니다"
+    },
+    "eventCountdown": {
+      "title": "황무지 이벤트 시작까지",
+      "subtitle": "다음 지역 이벤트",
+      "activeTitle": "황무지 이벤트 진행 중",
+      "activeSubtitle": "황무지 이벤트 종료까지",
+      "active": "진행 중"
+    },
+    "time": {
+      "days": "일",
+      "hours": "시간",
+      "minutes": "분",
+      "seconds": "초",
+      "unscheduled": "다음 시작 날짜가 아직 정해지지 않았습니다"
+    },
+    "recent": {
+      "title": "최근 등록",
+      "text": "최근 신청서를 제출한 플레이어 5명입니다.",
+      "nickname": "닉네임",
+      "alliance": "동맹",
+      "troop": "부대",
+      "tier": "티어",
+      "time": "시각",
+      "timeAgo": {
+        "justNow": "방금",
+        "minutes": "{{count}}분 전",
+        "hours": "{{count}}시간 전",
+        "days": "{{count}}일 전"
+      }
+    },
+    "allianceStats": {
+      "title": "동맹 통계",
+      "text": "등록된 플레이어의 분포입니다.",
+      "players": "플레이어",
+      "other": "기타",
+      "showAll": "모든 동맹 표시",
+      "showLess": "간략히 보기"
+    },
+    "navigation": {
+      "registration": {
+        "title": "등록",
+        "text": "황무지 이벤트 참여 정보를 입력하거나 수정하세요."
+      },
+      "players": {
+        "title": "플레이어 목록",
+        "text": "지역의 모든 플레이어 신청서를 확인하세요."
+      },
+      "finalPlan": {
+        "title": "최종 배치",
+        "text": "팀, 대장 및 교대 배치 현황입니다."
+      },
+      "settings": {
+        "title": "설정",
+        "text": "언어, 시간 및 브라우저 설정입니다."
+      }
+    },
+    "loading": "데이터 로딩 중..."
+  }
+}

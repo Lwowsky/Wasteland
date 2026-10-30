@@ -1,0 +1,40 @@
+{
+  "title": "Quản trị khu vực",
+  "subtitle": "Quản lý truy cập, người chơi, tháp pháo và đăng ký.",
+  "checkingAccess": "Đang kiểm tra quyền truy cập...",
+  "navigationLabel": "Điều hướng quản trị",
+  "tabs": {
+    "access": "Vai trò và quyền truy cập",
+    "players": "Bảng người chơi",
+    "distribution": "Phân bổ tháp pháo",
+    "registration": "Cài đặt đăng ký",
+    "settings": "Cài đặt"
+  },
+  "actions": {
+    "save": "Lưu",
+    "cancel": "Hủy",
+    "edit": "Sửa",
+    "delete": "Xóa",
+    "close": "Đóng",
+    "logout": "Đăng xuất",
+    "reset": "Đặt lại",
+    "add": "Thêm",
+    "removeAccess": "Xóa quyền truy cập"
+  },
+  "status": {
+    "active": "Đang hoạt động",
+    "blocked": "Bị chặn",
+    "pending": "Đang chờ",
+    "approved": "Đã duyệt",
+    "rejected": "Đã từ chối"
+  },
+  "yes": "Có",
+  "no": "Không",
+  "roles": {
+    "owner": "Chủ sở hữu",
+    "admin": "Quản trị",
+    "consul": "Lãnh sự"
+  },
+  "loading": "Đang tải...",
+  "unknown": "Không rõ"
+}

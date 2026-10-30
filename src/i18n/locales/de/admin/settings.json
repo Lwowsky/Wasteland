@@ -1,0 +1,480 @@
+{
+  "title": "Einstellungen",
+  "description": "Website-Gestaltung, Spielerimport und -export, Sicherungen, Zugriff und Systemwerkzeuge verwalten.",
+  "sections": {
+    "import": "Import",
+    "export": "Export",
+    "backup": "Sicherungen",
+    "system": "System",
+    "access": "Zugriff"
+  },
+  "siteIdentity": {
+    "eyebrow": "Website-Gestaltung",
+    "title": "Name, Region und Fußzeile",
+    "description": "Website-Name, Markenname, Regionsnummer und -name sowie Fußzeileninhalt ändern.",
+    "edit": "Website konfigurieren",
+    "ownerOnly": "Bearbeitung nur für Owner verfügbar.",
+    "saved": "Website-Einstellungen gespeichert.",
+    "summary": {
+      "siteName": "Website-Name",
+      "region": "Region",
+      "brand": "Logo-Text"
+    },
+    "identity": {
+      "title": "Grundlegende Website-Angaben",
+      "description": "Diese Werte werden in der Kopfzeile, im Browser-Titel und in den Regionsinformationen verwendet."
+    },
+    "footer": {
+      "title": "Fußzeileninhalt",
+      "description": "Separaten Fußzeilentext für jede unterstützte Sprache konfigurieren.",
+      "languageLabel": "Fußzeilensprache",
+      "languageHelp": "Standardmäßig werden JSON-Übersetzungen angezeigt. Nur geänderte Felder werden als Überschreibungen in D1 gespeichert. Ein leeres Feld setzt den Standard beim Speichern wieder ein. Bearbeite jede Sprache einzeln.",
+      "restoreDefaults": "Standardtext wiederherstellen",
+      "restoreHelp": "Ausgewählte Sprache aus JSON-Übersetzungen wiederherstellen. Zum Übernehmen speichern.",
+      "restoreNotice": "Standardtext im Entwurf wiederhergestellt. Zum Übernehmen auf „Änderungen speichern“ klicken."
+    },
+    "fields": {
+      "siteName": "Website-Name",
+      "brandText": "Logo-/Markentext",
+      "regionNumber": "Regionsnummer",
+      "regionName": "Regionsname",
+      "footerDescription": "Website-Beschreibung in der Fußzeile",
+      "authorLabel": "Beschriftung des Autorenblocks",
+      "author": "Name des Autors",
+      "authorDescription": "Beschreibung des Autors",
+      "projectDescription": "Projektbeschreibung",
+      "copyright": "Copyright-Text"
+    },
+    "help": {
+      "siteName": "Wird als Browser-Titel und SEO-Titel verwendet.",
+      "brandText": "Wird in der Kopf- und Fußzeile der Website angezeigt."
+    },
+    "modal": {
+      "title": "Website-Einstellungen",
+      "subtitle": "Hauptname, Region und Fußzeile ohne Codeänderungen bearbeiten.",
+      "footerHint": "Änderungen werden nach dem Speichern sofort angewendet.",
+      "unsaved": "Ungespeicherte Änderungen"
+    },
+    "actions": {
+      "close": "Schließen",
+      "cancel": "Abbrechen",
+      "save": "Änderungen speichern",
+      "saving": "Wird gespeichert…"
+    },
+    "errors": {
+      "load": "Website-Einstellungen konnten nicht geladen werden.",
+      "save": "Website-Einstellungen konnten nicht gespeichert werden."
+    },
+    "unsaved": {
+      "title": "Ungespeicherte Änderungen verwerfen?",
+      "message": "Du hast Website-Einstellungen oder Fußzeilentexte geändert. Wenn du dieses Fenster jetzt schließt, gehen die Änderungen verloren.",
+      "discard": "Änderungen verwerfen",
+      "keepEditing": "Weiter bearbeiten"
+    }
+  },
+  "import": {
+    "title": "Spieler importieren",
+    "description": "Nur in die Spielertabelle des aktuellen Zyklus importieren (XLSX, XLS oder CSV).",
+    "chooseFile": "Spielerdatei auswählen",
+    "reading": "Datei wird gelesen…",
+    "formats": "XLSX · XLS · CSV",
+    "cancel": "Abbrechen",
+    "importing": "Wird importiert…",
+    "success": "Erfolgreich importiert: {{count}} Spieler.",
+    "fixBeforeImport": "Behebe Dateifehler und Duplikate vor dem Import.",
+    "preview": {
+      "title": "Vorschauvalidierung",
+      "total": "Zeilen",
+      "valid": "Bereit",
+      "invalid": "Fehler",
+      "duplicates": "Duplikate",
+      "problems": "Was korrigiert werden muss",
+      "row": "Zeile {{row}}",
+      "rowShort": "Zeile",
+      "showing": "{{from}}–{{to}} von {{total}} angezeigt",
+      "perPage": "Pro Seite",
+      "all": "Alle",
+      "page": "{{page}} / {{pages}}",
+      "previous": "Vorherige Seite",
+      "next": "Nächste Seite"
+    },
+    "errors": {
+      "readFile": "Datei konnte nicht gelesen werden. Überprüfe das XLSX-/XLS-/CSV-Format.",
+      "emptyFile": "Die Datei enthält keine Spielerzeilen.",
+      "importFailed": "Import fehlgeschlagen. Gehe nicht davon aus, dass Daten importiert wurden; überprüfe Worker und Datei.",
+      "duplicateExisting": "dieser Nickname existiert bereits im aktuellen Zyklus",
+      "duplicateFile": "dieser Nickname ist in der Datei doppelt vorhanden",
+      "invalidField": {
+        "nickname": "Nickname fehlt",
+        "alliance": "Allianz fehlt",
+        "troopType": "unbekannter Truppentyp",
+        "tier": "Tier muss T1–T14 sein",
+        "shift": "unbekannte Schicht",
+        "captain": "unbekannter Kapitänswert — Ja/Nein manuell auswählen",
+        "readyAttack": "unbekannter Bereitschaftswert — Ja/Nein manuell auswählen"
+      },
+      "saveDraftFailed": "Lokaler Importentwurf konnte nicht gespeichert werden."
+    },
+    "close": "Schließen",
+    "fields": {
+      "nickname": "Nickname",
+      "alliance": "Allianz",
+      "troopType": "Truppentyp",
+      "tier": "Tier",
+      "lairLevel": "Höhlenlevel",
+      "marchSize": "Marschgröße",
+      "rallySize": "Rallyegröße",
+      "shift": "Schicht",
+      "readyAttack": "Bereit zum Angriff",
+      "captain": "Kapitän",
+      "comment": "Kommentar",
+      "extraFighterTier": "Zusatztrupp — Kämpfer",
+      "extraRiderTier": "Zusatztrupp — Reiter",
+      "extraShooterTier": "Zusatztrupp — Schützen"
+    },
+    "mapping": {
+      "cardHint": "Nach der Dateiauswahl öffnet sich ein Zuordnungsfenster, in dem jede Excel-Spalte einem Spielerfeld zugewiesen werden kann.",
+      "title": "Einstellungen für den Spielerimport",
+      "subtitle": "Datei: {{file}}. Wähle die Spalten aus, die den Website-Feldern entsprechen.",
+      "fileSummary": "Spalten: {{columns}} · Zeilen: {{rows}}",
+      "fieldsTitle": "Spaltenzuordnung",
+      "fieldsText": "Das Website-Feld steht links, die hochgeladene Spalte rechts. Nicht verwendete Spalten können als zusätzliche Spielerfelder hinzugefügt werden.",
+      "required": "Für Import erforderlich",
+      "custom": "Zusatzfeld",
+      "customName": "Name des Zusatzfelds",
+      "skip": "— Nicht importieren —",
+      "unknownTitle": "Nicht erkannte Dateispalten",
+      "unknownText": "Wenn die Datei Angaben enthält, die auf der Website noch nicht existieren, füge die Spalte als zusätzliches Spielerfeld hinzu.",
+      "addCustom": "Als Feld hinzufügen",
+      "removeCustom": "Zusatzfeld entfernen",
+      "previewText": "Werte werden vor dem Import vereinheitlicht: Tier 10 → T10, первая половина / 1st shift → shift1, вторая половина / 2nd shift → shift2, оба подходят / both are suitable → Any shift.",
+      "status": "Status",
+      "ok": "Bereit",
+      "ready": "{{count}} Spieler können importiert werden.",
+      "importCount": "{{count}} importieren",
+      "saveMapping": "Spaltenzuordnung speichern",
+      "saved": "Zuordnung gespeichert",
+      "continueMapping": "Dateieinrichtung fortsetzen"
+    },
+    "destination": {
+      "title": "Wo sollen Spieler vorbereitet werden?",
+      "text": "Es wird empfohlen, die Datei zuerst als lokalen Entwurf zu speichern, die Werte zu prüfen und erst dann Spieler in den aktuellen Zyklus zu verschieben.",
+      "staging": "Lokaler Entwurf",
+      "stagingText": "Es wird nichts in die Datenbank geschrieben. Du kannst die Zuordnungen korrigieren und später fortfahren.",
+      "current": "Aktueller Zyklus",
+      "currentText": "Spieler direkt in den aktiven Zyklus schreiben. Nur verfügbar, wenn keine Fehler oder Duplikate vorhanden sind.",
+      "saveDraft": "{{count}} im Entwurf speichern",
+      "draftWithErrors": "Der Entwurf kann auch mit Fehlern gespeichert werden. Diese Zeilen werden nicht in die Datenbank geschrieben."
+    },
+    "draft": {
+      "title": "Lokaler Importentwurf",
+      "summary": "{{file}} · {{count}} Zeilen",
+      "open": "Entwurf öffnen",
+      "clear": "Entwurf löschen",
+      "saved": "{{count}} Zeilen im lokalen Entwurf gespeichert.",
+      "help": "Der Entwurf wird nur in diesem Browser gespeichert. Um Spieler zur Datenbank und zu den Spielertabellen hinzuzufügen, öffne „Spielertabelle“ → „Lokale Tabelle“ und klicke „Verschieben“."
+    },
+    "valueMapping": {
+      "title": "Wertzuordnung",
+      "text": "Falls die Website Truppentyp, Tier, Schicht, Kapitäns- oder Bereitschaftswert nicht erkennt, wähle den richtigen Wert manuell. Unbekannte Werte werden nicht mehr stillschweigend zu „Nein“ umgewandelt.",
+      "choose": "— Manuell auswählen —",
+      "troops": {
+        "fighter": "Kämpfer",
+        "rider": "Reiter",
+        "shooter": "Schützen"
+      },
+      "shifts": {
+        "shift1": "Schicht 1",
+        "shift2": "Schicht 2",
+        "shift3": "Schicht 3",
+        "shift4": "Schicht 4",
+        "flexible": "Beliebige Schicht"
+      },
+      "yes": "Ja",
+      "no": "Nein"
+    }
+  },
+  "export": {
+    "title": "Spieler exportieren",
+    "description": "Nur Daten der Spielertabelle exportieren.",
+    "excel": "Excel-Export",
+    "fileName": "Dateiname",
+    "download": "Excel herunterladen",
+    "options": {
+      "players": "Grundangaben der Spieler",
+      "readiness": "Bereitschaft und Kapitän",
+      "extraSquads": "Zusätzliche Truppen",
+      "comments": "Kommentare"
+    },
+    "excelLabels": {
+      "sheets": {
+        "players": "Spieler"
+      },
+      "columns": {
+        "nickname": "Nickname",
+        "alliance": "Allianz",
+        "troop": "Truppen",
+        "tier": "Tier",
+        "lair": "Versteck",
+        "march": "Marsch",
+        "rally": "Rallye",
+        "shift": "Schicht",
+        "submitted": "Gesendet",
+        "captain": "Kapitän",
+        "readyAttack": "Bereit zum Angriff",
+        "comment": "Kommentar",
+        "setting": "Einstellung",
+        "value": "Wert",
+        "role": "Rolle",
+        "permissions": "Berechtigungen",
+        "active": "Aktiv",
+        "extraFighterTier": "Zusatztrupp — Kämpfer",
+        "extraRiderTier": "Zusatztrupp — Reiter",
+        "extraShooterTier": "Zusatztrupp — Schützen"
+      }
+    },
+    "settingsButton": "Einstellungen",
+    "selectedSummary": "Ausgewählte Spalten: {{count}}",
+    "modal": {
+      "title": "Exporteinstellungen",
+      "subtitle": "Wähle, welche Felder der Spielertabelle in Excel enthalten sein sollen.",
+      "close": "Schließen",
+      "selectAll": "Alle auswählen",
+      "clearAll": "Alle abwählen",
+      "selected": "Ausgewählt: {{count}}",
+      "customField": "Zusatzfeld",
+      "done": "Fertig"
+    }
+  },
+  "backup": {
+    "title": "Sicherungen",
+    "description": "Vollständige Regionssicherung herunterladen oder die Website aus einer JSON-Datei wiederherstellen.",
+    "ownerOnly": "Vollständige Sicherungen erstellen und wiederherstellen darf nur der Owner.",
+    "create": "Erstellen & herunterladen",
+    "creating": "Sicherung wird erstellt…",
+    "restore": "Aus Datei wiederherstellen",
+    "created": "Sicherung erstellt und heruntergeladen.",
+    "restored": "Sicherung wiederhergestellt.",
+    "note": "Die Sicherung wird nicht in der Datenbank gespeichert, sondern als lokale JSON-Datei. Benutzer und Rollen sind nicht enthalten.",
+    "errors": {
+      "create": "Sicherung konnte nicht erstellt werden.",
+      "invalidFile": "Dies ist keine unterstützte Wasteland-Sicherungsdatei.",
+      "restore": "Sicherung konnte nicht wiederhergestellt werden. Gehe nicht davon aus, dass die aktuellen Daten vollständig wiederhergestellt wurden."
+    },
+    "restoreModal": {
+      "title": "Sicherung wiederherstellen",
+      "subtitle": "Die aktuellen Regionsdaten werden durch die Daten der ausgewählten Datei ersetzt.",
+      "warningTitle": "Aktuelle Daten werden überschrieben",
+      "warningText": "Vor der Wiederherstellung lädt das System automatisch eine Notfallsicherung des aktuellen Zustands herunter. Firebase Auth und adminUsers bleiben unverändert. Alle zuvor erstellten geheimen Links zur Spielertabelle und zum endgültigen Plan werden widerrufen. Erstelle nach der Wiederherstellung neue Links.",
+      "createdAt": "Sicherung erstellt",
+      "players": "Spieler",
+      "periods": "Zyklen",
+      "alliances": "Allianz-Rotationszeilen",
+      "requests": "Zugriffsanträge",
+      "phraseLabel": "Gib zur Bestätigung exakt folgenden Ausdruck ein:",
+      "help": "Die Schaltfläche zur Wiederherstellung wird außerdem nach 10 Sekunden freigeschaltet.",
+      "cancel": "Abbrechen",
+      "confirm": "Daten wiederherstellen",
+      "restoring": "Wiederherstellung läuft…",
+      "phrase": "RESTORE REGION DATA"
+    }
+  },
+  "factoryReset": {
+    "eyebrow": "Gefahrenbereich",
+    "title": "Regionsdaten zurücksetzen",
+    "description": "Ausgewählte Regionsdaten vollständig löschen und Standardeinstellungen wiederherstellen.",
+    "preserved": {
+      "title": "Benutzer und Rollen sind geschützt",
+      "text": "Firebase Auth und die Sammlung adminUsers bleiben erhalten. Owner, Admin, Consul und zugewiesene Zugriffsrechte bleiben bestehen."
+    },
+    "open": "Regionsdaten zurücksetzen",
+    "modal": {
+      "title": "Regionsdaten zurücksetzen",
+      "subtitle": "Wähle genau aus, was gelöscht werden soll. Diese Aktion löscht Daten aus den Datenbanken."
+    },
+    "warning": {
+      "title": "Diese Aktion kann nicht rückgängig gemacht werden",
+      "text": "Ausgewählte Daten werden physisch aus der Website-Datenbank gelöscht. Ohne Sicherung können sie nicht wiederhergestellt werden."
+    },
+    "deleteAll": {
+      "title": "Alle Regionsdaten löschen",
+      "description": "Alle unten aufgeführten Kategorien auswählen und die Website als neue, leere Region vorbereiten."
+    },
+    "options": {
+      "players": {
+        "title": "Spieler und Anmeldungen",
+        "description": "Anmeldungen, public_players und Spielerstatistiken löschen."
+      },
+      "cycles": {
+        "title": "Anmeldezyklen",
+        "description": "Gesamten Zyklusverlauf löschen. Zugehörige Spieler werden ebenfalls entfernt."
+      },
+      "alliances": {
+        "title": "Allianzen und Rotation",
+        "description": "Allianzen, Rotation, Gastgeberallianz und Gouverneur löschen."
+      },
+      "registrationSettings": {
+        "title": "Anmeldeeinstellungen",
+        "description": "Zyklus, T9–T14, Schicht 1/2/Beliebig, Formularfelder und öffentlichen Zugriff auf Werkseinstellungen zurücksetzen."
+      },
+      "accessRequests": {
+        "title": "Zugriffsanträge",
+        "description": "Alte/ausstehende accessRequests aus Firestore löschen, ohne adminUsers zu verändern."
+      },
+      "browserData": {
+        "title": "Lokale Daten in diesem Browser",
+        "description": "Spielervorlagen, Einstellungen des endgültigen Plans und lokale Zeiteinstellungen auf diesem Gerät löschen."
+      }
+    },
+    "preview": {
+      "title": "Derzeit gespeicherte Daten",
+      "loading": "Datenbanken werden geprüft…",
+      "players": "Spieleranmeldungen",
+      "periods": "Zyklen",
+      "stats": "Zyklusstatistiken",
+      "alliances": "Rotationsdatensätze",
+      "requests": "Zugriffsanträge"
+    },
+    "confirmation": {
+      "label": "Gib zur Bestätigung den genauen Ausdruck ein:",
+      "help": "Die Löschschaltfläche bleibt außerdem 10 Sekunden lang deaktiviert.",
+      "phrase": "DELETE REGION DATA"
+    },
+    "actions": {
+      "cancel": "Abbrechen",
+      "delete": "Ausgewählte Daten löschen",
+      "deleting": "Wird gelöscht…"
+    },
+    "errors": {
+      "preview": "Datenvorschau konnte nicht geladen werden.",
+      "reset": "Zurücksetzen fehlgeschlagen. Gehe nicht davon aus, dass alles gelöscht wurde; prüfe den Worker und versuche es erneut.",
+      "backup": "Die Sicherung konnte nicht heruntergeladen werden. Daher wurde das Zurücksetzen gestoppt. Deaktiviere diese Option nur, wenn du bewusst ohne Sicherung fortfahren möchtest."
+    },
+    "preservedSummary": "Benutzerkonten, Owner/Admin/Consul und ihre Rollen werden niemals gelöscht.",
+    "backupBeforeReset": {
+      "title": "Vor dem Zurücksetzen eine Sicherung herunterladen",
+      "description": "Vor dem Löschen sammelt das System die aktuellen Website-Daten und lädt eine JSON-Datei auf dieses Gerät herunter. In der Datenbank verbleibt keine Sicherung."
+    }
+  },
+  "access": {
+    "title": "Zugriff",
+    "description": "Festlegen, wer die Spielertabelle und den endgültigen Plan öffnen darf.",
+    "resourceLabel": "Zu konfigurierende Ressource",
+    "resources": {
+      "players": "Spielertabelle",
+      "final_plan": "Endplan"
+    },
+    "loading": "Zugriffseinstellungen werden geladen…",
+    "cycle": "Zyklus #{{cycle}}",
+    "cycleNote": "Statische Freigabelinks können über mehrere Zyklen bestehen bleiben, zeigen aber nur veröffentlichte Daten des aktuellen Zyklus.",
+    "modeLabel": "Zugriffsmodus",
+    "publicWarning": "Im öffentlichen Modus werden Daten des aktuellen Zyklus nach der nächsten erfolgreichen JSON-Veröffentlichung ohne Passwort für alle sichtbar. Ein Moduswechsel widerruft zuvor erstellte private Links. Die kalenderbasierte Zyklusschließung bleibt aktiv.",
+    "modes": {
+      "public": "Öffentlich — für alle sichtbar",
+      "private": "Geschlossen — öffentliche Seite nicht verfügbar",
+      "link": "Privater Link"
+    },
+    "status": {
+      "public": "Öffentlicher Zugriff",
+      "private": "Zugriff geschlossen",
+      "active": "Privater Zugriff aktiv",
+      "needsToken": "Privaten Freigabelink erstellen"
+    },
+    "tokenLifetime": {
+      "label": "Gültigkeitsdauer des Links"
+    },
+    "duration": {
+      "hours24": "24 Stunden",
+      "cycle": "Bis zum Ende des aktuellen Zyklus",
+      "hours1": "1 Stunde",
+      "hours6": "6 Stunden",
+      "hours12": "12 Stunden",
+      "days7": "7 Tage",
+      "forever": "Läuft nie ab"
+    },
+    "generated": {
+      "title": "Neuer Zugriff erstellt",
+      "once": "Kopiere diesen Link jetzt. Er wird nach der nächsten JSON-Veröffentlichung aktiv; der vollständige Code wird nicht im öffentlichen GitHub gespeichert."
+    },
+    "actions": {
+      "save": "Speichern",
+      "generateLink": "Neuen Link erstellen",
+      "copy": "Kopieren",
+      "revoke": "Widerrufen"
+    },
+    "messages": {
+      "saved": "Zugriffseinstellungen gespeichert.",
+      "generated": "Link erstellt. Er funktioniert nach der nächsten Snapshot-Veröffentlichung; ältere Links bleiben aktiv.",
+      "revoked": "Link widerrufen. Der statische Zugriff endet nach der nächsten Snapshot-Veröffentlichung.",
+      "copied": "Kopiert.",
+      "historyDeleted": "Archivierter Linkeintrag gelöscht."
+    },
+    "errors": {
+      "load": "Zugriffseinstellungen konnten nicht geladen werden.",
+      "save": "Zugriffseinstellungen konnten nicht gespeichert werden.",
+      "generate": "Privater Link konnte nicht erstellt werden.",
+      "revoke": "Zugriff konnte nicht widerrufen werden.",
+      "copy": "Kopieren fehlgeschlagen.",
+      "noPeriod": "Für privaten Zugriff gibt es keinen aktuellen Zyklus.",
+      "deleteLink": "Archivierter Link konnte nicht gelöscht werden."
+    },
+    "staticLinks": {
+      "title": "Erstellte Links (Owner und Admin können gespeicherte Links kopieren)",
+      "active": "Aktiv",
+      "inactive": "Abgelaufen oder widerrufen",
+      "history": "Verlauf — abgelaufen und widerrufen",
+      "delete": "Eintrag löschen",
+      "confirmDelete": "Diesen inaktiven Linkeintrag dauerhaft löschen?",
+      "deleteTitle": "Archivierten Link löschen?",
+      "cancel": "Abbrechen"
+    }
+  },
+  "sharedConsul": {
+    "title": "Gemeinsames Consul-Passwort",
+    "description": "Neues Passwort erzeugen. Das vorherige Passwort und alle damit verbundenen Sitzungen werden sofort widerrufen.",
+    "duration": "Ablaufdatum",
+    "day": "Ein Tag",
+    "wasteland": "Bis zum Ende von Wasteland",
+    "forever": "Kein Ablaufdatum für den Schlüssel",
+    "generate": "Neues Passwort erzeugen",
+    "revoke": "Zugriff widerrufen",
+    "active": "Zugriff aktiv",
+    "failed": "Zugriffseinstellungen konnten nicht geladen werden.",
+    "noWasteland": "Kein aktuelles Wasteland-Enddatum verfügbar.",
+    "copy": "Kopieren",
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "ok": "Verstanden",
+    "copySuccessTitle": "Passwort kopiert",
+    "copySuccess": "Das Consul-Zugangspasswort wurde in die Zwischenablage kopiert. Gib es nur an vertrauenswürdige Personen weiter.",
+    "copyExpires": "Passwort läuft ab:",
+    "copyForeverWarning": "Dieses Passwort läuft nicht ab. Erzeuge aus Sicherheitsgründen nach jedem Wasteland ein neues oder wähle „Ein Tag“ bzw. „Bis Wasteland-Ende“.",
+    "multipleDescription": "Bis zu 5 aktive Passwörter. Ein weiteres Passwort widerruft bestehenden Zugriff nicht. Nur Owner dürfen diese Einstellungen bedienen.",
+    "legacyKey": "Vorheriges Passwort aus Stage 042",
+    "keyName": "Passwortname",
+    "keyPlaceholder": "Zum Beispiel: Oktober-Consuls",
+    "limitReached": "Es sind bereits fünf Passwörter aktiv. Widerrufe eines oder warte, bis es abläuft.",
+    "showPassword": "Passwort anzeigen",
+    "passwordPrivacy": "Gib dieses Passwort nicht an nicht vertrauenswürdige Personen weiter. Schließe dieses Fenster nach dem Kopieren.",
+    "confirmSingleRevoke": "Nur dieses Passwort widerrufen? Benutzer dieses Passworts verlieren ihren Zugriff. Andere Passwörter bleiben gültig.",
+    "confirmChangeDuration": "Ablaufdatum dieses Passworts ändern? Andere Passwörter bleiben unverändert.",
+    "confirmUpdate": "Ablaufdatum ändern",
+    "confirmAdd": "Weiteres Passwort erstellen? Bestehende Passwörter bleiben aktiv.",
+    "tabsActive": "Aktiv",
+    "tabsHistory": "Verlauf",
+    "tabsCreate": "Erstellen",
+    "emptyActive": "Noch keine aktiven Passwörter.",
+    "emptyHistory": "Keine abgelaufenen oder widerrufenen Passwörter.",
+    "historyHint": "Abgelaufene und widerrufene Passwörter werden hier angezeigt. Ihre Einträge können dauerhaft entfernt werden.",
+    "deleteHistory": "Eintrag löschen",
+    "confirmDeleteHistory": "Diesen Eintrag dauerhaft aus dem Verlauf löschen? Andere Passwörter bleiben davon unberührt.",
+    "expired": "abgelaufen",
+    "revoked": "widerrufen",
+    "copyPassword": "Passwort kopieren",
+    "hidePassword": "Ausblenden",
+    "createdAt": "Erstellt:",
+    "historyLegacy": "Das alte Passwort kann nicht angezeigt werden. Widerrufe es, um den Zugriff zu stoppen.",
+    "createHint": "Bis zu 5 Passwörter können gleichzeitig aktiv sein. Bestehende Passwörter bleiben gültig.",
+    "deleteBlocked": "Widerrufe ein aktives Passwort, bevor du es löschst."
+  }
+}

@@ -1,3 +1,4 @@
+import { getIntlLocale } from "../../../utils/intlLocale.js";
 function getTierNumber(value) {
   const match = String(value || "").match(/\d+/);
 
@@ -107,7 +108,7 @@ export function filterRegionPlayers(players, search) {
 
 export function formatRegionNumber(value, language) {
   return Number(value || 0).toLocaleString(
-    language === "uk" ? "uk-UA" : "en-GB",
+    getIntlLocale(language),
   );
 }
 
