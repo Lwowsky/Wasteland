@@ -16,7 +16,7 @@ test("061: simplified Chinese and Korean catalogs contain every key and placehol
   const { errors, summaries } = auditDraftLocales();
   assert.deepEqual(errors, []);
   for (const code of ["zh", "ko"]) {
-    assert.equal(summaries[code].total, 1595);
+    assert.equal(summaries[code].total, 1603);
     assert.equal(summaries[code].pendingCount, 0);
     assert.ok(summaries[code].translated > 1500);
     const folder = path.join(ROOT, "src/i18n/locales", code);
@@ -68,8 +68,9 @@ test("061: critical destructive confirmations are localized without altering exa
   }
 });
 
-test("061: final-plan PNG/TXT internal language restrictions are unchanged", () => {
+test("066: Chinese and Korean enabled in final-plan PNG/TXT", () => {
   const source = read("src/features/turrets/planLanguages.js");
-  assert.match(source, /PLAN_LANGUAGE_CODES\s*=\s*Object\.freeze\(\["uk", "en"\]\)/);
-  assert.doesNotMatch(source, /"zh"|"ko"/);
+  assert.match(source, /PLAN_LANGUAGE_CODES\s*=\s*Object\.freeze\(\[/);
+  assert.match(source, /"zh"/);
+  assert.match(source, /"ko"/);
 });

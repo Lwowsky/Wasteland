@@ -28,7 +28,7 @@ export default function FinalPlanLanguageModal({ open, onClose, languages, onCha
               <span className="final-plan-language-option__flag" aria-hidden="true">
                 <img src={publicAsset(`/images/final-plan/lang/${code}.svg`)} alt="" width="38" height="38" />
               </span>
-              <span>{copy.choices[code]}</span>
+              <span lang={code} dir={code === "ar" ? "rtl" : "auto"}>{copy.choices[code]}</span>
               {fixed && <span className="final-plan-language-option__fixed" title={copy.alwaysOn}>✓</span>}
             </label>
           );

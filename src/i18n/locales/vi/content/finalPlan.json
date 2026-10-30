@@ -47,14 +47,22 @@
   },
   "languageModal": {
     "title": "Ngôn ngữ của kế hoạch cuối cùng",
-    "subtitle": "Chọn ngôn ngữ của kế hoạch. Tiếng Anh luôn được bật.",
+    "subtitle": "Chọn ngôn ngữ cho tên tháp, loại quân và tệp xuất. Tiếng Anh luôn được bật.",
     "close": "Đóng",
     "done": "Xong",
     "alwaysOn": "Luôn bật",
-    "help": "Tiếng Anh luôn được bật. Có thể bật thêm tiếng Ukraina.",
+    "help": "Ngôn ngữ đã chọn xuất hiện trong kế hoạch và tệp PNG/TXT. Không thể tắt tiếng Anh.",
     "choices": {
       "uk": "Українська",
-      "en": "English"
+      "en": "English",
+      "ru": "Русский",
+      "pl": "Polski",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "zh": "中文",
+      "ko": "한국어",
+      "vi": "Tiếng Việt",
+      "ar": "العربية"
     }
   },
   "toolbar": {

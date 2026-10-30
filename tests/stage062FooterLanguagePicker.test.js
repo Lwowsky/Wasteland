@@ -58,7 +58,7 @@ test("062: complete Vietnamese/Arabic dictionaries are active with matching key 
   assert.deepEqual(report.errors, []);
     for (const code of ["vi", "ar"]) {
     assert.ok(SUPPORTED_LANGUAGES.includes(code));
-    assert.equal(report.summaries[code].total, 1595);
+    assert.equal(report.summaries[code].total, 1603);
     assert.equal(report.summaries[code].pending.length, 0);
   }
 });

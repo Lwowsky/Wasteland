@@ -43,18 +43,26 @@
   },
   "labels": {
     "captain": "队长",
-    "players": "— 选择玩家 —"
+    "players": "玩家"
   },
   "languageModal": {
     "title": "最终方案语言",
-    "subtitle": "选择方案语言。英语始终启用。",
+    "subtitle": "选择炮塔名称、兵种和导出内容的语言。英语始终启用。",
     "close": "关闭",
     "done": "完成",
     "alwaysOn": "始终启用",
-    "help": "英语始终启用，乌克兰语可选。",
+    "help": "所选语言会显示在方案及 PNG/TXT 导出中。英语无法关闭。",
     "choices": {
       "uk": "Українська",
-      "en": "English"
+      "en": "English",
+      "ru": "Русский",
+      "pl": "Polski",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "zh": "中文",
+      "ko": "한국어",
+      "vi": "Tiếng Việt",
+      "ar": "العربية"
     }
   },
   "toolbar": {

@@ -16,7 +16,7 @@ test("060: German and Japanese have all 19 files, keys, types and interpolation 
   const { errors, summaries } = auditDraftLocales();
   assert.deepEqual(errors, []);
   for (const language of ["de", "ja"]) {
-    assert.equal(summaries[language].total, 1595);
+    assert.equal(summaries[language].total, 1603);
     assert.equal(summaries[language].pendingCount, 0);
     assert.ok(summaries[language].translated > 1400);
     const folder = path.join(ROOT, "src/i18n/locales", language);
@@ -62,10 +62,11 @@ test("060: German and Japanese routes and Intl date/number locales are correct",
   assert.equal(getIntlLocale("unknown"), "en-GB");
 });
 
-test("060: plan export remains EN/UA only until separate Worker-safe upgrade", () => {
+test("066: plan export supports German and Japanese after Worker-safe upgrade", () => {
   const source = load("src/features/turrets/planLanguages.js");
-  assert.match(source, /PLAN_LANGUAGE_CODES\s*=\s*Object\.freeze\(\["uk", "en"\]\)/);
-  assert.doesNotMatch(source, /"de"|"ja"/);
+  assert.match(source, /PLAN_LANGUAGE_CODES\s*=\s*Object\.freeze\(\[/);
+  assert.match(source, /"de"/);
+  assert.match(source, /"ja"/);
   const modal = load("src/pages/FinalPlan/components/FinalPlanLanguageModal.jsx");
   assert.match(modal, /translations\[language\]/);
 });

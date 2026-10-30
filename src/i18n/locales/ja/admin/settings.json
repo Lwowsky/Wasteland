@@ -450,7 +450,7 @@
     "copyExpires": "パスワードの有効期限:",
     "copyForeverWarning": "このパスワードは無期限です。セキュリティのためWastelandごとに再生成するか、「1日」または「Wasteland終了まで」を選択してください。",
     "multipleDescription": "有効なパスワードは最大5つです。新しいパスワードを作成しても既存のアクセスは取り消されません。操作できるのはオーナーだけです。",
-    "legacyKey": "旧Stage 042のパスワード",
+    "legacyKey": "以前のパスワード",
     "keyName": "パスワード名",
     "keyPlaceholder": "例: 10月のConsul",
     "limitReached": "すでに5つのパスワードが有効です。1つ取り消すか、有効期限が切れるまでお待ちください。",

@@ -38,6 +38,7 @@ function tokens(value) {
 
 function isIntentionallyUntranslated(relative, key, value) {
   if (EXPECTED_LITERAL.has(value)) return true;
+  if (relative === "content/finalPlan.json" && key === ".languageModal.choices.en" && value === "English") return true;
   if (relative === "ui/header.json" && key.includes(".languageOptions.") && /\.(badge|label)$/.test(key)) return true;
   return false;
 }

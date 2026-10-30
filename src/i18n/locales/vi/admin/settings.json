@@ -450,7 +450,7 @@
     "copyExpires": "Mật khẩu hết hạn:",
     "copyForeverWarning": "Mật khẩu này không hết hạn. Để an toàn, hãy tạo mật khẩu mới sau mỗi Wasteland hoặc chọn quyền truy cập một ngày / đến khi Wasteland kết thúc.",
     "multipleDescription": "Tối đa 5 mật khẩu đang hoạt động. Tạo mật khẩu khác không thu hồi quyền truy cập hiện có. Chỉ Owner điều khiển.",
-    "legacyKey": "Mật khẩu Stage 042 trước đây",
+    "legacyKey": "Mật khẩu trước đây",
     "keyName": "Tên mật khẩu",
     "keyPlaceholder": "Ví dụ: Các consul tháng Mười",
     "limitReached": "Đã có 5 mật khẩu đang hoạt động. Hãy thu hồi một mật khẩu hoặc chờ hết hạn.",

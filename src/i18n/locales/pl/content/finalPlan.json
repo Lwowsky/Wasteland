@@ -47,14 +47,22 @@
   },
   "languageModal": {
     "title": "Języki planu końcowego",
-    "subtitle": "Wybierz języki planu. Angielski jest zawsze włączony.",
+    "subtitle": "Wybierz języki nazw wież, typów wojsk i eksportu. Angielski jest zawsze włączony.",
     "close": "Zamknij",
     "done": "Gotowe",
     "alwaysOn": "Zawsze włączone",
-    "help": "Angielski jest zawsze włączony. Ukraiński jest opcjonalny.",
+    "help": "Wybrane języki są widoczne w planie oraz plikach PNG/TXT. Angielskiego nie można wyłączyć.",
     "choices": {
       "uk": "Українська",
-      "en": "Angielski"
+      "en": "English",
+      "ru": "Русский",
+      "pl": "Polski",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "zh": "中文",
+      "ko": "한국어",
+      "vi": "Tiếng Việt",
+      "ar": "العربية"
     }
   },
   "toolbar": {

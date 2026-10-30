@@ -450,7 +450,7 @@
     "copyExpires": "Passwort läuft ab:",
     "copyForeverWarning": "Dieses Passwort läuft nicht ab. Erzeuge aus Sicherheitsgründen nach jedem Wasteland ein neues oder wähle „Ein Tag“ bzw. „Bis Wasteland-Ende“.",
     "multipleDescription": "Bis zu 5 aktive Passwörter. Ein weiteres Passwort widerruft bestehenden Zugriff nicht. Nur Owner dürfen diese Einstellungen bedienen.",
-    "legacyKey": "Vorheriges Passwort aus Stage 042",
+    "legacyKey": "Vorheriges Passwort",
     "keyName": "Passwortname",
     "keyPlaceholder": "Zum Beispiel: Oktober-Consuls",
     "limitReached": "Es sind bereits fünf Passwörter aktiv. Widerrufe eines oder warte, bis es abläuft.",

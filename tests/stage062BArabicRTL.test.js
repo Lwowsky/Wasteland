@@ -31,9 +31,9 @@ test("062B: both complete catalogs have valid placeholders and exact confirmatio
   const result = auditStage062Locales();
   assert.deepEqual(result.errors, []);
   for (const language of ["vi", "ar"]) {
-    assert.equal(result.summaries[language].total, 1595);
+    assert.equal(result.summaries[language].total, 1603);
     assert.equal(result.summaries[language].pending.length, 0);
-    assert.equal(result.summaries[language].invariant, 41);
+    assert.equal(result.summaries[language].invariant, 49);
     const settings = json(`src/i18n/locales/${language}/admin/settings.json`);
     assert.equal(settings.backup.restoreModal.phrase, "RESTORE REGION DATA");
     assert.equal(settings.factoryReset.confirmation.phrase, "DELETE REGION DATA");

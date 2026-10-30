@@ -47,14 +47,22 @@
   },
   "languageModal": {
     "title": "Sprachen des endgültigen Plans",
-    "subtitle": "Wähle die Sprachen für den Plan. Englisch ist immer aktiviert.",
+    "subtitle": "Wähle Sprachen für Turmnamen, Truppentypen und Exporte. Englisch bleibt immer aktiv.",
     "close": "Schließen",
     "done": "Fertig",
     "alwaysOn": "Immer aktiv",
-    "help": "Englisch ist immer aktiviert. Ukrainisch ist optional.",
+    "help": "Gewählte Sprachen erscheinen im Plan und in PNG/TXT. Englisch kann nicht deaktiviert werden.",
     "choices": {
       "uk": "Українська",
-      "en": "Englisch"
+      "en": "English",
+      "ru": "Русский",
+      "pl": "Polski",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "zh": "中文",
+      "ko": "한국어",
+      "vi": "Tiếng Việt",
+      "ar": "العربية"
     }
   },
   "toolbar": {

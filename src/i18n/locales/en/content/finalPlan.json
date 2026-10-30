@@ -47,14 +47,22 @@
   },
   "languageModal": {
     "title": "Final-plan languages",
-    "subtitle": "Choose plan languages. English is always enabled.",
+    "subtitle": "Choose languages for turret names, troop types and exports. English is always enabled.",
     "close": "Close",
     "done": "Done",
     "alwaysOn": "Always enabled",
-    "help": "English is always enabled. Ukrainian is optional.",
+    "help": "Selected languages appear on the plan and in PNG/TXT exports. English cannot be disabled.",
     "choices": {
       "uk": "Українська",
-      "en": "English"
+      "en": "English",
+      "ru": "Русский",
+      "pl": "Polski",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "zh": "中文",
+      "ko": "한국어",
+      "vi": "Tiếng Việt",
+      "ar": "العربية"
     }
   },
   "toolbar": {

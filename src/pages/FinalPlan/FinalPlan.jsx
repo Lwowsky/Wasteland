@@ -11,7 +11,7 @@ import { ROUTES } from "../../config/routes.js";
 import FinalPlanToolbar from "./components/FinalPlanToolbar.jsx";
 import FinalPlanBoard from "./components/FinalPlanBoard.jsx";
 import usePlanLanguages from "./components/usePlanLanguages.js";
-import { getPlanBoardTranslations } from "./data/finalPlanLanguages.js";
+import { getPlanBoardTranslations, normalizePlanLanguages } from "./data/finalPlanLanguages.js";
 import { useVerifiedContentAccess } from "../../features/contentAccess/ContentAccessContext.js";
 import { getPublicFinalPlan } from "./services/finalPlanApi.js";
 import { PLANNER_SHIFTS } from "../../features/turrets/plannerConstants.js";
@@ -58,7 +58,8 @@ function FinalPlan() {
   const selectedRegion = activeRegion !== "home" && regions.includes(activeRegion) ? activeRegion
     : hasHome ? "home" : regions[0] || "home";
   const selectedPlan = selectedRegion === "home" ? plan : plan?.__regions?.[selectedRegion];
-  const languages = hasChosenLanguages ? userLanguages : selectedPlan?.__languages || plan?.__languages || userLanguages;
+  const languages = normalizePlanLanguages(hasChosenLanguages ? userLanguages
+    : selectedPlan?.__languages || plan?.__languages || userLanguages);
   const boardT = getPlanBoardTranslations(t, languages, language);
   function chooseLanguages(codes) { setUserLanguages(codes); }
   const shifts = PLANNER_SHIFTS.filter((shift) => Object.hasOwn(selectedPlan || {}, shift));

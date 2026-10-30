@@ -450,7 +450,7 @@
     "copyExpires": "Hasło wygasa:",
     "copyForeverWarning": "To hasło nie wygasa. Dla bezpieczeństwa generuj nowe po każdym Pustkowiu albo wybierz ważność jednego dnia lub do końca Pustkowia.",
     "multipleDescription": "Do 5 aktywnych haseł. Utworzenie kolejnego hasła nie cofa istniejącego dostępu. Funkcje dostępne tylko dla właściciela.",
-    "legacyKey": "Hasło z poprzedniego Stage 042",
+    "legacyKey": "Poprzednie hasło",
     "keyName": "Nazwa hasła",
     "keyPlaceholder": "Na przykład konsulowie października",
     "limitReached": "Istnieje już pięć aktywnych haseł. Cofnij jedno lub poczekaj, aż wygaśnie.",

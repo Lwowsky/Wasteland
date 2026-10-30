@@ -16,6 +16,8 @@
   font-size: 17px;
   font-weight: 800;
   cursor: pointer;
+  min-width: 0;
+  overflow-wrap: anywhere;
   transition: border-color .17s ease, background .17s ease;
 }
 .final-plan-language-option.is-selected {
@@ -36,7 +38,7 @@
   font-size: 30px;
 }
 .final-plan-language-option__flag img { display: block; width: 38px; height: 38px; object-fit: contain; }
-.final-plan-language-option__fixed { margin-left: auto; opacity: .7; font-size: 12px; }
+.final-plan-language-option__fixed { margin-inline-start: auto; opacity: .7; font-size: 12px; }
 .final-plan-language-modal .site-modal__body { padding: 20px 24px; background: #101d37; }
 .final-plan-language-modal .site-modal__title { color: #fff; }
 .final-plan-language-modal .site-modal__subtitle { color: #a7bbde; }
@@ -56,3 +58,4 @@
   .final-plan-language-grid { grid-template-columns: minmax(0, 1fr); }
   .final-plan-language-option { min-height: 54px; padding: 9px 12px; font-size: 15px; }
 }
+

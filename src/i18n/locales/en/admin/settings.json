@@ -450,7 +450,7 @@
     "copyExpires": "Password expires:",
     "copyForeverWarning": "This password does not expire. For security, generate a new one after each Wasteland, or choose one-day or until-Wasteland-ends access.",
     "multipleDescription": "Up to 5 active passwords. Creating another password does not revoke existing access. Owner-only controls.",
-    "legacyKey": "Previous Stage 042 password",
+    "legacyKey": "Previous password",
     "keyName": "Password name",
     "keyPlaceholder": "For example, October consuls",
     "limitReached": "Five active passwords already exist. Revoke one or wait until one expires.",
